@@ -17,6 +17,7 @@ So a 9.0-trust capper at 10/10 confidence outweighs two 5.0-trust cappers at
 
 from __future__ import annotations
 
+import logging
 from collections import defaultdict
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
@@ -24,7 +25,9 @@ from typing import Any, Iterable
 
 from .config import Capper
 from .extract import Pick
-from .normalize import display_name, fight_key, selection_key
+from .normalize import display_name, fight_key, selection_key, surname
+
+log = logging.getLogger(__name__)
 
 BET_TYPE_ORDER = ["moneyline", "method_of_victory", "over_under", "round", "prop"]
 BET_TYPE_LABELS = {
@@ -73,6 +76,47 @@ def _round(value: float, places: int = 2) -> float:
     return round(value + 0.0, places)
 
 
+def _within_one_edit(a: str, b: str) -> bool:
+    """True when two strings differ by at most one edit (swap/insert/delete)."""
+    if a == b:
+        return True
+    if abs(len(a) - len(b)) > 1:
+        return False
+    if len(a) == len(b):
+        return sum(x != y for x, y in zip(a, b)) <= 1
+    shorter, longer = (a, b) if len(a) < len(b) else (b, a)
+    i = j = edits = 0
+    while i < len(shorter) and j < len(longer):
+        if shorter[i] == longer[j]:
+            i += 1
+        else:
+            edits += 1
+            if edits > 1:
+                return False
+        j += 1
+    return True
+
+
+def _degenerate_matchup(fighter_a: str, fighter_b: str) -> bool:
+    """A pairing that can't be a real fight — an extraction artifact.
+
+    Auto-captions mangle names, and the extractor occasionally emits the same
+    fighter on both sides of the "vs" (sometimes as two spellings of one
+    surname, e.g. "Ribovics vs Ribovic"). Such a pick can never group with
+    other cappers' picks for the real fight, so it would only render a phantom
+    one-pick fight on the dashboard.
+    """
+    surname_a, surname_b = surname(fighter_a), surname(fighter_b)
+    if not surname_a or not surname_b:
+        return True  # an unknown opponent can't form a market
+    if surname_a == surname_b:
+        return True
+    # Long near-identical surnames are caption typos, not two real fighters.
+    if min(len(surname_a), len(surname_b)) >= 6 and _within_one_edit(surname_a, surname_b):
+        return True
+    return False
+
+
 def _option_payload(option: _Option, market_weight: float) -> dict[str, Any]:
     consensus = (option.weight / market_weight * 100.0) if market_weight else 0.0
     supporters = sorted(
@@ -108,7 +152,21 @@ def build_consensus(
     min_confidence: int = 1,
 ) -> dict[str, Any]:
     """Aggregate picks into the `data.json` payload the dashboard renders."""
-    picks = [s for s in sourced_picks if s.pick.confidence >= min_confidence]
+    picks: list[SourcedPick] = []
+    dropped = 0
+    for candidate in sourced_picks:
+        if candidate.pick.confidence < min_confidence:
+            continue
+        if _degenerate_matchup(candidate.pick.fighter_a, candidate.pick.fighter_b):
+            dropped += 1
+            continue
+        picks.append(candidate)
+    if dropped:
+        log.info(
+            "Dropped %d pick(s) whose fighter pairing was unusable "
+            "(missing, identical, or near-identical names)",
+            dropped,
+        )
 
     # fight -> bet_type -> selection_key -> _Option
     grouped: dict[str, dict[str, dict[str, _Option]]] = defaultdict(
@@ -121,7 +179,13 @@ def build_consensus(
         key = fight_key(pick.fighter_a, pick.fighter_b)
         if not key:
             continue
-        name_variants[key].extend([pick.fighter_a, pick.fighter_b])
+        # The key is surname-sorted, but each capper lists the pair in their
+        # own order. Sort the same way before collecting spellings, so slot 0
+        # variants all belong to one fighter and slot 1 to the other —
+        # otherwise "A vs B" and "B vs A" videos scramble both display names.
+        name_variants[key].extend(
+            sorted((pick.fighter_a, pick.fighter_b), key=surname)
+        )
 
         market = grouped[key][pick.bet_type]
         option_key = selection_key(pick.bet_type, pick.selection, pick.fighter)
