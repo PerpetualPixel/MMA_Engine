@@ -2,6 +2,9 @@
 .env
 .env.*
 !.env.example
+# Exported YouTube cookies for the age-restricted transcript fallback — a live
+# session token, every bit as sensitive as an API key.
+cookies.txt
 
 # Python
 __pycache__/
