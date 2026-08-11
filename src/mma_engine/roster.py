@@ -158,6 +158,11 @@ def slugify(name: str) -> str:
     return "_".join(cleaned.split())[:40] or "capper"
 
 
+def name_key(name: str) -> str:
+    """Normalize a capper name for matching: lowercase, alphanumerics only."""
+    return "".join(c.lower() for c in (name or "") if c.isalnum())
+
+
 def _shrink(raw: float, picks: int) -> float:
     """Pull a raw score toward neutral in proportion to how little data backs it."""
     confidence = picks / (picks + PRIOR_PICKS)
@@ -311,10 +316,14 @@ def merge_into_config(
 ) -> dict[str, list[str]]:
     """Merge proposed cappers into `config.json`. Returns a per-outcome report.
 
-    Existing cappers are matched by id or by channel URL, so a name variation in
-    one video doesn't create a duplicate entry. `channel_url` and the `discover`
-    flag on an existing capper are left alone — only the tracked record and the
-    trust scores derived from it are touched.
+    Existing cappers are matched by id, by channel URL, or by normalized name —
+    including any spellings listed in the entry's optional `aliases` array. The
+    aliases exist because tracker transcripts garble channel names ("Bet Sam"
+    for BetSlam with Sam, "Live It Larry" for Livid Larry); listing the garbled
+    form on the real capper routes its results to them instead of minting a
+    duplicate. `channel_url` and the `discover` flag on an existing capper are
+    left alone — only the tracked record and the trust scores derived from it
+    are touched.
 
     Two modes:
 
@@ -337,18 +346,29 @@ def merge_into_config(
         for entry in existing
         if entry.get("channel_url")
     }
+    by_name: dict[str, dict[str, Any]] = {}
+    for entry in existing:
+        for spelling in [entry.get("name", "")] + list(entry.get("aliases") or []):
+            key = name_key(spelling)
+            if key:
+                by_name.setdefault(key, entry)
 
     report: dict[str, list[str]] = {"added": [], "updated": [], "skipped": []}
 
     for candidate in proposed:
         url_key = candidate.get("channel_url", "").rstrip("/").lower()
-        target = by_id.get(candidate["id"]) or (by_url.get(url_key) if url_key else None)
+        target = (
+            by_id.get(candidate["id"])
+            or (by_url.get(url_key) if url_key else None)
+            or by_name.get(name_key(candidate["name"]))
+        )
 
         if target is None:
             existing.append(candidate)
             by_id[candidate["id"]] = candidate
             if url_key:
                 by_url[url_key] = candidate
+            by_name.setdefault(name_key(candidate["name"]), candidate)
             report["added"].append(candidate["name"])
             continue
 
