@@ -1,0 +1,5 @@
+youtube-transcript-api>=1.2,<2
+requests>=2.31
+anthropic>=0.121,<1
+python-dotenv>=1.0
+pydantic>=2.7,<3

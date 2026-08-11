@@ -1,0 +1,64 @@
+name: Build consensus
+
+on:
+  workflow_dispatch:
+    inputs:
+      skip_extraction:
+        description: "Fetch transcripts only (no Claude API calls)"
+        type: boolean
+        default: false
+  schedule:
+    # Fridays 15:00 UTC — after most cappers have posted their fight-week videos.
+    - cron: "0 15 * * 5"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: consensus
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # Transcript and extraction caches survive between runs, so re-runs only
+      # pay for videos that are actually new.
+      - name: Restore pipeline cache
+        uses: actions/cache@v4
+        with:
+          path: cache
+          key: mma-cache-${{ github.run_id }}
+          restore-keys: mma-cache-
+
+      - name: Build consensus
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          PYTHONPATH: src
+        run: |
+          python -m mma_engine \
+            --config config.json \
+            --output docs/data.json \
+            ${{ inputs.skip_extraction && '--skip-extraction' || '' }}
+
+      - name: Commit updated data.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- docs/data.json; then
+            echo "No consensus changes to commit."
+            exit 0
+          fi
+          git add docs/data.json
+          git commit -m "chore: refresh consensus data"
+          git push
