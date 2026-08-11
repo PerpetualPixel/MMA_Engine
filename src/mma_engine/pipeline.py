@@ -284,10 +284,21 @@ def _summarize_discovery(
         lines.append(f"{len(failures)} channel(s) could not be read:")
         for entry in failures:
             lines.append(f"  - {entry['capper']}: {entry.get('error', entry['status'])}")
+    filtered_out = [entry for entry in report if entry.get("recent_titles")]
+    if filtered_out:
+        lines.append("")
+        lines.append(
+            "Channels whose recent uploads all failed the filters "
+            "(lookback_days / title_contains):"
+        )
+        for entry in filtered_out:
+            lines.append(f"  {entry['capper']}:")
+            for title in entry["recent_titles"]:
+                lines.append(f"    {title}")
     if not videos:
         lines.append(
-            "  (nothing) — widen settings.discovery.lookback_days, clear "
-            "title_contains, or list videos by hand."
+            "  (nothing) — widen settings.discovery.lookback_days, adjust "
+            "title_contains to match the titles above, or list videos by hand."
         )
     return "\n".join(lines)
 
