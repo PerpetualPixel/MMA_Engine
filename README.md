@@ -262,9 +262,11 @@ it there.
 
 **On Windows, the whole weekly run is one double-click: `weekly.bat`.** It
 pulls the latest code, installs anything missing, discovers this week's
-videos, fetches transcripts, extracts picks, builds `docs/data.json`, and
-commits + pushes it — the dashboard updates itself a minute later. If
-anything fails, it stops and shows the error instead of pushing.
+videos, fetches transcripts, extracts picks, builds `docs/data.json` (the
+dashboard) and `docs/picks.json` (the weighted picks feed for
+PerpetualPicks.com), and commits + pushes both — the live site updates
+itself a minute later. If anything fails, it stops and shows the error
+instead of pushing.
 
 The only thing the button doesn't do is retarget the event. When a new card
 is coming up, edit two lines in `config.json` first (`event.name` and
@@ -349,6 +351,66 @@ missing if it's ever misconfigured.
 ---
 
 ## Integrating with other systems (e.g. PerpetualPicks.com)
+
+### Option 0: Pull the ready-made weighted picks feed (easiest)
+
+Every `weekly.bat` run also publishes `docs/picks.json` — the consensus
+already distilled into one scored pick per market, ready for a website to
+display or an algorithm to weight. No Python needed on the consuming side;
+just fetch:
+
+```
+https://perpetualpixel.github.io/MMA_Engine/docs/picks.json
+```
+
+The shape:
+
+```jsonc
+{
+  "schema_version": 1,
+  "generated_at": "2026-08-11T07:28:17+00:00",
+  "event": { "name": "UFC 330" },
+  "totals": { "picks": 35, "strong": 4, "lean": 23, "pass": 8 },
+  "picks": [
+    {
+      "fight": "Mansour Abdul-Malik vs Dustin Stoltzfus",
+      "market": "moneyline",                // or method_of_victory / over_under / round / prop
+      "market_label": "Moneyline",
+      "selection": "Mansour Abdul-Malik",   // the consensus side
+      "consensus_pct": 100.0,               // share of the market's trust weight
+      "weight": 14.05,                      // absolute trust weight behind it
+      "pick_count": 4,                      // cappers backing it
+      "avg_confidence": 6.0,
+      "strength": 8.5,                      // 0–10 score (see below)
+      "tier": "strong",                     // strong / lean / pass
+      "suggested_units": 2.0                // 2u strong, 1u lean, 0 pass
+    }
+  ]
+}
+```
+
+`strength` blends how one-sided the market is with how much trust-weight
+actually backs it, so one lone capper picking unopposed doesn't score like a
+unanimous panel:
+
+```
+conviction = consensus_pct / 100
+backing    = min(1.0, weight / 20.0)      # 20+ weight ≈ three high-trust cappers
+strength   = 10 * conviction * (0.5 + 0.5 * backing)
+```
+
+`strength >= 7.5` is tiered "strong" (2 units), `>= 5.0` "lean" (1 unit),
+below that "pass" (0 units). Picks are sorted strongest-first. A typical
+website integration is: fetch the URL, show every pick with `tier != "pass"`,
+and size stakes by `suggested_units` — or feed `strength` into your own
+model as one input among many.
+
+The feed is rebuilt from `data.json`, so you can also regenerate it by hand:
+
+```powershell
+$env:PYTHONPATH = "src"
+python -m mma_engine.weighted_picks   # reads docs\data.json, writes docs\picks.json
+```
 
 ### Option 1: Pull the static `data.json` feed (simple)
 
@@ -576,10 +638,13 @@ src/mma_engine/
   extract.py                 # Claude structured-output extraction, chunking
   normalize.py               # fighter-name and selection matching
   aggregate.py               # trust-weighted consensus math
+  weighted_picks.py          # distills data.json into the picks.json feed
+  consensus_client.py        # Python client for external integrations
   proxy.py                   # optional proxy for GitHub Actions' cloud IPs
   pipeline.py                # orchestration + CLI
 docs/index.html              # static dashboard (no build step, no CDN)
 docs/data.json               # generated output — also the integration feed
+docs/picks.json              # weighted picks feed for PerpetualPicks.com
 tests/test_aggregate.py      # normalization + aggregation tests
 tests/test_discover.py       # feed parsing, filtering, merge behavior
 tests/test_roster.py         # trust arithmetic, pooling, config merge

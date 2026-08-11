@@ -4,7 +4,9 @@
 #   1. pull the latest code and config
 #   2. discover this week's capper videos (YouTube Data API)
 #   3. fetch transcripts and extract picks (Claude API)
-#   4. build docs/data.json and push it, updating the live dashboard
+#   4. build docs/data.json (the dashboard) and docs/picks.json (the
+#      weighted picks feed PerpetualPicks.com reads)
+#   5. push both, updating the live site in about a minute
 #
 # Needs a one-time .env file next to this script with:
 #   ANTHROPIC_API_KEY=sk-ant-...
@@ -48,8 +50,14 @@ if ($LASTEXITCODE -ne 0) {
     Fail "The pipeline failed (see errors above). Nothing was pushed."
 }
 
+Write-Host "== Building the weighted picks feed ==" -ForegroundColor Cyan
+& ".venv\Scripts\python.exe" -m mma_engine.weighted_picks --input docs\data.json --output docs\picks.json
+if ($LASTEXITCODE -ne 0) {
+    Fail "Building picks.json failed (see errors above). Nothing was pushed."
+}
+
 Write-Host "== Publishing ==" -ForegroundColor Cyan
-git add docs/data.json
+git add docs/data.json docs/picks.json
 git diff --cached --quiet
 if ($LASTEXITCODE -ne 0) {
     git commit -m "chore: weekly consensus refresh"
