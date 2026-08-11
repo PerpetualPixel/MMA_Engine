@@ -24,7 +24,7 @@ from .discover import ChannelDiscovery
 from .extract import PickExtractor
 from .proxy import ProxyConfigError, build_proxy_config, build_requests_proxies
 from .roster import RosterExtractor, build_capper_entry, merge_into_config
-from .transcripts import TranscriptFetcher
+from .transcripts import TranscriptFetcher, build_cookie_config
 
 log = logging.getLogger("mma_engine")
 
@@ -103,6 +103,7 @@ def run_pipeline(
         max_delay=float(settings["max_delay_seconds"]),
         use_cache=bool(settings["use_cache"]),
         proxy_config=build_proxy_config(settings),
+        cookie_config=build_cookie_config(settings),
     )
     extractor = (
         None
@@ -208,6 +209,7 @@ def run_roster(
         max_delay=float(settings["max_delay_seconds"]),
         use_cache=bool(settings["use_cache"]),
         proxy_config=build_proxy_config(settings),
+        cookie_config=build_cookie_config(settings),
     )
     transcript = fetcher.fetch(video_id)
     if not transcript.ok:

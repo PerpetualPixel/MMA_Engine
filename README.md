@@ -92,6 +92,8 @@ Exit codes: `0` success, `1` every video failed, `2` bad or empty config.
 | `MMA_PROXY_ENABLED` | no | Overrides `settings.proxy.enabled` (`true`/`false`). Only relevant if you set up the optional unattended GitHub Actions path; local runs don't need it. |
 | `WEBSHARE_PROXY_USERNAME` / `WEBSHARE_PROXY_PASSWORD` | only for the optional unattended path, `settings.proxy.provider` = `webshare` | Proxy credentials, **not** your Webshare account login. See **Optional: fully unattended runs on GitHub Actions** below. |
 | `MMA_PROXY_URL` | only for the optional unattended path, `settings.proxy.provider` = `generic` | A full proxy URL, e.g. `http://user:pass@host:port`, for any other residential/rotating proxy provider. |
+| `MMA_TRANSCRIPT_COOKIES_FILE` | no | Path to a `cookies.txt` for the age-restricted fallback (see **Age-restricted videos** below). Setting it also turns the fallback on. |
+| `MMA_TRANSCRIPT_COOKIES_ENABLED` | no | Overrides `settings.transcript_cookies.enabled` (`true`/`false`). |
 
 **Locally:** put the key in `.env` — `.gitignore` already excludes it, and the
 pipeline loads it via `python-dotenv`.
@@ -347,6 +349,53 @@ Without valid credentials, a run fails fast with a clear
 `WEBSHARE_PROXY_USERNAME / WEBSHARE_PROXY_PASSWORD are not set` error rather
 than the confusing IP-block failures seen before — so it's obvious what's
 missing if it's ever misconfigured.
+
+---
+
+## Age-restricted videos
+
+Some cappers post age-restricted uploads, and YouTube gates those videos'
+captions behind a signed-in, 18+ account. The anonymous transcript endpoint
+can't read them, so by default they're logged as `transcript_failed`
+(`AgeRestricted`) and simply left out of the consensus — the same is true of
+the occasional `PoTokenRequired` video.
+
+Because these are public videos you're allowed to watch, the fix is to
+authenticate as **yourself** rather than to circumvent anything: when cookies
+are configured, those specific failures retry once through
+[`yt-dlp`](https://github.com/yt-dlp/yt-dlp) using your own YouTube cookies,
+which proves your age to YouTube and lets it hand back the captions it already
+would in your browser. Every other video stays on the faster anonymous path,
+and a run with no cookies configured behaves exactly as before.
+
+**Turn it on** in `config.json`, pointing at whichever cookie source you have:
+
+```jsonc
+"settings": {
+  "transcript_cookies": {
+    "enabled": true,
+    "from_browser": "chrome",   // read cookies straight from a local browser
+    "file": ""                   // ...or set a cookies.txt path instead
+  }
+}
+```
+
+- `from_browser` — a browser profile `yt-dlp` can read directly (`chrome`,
+  `firefox`, `edge`, `brave`, …). Easiest for local runs; the browser should
+  be closed when the pipeline runs, since some OSes lock the cookie database.
+  If both fields are set, `from_browser` wins.
+- `file` — a Netscape-format `cookies.txt` exported from a logged-in session
+  (a "Get cookies.txt" browser extension, or `yt-dlp --cookies`). Use this for
+  unattended/GitHub Actions runs, where there's no browser to read from: write
+  the file from a repo secret and point `MMA_TRANSCRIPT_COOKIES_FILE` at it
+  (which also flips `enabled` on).
+
+A dedicated throwaway Google account works fine — any 18+ account will do.
+Cookies expire, so a scheduled run will eventually need them refreshed;
+`yt-dlp` signals this with a "Sign in to confirm your age" error, at which
+point the affected videos fall back to the same clean `transcript_failed`
+they'd have without cookies rather than aborting the run. `yt-dlp` also
+resolves the `PoTokenRequired` case, so this same path fixes those too.
 
 ---
 

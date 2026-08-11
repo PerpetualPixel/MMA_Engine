@@ -52,3 +52,36 @@ def test_mma_proxy_enabled_env_false_values_disable(tmp_path, monkeypatch, value
     # any other non-truthy string explicitly disables it.
     expected = True if value == "" else False
     assert config.settings["proxy"]["enabled"] is expected
+
+
+def test_transcript_cookies_defaults_when_omitted(tmp_path):
+    config = load_config(write_config(tmp_path, MINIMAL))
+    assert config.settings["transcript_cookies"] == {
+        "enabled": False,
+        "from_browser": "",
+        "file": "",
+    }
+
+
+def test_partial_transcript_cookies_block_keeps_other_defaults(tmp_path):
+    data = {**MINIMAL, "settings": {"transcript_cookies": {"from_browser": "chrome"}}}
+    config = load_config(write_config(tmp_path, data))
+    assert config.settings["transcript_cookies"] == {
+        "enabled": False,
+        "from_browser": "chrome",
+        "file": "",
+    }
+
+
+def test_transcript_cookies_file_env_sets_path_and_enables(tmp_path, monkeypatch):
+    monkeypatch.setenv("MMA_TRANSCRIPT_COOKIES_FILE", "/run/secrets/cookies.txt")
+    config = load_config(write_config(tmp_path, MINIMAL))
+    assert config.settings["transcript_cookies"]["file"] == "/run/secrets/cookies.txt"
+    assert config.settings["transcript_cookies"]["enabled"] is True
+
+
+def test_transcript_cookies_enabled_env_can_disable(tmp_path, monkeypatch):
+    data = {**MINIMAL, "settings": {"transcript_cookies": {"enabled": True, "from_browser": "chrome"}}}
+    monkeypatch.setenv("MMA_TRANSCRIPT_COOKIES_ENABLED", "false")
+    config = load_config(write_config(tmp_path, data))
+    assert config.settings["transcript_cookies"]["enabled"] is False
