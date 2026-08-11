@@ -1,0 +1,6 @@
+# Patches are byte-exact by definition: a checkout that rewrote their line
+# endings would make every context line stop matching the source it targets,
+# and `git am` would reject the whole thing. Keep them verbatim on every
+# platform.
+*.patch -text
+*.diff -text
