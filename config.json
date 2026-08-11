@@ -1,6 +1,6 @@
 {
   "event": {
-    "name": "UFC 320",
+    "name": "UFC 330",
     "date": "",
     "notes": "Discovery pulls recent uploads from each capper channel and keeps the ones whose title matches settings.discovery.title_contains. Add entries to \"videos\" only to pin a specific video by hand."
   },
@@ -31,8 +31,8 @@
       "lookback_days": 14,
       "max_videos_per_channel": 3,
       "title_contains": [
-        "ufc 320",
-        "ufc320"
+        "ufc 330",
+        "ufc330"
       ]
     },
     "proxy": {
