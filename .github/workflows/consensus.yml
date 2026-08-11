@@ -3,6 +3,10 @@ name: Build consensus
 on:
   workflow_dispatch:
     inputs:
+      discover_only:
+        description: "Dry run: list the videos discovery finds, then stop"
+        type: boolean
+        default: false
       skip_extraction:
         description: "Fetch transcripts only (no Claude API calls)"
         type: boolean
@@ -49,9 +53,12 @@ jobs:
           python -m mma_engine \
             --config config.json \
             --output docs/data.json \
+            ${{ inputs.discover_only && '--discover-only' || '' }} \
             ${{ inputs.skip_extraction && '--skip-extraction' || '' }}
 
       - name: Commit updated data.json
+        # A dry run writes no output, so there is nothing to commit.
+        if: ${{ !inputs.discover_only }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"

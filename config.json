@@ -1,84 +1,153 @@
 {
   "event": {
-    "name": "Upcoming Event",
+    "name": "UFC 320",
     "date": "",
-    "notes": "Set the event name/date, then add this week's videos to the \"videos\" array below."
+    "notes": "Discovery pulls recent uploads from each capper channel and keeps the ones whose title matches settings.discovery.title_contains. Add entries to \"videos\" only to pin a specific video by hand."
   },
-
+  "tracker": {
+    "channel_url": "https://www.youtube.com/@UFCPredictionsTracker",
+    "notes": "Source for capper trust scores. Feed a period recap with --roster-from ... --roster-mode replace to reset the baseline, then each post-event review with the default accumulate mode.",
+    "period_recaps": [
+      "https://www.youtube.com/watch?v=rLxl9yy3Tbc"
+    ],
+    "event_reviews": [
+      "https://www.youtube.com/watch?v=22nH0495ch4"
+    ]
+  },
   "settings": {
     "model": "claude-opus-5",
     "effort": "high",
     "max_tokens": 20000,
-    "transcript_languages": ["en"],
+    "transcript_languages": [
+      "en"
+    ],
     "min_delay_seconds": 4,
     "max_delay_seconds": 12,
     "max_transcript_chars": 60000,
     "min_confidence": 1,
-    "use_cache": true
+    "use_cache": true,
+    "discovery": {
+      "enabled": true,
+      "lookback_days": 14,
+      "max_videos_per_channel": 3,
+      "title_contains": [
+        "ufc 320",
+        "ufc320"
+      ]
+    }
   },
-
   "cappers": [
     {
       "id": "artem_mma",
       "name": "Artem MMA",
       "channel_url": "https://www.youtube.com/channel/UCpSQhfFzpZ9COp_WiKSUEkQ",
-      "trust": { "overall": 7.5, "underdog": 9.0, "favorite": 6.5 }
+      "channel_id": "UCpSQhfFzpZ9COp_WiKSUEkQ",
+      "discover": true,
+      "trust": {
+        "overall": 7.5,
+        "underdog": 9.0,
+        "favorite": 6.5
+      }
     },
     {
       "id": "axel_mma",
       "name": "Axel MMA",
       "channel_url": "https://www.youtube.com/@AlexTalksFights",
-      "trust": { "overall": 7.5, "underdog": 9.0, "favorite": 9.0 }
+      "discover": true,
+      "trust": {
+        "overall": 7.5,
+        "underdog": 9.0,
+        "favorite": 9.0
+      }
     },
     {
       "id": "betslam_sam",
       "name": "BetSlam with Sam",
       "channel_url": "https://www.youtube.com/@BetSlamWithSam",
-      "trust": { "overall": 7.5, "underdog": 9.0, "favorite": 9.0 }
+      "discover": true,
+      "trust": {
+        "overall": 7.5,
+        "underdog": 9.0,
+        "favorite": 9.0
+      }
     },
     {
       "id": "funky_picks",
       "name": "Funkybunch MMA",
       "channel_url": "https://www.youtube.com/@FunkyPicks",
-      "trust": { "overall": 7.5, "underdog": 9.0, "favorite": 9.0 }
+      "discover": true,
+      "trust": {
+        "overall": 7.5,
+        "underdog": 9.0,
+        "favorite": 9.0
+      }
     },
     {
       "id": "livid_larry",
       "name": "Livid Larry MMA",
       "channel_url": "https://www.youtube.com/@LividLarryMMA",
-      "trust": { "overall": 7.5, "underdog": 9.0, "favorite": 6.5 }
+      "discover": true,
+      "trust": {
+        "overall": 7.5,
+        "underdog": 9.0,
+        "favorite": 6.5
+      }
     },
     {
       "id": "pure_picks",
       "name": "Pure Picks MMA",
       "channel_url": "https://www.youtube.com/@PurePicksMMA",
-      "trust": { "overall": 7.5, "underdog": 6.5, "favorite": 9.0 }
+      "discover": true,
+      "trust": {
+        "overall": 7.5,
+        "underdog": 6.5,
+        "favorite": 9.0
+      }
     },
     {
       "id": "couch_warrior",
       "name": "Couch Warrior Podcast",
       "channel_url": "https://www.youtube.com/@couchwarriorpodcast",
-      "trust": { "overall": 7.5, "underdog": 6.5, "favorite": 9.0 }
+      "discover": true,
+      "trust": {
+        "overall": 7.5,
+        "underdog": 6.5,
+        "favorite": 9.0
+      }
     },
     {
       "id": "tony_has_died",
       "name": "TonyHasDiedMMA",
       "channel_url": "https://www.youtube.com/@TonyHasDiedMMA",
-      "trust": { "overall": 7.5, "underdog": 9.0, "favorite": 6.5 }
+      "discover": true,
+      "trust": {
+        "overall": 7.5,
+        "underdog": 9.0,
+        "favorite": 6.5
+      }
     },
     {
       "id": "double_vision",
       "name": "Double Vision MMA 365",
       "channel_url": "https://www.youtube.com/@DoubleVisionMMA365",
-      "trust": { "overall": 5.0, "underdog": 4.0, "favorite": 8.0 }
+      "discover": false,
+      "trust": {
+        "overall": 5.0,
+        "underdog": 4.0,
+        "favorite": 8.0
+      }
     },
     {
       "id": "we_want_picks",
       "name": "We Want Picks (Jacob)",
       "channel_url": "https://www.youtube.com/@WeWantPicks",
-      "trust": { "overall": 5.0, "underdog": 4.0, "favorite": 8.0 }
+      "discover": false,
+      "trust": {
+        "overall": 5.0,
+        "underdog": 4.0,
+        "favorite": 8.0
+      }
     }
   ],
-
   "videos": []
 }

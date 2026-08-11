@@ -18,20 +18,68 @@ from typing import Any
 from dotenv import load_dotenv
 
 from .aggregate import SourcedPick, build_consensus
-from .config import Config, ConfigError, load_config
+from .config import Config, ConfigError, VideoRef, extract_video_id, load_config
+from .discover import ChannelDiscovery
 from .extract import PickExtractor
+from .roster import RosterExtractor, build_capper_entry, merge_into_config
 from .transcripts import TranscriptFetcher
 
 log = logging.getLogger("mma_engine")
+
+
+def resolve_videos(config: Config) -> tuple[list[VideoRef], list[dict]]:
+    """Combine explicitly configured videos with channel-discovered ones.
+
+    Explicit entries in `config.json` always win: if the same video is both
+    listed by hand and found via discovery, the hand-listed entry is kept (it
+    may carry a title or a deliberate capper attribution).
+    """
+    videos = list(config.videos)
+    discovery_settings = config.settings["discovery"]
+    if not discovery_settings.get("enabled"):
+        return videos, []
+
+    cappers = config.discoverable_cappers
+    if not cappers:
+        log.warning("Discovery is enabled but no capper has a channel configured.")
+        return videos, []
+
+    log.info("Discovering recent uploads for %d channel(s)", len(cappers))
+    discovery = ChannelDiscovery(
+        lookback_days=int(discovery_settings["lookback_days"]),
+        max_per_channel=int(discovery_settings["max_videos_per_channel"]),
+        title_contains=discovery_settings.get("title_contains", ""),
+        use_cache=bool(config.settings["use_cache"]),
+    )
+    discovered, report = discovery.discover(cappers)
+
+    seen = {video.video_id for video in videos}
+    for item in discovered:
+        if item.video_id in seen:
+            continue
+        seen.add(item.video_id)
+        videos.append(
+            VideoRef(
+                video_id=item.video_id,
+                capper_id=item.capper_id,
+                url=item.url,
+                title=item.title,
+            )
+        )
+    log.info("Discovery added %d video(s); %d total to process", len(videos) - len(config.videos), len(videos))
+    return videos, report
 
 
 def run_pipeline(
     config: Config,
     output_path: Path,
     skip_extraction: bool = False,
+    videos: list[VideoRef] | None = None,
+    discovery_report: list[dict] | None = None,
 ) -> dict[str, Any]:
     """Fetch transcripts, extract picks, aggregate, and write the payload."""
     settings = config.settings
+    videos = config.videos if videos is None else videos
 
     fetcher = TranscriptFetcher(
         languages=settings["transcript_languages"],
@@ -55,11 +103,9 @@ def run_pipeline(
     sources: list[dict[str, Any]] = []
     event_name = config.event.get("name", "")
 
-    for index, video in enumerate(config.videos, start=1):
+    for index, video in enumerate(videos, start=1):
         capper = config.capper(video.capper_id)
-        log.info(
-            "[%d/%d] %s — %s", index, len(config.videos), capper.name, video.video_id
-        )
+        log.info("[%d/%d] %s — %s", index, len(videos), capper.name, video.video_id)
 
         record: dict[str, Any] = {
             "video_id": video.video_id,
@@ -117,6 +163,8 @@ def run_pipeline(
         sources=sources,
         min_confidence=int(settings["min_confidence"]),
     )
+    if discovery_report:
+        payload["discovery"] = discovery_report
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(
@@ -124,6 +172,106 @@ def run_pipeline(
     )
     log.info("Wrote %s", output_path)
     return payload
+
+
+def run_roster(
+    config: Config,
+    video_url: str,
+    mode: str,
+    apply_changes: bool,
+    proposal_path: Path,
+) -> int:
+    """Extract a capper roster from a tracker results video."""
+    settings = config.settings
+    video_id = extract_video_id(video_url)
+
+    fetcher = TranscriptFetcher(
+        languages=settings["transcript_languages"],
+        min_delay=float(settings["min_delay_seconds"]),
+        max_delay=float(settings["max_delay_seconds"]),
+        use_cache=bool(settings["use_cache"]),
+    )
+    transcript = fetcher.fetch(video_id)
+    if not transcript.ok:
+        log.error("Could not read that video's transcript: %s", transcript.error)
+        return 1
+
+    extractor = RosterExtractor(
+        model=settings["model"],
+        effort=settings["effort"],
+        max_tokens=int(settings["max_tokens"]),
+    )
+    try:
+        report = extractor.extract(transcript.text, video_url)
+    except Exception as exc:
+        log.error("Roster extraction failed: %s: %s", type(exc).__name__, exc)
+        return 1
+
+    if not report.cappers:
+        log.error(
+            "No capper results found in that video. Check it is a tracker results "
+            "video rather than a picks video."
+        )
+        return 1
+
+    entries = [build_capper_entry(capper, video_id) for capper in report.cappers]
+    proposal = {
+        "source_video": video_url,
+        "video_id": video_id,
+        "period": report.period,
+        "mode": mode,
+        "cappers": entries,
+    }
+    proposal_path.write_text(
+        json.dumps(proposal, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+    )
+
+    print(f"\nTracked period: {report.period or '(not stated)'}")
+    print(f"Cappers found:  {len(entries)}\n")
+    print(f"{'Capper':<28}{'overall':>9}{'underdog':>10}{'favorite':>10}")
+    print("-" * 57)
+    for entry in sorted(entries, key=lambda e: e["trust"]["overall"], reverse=True):
+        trust = entry["trust"]
+        print(
+            f"{entry['name'][:27]:<28}{trust['overall']:>9}"
+            f"{trust['underdog']:>10}{trust['favorite']:>10}"
+        )
+    print(f"\nProposal written to {proposal_path}")
+
+    if not apply_changes:
+        print("Review it, then re-run with --apply-roster to merge into config.json.")
+        return 0
+
+    result = merge_into_config(config.path, entries, video_id=video_id, mode=mode)
+    print(f"\nMerged into {config.path} ({mode} mode):")
+    for outcome in ("added", "updated", "skipped"):
+        if result[outcome]:
+            print(f"  {outcome}: {', '.join(result[outcome])}")
+    if result["skipped"]:
+        print("  (skipped = this video was already applied to that capper)")
+    return 0
+
+
+def _summarize_discovery(
+    config: Config, videos: list[VideoRef], report: list[dict]
+) -> str:
+    """Human-readable dry run of what discovery found, for `--discover-only`."""
+    lines = ["", f"Discovered {len(videos)} video(s) to process:"]
+    for video in videos:
+        capper = config.capper(video.capper_id)
+        lines.append(f"  {capper.name:<24} {video.video_id}  {video.title}")
+    failures = [entry for entry in report if entry["status"] != "ok"]
+    if failures:
+        lines.append("")
+        lines.append(f"{len(failures)} channel(s) could not be read:")
+        for entry in failures:
+            lines.append(f"  - {entry['capper']}: {entry.get('error', entry['status'])}")
+    if not videos:
+        lines.append(
+            "  (nothing) — widen settings.discovery.lookback_days, clear "
+            "title_contains, or list videos by hand."
+        )
+    return "\n".join(lines)
 
 
 def _summarize(payload: dict[str, Any]) -> str:
@@ -180,6 +328,53 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="Ignore cached transcripts and extractions; re-fetch everything.",
     )
+    parser.add_argument(
+        "--discover",
+        action="store_true",
+        help="Force channel discovery on, regardless of settings.discovery.enabled.",
+    )
+    parser.add_argument(
+        "--no-discover",
+        action="store_true",
+        help="Force channel discovery off; use only the videos listed in config.json.",
+    )
+    parser.add_argument(
+        "--discover-only",
+        action="store_true",
+        help=(
+            "List the videos discovery would process, then exit. No transcripts "
+            "are fetched and no Claude API calls are made."
+        ),
+    )
+    roster_group = parser.add_argument_group("capper roster (tracker videos)")
+    roster_group.add_argument(
+        "--roster-from",
+        metavar="VIDEO_URL",
+        help=(
+            "Extract capper results from a predictions-tracker video and derive "
+            "trust scores from them. Writes a proposal for review."
+        ),
+    )
+    roster_group.add_argument(
+        "--roster-mode",
+        choices=["accumulate", "replace"],
+        default="accumulate",
+        help=(
+            "accumulate (default): pool with previously recorded results — use "
+            "for post-event reviews. replace: use this video alone — use for a "
+            "long-period recap, which would double-count if pooled."
+        ),
+    )
+    roster_group.add_argument(
+        "--apply-roster",
+        action="store_true",
+        help="Merge the extracted roster into config.json instead of only proposing it.",
+    )
+    roster_group.add_argument(
+        "--roster-output",
+        default="roster_proposal.json",
+        help="Where to write the roster proposal (default: roster_proposal.json).",
+    )
     parser.add_argument("-v", "--verbose", action="store_true", help="Debug logging")
     args = parser.parse_args(argv)
 
@@ -195,19 +390,44 @@ def main(argv: list[str] | None = None) -> int:
         log.error("%s", exc)
         return 2
 
-    if not config.videos:
+    if args.no_cache:
+        config.settings["use_cache"] = False
+
+    if args.roster_from:
+        return run_roster(
+            config,
+            video_url=args.roster_from,
+            mode=args.roster_mode,
+            apply_changes=args.apply_roster,
+            proposal_path=Path(args.roster_output),
+        )
+
+    if args.discover or args.discover_only:
+        config.settings["discovery"]["enabled"] = True
+    if args.no_discover:
+        config.settings["discovery"]["enabled"] = False
+
+    videos, discovery_report = resolve_videos(config)
+
+    if args.discover_only:
+        print(_summarize_discovery(config, videos, discovery_report))
+        return 0 if videos else 1
+
+    if not videos:
         log.error(
-            "No videos configured. Add this week's entries to the \"videos\" array "
-            "in %s, e.g. {\"capper_id\": \"artem_mma\", \"url\": \"https://youtu.be/...\"}",
+            "No videos to process. Either add entries to the \"videos\" array in %s "
+            "(e.g. {\"capper_id\": \"artem_mma\", \"url\": \"https://youtu.be/...\"}), "
+            "or enable settings.discovery to pull them from the capper channels.",
             config.path,
         )
         return 2
 
-    if args.no_cache:
-        config.settings["use_cache"] = False
-
     payload = run_pipeline(
-        config, Path(args.output), skip_extraction=args.skip_extraction
+        config,
+        Path(args.output),
+        skip_extraction=args.skip_extraction,
+        videos=videos,
+        discovery_report=discovery_report,
     )
     print(_summarize(payload))
 

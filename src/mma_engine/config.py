@@ -38,6 +38,16 @@ DEFAULT_SETTINGS: dict[str, Any] = {
     "max_transcript_chars": 60000,
     "min_confidence": 1,
     "use_cache": True,
+    "discovery": {
+        # Pull each capper's recent uploads from their channel RSS feed instead
+        # of pasting video URLs by hand every week.
+        "enabled": False,
+        "lookback_days": 10,
+        "max_videos_per_channel": 2,
+        # Optional substring the video title must contain, e.g. "UFC 300".
+        # Useful when a channel posts non-betting content in the same window.
+        "title_contains": "",
+    },
 }
 
 
@@ -60,6 +70,11 @@ class Capper:
     id: str
     name: str
     channel_url: str = ""
+    # Optional UC... ID. Set it to skip handle resolution, or leave it blank and
+    # let discovery scrape it from the channel page once and cache it.
+    channel_id: str = ""
+    # Whether channel discovery pulls this capper's uploads.
+    discover: bool = True
     trust: dict[str, float] = field(default_factory=dict)
 
     def trust_for(self, role: str) -> float:
@@ -96,6 +111,15 @@ class Config:
         except KeyError:
             raise ConfigError(f"Unknown capper_id {capper_id!r}") from None
 
+    @property
+    def discoverable_cappers(self) -> list[Capper]:
+        """Cappers whose channels should be swept for recent uploads."""
+        return [
+            capper
+            for capper in self.cappers.values()
+            if capper.discover and (capper.channel_url or capper.channel_id)
+        ]
+
 
 def load_config(path: str | Path = "config.json") -> Config:
     """Read, validate, and normalize `config.json`."""
@@ -108,7 +132,14 @@ def load_config(path: str | Path = "config.json") -> Config:
     except json.JSONDecodeError as exc:
         raise ConfigError(f"{config_path} is not valid JSON: {exc}") from exc
 
-    settings = {**DEFAULT_SETTINGS, **(raw.get("settings") or {})}
+    raw_settings = raw.get("settings") or {}
+    settings = {**DEFAULT_SETTINGS, **raw_settings}
+    # `discovery` is nested, so merge it key-by-key rather than letting a partial
+    # block from config.json drop the defaults for the keys it omits.
+    settings["discovery"] = {
+        **DEFAULT_SETTINGS["discovery"],
+        **(raw_settings.get("discovery") or {}),
+    }
     # Environment wins over the file so CI can override without a commit.
     if os.environ.get("MMA_MODEL"):
         settings["model"] = os.environ["MMA_MODEL"]
@@ -128,6 +159,8 @@ def load_config(path: str | Path = "config.json") -> Config:
             id=entry["id"],
             name=entry["name"],
             channel_url=entry.get("channel_url", ""),
+            channel_id=entry.get("channel_id", ""),
+            discover=bool(entry.get("discover", True)),
             trust=dict(entry.get("trust") or {}),
         )
     if not cappers:
