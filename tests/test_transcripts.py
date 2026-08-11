@@ -104,9 +104,22 @@ def test_ytdlp_command_shape():
     assert "--cookies-from-browser" in cmd and "chrome" in cmd
     assert "--skip-download" in cmd
     assert "--write-subs" in cmd and "--write-auto-subs" in cmd
+    assert "--ignore-no-formats-error" in cmd
     assert cmd[cmd.index("--sub-langs") + 1] == "en,es"
     assert cmd[cmd.index("--sub-format") + 1] == "json3"
     assert cmd[-1] == "https://www.youtube.com/watch?v=VIDEOID1234"
+
+
+def test_ytdlp_command_ignores_format_selection():
+    # Regression: --skip-download does NOT skip format selection. Without
+    # --ignore-no-formats-error, an age-restricted video whose format list comes
+    # back empty or unselectable dies with "Requested format is not available"
+    # before any subtitle file is written — losing captions we could have read.
+    fetcher = TranscriptFetcher(cookie_config=CookieConfig(file="cookies.txt"))
+    cmd = fetcher._ytdlp_command("Kzsm8s6hlgQ", "/tmp/%(id)s.%(ext)s")
+    assert "--ignore-no-formats-error" in cmd
+    # Must precede the URL, or yt-dlp reads it as a second target.
+    assert cmd.index("--ignore-no-formats-error") < len(cmd) - 1
 
 
 def test_ytdlp_command_includes_proxy_when_configured():

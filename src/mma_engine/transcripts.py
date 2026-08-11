@@ -259,6 +259,14 @@ class TranscriptFetcher:
             sys.executable, "-m", "yt_dlp",
             *self.cookie_config.ytdlp_args(),
             "--skip-download",
+            # --skip-download stops the *download*, not format selection: yt-dlp
+            # still resolves its default `bestvideo*+bestaudio/best` selector and
+            # aborts with "Requested format is not available" before writing any
+            # subtitles when nothing matches. Age-restricted uploads routinely
+            # hand back an empty or unselectable format list even with valid
+            # cookies, which killed the whole fetch over media we never wanted.
+            # This downgrades that to a warning and lets subtitle writing run.
+            "--ignore-no-formats-error",
             "--write-subs",
             "--write-auto-subs",
             "--sub-langs", ",".join(self.languages),
