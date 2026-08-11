@@ -236,3 +236,48 @@ def test_chunk_transcript_splits_on_word_boundaries():
 
 def test_chunk_transcript_returns_single_chunk_when_short():
     assert chunk_transcript("short text", 1000) == ["short text"]
+
+
+# -- fighter-pair hygiene (live-run regressions) ---------------------------
+
+
+def test_reversed_fighter_order_does_not_scramble_display_names():
+    # One capper says "Johnson vs Ochoa", another says "Ochoa vs Johnson".
+    # Regression: both display slots showed the same fighter.
+    p1 = make_pick(a="Charles Johnson", b="Jose Ochoa", selection="Jose Ochoa", fighter="Jose Ochoa")
+    p2 = make_pick(a="Jose Ochoa", b="Charles Johnson", selection="Jose Ochoa", fighter="Jose Ochoa")
+    payload = build_consensus(
+        [source(p1, make_capper("a")), source(p2, make_capper("b"), video_id="vid00000002")]
+    )
+
+    fight = payload["fights"][0]
+    names = {fight["fighter_a"], fight["fighter_b"]}
+    assert names == {"Charles Johnson", "Jose Ochoa"}
+    assert fight["fighter_a"] != fight["fighter_b"]
+
+
+def test_same_surname_both_sides_is_dropped():
+    pick = make_pick(a="Ramiz Brahimaj", b="Brahimaj", selection="Ramiz Brahimaj")
+    payload = build_consensus([source(pick, make_capper("a"))])
+    assert payload["fights"] == []
+    assert payload["totals"]["picks"] == 0
+
+
+def test_near_identical_surnames_are_dropped_as_caption_typos():
+    pick = make_pick(a="Esteban Ribovics", b="Esteban Ribovic", selection="Esteban Ribovics")
+    payload = build_consensus([source(pick, make_capper("a"))])
+    assert payload["fights"] == []
+
+
+def test_missing_opponent_is_dropped():
+    pick = make_pick(a="Jon Jones", b="", selection="Jon Jones")
+    payload = build_consensus([source(pick, make_capper("a"))])
+    assert payload["fights"] == []
+
+
+def test_short_similar_surnames_are_distinct_fighters():
+    # "Lee vs Gee" is one edit apart but short names stay distinct — the
+    # typo heuristic only applies to longer surnames.
+    pick = make_pick(a="Kevin Lee", b="Danny Gee", selection="Kevin Lee", fighter="Kevin Lee")
+    payload = build_consensus([source(pick, make_capper("a"))])
+    assert len(payload["fights"]) == 1

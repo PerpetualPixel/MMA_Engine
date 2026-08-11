@@ -53,6 +53,12 @@ git add docs/data.json
 git diff --cached --quiet
 if ($LASTEXITCODE -ne 0) {
     git commit -m "chore: weekly consensus refresh"
+    if ($LASTEXITCODE -ne 0) {
+        Fail ("git commit failed - see the error above. If it says 'Author identity unknown', run:`n" +
+              '  git config --global user.name "Your Name"' + "`n" +
+              '  git config --global user.email "you@example.com"' + "`n" +
+              "then rerun weekly.bat.")
+    }
     git push
     if ($LASTEXITCODE -ne 0) { Fail "git push failed - see the error above." }
     Write-Host ""
