@@ -18,10 +18,10 @@ So a 9.0-trust capper at 10/10 confidence outweighs two 5.0-trust cappers at
 from __future__ import annotations
 
 import logging
-from collections import defaultdict
+from collections import Counter, defaultdict
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
-from typing import Any, Iterable
+from typing import Any, Callable, Iterable
 
 from .config import Capper
 from .extract import Pick
@@ -97,6 +97,43 @@ def _within_one_edit(a: str, b: str) -> bool:
     return True
 
 
+def surname_canonicalizer(picks: list["SourcedPick"]) -> Callable[[str], str]:
+    """Map caption-typo surname variants onto one canonical spelling.
+
+    Different videos garble the same fighter differently ("makhachev" /
+    "makhache", "ribovics" / "ribovic"), which would split one fight's picks
+    across two keys and dilute the consensus. Long surnames within one edit
+    of each other are folded onto the variant that appears most often (ties:
+    the longer, then alphabetical, for determinism). Short surnames are left
+    alone — one edit can be a genuinely different fighter there.
+    """
+    counts: Counter[str] = Counter()
+    for sourced in picks:
+        for name in (sourced.pick.fighter_a, sourced.pick.fighter_b):
+            token = surname(name)
+            if token:
+                counts[token] += 1
+
+    ordered = sorted(counts, key=lambda s: (-counts[s], -len(s), s))
+    mapping: dict[str, str] = {}
+    for index, canonical in enumerate(ordered):
+        if canonical in mapping:
+            continue
+        for variant in ordered[index + 1 :]:
+            if variant in mapping:
+                continue
+            if min(len(canonical), len(variant)) >= 6 and _within_one_edit(
+                canonical, variant
+            ):
+                mapping[variant] = canonical
+    if mapping:
+        log.info(
+            "Merged surname spelling variants: %s",
+            ", ".join(f"{v}→{c}" for v, c in sorted(mapping.items())),
+        )
+    return lambda s: mapping.get(s, s)
+
+
 def _degenerate_matchup(fighter_a: str, fighter_b: str) -> bool:
     """A pairing that can't be a real fight — an extraction artifact.
 
@@ -168,6 +205,8 @@ def build_consensus(
             dropped,
         )
 
+    canon = surname_canonicalizer(picks)
+
     # fight -> bet_type -> selection_key -> _Option
     grouped: dict[str, dict[str, dict[str, _Option]]] = defaultdict(
         lambda: defaultdict(dict)
@@ -176,7 +215,7 @@ def build_consensus(
 
     for source in picks:
         pick = source.pick
-        key = fight_key(pick.fighter_a, pick.fighter_b)
+        key = fight_key(pick.fighter_a, pick.fighter_b, canon)
         if not key:
             continue
         # The key is surname-sorted, but each capper lists the pair in their
@@ -184,11 +223,11 @@ def build_consensus(
         # variants all belong to one fighter and slot 1 to the other —
         # otherwise "A vs B" and "B vs A" videos scramble both display names.
         name_variants[key].extend(
-            sorted((pick.fighter_a, pick.fighter_b), key=surname)
+            sorted((pick.fighter_a, pick.fighter_b), key=lambda n: canon(surname(n)))
         )
 
         market = grouped[key][pick.bet_type]
-        option_key = selection_key(pick.bet_type, pick.selection, pick.fighter)
+        option_key = selection_key(pick.bet_type, pick.selection, pick.fighter, canon)
         option = market.get(option_key)
         if option is None:
             option = _Option(label=pick.selection.strip())

@@ -281,3 +281,32 @@ def test_short_similar_surnames_are_distinct_fighters():
     pick = make_pick(a="Kevin Lee", b="Danny Gee", selection="Kevin Lee", fighter="Kevin Lee")
     payload = build_consensus([source(pick, make_capper("a"))])
     assert len(payload["fights"]) == 1
+
+
+def test_cross_video_surname_typos_merge_into_one_fight():
+    # One video says "Islam Makhachev", another drops the v. The picks must
+    # pool into a single fight, displayed with the most complete spelling.
+    p1 = make_pick(a="Ian Machado Garry", b="Islam Makhachev", selection="Islam Makhachev", fighter="Islam Makhachev")
+    p2 = make_pick(a="Islam Makhache", b="Ian Garry", selection="Islam Makhache", fighter="Islam Makhache")
+    payload = build_consensus(
+        [source(p1, make_capper("a")), source(p2, make_capper("b"), video_id="vid00000002")]
+    )
+
+    assert len(payload["fights"]) == 1
+    fight = payload["fights"][0]
+    assert fight["pick_count"] == 2
+    assert "Islam Makhachev" in (fight["fighter_a"], fight["fighter_b"])
+    moneyline = fight["markets"][0]
+    # Both picks are the same side, so they group into one option.
+    assert len(moneyline["options"]) == 1
+    assert moneyline["options"][0]["pick_count"] == 2
+
+
+def test_short_surnames_never_canonicalized_together():
+    # Lee and Gee are one edit apart but are different real fighters.
+    p1 = make_pick(a="Kevin Lee", b="Tony Ferguson", selection="Kevin Lee", fighter="Kevin Lee")
+    p2 = make_pick(a="Danny Gee", b="Mike Perry", selection="Danny Gee", fighter="Danny Gee")
+    payload = build_consensus(
+        [source(p1, make_capper("a")), source(p2, make_capper("b"), video_id="vid00000002")]
+    )
+    assert len(payload["fights"]) == 2

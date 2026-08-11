@@ -136,7 +136,7 @@
       "id": "double_vision",
       "name": "Double Vision MMA 365",
       "channel_url": "https://www.youtube.com/@DoubleVisionMMA365",
-      "discover": false,
+      "discover": true,
       "trust": {
         "overall": 5.0,
         "underdog": 4.0,
@@ -147,7 +147,7 @@
       "id": "we_want_picks",
       "name": "We Want Picks (Jacob)",
       "channel_url": "https://www.youtube.com/@WeWantPicks",
-      "discover": false,
+      "discover": true,
       "trust": {
         "overall": 5.0,
         "underdog": 4.0,
