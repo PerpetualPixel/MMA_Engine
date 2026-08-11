@@ -11,6 +11,7 @@ from __future__ import annotations
 import argparse
 import json
 import logging
+import os
 import sys
 from pathlib import Path
 from typing import Any
@@ -45,13 +46,26 @@ def resolve_videos(config: Config) -> tuple[list[VideoRef], list[dict]]:
         log.warning("Discovery is enabled but no capper has a channel configured.")
         return videos, []
 
-    log.info("Discovering recent uploads for %d channel(s)", len(cappers))
+    api_key = os.environ.get("YOUTUBE_API_KEY", "").strip()
+    if api_key:
+        log.info(
+            "Discovering recent uploads for %d channel(s) via the YouTube Data API",
+            len(cappers),
+        )
+    else:
+        log.warning(
+            "YOUTUBE_API_KEY is not set — falling back to YouTube's RSS feeds, "
+            "which appear to be discontinued (404 for every channel as of Aug "
+            "2026). Get a free key: see README.md \"Channel discovery\"."
+        )
+        log.info("Discovering recent uploads for %d channel(s)", len(cappers))
     discovery = ChannelDiscovery(
         lookback_days=int(discovery_settings["lookback_days"]),
         max_per_channel=int(discovery_settings["max_videos_per_channel"]),
         title_contains=discovery_settings.get("title_contains", ""),
         use_cache=bool(config.settings["use_cache"]),
         proxies=build_requests_proxies(config.settings),
+        api_key=api_key,
     )
     discovered, report = discovery.discover(cappers)
 

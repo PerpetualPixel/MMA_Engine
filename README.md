@@ -20,8 +20,23 @@ cd MMA_Engine
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 
-cp .env.example .env       # then paste your key into .env — it is gitignored
+cp .env.example .env       # then paste both keys into .env — it is gitignored
 ```
+
+Two free-to-obtain keys go in `.env`:
+
+1. **`ANTHROPIC_API_KEY`** — [platform.claude.com/settings/keys](https://platform.claude.com/settings/keys).
+   Pays per extraction call (the only part of this that costs money to run).
+2. **`YOUTUBE_API_KEY`** — [console.cloud.google.com](https://console.cloud.google.com):
+   create a project → *APIs & Services → Library* → enable **YouTube Data API
+   v3** → *Credentials → Create credentials → API key*. Free, no billing setup;
+   a weekly run uses ~16 of the 10,000 free daily quota units. (YouTube shut
+   down the keyless RSS feeds this used to use — see **Channel discovery**.)
+
+**Windows one-button run:** once `.env` exists, just double-click
+**`weekly.bat`** — it pulls the latest code, discovers this week's videos,
+builds the consensus, and pushes the updated dashboard. Everything below is
+the manual/step-by-step equivalent.
 
 Point it at the event in `config.json` (discovery finds the videos itself):
 
@@ -71,6 +86,7 @@ Exit codes: `0` success, `1` every video failed, `2` bad or empty config.
 | Variable | Required | Purpose |
 | --- | --- | --- |
 | `ANTHROPIC_API_KEY` | yes | Claude API key ([console](https://platform.claude.com/settings/keys)). |
+| `YOUTUBE_API_KEY` | yes, for channel discovery | Free YouTube Data API v3 key (see **Quick start**). Without it, discovery falls back to YouTube's RSS feeds, which are discontinued and 404. |
 | `MMA_MODEL` | no | Overrides `settings.model` (default `claude-opus-5`). |
 | `MMA_EFFORT` | no | Overrides `settings.effort` (`low`/`medium`/`high`/`xhigh`/`max`). |
 | `MMA_PROXY_ENABLED` | no | Overrides `settings.proxy.enabled` (`true`/`false`). Only relevant if you set up the optional unattended GitHub Actions path; local runs don't need it. |
@@ -197,16 +213,22 @@ re-runs idempotent and the scores auditable.
 
 ## Channel discovery
 
-Rather than pasting eight video URLs every week, discovery reads each capper's
-public channel feed:
+Rather than pasting eight video URLs every week, discovery lists each capper
+channel's recent uploads through the **YouTube Data API v3** (the free
+`YOUTUBE_API_KEY` from Quick start). Listing one channel's uploads costs 1
+quota unit of the 10,000 you get daily, so a weekly run over 8 channels uses
+a fraction of a percent of the free allowance. Channels written as `@handle`
+are resolved to a channel ID once (a single `channels.list` call) and cached
+in `cache/channels.json`; a pinned `channel_id` in `config.json` needs no
+lookup at all.
 
-```
-https://www.youtube.com/feeds/videos.xml?channel_id=UC...
-```
-
-No API key and no quota — it's the same feed any RSS reader uses, carrying the
-last ~15 uploads with IDs, titles, and publish dates. Channels written as
-`@handle` are resolved to a channel ID once and cached in `cache/channels.json`.
+> **Why an API key is now required:** this originally used YouTube's keyless
+> per-channel RSS feeds (`/feeds/videos.xml?channel_id=UC...`). As of August
+> 2026 that endpoint returns 404 for every channel — including the largest on
+> the platform, from residential IPs and plain browsers — so YouTube appears
+> to have discontinued it. The RSS code path still exists as an automatic
+> fallback when no key is set, but expect it to fail until/unless YouTube
+> brings the feeds back.
 
 A video is picked up when it clears three filters:
 
@@ -230,15 +252,25 @@ before you spend a cent.
 
 ---
 
-## Weekly workflow (run it locally — no cost, no setup)
+## Weekly workflow (run it locally — one button, no cost)
 
 GitHub's shared `ubuntu-latest` runners sit on cloud-provider IP ranges, and
-YouTube blocks those outright — not a rate limit, confirmed via
-`youtube-transcript-api`'s own `RequestBlocked` error, and confirmed again
-against a paid-tier proxy's datacenter IPs (same block). Your own computer
-almost certainly isn't on a blocked range — that's exactly why fetching a
-transcript by hand already works fine — so **the free, zero-setup path is to
-just run it from your own machine each week**:
+YouTube blocks transcript fetching from those outright — not a rate limit,
+confirmed via `youtube-transcript-api`'s own `RequestBlocked` error in live
+runs. Your own computer isn't on a blocked range, so the free path is to run
+it there.
+
+**On Windows, the whole weekly run is one double-click: `weekly.bat`.** It
+pulls the latest code, installs anything missing, discovers this week's
+videos, fetches transcripts, extracts picks, builds `docs/data.json`, and
+commits + pushes it — the dashboard updates itself a minute later. If
+anything fails, it stops and shows the error instead of pushing.
+
+The only thing the button doesn't do is retarget the event. When a new card
+is coming up, edit two lines in `config.json` first (`event.name` and
+`settings.discovery.title_contains`), then press the button.
+
+The manual equivalent, on any OS:
 
 1. Update `event.name` and `settings.discovery.title_contains` in `config.json`
    for the new event.
@@ -266,12 +298,12 @@ above is the default, free way to run this.
 To make GitHub's cloud runners look like a normal visitor instead of a
 blocked datacenter, the pipeline supports routing through a proxy
 (`settings.proxy` in `config.json`, credentials from env vars — see
-`src/mma_engine/proxy.py`). **The critical detail learned the hard way:**
-this only works with a **residential** proxy plan. A free-trial or
-Datacenter-tier plan gives you datacenter IPs, which YouTube blocks exactly
-like it blocks GitHub's own runners — confirmed by testing Webshare's free
-tier against the same RSS endpoint and getting the same block signature
-(a fake-looking "Error 500" page from Google, not a real server error).
+`src/mma_engine/proxy.py`). **The critical detail:** use a **residential**
+proxy plan. YouTube's block targets cloud/datacenter IP ranges (that's the
+documented failure `youtube-transcript-api` reports from GitHub's runners),
+so a free-trial or Datacenter-tier proxy just swaps one datacenter IP for
+another — it's residential exit IPs that make the difference, and they're
+what `youtube-transcript-api`'s own docs recommend for exactly this error.
 
 ### Setup
 
@@ -285,19 +317,24 @@ tier against the same RSS endpoint and getting the same block signature
    login.
 3. Add them as repo secrets: *Settings → Secrets and variables → Actions → New
    repository secret* → `WEBSHARE_PROXY_USERNAME` and `WEBSHARE_PROXY_PASSWORD`.
-4. Sanity-check from your own machine before touching CI:
+   Also add `YOUTUBE_API_KEY` (same key as your local `.env`) so discovery
+   works in CI — the workflow passes all three through.
+4. Sanity-check from your own machine before touching CI (the RSS feeds are
+   dead, so test against a watch page instead — the thing the transcript
+   fetcher actually reads):
    ```bash
-   curl --proxy "http://USERNAME:PASSWORD@p.webshare.io:80/" \
-     "https://www.youtube.com/feeds/videos.xml?channel_id=UCpSQhfFzpZ9COp_WiKSUEkQ"
+   curl -sI --proxy "http://USERNAME:PASSWORD@p.webshare.io:80/" \
+     "https://www.youtube.com/watch?v=dQw4w9WgXcQ" | head -1
    ```
-   Real `<entry>` XML back means it works; an HTML error page means the plan
-   still isn't giving you residential IPs.
+   `HTTP/... 200` means the proxy exits through an IP YouTube serves
+   normally; a 4xx/5xx or an error page means the plan still isn't giving
+   you residential IPs.
 5. Uncomment a `schedule:` trigger in `.github/workflows/consensus.yml` (see
    the comment left in its place) and set it to whenever you want the run to
    fire — the `Build consensus` and `Extract roster from a tracker video`
-   steps already set `MMA_PROXY_ENABLED=true` and pass the two secrets
-   through; `config.json`'s `settings.proxy.enabled` stays `false` so local
-   runs are still unaffected.
+   steps already set `MMA_PROXY_ENABLED=true` and pass the secrets through;
+   `config.json`'s `settings.proxy.enabled` stays `false` so local runs are
+   still unaffected.
 
 Using a different residential proxy provider instead of Webshare? Set
 `settings.proxy.provider` to `"generic"` in `config.json` and add one secret,
@@ -428,9 +465,10 @@ To force a clean run: `--no-cache`, or `rm -rf cache/`.
 
 ```
 config.json                  # the only file you edit weekly
+weekly.bat / weekly.ps1      # Windows one-button run: pull, build, push
 src/mma_engine/
   config.py                  # config loading, validation, URL → video ID
-  discover.py                # channel RSS discovery, handle → channel ID
+  discover.py                # upload discovery: Data API primary, RSS fallback
   roster.py                  # tracker-video → measured capper trust scores
   transcripts.py             # YouTube fetching, caching, jittered delays
   extract.py                 # Claude structured-output extraction, chunking
@@ -455,8 +493,9 @@ PYTHONPATH=src python -m pytest -q
 ```
 
 No network or API key required — the tests cover name normalization, market
-grouping, the weighting math, RSS feed parsing, discovery filtering, and the
-tracker-derived trust arithmetic against constructed fixtures.
+grouping, the weighting math, Data API and RSS response parsing, discovery
+filtering, and the tracker-derived trust arithmetic against constructed
+fixtures.
 
 ---
 
@@ -468,13 +507,19 @@ tracker-derived trust arithmetic against constructed fixtures.
 - **Transcript quality.** Auto-generated captions mangle fighter names. The
   extraction prompt corrects obvious cases, but a garbled name can produce a
   stray fight entry.
-- **YouTube blocks cloud IPs outright** (GitHub Actions' shared runners
-  included) **and blocks flagged datacenter IPs too** — confirmed both against
-  live GitHub runs and against a Webshare free-trial/Datacenter proxy, which
-  hit the identical block. A local run from your own computer doesn't need
-  any of this — see **Weekly workflow** above. If you want it to run itself,
-  see **Optional: fully unattended runs on GitHub Actions**, which needs a
-  paid *Residential* proxy plan specifically — Datacenter tiers don't help.
+- **YouTube blocks transcript fetching from cloud/datacenter IPs** (GitHub
+  Actions' shared runners included) — confirmed in live runs via
+  `youtube-transcript-api`'s `RequestBlocked` error, whose own docs name
+  cloud IPs as the cause. Discovery is immune (the Data API works from
+  anywhere), but transcripts aren't. A local run from your own computer
+  avoids this entirely — see **Weekly workflow** above. For fully unattended
+  cloud runs, see **Optional: fully unattended runs on GitHub Actions**,
+  which needs a paid *Residential* proxy plan — a Datacenter-tier proxy just
+  swaps one blocked IP class for another.
+- **YouTube discontinued its channel RSS feeds** (observed Aug 2026: 404 on
+  every channel, everywhere). Discovery therefore requires the free
+  `YOUTUBE_API_KEY`; the RSS path remains only as an automatic fallback in
+  case the feeds return.
 - **Discovery is title-based.** It cannot tell a betting preview from a recap or
   a vlog except by title text and date. Dry-run with `--discover-only` before
   each event and adjust `title_contains` — a wrong filter silently produces an
