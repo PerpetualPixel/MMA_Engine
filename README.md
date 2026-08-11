@@ -14,7 +14,7 @@ config.json ─▶ channel discovery ─▶ transcripts ─▶ Claude extraction
 ## Quick start
 
 ```bash
-git clone https://github.com/miguelsgarcia4/MMA_Engine.git
+git clone https://github.com/PerpetualPixel/MMA_Engine.git
 cd MMA_Engine
 
 python3 -m venv .venv && source .venv/bin/activate
