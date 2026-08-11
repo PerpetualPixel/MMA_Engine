@@ -323,3 +323,58 @@ def test_replace_mode_discards_prior_record(config_file):
     record = json.loads(config_file.read_text())["cappers"][0]["tracked"]
     assert record["videos"] == ["recap0000001"]
     assert record["record"]["overall"]["roi"] == {"picks": 20, "value": -20.0}
+
+
+def test_merge_matches_by_normalized_name_without_url():
+    # The tracker transcript gives no handle, and spacing differs from the
+    # configured name — normalized-name matching must still route it.
+    import pytest as _pytest  # local to keep top imports untouched
+    from pathlib import Path
+    import tempfile
+
+    with tempfile.TemporaryDirectory() as tmp:
+        path = Path(tmp) / "config.json"
+        path.write_text(json.dumps({
+            "cappers": [{
+                "id": "funky_picks",
+                "name": "Funkybunch MMA",
+                "channel_url": "https://www.youtube.com/@FunkyPicks",
+                "discover": True,
+                "trust": {"overall": 7.5, "underdog": 9.0, "favorite": 9.0},
+            }]
+        }))
+        proposed = [entry("Funky Bunch MMA", "funky_bunch_mma", "", 10.0)]
+        report = merge_into_config(path, proposed, video_id="vid00000001")
+
+        config = json.loads(path.read_text())
+        assert len(config["cappers"]) == 1
+        assert report["updated"] == ["Funkybunch MMA"]
+
+
+def test_merge_matches_by_alias():
+    # "Bet Sam" is how captions mangle "BetSlam with Sam" — an alias on the
+    # real capper routes the tracked record to them instead of duplicating.
+    from pathlib import Path
+    import tempfile
+
+    with tempfile.TemporaryDirectory() as tmp:
+        path = Path(tmp) / "config.json"
+        path.write_text(json.dumps({
+            "cappers": [{
+                "id": "betslam_sam",
+                "name": "BetSlam with Sam",
+                "channel_url": "https://www.youtube.com/@BetSlamWithSam",
+                "discover": True,
+                "trust": {"overall": 7.5, "underdog": 9.0, "favorite": 9.0},
+                "aliases": ["Bet Sam", "Bet Slam with Sam"],
+            }]
+        }))
+        proposed = [entry("Bet Sam", "bet_sam", "", 12.0)]
+        report = merge_into_config(path, proposed, video_id="vid00000001")
+
+        config = json.loads(path.read_text())
+        assert len(config["cappers"]) == 1
+        assert report["updated"] == ["BetSlam with Sam"]
+        # The configured name survives; only trust/record change.
+        assert config["cappers"][0]["name"] == "BetSlam with Sam"
+        assert config["cappers"][0]["trust"]["overall"] > NEUTRAL_TRUST

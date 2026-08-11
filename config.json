@@ -53,7 +53,10 @@
         "overall": 7.5,
         "underdog": 9.0,
         "favorite": 6.5
-      }
+      },
+      "aliases": [
+        "Artem"
+      ]
     },
     {
       "id": "axel_mma",
@@ -64,7 +67,11 @@
         "overall": 7.5,
         "underdog": 9.0,
         "favorite": 9.0
-      }
+      },
+      "aliases": [
+        "Axel Talks Fights",
+        "Alex Talks Fights"
+      ]
     },
     {
       "id": "betslam_sam",
@@ -75,7 +82,12 @@
         "overall": 7.5,
         "underdog": 9.0,
         "favorite": 9.0
-      }
+      },
+      "aliases": [
+        "Bet Sam",
+        "BetSlam Sam",
+        "Bet Slam with Sam"
+      ]
     },
     {
       "id": "funky_picks",
@@ -86,7 +98,12 @@
         "overall": 7.5,
         "underdog": 9.0,
         "favorite": 9.0
-      }
+      },
+      "aliases": [
+        "Funky Bunch MMA",
+        "Funky Picks",
+        "Funkybunch"
+      ]
     },
     {
       "id": "livid_larry",
@@ -97,7 +114,12 @@
         "overall": 7.5,
         "underdog": 9.0,
         "favorite": 6.5
-      }
+      },
+      "aliases": [
+        "Live It Larry MMA",
+        "Live It Larry",
+        "Livid Larry"
+      ]
     },
     {
       "id": "pure_picks",
@@ -108,7 +130,10 @@
         "overall": 7.5,
         "underdog": 6.5,
         "favorite": 9.0
-      }
+      },
+      "aliases": [
+        "Pure Picks"
+      ]
     },
     {
       "id": "couch_warrior",
@@ -119,7 +144,10 @@
         "overall": 7.5,
         "underdog": 6.5,
         "favorite": 9.0
-      }
+      },
+      "aliases": [
+        "Couch Warrior"
+      ]
     },
     {
       "id": "tony_has_died",
@@ -130,7 +158,11 @@
         "overall": 7.5,
         "underdog": 9.0,
         "favorite": 6.5
-      }
+      },
+      "aliases": [
+        "Tony Has Died",
+        "Tony Has Died MMA"
+      ]
     },
     {
       "id": "double_vision",
@@ -141,7 +173,11 @@
         "overall": 5.0,
         "underdog": 4.0,
         "favorite": 8.0
-      }
+      },
+      "aliases": [
+        "Double Vision MMA",
+        "Double Vision"
+      ]
     },
     {
       "id": "we_want_picks",
@@ -152,7 +188,11 @@
         "overall": 5.0,
         "underdog": 4.0,
         "favorite": 8.0
-      }
+      },
+      "aliases": [
+        "Jacob from We Want Picks",
+        "We Want Picks"
+      ]
     }
   ],
   "videos": []
