@@ -180,6 +180,24 @@ function renderSources(sources) {
       <tbody>${rows}</tbody></table></div></details>`;
 }
 
+function renderDiscovery(entries) {
+  if (!entries.length) return "";
+  const rows = entries.map((e) => {
+    const found = (e.selected || []).map((v) => esc(v.title)).join("<br>") || "—";
+    return `<tr>
+      <td>${esc(e.capper)}</td>
+      <td>${esc(e.status)}${e.error ? ` — ${esc(e.error)}` : ""}</td>
+      <td class="num">${esc((e.selected || []).length)}</td>
+      <td class="why">${found}</td>
+    </tr>`;
+  }).join("");
+  const failed = entries.filter((e) => e.status !== "ok").length;
+  return `<details><summary>Channel discovery (${entries.length} channels${failed ? `, ${failed} failed` : ""})</summary>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Capper</th><th>Status</th><th>Used</th><th>Videos found</th></tr></thead>
+      <tbody>${rows}</tbody></table></div></details>`;
+}
+
 function render(data) {
   const event = data.event || {};
   const generated = data.generated_at
@@ -203,7 +221,8 @@ function render(data) {
        <code>config.json</code> and run the pipeline
        (<code>python -m mma_engine</code> or the <em>Build consensus</em> GitHub Action).</p>`;
 
-  $("#footer").innerHTML = renderSources(data.sources || []);
+  $("#footer").innerHTML =
+    renderSources(data.sources || []) + renderDiscovery(data.discovery || []);
 }
 
 fetch(`data.json?t=${Date.now()}`)

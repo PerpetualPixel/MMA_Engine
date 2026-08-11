@@ -5,8 +5,8 @@ picks with the Claude API, and aggregates them into a **trust-weighted
 consensus** rendered by a static dashboard.
 
 ```
-config.json ─▶ transcripts ─▶ Claude extraction ─▶ weighted aggregation ─▶ docs/data.json ─▶ docs/index.html
-              (cached)         (structured JSON)     (per-capper trust)                        (GitHub Pages)
+config.json ─▶ channel discovery ─▶ transcripts ─▶ Claude extraction ─▶ weighted aggregation ─▶ docs/data.json ─▶ docs/index.html
+              (RSS, finds videos)   (cached)        (structured JSON)     (per-capper trust)                       (GitHub Pages)
 ```
 
 ---
@@ -23,20 +23,26 @@ pip install -r requirements.txt
 cp .env.example .env       # then paste your key into .env — it is gitignored
 ```
 
-Add this week's videos to `config.json`:
+Point it at the event in `config.json` (discovery finds the videos itself):
 
 ```json
-"videos": [
-  { "capper_id": "artem_mma",  "url": "https://youtu.be/VIDEO_ID" },
-  { "capper_id": "funky_picks", "url": "https://www.youtube.com/watch?v=VIDEO_ID" }
-]
+"event": { "name": "UFC 320" },
+"settings": {
+  "discovery": {
+    "enabled": true,
+    "lookback_days": 14,
+    "max_videos_per_channel": 3,
+    "title_contains": ["ufc 320", "ufc320"]
+  }
+}
 ```
 
 Run it:
 
 ```bash
-PYTHONPATH=src python -m mma_engine            # writes docs/data.json
-python -m http.server -d docs 8000             # open http://localhost:8000
+PYTHONPATH=src python -m mma_engine --discover-only   # dry run: what would it pull?
+PYTHONPATH=src python -m mma_engine                   # writes docs/data.json
+python -m http.server -d docs 8000                    # open http://localhost:8000
 ```
 
 > The dashboard fetches `data.json`, so it must be served over HTTP — opening
@@ -46,7 +52,9 @@ python -m http.server -d docs 8000             # open http://localhost:8000
 
 | Flag | Effect |
 | --- | --- |
+| `--discover-only` | Dry run: print the videos discovery finds, then exit. No transcripts, no API calls. |
 | `--skip-extraction` | Fetch and cache transcripts only. No Claude API calls, no cost. |
+| `--discover` / `--no-discover` | Force channel discovery on or off, overriding the config. |
 | `--no-cache` | Ignore cached transcripts/extractions and redo everything. |
 | `--config` / `--output` | Point at a different config or output path. |
 | `-v` | Debug logging. |
@@ -119,12 +127,49 @@ in the code hardcodes a capper.
 
 ---
 
+## Channel discovery
+
+Rather than pasting eight video URLs every week, discovery reads each capper's
+public channel feed:
+
+```
+https://www.youtube.com/feeds/videos.xml?channel_id=UC...
+```
+
+No API key and no quota — it's the same feed any RSS reader uses, carrying the
+last ~15 uploads with IDs, titles, and publish dates. Channels written as
+`@handle` are resolved to a channel ID once and cached in `cache/channels.json`.
+
+A video is picked up when it clears three filters:
+
+| Setting | Filter |
+| --- | --- |
+| `lookback_days` | Published within this many days. |
+| `title_contains` | Title contains **any** listed substring (case-insensitive). Empty = no title filter. |
+| `max_videos_per_channel` | Cap per channel, newest first. |
+
+`title_contains` takes a list because cappers spell events inconsistently —
+`["ufc 320", "ufc320"]` catches both. Widen it if a capper titles videos by main
+event instead (e.g. add `"ankalaev"`).
+
+Set `"discover": false` on a capper to keep them configured but excluded from the
+sweep. Anything you list by hand in `videos` is always used and wins over a
+discovered duplicate.
+
+**Always dry-run first:** `--discover-only` (or the *discover_only* checkbox on
+the Action) prints exactly what would be processed, with per-channel failures,
+before you spend a cent.
+
+---
+
 ## Weekly workflow
 
-1. Update `event` and replace the `videos` array in `config.json`.
-2. Commit and push, then run the **Build consensus** action (Actions tab →
-   *Run workflow*). It also runs Fridays at 15:00 UTC.
-3. The action commits a refreshed `docs/data.json`; the dashboard picks it up.
+1. Update `event.name` and `settings.discovery.title_contains` in `config.json`
+   for the new event.
+2. Run the **Build consensus** action with *discover_only* ticked to confirm it
+   finds the right videos.
+3. Run it again unticked. It also runs Fridays at 15:00 UTC.
+4. The action commits a refreshed `docs/data.json`; the dashboard picks it up.
 
 To publish the dashboard: *Settings → Pages → Source: Deploy from a branch →
 `main` / `/docs`*.
@@ -159,6 +204,10 @@ accounts at 5.0 and adjust once you have a sample of their results.
 | `max_transcript_chars` | `60000` | Transcripts longer than this are chunked. |
 | `min_confidence` | `1` | Drop picks below this confidence from the consensus. |
 | `use_cache` | `true` | Reuse cached transcripts and extractions. |
+| `discovery.enabled` | `true` | Pull videos from capper channels automatically. |
+| `discovery.lookback_days` | `14` | Only consider uploads this recent. |
+| `discovery.max_videos_per_channel` | `3` | Cap per channel, newest first. |
+| `discovery.title_contains` | `[]` | Title must contain any of these (case-insensitive). |
 
 ---
 
@@ -180,6 +229,7 @@ To force a clean run: `--no-cache`, or `rm -rf cache/`.
 config.json                  # the only file you edit weekly
 src/mma_engine/
   config.py                  # config loading, validation, URL → video ID
+  discover.py                # channel RSS discovery, handle → channel ID
   transcripts.py             # YouTube fetching, caching, jittered delays
   extract.py                 # Claude structured-output extraction, chunking
   normalize.py               # fighter-name and selection matching
@@ -188,6 +238,7 @@ src/mma_engine/
 docs/index.html              # static dashboard (no build step, no CDN)
 docs/data.json               # generated output
 tests/test_aggregate.py      # normalization + aggregation tests
+tests/test_discover.py       # feed parsing, filtering, merge behavior
 .github/workflows/consensus.yml
 ```
 
@@ -198,7 +249,8 @@ PYTHONPATH=src python -m pytest -q
 ```
 
 No network or API key required — the tests cover name normalization, market
-grouping, and the weighting math against constructed picks.
+grouping, the weighting math, RSS feed parsing, and discovery filtering against
+constructed fixtures.
 
 ---
 
@@ -213,6 +265,13 @@ grouping, and the weighting math against constructed picks.
 - **YouTube blocking.** Datacenter IPs get rate-limited or blocked. Delays and
   caching mitigate it; if the runner starts failing, `youtube-transcript-api`
   supports proxy configuration.
+- **Discovery is title-based.** It cannot tell a betting preview from a recap or
+  a vlog except by title text and date. Dry-run with `--discover-only` before
+  each event and adjust `title_contains` — a wrong filter silently produces an
+  empty or off-topic consensus.
+- **Handle resolution scrapes HTML.** Resolving `@handle` → channel ID parses the
+  channel page, which YouTube can change. Pin `channel_id` in `config.json` to
+  skip it entirely (Artem's is already pinned as an example).
 - **Extraction is a judgment call.** Confidence and underdog/favorite framing are
   inferred from how the capper talks. Spot-check the per-capper reasoning shown
   in the dashboard before trusting a number.
