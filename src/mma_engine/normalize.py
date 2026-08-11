@@ -52,9 +52,15 @@ def surname(name: str) -> str:
     return tokens[-1]
 
 
-def fight_key(fighter_a: str, fighter_b: str) -> str:
-    """Order-independent key identifying a matchup."""
-    parts = sorted(p for p in (surname(fighter_a), surname(fighter_b)) if p)
+def fight_key(fighter_a: str, fighter_b: str, canon=None) -> str:
+    """Order-independent key identifying a matchup.
+
+    `canon` optionally maps a surname to its canonical spelling, so caption
+    typos that differ between videos ("makhache" / "makhachev") still land on
+    the same key. See `aggregate.surname_canonicalizer`.
+    """
+    canon = canon or (lambda s: s)
+    parts = sorted(canon(p) for p in (surname(fighter_a), surname(fighter_b)) if p)
     return "|".join(parts)
 
 
@@ -72,10 +78,11 @@ def _number_in(text: str) -> str:
     return match.group(0) if match else ""
 
 
-def selection_key(bet_type: str, selection: str, fighter: str = "") -> str:
+def selection_key(bet_type: str, selection: str, fighter: str = "", canon=None) -> str:
     """Stable key for the *side* of a bet, so identical picks group together."""
+    canon = canon or (lambda s: s)
     selection = selection or ""
-    fighter_part = surname(fighter) or surname(selection)
+    fighter_part = canon(surname(fighter) or surname(selection))
 
     if bet_type == "moneyline":
         return fighter_part
