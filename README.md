@@ -360,8 +360,11 @@ display or an algorithm to weight. No Python needed on the consuming side;
 just fetch:
 
 ```
-https://perpetualpixel.github.io/MMA_Engine/docs/picks.json
+https://perpetualpixel.github.io/MMA_Engine/picks.json
 ```
+
+(No `/docs/` in the path — Pages is configured to serve `main` / `/docs`, so
+`docs/` *is* the site root.)
 
 The shape:
 
@@ -405,6 +408,34 @@ website integration is: fetch the URL, show every pick with `tier != "pass"`,
 and size stakes by `suggested_units` — or feed `strength` into your own
 model as one input among many.
 
+#### Getting the new feed on the consuming site *immediately*
+
+GitHub Pages serves `picks.json` through a CDN, and browsers cache it too, so
+a site that fetches the plain URL can keep showing the pre-push feed for
+minutes after `weekly.bat` finished — which looks exactly like the run having
+failed. Two things fix it on the consuming side:
+
+1. **Cache-bust every request** — append a changing query string
+   (`picks.json?t=<timestamp>`) and send `cache: 'no-store'`. A unique URL
+   misses both the browser cache and the CDN edge cache, so you get the bytes
+   that are actually published right now.
+2. **Poll and compare `generated_at`** — re-fetch on a short interval and only
+   re-render when that timestamp moves. An unchanged feed then costs one small
+   request and nothing else.
+
+`integrations/perpetualcode-instant-consensus-refresh.patch` is exactly this,
+already written for PerpetualPicks.com. Apply it in the PerpetualCode checkout:
+
+```powershell
+git am ..\MMA_Engine\integrations\perpetualcode-instant-consensus-refresh.patch
+node --test test\capper-consensus.test.mjs
+```
+
+Then push `docs/` (the site) and `npx wrangler deploy` from `worker\` (the
+locked daily picks read the same feed, so both sides stay in agreement). After
+that, a `weekly.bat` run shows up on an already-open board within a minute,
+with no manual refresh.
+
 The feed is rebuilt from `data.json`, so you can also regenerate it by hand:
 
 ```powershell
@@ -418,7 +449,7 @@ python -m mma_engine.weighted_picks   # reads docs\data.json, writes docs\picks.
 serves — anything that can fetch a URL can read it:
 
 ```
-https://perpetualpixel.github.io/MMA_Engine/docs/data.json
+https://perpetualpixel.github.io/MMA_Engine/data.json
 ```
 
 It refreshes every time you run `weekly.bat`, so a puller on a similar or looser
@@ -645,6 +676,7 @@ src/mma_engine/
 docs/index.html              # static dashboard (no build step, no CDN)
 docs/data.json               # generated output — also the integration feed
 docs/picks.json              # weighted picks feed for PerpetualPicks.com
+integrations/                # patches for consuming sites (see Option 0)
 tests/test_aggregate.py      # normalization + aggregation tests
 tests/test_discover.py       # feed parsing, filtering, merge behavior
 tests/test_roster.py         # trust arithmetic, pooling, config merge

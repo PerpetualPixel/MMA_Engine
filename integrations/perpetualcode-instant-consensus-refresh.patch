@@ -1,0 +1,299 @@
+From d5209769db8b749b2fef9e64700e8b696f38f543 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Tue, 11 Aug 2026 09:11:13 +0000
+Subject: [PATCH] feat: poll the MMA consensus feed so weekly runs land within
+ a minute
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+An open board kept showing the pre-push grades long after MMA_Engine's
+weekly run finished: the feed was cached for 15 minutes in memory, and the
+request underneath it was a plain GET that GitHub Pages' CDN and the browser
+HTTP cache were both free to answer from a stale copy.
+
+Every request is now cache-busted and no-store, the in-memory TTL is a
+minute, and the board polls the feed on the same cadence as the slate — but
+only re-scores when generated_at actually moves, so an unchanged feed costs
+one small fetch and no re-render. A fight the feed has dropped resets to its
+price-only score instead of holding a stale swing.
+
+Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01Ko7MvVdXhjZNR67gyhzZq3
+---
+ docs/app.js                    | 93 ++++++++++++++++++++++++++++------
+ docs/capper-consensus.js       | 31 +++++++++---
+ test/capper-consensus.test.mjs | 59 +++++++++++++++++++++
+ worker/src/tracking.js         |  4 +-
+ 4 files changed, 162 insertions(+), 25 deletions(-)
+
+diff --git a/docs/app.js b/docs/app.js
+index 88b8922..64b7761 100644
+--- a/docs/app.js
++++ b/docs/app.js
+@@ -2893,6 +2893,37 @@ async function enrichTennisAltSpreads() {
+   }
+ }
+ 
++/**
++ * Attach the capper-consensus swing to MMA moneyline candidates in place and
++ * rescore them. A candidate the feed no longer covers is reset to its
++ * price-only score rather than left holding a stale swing — MMA_Engine drops
++ * a fight from picks.json when the cappers stop agreeing on it, and that
++ * withdrawal is information too.
++ */
++function applyConsensusToCandidates(candidates, feed) {
++  const now = Date.now();
++  for (const c of candidates) {
++    const match = capperConsensusSignal(feed, c);
++    if (!match) {
++      if (!c.capperConsensus) continue;
++      delete c.capperConsensus;
++      Object.assign(c, scoreCandidate(c, { now, qualitative: 0 }));
++      continue;
++    }
++    c.capperConsensus = {
++      selection: match.pick.selection,
++      consensusPct: match.pick.consensus_pct,
++      strength: match.pick.strength,
++      tier: match.pick.tier,
++      pickCount: match.pick.pick_count,
++      aligned: match.aligned,
++      signal: match.signal,
++      generatedAt: feed.generated_at ?? null,
++    };
++    Object.assign(c, scoreCandidate(c, { now, qualitative: match.signal }));
++  }
++}
++
+ // Bumped on every refreshQualitativeSignals() call — lets a slow run started
+ // before the user switched days/leagues detect it's been superseded and
+ // discard its own results rather than overwriting a newer run's.
+@@ -2920,22 +2951,9 @@ async function refreshQualitativeSignals() {
+     if (!mmaTargets.length) return;
+     const feed = await fetchCapperConsensus();
+     if (!feed) return;
+-    for (const c of mmaTargets) {
+-      const match = capperConsensusSignal(feed, c);
+-      if (!match) continue;
+-      if (token !== qualitativeRunToken) return;
+-      c.capperConsensus = {
+-        selection: match.pick.selection,
+-        consensusPct: match.pick.consensus_pct,
+-        strength: match.pick.strength,
+-        tier: match.pick.tier,
+-        pickCount: match.pick.pick_count,
+-        aligned: match.aligned,
+-        signal: match.signal,
+-        generatedAt: feed.generated_at ?? null,
+-      };
+-      Object.assign(c, scoreCandidate(c, { now: Date.now(), qualitative: match.signal }));
+-    }
++    if (token !== qualitativeRunToken) return;
++    appliedConsensusAt = feed.generated_at ?? null;
++    applyConsensusToCandidates(mmaTargets, feed);
+   })();
+ 
+   await Promise.allSettled([mmaWork, ...targets.map(async (c) => {
+@@ -5770,6 +5788,7 @@ el.whatsNewHintClose.addEventListener('click', () => {
+ 
+   startSlateAutoRefresh();
+   startUpdateChecks();
++  startConsensusPolling();
+ })();
+ 
+ /**
+@@ -5803,6 +5822,48 @@ function startSlateAutoRefresh() {
+   document.addEventListener('visibilitychange', tick);
+ }
+ 
++/**
++ * Polls the MMA_Engine picks feed so a weekly run's new consensus lands on an
++ * already-open board within a minute, instead of whenever the page next
++ * happens to reload. MMA_Engine's weekly.bat pushes picks.json and a person
++ * watching the site expects the grades to move — this is what makes that
++ * true without a manual refresh.
++ *
++ * Only re-scores when `generated_at` actually differs from the applied feed,
++ * so the common case (same feed, nothing pushed) is one small conditional
++ * fetch and no re-render at all. The fetch itself is cache-busted in
++ * docs/capper-consensus.js; without that the CDN would keep handing back the
++ * pre-push body and this poll would learn nothing.
++ */
++const CONSENSUS_POLL_MS = 60000;
++let appliedConsensusAt = null;
++
++async function refreshCapperConsensus() {
++  const mmaTargets = dayFilteredCandidates().filter(
++    (c) => isMmaSportKey(c.sportKey) && c.marketKey === 'h2h',
++  );
++  if (!mmaTargets.length) return;
++  const feed = await fetchCapperConsensus(undefined, { force: true });
++  if (!feed) return;
++  const stamp = feed.generated_at ?? null;
++  if (stamp && stamp === appliedConsensusAt) return;
++  appliedConsensusAt = stamp;
++  applyConsensusToCandidates(mmaTargets, feed);
++  renderFullSlate();
++  renderPixelPicksBoard();
++}
++
++function startConsensusPolling() {
++  const tick = () => {
++    if (document.visibilityState !== 'visible') return;
++    refreshCapperConsensus();
++  };
++  setInterval(tick, CONSENSUS_POLL_MS);
++  // A tab left open in the background across a weekly run catches up the
++  // moment it's looked at, rather than waiting out the rest of the interval.
++  document.addEventListener('visibilitychange', tick);
++}
++
+ /**
+  * Polls the deployed build's own version.js for a version newer than the
+  * one this page loaded with, and shows a persistent "refresh to update"
+diff --git a/docs/capper-consensus.js b/docs/capper-consensus.js
+index 126c758..b9b48eb 100644
+--- a/docs/capper-consensus.js
++++ b/docs/capper-consensus.js
+@@ -130,17 +130,34 @@ export function applyCapperConsensus(candidates, feed, { now = Date.now() } = {}
+ 
+ let feedCache = null;
+ let feedFetchedAt = 0;
+-const FEED_TTL_MS = 15 * 60 * 1000;
++export const FEED_TTL_MS = 60 * 1000;
+ 
+ /**
+- * Fetch the picks feed, cached for 15 minutes — the feed only changes when
+- * MMA_Engine's weekly run pushes, so refetching per render would be noise.
+- * Returns null on any failure: the price-only score always stands on its own.
++ * Fetch the picks feed, cached for a minute.
++ *
++ * The feed only changes when MMA_Engine's weekly run pushes, but the whole
++ * point of a push is that the board reflects it right away — so the cache is
++ * short and every actual request is cache-busted (unique `?t=` plus
++ * `cache: 'no-store'`). Without that, GitHub Pages' own CDN and the browser
++ * HTTP cache would both keep serving the pre-push body for minutes after
++ * weekly.bat finished, which reads as "the run didn't work".
++ *
++ * `force` skips the in-memory TTL for a caller that already knows it wants
++ * fresh bytes (the poller below). Returns the last good feed — or null if
++ * there has never been one — on any failure: the price-only score always
++ * stands on its own.
+  */
+-export async function fetchCapperConsensus(url = CAPPER_CONSENSUS_URL, { now = Date.now() } = {}) {
+-  if (feedCache && now - feedFetchedAt < FEED_TTL_MS) return feedCache;
++export async function fetchCapperConsensus(
++  url = CAPPER_CONSENSUS_URL,
++  { now = Date.now(), force = false } = {},
++) {
++  if (!force && feedCache && now - feedFetchedAt < FEED_TTL_MS) return feedCache;
++  const busted = `${url}${url.includes('?') ? '&' : '?'}t=${now}`;
+   try {
+-    const res = await fetch(url, { headers: { accept: 'application/json' } });
++    const res = await fetch(busted, {
++      headers: { accept: 'application/json' },
++      cache: 'no-store',
++    });
+     if (!res.ok) return feedCache;
+     const feed = await res.json();
+     if (!Array.isArray(feed?.picks)) return feedCache;
+diff --git a/test/capper-consensus.test.mjs b/test/capper-consensus.test.mjs
+index 078babc..f8e9964 100644
+--- a/test/capper-consensus.test.mjs
++++ b/test/capper-consensus.test.mjs
+@@ -6,6 +6,8 @@ import {
+   findConsensusPick,
+   capperConsensusSignal,
+   applyCapperConsensus,
++  fetchCapperConsensus,
++  FEED_TTL_MS,
+ } from '../docs/capper-consensus.js';
+ import { QUALITATIVE, scoreCandidate } from '../docs/engine.js';
+ 
+@@ -138,3 +140,60 @@ test('applyCapperConsensus passes through on an empty feed', () => {
+   assert.equal(applyCapperConsensus(candidates, null), candidates);
+   assert.equal(applyCapperConsensus(candidates, { picks: [] }), candidates);
+ });
++
++/* --- fetching: freshness is the whole point after a weekly.bat push --- */
++
++// The module's feed cache is process-wide, so each test starts from a clock
++// far enough ahead of the last one that the previous test's entry is stale.
++let clock = 1_000_000;
++function nextWindow() {
++  clock += 10 * FEED_TTL_MS;
++  return clock;
++}
++
++function stubFetch(bodies) {
++  const calls = [];
++  globalThis.fetch = async (url, opts) => {
++    calls.push({ url: String(url), opts });
++    return { ok: true, json: async () => bodies[Math.min(calls.length - 1, bodies.length - 1)] };
++  };
++  return calls;
++}
++
++test('every request is cache-busted and bypasses the HTTP cache', async () => {
++  const calls = stubFetch([FEED]);
++  const now = nextWindow();
++  await fetchCapperConsensus('https://example.test/picks.json', { now });
++  assert.equal(calls[0].url, `https://example.test/picks.json?t=${now}`);
++  assert.equal(calls[0].opts.cache, 'no-store');
++});
++
++test('a second call inside the TTL is served from memory', async () => {
++  const calls = stubFetch([FEED]);
++  const now = nextWindow();
++  await fetchCapperConsensus('https://example.test/a.json', { now });
++  await fetchCapperConsensus('https://example.test/a.json', { now: now + FEED_TTL_MS - 1 });
++  assert.equal(calls.length, 1);
++});
++
++test('force refetches inside the TTL and picks up a newer feed', async () => {
++  const pushed = { ...FEED, generated_at: '2026-08-11T09:00:00+00:00' };
++  const calls = stubFetch([FEED, pushed]);
++  const now = nextWindow();
++  await fetchCapperConsensus('https://example.test/b.json', { now });
++  const fresh = await fetchCapperConsensus('https://example.test/b.json', { now: now + 500, force: true });
++  assert.equal(calls.length, 2);
++  assert.equal(fresh.generated_at, pushed.generated_at);
++  assert.notEqual(calls[0].url, calls[1].url); // distinct busters, or the CDN replays the old body
++});
++
++test('a failed refetch keeps the last good feed rather than blanking the board', async () => {
++  stubFetch([FEED]);
++  const now = nextWindow();
++  const good = await fetchCapperConsensus('https://example.test/c.json', { now });
++  globalThis.fetch = async () => {
++    throw new Error('offline');
++  };
++  const after = await fetchCapperConsensus('https://example.test/c.json', { now: now + 500, force: true });
++  assert.equal(after, good);
++});
+diff --git a/worker/src/tracking.js b/worker/src/tracking.js
+index 8f47831..03c452b 100644
+--- a/worker/src/tracking.js
++++ b/worker/src/tracking.js
+@@ -593,7 +593,7 @@ export async function runTop5Batch(
+   // browser's refreshQualitativeSignals() applies, so the locked board and
+   // the live one grade an MMA fight the same way. Fetch failure degrades to
+   // the unadjusted pool: consensus is a bonus, never a dependency.
+-  const consensusFeed = await fetchCapperConsensus().catch(() => null);
++  const consensusFeed = await fetchCapperConsensus(undefined, { force: true }).catch(() => null);
+   const drawPool = consensusFeed
+     ? applyCapperConsensus(stillActionable, consensusFeed, { now })
+     : stillActionable;
+@@ -843,7 +843,7 @@ export async function getTop5Leaning(env, { now = Date.now(), dateKey } = {}) {
+   // Same capper-consensus enrichment as the real batch below, so the lean
+   // never disagrees with the eventual lock over an adjustment one of them
+   // didn't apply.
+-  const consensusFeed = await fetchCapperConsensus().catch(() => null);
++  const consensusFeed = await fetchCapperConsensus(undefined, { force: true }).catch(() => null);
+   const drawPool = consensusFeed
+     ? applyCapperConsensus(stillActionable, consensusFeed, { now })
+     : stillActionable;
+-- 
+2.43.0
+
