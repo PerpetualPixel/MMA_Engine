@@ -112,6 +112,25 @@ def test_build_picks_skips_empty_markets():
     assert feed["picks"] == []
 
 
+def test_build_picks_carries_capper_comments():
+    """Backing cappers' reasoning rides along, trust-ordered, empties skipped."""
+    option = _option("Fighter A", 100.0, 14.0, picks=3)
+    option["cappers"] = [
+        {"id": "low", "name": "Low Trust", "trust": 2.0, "confidence": 5, "reasoning": "Cardio edge."},
+        {"id": "high", "name": "High Trust", "trust": 9.0, "confidence": 8, "reasoning": "Better everywhere."},
+        {"id": "mute", "name": "No Comment", "trust": 7.0, "confidence": 6, "reasoning": "  "},
+    ]
+    feed = build_picks(_consensus([_fight("a|b", "A vs B", [option])]))
+    comments = feed["picks"][0]["comments"]
+    assert [c["capper"] for c in comments] == ["High Trust", "Low Trust"]
+    assert comments[0] == {"capper": "High Trust", "comment": "Better everywhere.", "confidence": 8}
+
+
+def test_build_picks_without_cappers_has_empty_comments():
+    feed = build_picks(_consensus([_fight("a|b", "A vs B", [_option("A", 60.0, 5.0)])]))
+    assert feed["picks"][0]["comments"] == []
+
+
 def test_feed_metadata_carried_over():
     feed = build_picks(_consensus([]))
     assert feed["schema_version"] == 1

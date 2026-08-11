@@ -26,7 +26,29 @@
       "avg_confidence": 6.0,
       "strength": 8.5,
       "tier": "strong",
-      "suggested_units": 2.0
+      "suggested_units": 2.0,
+      "comments": [
+        {
+          "capper": "TonyHasDiedMMA",
+          "comment": "Says he isn't super confident but Abdul-Malik is younger, more physical, with height, reach and power advantages over a hittable Stoltzfus.",
+          "confidence": 4
+        },
+        {
+          "capper": "We Want Picks (Jacob)",
+          "comment": "Both cappers pick Mansur: Angelo cites a giant grappling gap plus powerful hands and desperation after his TKO loss, while Jacob thinks the striking edge is the difference since Stoltzfus is stationary and hittable.",
+          "confidence": 7
+        },
+        {
+          "capper": "BetSlam with Sam",
+          "comment": "Athletic freak with reach and better wrestling against a middle-of-the-road middleweight; expects him to take Stoltzfus down and smash him early despite the high price.",
+          "confidence": 7
+        },
+        {
+          "capper": "Livid Larry MMA",
+          "comment": "Picks Abdul-Malik to defeat Stoltzfus.",
+          "confidence": 6
+        }
+      ]
     },
     {
       "fight_id": "dern|robertson",
@@ -40,7 +62,24 @@
       "avg_confidence": 7.3,
       "strength": 8.1,
       "tier": "strong",
-      "suggested_units": 2.0
+      "suggested_units": 2.0,
+      "comments": [
+        {
+          "capper": "We Want Picks (Jacob)",
+          "comment": "Dern is better everywhere - striking, grappling, even wrestling - and is all-time tough; Robertson has no path without takedowns, and capper says he can't see how she wins.",
+          "confidence": 9
+        },
+        {
+          "capper": "BetSlam with Sam",
+          "comment": "Robertson's takedowns are still weak and she gave up reversals to Lemos; Dern is far higher-level on the ground and he prefers her striking and chin too.",
+          "confidence": 7
+        },
+        {
+          "capper": "Livid Larry MMA",
+          "comment": "Picks Dern in the co-main event.",
+          "confidence": 6
+        }
+      ]
     },
     {
       "fight_id": "garry|makhachev",
@@ -54,7 +93,24 @@
       "avg_confidence": 7.3,
       "strength": 8.0,
       "tier": "strong",
-      "suggested_units": 2.0
+      "suggested_units": 2.0,
+      "comments": [
+        {
+          "capper": "We Want Picks (Jacob)",
+          "comment": "Angelo says the wrestling is simply too good and Makhachev should take Garry down, though he respects Garry and won't bet it; Jacob agrees Garry's hands won't keep Islam out.",
+          "confidence": 6
+        },
+        {
+          "capper": "BetSlam with Sam",
+          "comment": "One of his most confident favorites on the card: Makhachev has passed every test, is durable without the weight cut, and Garry's year with Oliveira won't be enough.",
+          "confidence": 9
+        },
+        {
+          "capper": "Livid Larry MMA",
+          "comment": "Picks Makhachev in the main event.",
+          "confidence": 7
+        }
+      ]
     },
     {
       "fight_id": "orolbai|wells",
@@ -68,7 +124,19 @@
       "avg_confidence": 8.0,
       "strength": 7.6,
       "tier": "strong",
-      "suggested_units": 2.0
+      "suggested_units": 2.0,
+      "comments": [
+        {
+          "capper": "TonyHasDiedMMA",
+          "comment": "Calls it the easiest pick on the card: Orolbai is far better on the ground, has wins over ranked opposition, and Wells will get taken down and submitted or rocked into a panic takedown into a d'arce.",
+          "confidence": 9
+        },
+        {
+          "capper": "Livid Larry MMA",
+          "comment": "Wells won't handle Orolbai's grappling as the fight wears on; Orolbai has the edge in both striking volume/technique and wrestling, so he should reach a dominant position and find the sub.",
+          "confidence": 7
+        }
+      ]
     },
     {
       "fight_id": "malik|stoltzfus",
@@ -82,7 +150,19 @@
       "avg_confidence": 7.0,
       "strength": 6.8,
       "tier": "lean",
-      "suggested_units": 1.0
+      "suggested_units": 1.0,
+      "comments": [
+        {
+          "capper": "Livid Larry MMA",
+          "comment": "Abdul-Malik is better technically on the feet, far more powerful and explosive, and his takedown defense removes Stoltzfus's best weapon; very confident.",
+          "confidence": 8
+        },
+        {
+          "capper": "Artem MMA",
+          "comment": "Abdul-Malik's power and brutal ground and pound against Stoltzfus' bad chin, poor striking defense and poor takedown defense should equal a knockout.",
+          "confidence": 6
+        }
+      ]
     },
     {
       "fight_id": "barboza|ribovics",
@@ -96,7 +176,19 @@
       "avg_confidence": 6.5,
       "strength": 6.6,
       "tier": "lean",
-      "suggested_units": 1.0
+      "suggested_units": 1.0,
+      "comments": [
+        {
+          "capper": "We Want Picks (Jacob)",
+          "comment": "Barboza is 40, slower and less durable after a bad knockout loss; Ribovics is clean, durable and busy, has never really lost to a striker and should stay a step ahead.",
+          "confidence": 7
+        },
+        {
+          "capper": "Livid Larry MMA",
+          "comment": "Stated as his main card pick to defeat Barboza.",
+          "confidence": 6
+        }
+      ]
     },
     {
       "fight_id": "orolbai|wells",
@@ -110,7 +202,14 @@
       "avg_confidence": 9.0,
       "strength": 6.3,
       "tier": "lean",
-      "suggested_units": 1.0
+      "suggested_units": 1.0,
+      "comments": [
+        {
+          "capper": "We Want Picks (Jacob)",
+          "comment": "Orolbai is better than Wells at everything Wells does best, should take him down instantly and maul him on top; capper thinks he should be a much larger favorite and calls him the overwhelmingly confident pick to open the card.",
+          "confidence": 9
+        }
+      ]
     },
     {
       "fight_id": "garry|makhachev",
@@ -124,7 +223,24 @@
       "avg_confidence": 7.3,
       "strength": 6.2,
       "tier": "lean",
-      "suggested_units": 1.0
+      "suggested_units": 1.0,
+      "comments": [
+        {
+          "capper": "TonyHasDiedMMA",
+          "comment": "Makhachev has solved every advantage Garry has before (size, reach, boxing), is elite in scrambles with the d'arce and back takes, and Garry can't finish him or out-decision him with Khabib game-planning.",
+          "confidence": 9
+        },
+        {
+          "capper": "Artem MMA",
+          "comment": "Nobody defends Makhachev's takedowns and Garry lacks one-punch power, so Garry would have to win a decision; Makhachev drags him late for a finish.",
+          "confidence": 7
+        },
+        {
+          "capper": "Livid Larry MMA",
+          "comment": "Despite giving Garry a 35-40% chance and outlining a game plan for him, he still picks Islam by submission, believing Islam should be able to secure takedowns and control time.",
+          "confidence": 6
+        }
+      ]
     },
     {
       "fight_id": "johnson|ochoa",
@@ -138,7 +254,24 @@
       "avg_confidence": 6.0,
       "strength": 6.1,
       "tier": "lean",
-      "suggested_units": 1.0
+      "suggested_units": 1.0,
+      "comments": [
+        {
+          "capper": "TonyHasDiedMMA",
+          "comment": "Vowed never to pick Johnson again; Johnson is hittable to the left hook and starts slow, while Ochoa has crisp boxing and in his view beat Alibayev.",
+          "confidence": 7
+        },
+        {
+          "capper": "Artem MMA",
+          "comment": "Ochoa's rare power at 125 will get Johnson's respect, Johnson is coming off a bad KO loss and fighting too often, and he won't offensively wrestle Ochoa.",
+          "confidence": 6
+        },
+        {
+          "capper": "Livid Larry MMA",
+          "comment": "Expects the win most likely by KO.",
+          "confidence": 5
+        }
+      ]
     },
     {
       "fight_id": "khalidov|wells",
@@ -152,7 +285,14 @@
       "avg_confidence": 8.0,
       "strength": 6.1,
       "tier": "lean",
-      "suggested_units": 1.0
+      "suggested_units": 1.0,
+      "comments": [
+        {
+          "capper": "BetSlam with Sam",
+          "comment": "On a three-fight win streak at 170 with wrestling pace and pressure, while Wells is nearly 40 and had been on a losing skid; he can take damage and keep coming.",
+          "confidence": 8
+        }
+      ]
     },
     {
       "fight_id": "fernandes|turner",
@@ -166,7 +306,19 @@
       "avg_confidence": 4.5,
       "strength": 6.1,
       "tier": "lean",
-      "suggested_units": 1.0
+      "suggested_units": 1.0,
+      "comments": [
+        {
+          "capper": "We Want Picks (Jacob)",
+          "comment": "Angelo thinks Fernandes can wrestle his way to a win and repeat his flow-state performance vs Gam, though he calls it a very close fight.",
+          "confidence": 5
+        },
+        {
+          "capper": "Livid Larry MMA",
+          "comment": "Doesn't fully trust Turner's comeback after his early retirement, and Fernandes is solid, well-rounded and mixes in takedowns well; likely decision or late TKO, but a lower confidence pick.",
+          "confidence": 4
+        }
+      ]
     },
     {
       "fight_id": "oralby|wells",
@@ -180,7 +332,14 @@
       "avg_confidence": 7.0,
       "strength": 6.0,
       "tier": "lean",
-      "suggested_units": 1.0
+      "suggested_units": 1.0,
+      "comments": [
+        {
+          "capper": "We Want Picks (Jacob)",
+          "comment": "Angelo says Oralby is a different level of wrestler and will dominate a 40-year-old Wells whenever he wants; the odds are understated but too expensive to bet heavily.",
+          "confidence": 7
+        }
+      ]
     },
     {
       "fight_id": "brahimaj|magny",
@@ -194,7 +353,29 @@
       "avg_confidence": 5.5,
       "strength": 5.9,
       "tier": "lean",
-      "suggested_units": 1.0
+      "suggested_units": 1.0,
+      "comments": [
+        {
+          "capper": "BetSlam with Sam",
+          "comment": "Official prediction is Brahimaj via submission in round one or two given Magny's history of early submission losses.",
+          "confidence": 6
+        },
+        {
+          "capper": "Livid Larry MMA",
+          "comment": "Even-odds fight but he favors Brahimaj's explosiveness and quick finishing ability, and Magny has repeatedly gotten into bad grappling spots and been submitted recently.",
+          "confidence": 6
+        },
+        {
+          "capper": "Artem MMA",
+          "comment": "Brahimaj only wins by submission and usually in round one, and Magny has always struggled with submission defense; the fight is either a Brahimaj finish or a Magny decision.",
+          "confidence": 6
+        },
+        {
+          "capper": "We Want Picks (Jacob)",
+          "comment": "12 of Brahimaj's 13 wins are by submission and Magny has been submitted repeatedly; capper says he'll watch for the prop when it drops and take a shot at it.",
+          "confidence": 4
+        }
+      ]
     },
     {
       "fight_id": "gore|luque",
@@ -208,7 +389,14 @@
       "avg_confidence": 5.0,
       "strength": 5.9,
       "tier": "lean",
-      "suggested_units": 1.0
+      "suggested_units": 1.0,
+      "comments": [
+        {
+          "capper": "TonyHasDiedMMA",
+          "comment": "Predicts Luque shoots a bad takedown and Gore lands another standing guillotine, having already got three in the UFC.",
+          "confidence": 5
+        }
+      ]
     },
     {
       "fight_id": "garry|makhachev",
@@ -222,7 +410,14 @@
       "avg_confidence": 7.0,
       "strength": 5.9,
       "tier": "lean",
-      "suggested_units": 1.0
+      "suggested_units": 1.0,
+      "comments": [
+        {
+          "capper": "We Want Picks (Jacob)",
+          "comment": "Jacob wanted Islam inside the distance at +150 but took fight doesn't go the distance at +120 to also cover a weird Garry finish; he expects Islam to wear Garry down and submit him.",
+          "confidence": 7
+        }
+      ]
     },
     {
       "fight_id": "alvarez|njokuani",
@@ -236,7 +431,14 @@
       "avg_confidence": 7.0,
       "strength": 5.9,
       "tier": "lean",
-      "suggested_units": 1.0
+      "suggested_units": 1.0,
+      "comments": [
+        {
+          "capper": "We Want Picks (Jacob)",
+          "comment": "Alvarez's fatal flaw is takedown defense and Njokuani never wrestles, so Alvarez gets the long-range striking match he wants against a hesitant opponent.",
+          "confidence": 7
+        }
+      ]
     },
     {
       "fight_id": "khalidov|wells",
@@ -250,7 +452,14 @@
       "avg_confidence": 6.0,
       "strength": 5.9,
       "tier": "lean",
-      "suggested_units": 1.0
+      "suggested_units": 1.0,
+      "comments": [
+        {
+          "capper": "BetSlam with Sam",
+          "comment": "Expects the wrestling and grappling output to lead to a submission finish in round two or three.",
+          "confidence": 6
+        }
+      ]
     },
     {
       "fight_id": "fernando|tobias",
@@ -264,7 +473,24 @@
       "avg_confidence": 5.3,
       "strength": 5.8,
       "tier": "lean",
-      "suggested_units": 1.0
+      "suggested_units": 1.0,
+      "comments": [
+        {
+          "capper": "TonyHasDiedMMA",
+          "comment": "Fernando is a massive LFA double champion with power and better level of competition, and Tobias struggles on the feet and plods around, so he expects a first-round knockout.",
+          "confidence": 6
+        },
+        {
+          "capper": "BetSlam with Sam",
+          "comment": "Calls Fernando a special talent with huge reach, fast varied striking; expects him to stop the takedowns and knock Tobias out early.",
+          "confidence": 7
+        },
+        {
+          "capper": "Livid Larry MMA",
+          "comment": "Thinks the fight should be even odds and Tobias is value, but ultimately Fernando is the more complete, technical and versatile striker; explicitly a low confidence pick.",
+          "confidence": 3
+        }
+      ]
     },
     {
       "fight_id": "brahimaj|magny",
@@ -278,7 +504,14 @@
       "avg_confidence": 6.0,
       "strength": 5.8,
       "tier": "lean",
-      "suggested_units": 1.0
+      "suggested_units": 1.0,
+      "comments": [
+        {
+          "capper": "We Want Picks (Jacob)",
+          "comment": "Jacob says he will definitely have action on Brahimaj early — first or second round submission — since Brahimaj chases the guillotine relentlessly and Magny is lazy with his head position.",
+          "confidence": 6
+        }
+      ]
     },
     {
       "fight_id": "urbay|wells",
@@ -292,7 +525,14 @@
       "avg_confidence": 6.0,
       "strength": 5.8,
       "tier": "lean",
-      "suggested_units": 1.0
+      "suggested_units": 1.0,
+      "comments": [
+        {
+          "capper": "Artem MMA",
+          "comment": "Urbay is the better wrestler (19 takedowns vs Chris Curtis) and Wells isn't enough of a submission threat; Urbay has been finding second-round submissions.",
+          "confidence": 6
+        }
+      ]
     },
     {
       "fight_id": "oralby|wells",
@@ -306,7 +546,14 @@
       "avg_confidence": 5.0,
       "strength": 5.7,
       "tier": "lean",
-      "suggested_units": 1.0
+      "suggested_units": 1.0,
+      "comments": [
+        {
+          "capper": "We Want Picks (Jacob)",
+          "comment": "Jacob finds +300 interesting because Wells puts himself in bad grappling positions and Oralby can snatch a submission when Wells tries to scramble.",
+          "confidence": 5
+        }
+      ]
     },
     {
       "fight_id": "johnson|nolan",
@@ -320,7 +567,14 @@
       "avg_confidence": 5.0,
       "strength": 5.7,
       "tier": "lean",
-      "suggested_units": 1.0
+      "suggested_units": 1.0,
+      "comments": [
+        {
+          "capper": "BetSlam with Sam",
+          "comment": "Won't back a 5'8\" fighter at 185; Johnson has been trapped in wrestling positions before, so he expects Nolan to extend the fight and outgrapple him.",
+          "confidence": 5
+        }
+      ]
     },
     {
       "fight_id": "fernando|tobias",
@@ -334,7 +588,14 @@
       "avg_confidence": 4.0,
       "strength": 5.6,
       "tier": "lean",
-      "suggested_units": 1.0
+      "suggested_units": 1.0,
+      "comments": [
+        {
+          "capper": "We Want Picks (Jacob)",
+          "comment": "Both like Fernando's striking, length and athleticism over Tobias's brute-force grappling, but at -300 in a UFC debut they are picking him without betting the moneyline.",
+          "confidence": 4
+        }
+      ]
     },
     {
       "fight_id": "kai|luque",
@@ -348,7 +609,14 @@
       "avg_confidence": 4.0,
       "strength": 5.5,
       "tier": "lean",
-      "suggested_units": 1.0
+      "suggested_units": 1.0,
+      "comments": [
+        {
+          "capper": "We Want Picks (Jacob)",
+          "comment": "Angelo says Luque is better everywhere and the line movement making him a dog makes no sense, but he is only picking him, not betting him.",
+          "confidence": 4
+        }
+      ]
     },
     {
       "fight_id": "fernandes|turner",
@@ -362,7 +630,14 @@
       "avg_confidence": 3.0,
       "strength": 5.4,
       "tier": "lean",
-      "suggested_units": 1.0
+      "suggested_units": 1.0,
+      "comments": [
+        {
+          "capper": "Livid Larry MMA",
+          "comment": "Suggested as a hedge alongside the Fernandes moneyline since Turner is the bigger, more dangerous finisher.",
+          "confidence": 3
+        }
+      ]
     },
     {
       "fight_id": "johnson|ochoa",
@@ -376,7 +651,24 @@
       "avg_confidence": 5.3,
       "strength": 5.1,
       "tier": "lean",
-      "suggested_units": 1.0
+      "suggested_units": 1.0,
+      "comments": [
+        {
+          "capper": "We Want Picks (Jacob)",
+          "comment": "Johnson tends to give away the first round which is fatal in a 15-minute fight, and Ochoa's pressure, volume, power and speed should carry it; capper doesn't love the -335 price.",
+          "confidence": 5
+        },
+        {
+          "capper": "BetSlam with Sam",
+          "comment": "Ochoa is the younger, active, intense striker with decent takedown defense; sees it as a passing of the torch over the 36-year-old Johnson.",
+          "confidence": 5
+        },
+        {
+          "capper": "Livid Larry MMA",
+          "comment": "Picks Ochoa to beat Johnson in the featured fight.",
+          "confidence": 6
+        }
+      ]
     },
     {
       "fight_id": "barboza|ribovics",
@@ -390,7 +682,24 @@
       "avg_confidence": 6.0,
       "strength": 5.0,
       "tier": "lean",
-      "suggested_units": 1.0
+      "suggested_units": 1.0,
+      "comments": [
+        {
+          "capper": "BetSlam with Sam",
+          "comment": "Barboza is 40 and has absorbed massive damage recently; Ribovics is durable, high-volume and pressuring, so he expects a punches-in-bunches breakdown finish.",
+          "confidence": 7
+        },
+        {
+          "capper": "Artem MMA",
+          "comment": "Ribovics' pressure, volume and power should overwhelm a 40-year-old Barboza who has taken a lot of damage; no specific round given since it could come in any of the three.",
+          "confidence": 6
+        },
+        {
+          "capper": "Livid Larry MMA",
+          "comment": "Expects the win to come most likely by KO.",
+          "confidence": 5
+        }
+      ]
     },
     {
       "fight_id": "gore|luque",
@@ -404,7 +713,19 @@
       "avg_confidence": 4.0,
       "strength": 4.4,
       "tier": "pass",
-      "suggested_units": 0.0
+      "suggested_units": 0.0,
+      "comments": [
+        {
+          "capper": "TonyHasDiedMMA",
+          "comment": "Doesn't like Luque's move up to 185 at age 35 after recent poor showings, while Gore is the bigger man and dangerous with front chokes.",
+          "confidence": 5
+        },
+        {
+          "capper": "BetSlam with Sam",
+          "comment": "Low confidence play; believes Luque is battle-worn, doesn't wear damage well and has no wins at middleweight, while Gore is the stronger, more willing man.",
+          "confidence": 3
+        }
+      ]
     },
     {
       "fight_id": "alvarez|njokuani",
@@ -418,7 +739,19 @@
       "avg_confidence": 7.5,
       "strength": 4.2,
       "tier": "pass",
-      "suggested_units": 0.0
+      "suggested_units": 0.0,
+      "comments": [
+        {
+          "capper": "TonyHasDiedMMA",
+          "comment": "Alvarez has a ~95% finish rate and is dangerous everywhere; Njokuani can't grapple and got hit repeatedly by lesser strikers like Carlos Leal.",
+          "confidence": 8
+        },
+        {
+          "capper": "Livid Larry MMA",
+          "comment": "Njokuani has a poor record against grapplers and Alvarez has a huge grappling advantage; if he uses the wrestling he could finish early in round one or two.",
+          "confidence": 7
+        }
+      ]
     },
     {
       "fight_id": "fernandes|turner",
@@ -432,7 +765,19 @@
       "avg_confidence": 6.5,
       "strength": 4.1,
       "tier": "pass",
-      "suggested_units": 0.0
+      "suggested_units": 0.0,
+      "comments": [
+        {
+          "capper": "BetSlam with Sam",
+          "comment": "Medium confidence: Turner is a gifted, huge, hard-hitting lightweight and Fernandes' opposition wouldn't beat him; a naked leg kick could get him cracked early.",
+          "confidence": 6
+        },
+        {
+          "capper": "Artem MMA",
+          "comment": "Turner is the side whenever he faces a non-wrestler, he's enormous for 155, his fights rarely leave round one, and the odds are close.",
+          "confidence": 7
+        }
+      ]
     },
     {
       "fight_id": "brahimaj|magny",
@@ -446,7 +791,19 @@
       "avg_confidence": 5.5,
       "strength": 3.4,
       "tier": "pass",
-      "suggested_units": 0.0
+      "suggested_units": 0.0,
+      "comments": [
+        {
+          "capper": "TonyHasDiedMMA",
+          "comment": "Thinks Brahimaj is overrated with wins only over cans, while Magny has huge height/reach, experience and a grappling edge and can pick him apart off the back foot for a decision.",
+          "confidence": 6
+        },
+        {
+          "capper": "We Want Picks (Jacob)",
+          "comment": "Jacob takes the dog Magny as the safer pick, saying it's a tailor-made Magny fight where he weathers the early submission threat and wears Brahimaj down for the decision.",
+          "confidence": 5
+        }
+      ]
     },
     {
       "fight_id": "johnson|mcconico",
@@ -460,7 +817,19 @@
       "avg_confidence": 4.0,
       "strength": 3.1,
       "tier": "pass",
-      "suggested_units": 0.0
+      "suggested_units": 0.0,
+      "comments": [
+        {
+          "capper": "Livid Larry MMA",
+          "comment": "Johnson's explosiveness, power and speed should matter in the striking exchanges and get an early finish, but McConico is the more technical guy and very live as a dog; low to mid confidence.",
+          "confidence": 4
+        },
+        {
+          "capper": "Artem MMA",
+          "comment": "Johnson's boxing is his real skill set and McConico hates being backed up and hit; the worry is Johnson's terrible fight IQ leading him to wrestle again.",
+          "confidence": 4
+        }
+      ]
     },
     {
       "fight_id": "gorimbo|luque",
@@ -474,7 +843,14 @@
       "avg_confidence": 5.0,
       "strength": 3.1,
       "tier": "pass",
-      "suggested_units": 0.0
+      "suggested_units": 0.0,
+      "comments": [
+        {
+          "capper": "Livid Larry MMA",
+          "comment": "A 50/50 fight where he takes the underdog: Luque is arguably better everywhere technically and if he hurts his opponent he'll likely club-and-sub with a front choke, though he's worried about Luque's durability.",
+          "confidence": 5
+        }
+      ]
     },
     {
       "fight_id": "dern|robertson",
@@ -488,7 +864,19 @@
       "avg_confidence": 6.5,
       "strength": 2.9,
       "tier": "pass",
-      "suggested_units": 0.0
+      "suggested_units": 0.0,
+      "comments": [
+        {
+          "capper": "Livid Larry MMA",
+          "comment": "Bad stylistic matchup for Robertson: Dern is dangerous on the ground and clearly more technical and dangerous on the feet, so if Robertson can't dominate with wrestling she loses; borderline confident-picks-list addition possibly in a two-legger.",
+          "confidence": 7
+        },
+        {
+          "capper": "Artem MMA",
+          "comment": "Dern's improved striking wins the exchanges while the grappling cancels out; as an experienced champ ahead on the cards she won't risk chasing a finish.",
+          "confidence": 6
+        }
+      ]
     },
     {
       "fight_id": "johnson|mcconico",
@@ -502,7 +890,14 @@
       "avg_confidence": 6.0,
       "strength": 2.9,
       "tier": "pass",
-      "suggested_units": 0.0
+      "suggested_units": 0.0,
+      "comments": [
+        {
+          "capper": "We Want Picks (Jacob)",
+          "comment": "Neither man has a clean UFC win, but based on potential, regional wins and power Johnson is the better fighter right now and should have the performance people have been expecting; odds are fine.",
+          "confidence": 6
+        }
+      ]
     }
   ]
 }

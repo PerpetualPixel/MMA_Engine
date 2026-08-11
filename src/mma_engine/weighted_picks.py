@@ -19,6 +19,12 @@ fully backed. Strength maps to a tier and a suggested stake:
     strength >= 7.5  ->  "strong"  (2.0 units)
     strength >= 5.0  ->  "lean"    (1.0 unit)
     otherwise        ->  "pass"    (0 units)
+
+Each pick also carries `comments`: the backing cappers' own reasoning for the
+consensus selection, verbatim from the extraction step, so the website can
+show WHY the cappers like the pick, not just that they do. Additive field —
+schema_version stays 1; consumers that only read the original fields are
+unaffected.
 """
 
 from __future__ import annotations
@@ -51,6 +57,26 @@ def _tier(strength: float) -> str:
     return "pass"
 
 
+def _comments(option: dict[str, Any]) -> list[dict[str, Any]]:
+    """The backing cappers' reasoning, ordered by trust so the most
+    trusted voice reads first. Cappers whose extraction produced no
+    reasoning text are skipped rather than emitted as empty bullets."""
+    backers = sorted(
+        option.get("cappers", []),
+        key=lambda c: c.get("trust", 0.0),
+        reverse=True,
+    )
+    return [
+        {
+            "capper": c.get("name") or c.get("id") or "Unknown capper",
+            "comment": c["reasoning"].strip(),
+            "confidence": c.get("confidence"),
+        }
+        for c in backers
+        if c.get("reasoning", "").strip()
+    ]
+
+
 def build_picks(consensus: dict[str, Any]) -> dict[str, Any]:
     """Distill a consensus payload into the weighted picks feed."""
     picks: list[dict[str, Any]] = []
@@ -77,6 +103,7 @@ def build_picks(consensus: dict[str, Any]) -> dict[str, Any]:
                     "strength": strength,
                     "tier": tier,
                     "suggested_units": UNITS[tier],
+                    "comments": _comments(top),
                 }
             )
 
