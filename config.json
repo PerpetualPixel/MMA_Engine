@@ -32,7 +32,9 @@
       "max_videos_per_channel": 3,
       "title_contains": [
         "ufc 330",
-        "ufc330"
+        "ufc330",
+        "makhachev",
+        "garry"
       ]
     },
     "proxy": {
