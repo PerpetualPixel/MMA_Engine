@@ -19,6 +19,7 @@ import json
 import logging
 import random
 import subprocess
+import sys
 import tempfile
 import time
 from dataclasses import dataclass
@@ -245,9 +246,17 @@ class TranscriptFetcher:
         """The yt-dlp invocation for a captions-only, authenticated fetch. Grabs
         both manual and auto-generated subs in the configured languages as
         json3 (the same timed-text shape the primary API returns), never the
-        video itself."""
+        video itself.
+
+        Invoked as `python -m yt_dlp` through the interpreter running the
+        pipeline, not the bare `yt-dlp` console script: weekly.ps1 runs the
+        pipeline via `.venv\\Scripts\\python.exe -m mma_engine` WITHOUT
+        activating the venv, so `.venv\\Scripts` (where `yt-dlp.exe` lives)
+        isn't on PATH and a bare `yt-dlp` call fails with FileNotFoundError.
+        Going through sys.executable uses the same venv that pip installed
+        yt-dlp into, regardless of PATH."""
         cmd = [
-            "yt-dlp",
+            sys.executable, "-m", "yt_dlp",
             *self.cookie_config.ytdlp_args(),
             "--skip-download",
             "--write-subs",
@@ -281,14 +290,22 @@ class TranscriptFetcher:
                     timeout=self.ytdlp_timeout,
                 )
             except FileNotFoundError:
-                log.error("yt-dlp is not installed; cannot fetch age-restricted %s", video_id)
+                # sys.executable missing is essentially impossible, but keep a
+                # clear message rather than a bare traceback if it ever happens.
+                log.error("Python interpreter not found; cannot run yt-dlp for %s", video_id)
                 return None
             except subprocess.TimeoutExpired:
                 log.warning("[%s] yt-dlp timed out after %.0fs", video_id, self.ytdlp_timeout)
                 return None
             except subprocess.CalledProcessError as exc:
                 stderr = (exc.stderr or b"").decode("utf-8", "replace").strip()
-                log.warning("[%s] yt-dlp failed: %s", video_id, stderr.splitlines()[-1] if stderr else exc)
+                # `python -m yt_dlp` when the package isn't installed exits with
+                # "No module named yt_dlp" — call that out specifically so the
+                # fix (pip install / rerun weekly.bat) is obvious.
+                if "No module named" in stderr and "yt_dlp" in stderr:
+                    log.error("yt-dlp is not installed in this environment; run pip install -r requirements.txt")
+                else:
+                    log.warning("[%s] yt-dlp failed: %s", video_id, stderr.splitlines()[-1] if stderr else exc)
                 return None
 
             # yt-dlp names subs "<id>.<lang>.json3"; a language may resolve to a
