@@ -1,7 +1,8 @@
 youtube-transcript-api>=1.2,<2
 # Authenticated fallback for age-restricted / PoToken-gated videos the
 # anonymous transcript API can't read (see mma_engine.transcripts). Invoked as
-# a CLI subprocess, so the console script must be on PATH.
+# `python -m yt_dlp` through the running interpreter, so it just needs to be
+# importable in the same venv — no PATH/console-script dependency.
 yt-dlp>=2024.1
 requests>=2.31
 anthropic>=0.121,<1

@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import json
 import subprocess
+import sys
 from pathlib import Path
 
 import pytest
@@ -96,7 +97,10 @@ def test_preferred_sub_file_falls_back_to_first():
 def test_ytdlp_command_shape():
     fetcher = TranscriptFetcher(cookie_config=CookieConfig(from_browser="chrome"), languages=["en", "es"])
     cmd = fetcher._ytdlp_command("VIDEOID1234", "/tmp/%(id)s.%(ext)s")
-    assert cmd[0] == "yt-dlp"
+    # Invoked as `python -m yt_dlp` through the running interpreter, not the
+    # bare console script — weekly.ps1 runs the venv python without activating
+    # it, so .venv\Scripts isn't on PATH and a bare "yt-dlp" would 404.
+    assert cmd[:3] == [sys.executable, "-m", "yt_dlp"]
     assert "--cookies-from-browser" in cmd and "chrome" in cmd
     assert "--skip-download" in cmd
     assert "--write-subs" in cmd and "--write-auto-subs" in cmd
@@ -215,12 +219,32 @@ def test_ytdlp_failure_returns_clean_error(tmp_path, monkeypatch):
 
 
 def test_ytdlp_not_installed_returns_clean_error(tmp_path, monkeypatch):
+    # `python -m yt_dlp` with the package missing exits non-zero with
+    # "No module named yt_dlp" on stderr — a CalledProcessError, not a
+    # FileNotFoundError (that would only fire if the interpreter itself were
+    # gone). Either way the fetch degrades cleanly.
     fetcher = _fetcher_with_primary_error(
         tmp_path, AgeRestricted("v"), cookie_config=CookieConfig(from_browser="chrome")
     )
 
     def fake_run(cmd, check, capture_output, timeout):  # noqa: ARG001
-        raise FileNotFoundError("yt-dlp")
+        raise subprocess.CalledProcessError(
+            1, cmd, output=b"", stderr=b"C:\\py.exe: No module named yt_dlp\n"
+        )
+
+    monkeypatch.setattr(subprocess, "run", fake_run)
+    result = fetcher.fetch("vid00000001")
+    assert not result.ok
+    assert "did not return captions" in result.error
+
+
+def test_ytdlp_missing_interpreter_returns_clean_error(tmp_path, monkeypatch):
+    fetcher = _fetcher_with_primary_error(
+        tmp_path, AgeRestricted("v"), cookie_config=CookieConfig(from_browser="chrome")
+    )
+
+    def fake_run(cmd, check, capture_output, timeout):  # noqa: ARG001
+        raise FileNotFoundError("python")
 
     monkeypatch.setattr(subprocess, "run", fake_run)
     result = fetcher.fetch("vid00000001")
