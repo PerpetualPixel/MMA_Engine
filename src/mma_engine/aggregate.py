@@ -232,7 +232,16 @@ def build_consensus(
         if option is None:
             option = _Option(label=pick.selection.strip())
             market[option_key] = option
-        option.sources.append(source)
+        # One vote per capper per option: a capper who posted two videos about
+        # the same card shouldn't count double. Keep their strongest statement.
+        duplicate = next(
+            (i for i, s in enumerate(option.sources) if s.capper.id == source.capper.id),
+            None,
+        )
+        if duplicate is None:
+            option.sources.append(source)
+        elif source.weight > option.sources[duplicate].weight:
+            option.sources[duplicate] = source
 
     fights: list[dict[str, Any]] = []
     for key, markets in grouped.items():

@@ -15,78 +15,175 @@
     --muted: #8b949e;
     --accent: #f0883e;
     --strong: #3fb950;
+    --strong-dim: #1d3325;
     --weak: #6e7681;
     --split: #d29922;
+    --split-dim: #33290f;
+    --dog: #f0883e;
   }
   * { box-sizing: border-box; }
+  html { scrollbar-gutter: stable; }
   body {
     margin: 0;
     background: var(--bg);
     color: var(--text);
-    font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   }
-  .wrap { max-width: 980px; margin: 0 auto; padding: 32px 20px 80px; }
+  .wrap { max-width: 1060px; margin: 0 auto; padding: 24px 18px 80px; }
 
-  header { border-bottom: 1px solid var(--border); padding-bottom: 20px; margin-bottom: 28px; }
-  h1 { margin: 0 0 4px; font-size: 26px; letter-spacing: -0.02em; }
+  header { padding-bottom: 6px; }
+  h1 { margin: 0 0 2px; font-size: 22px; letter-spacing: -0.02em; }
   h1 span { color: var(--accent); }
-  .event { font-size: 19px; font-weight: 600; margin-top: 12px; }
-  .meta { color: var(--muted); font-size: 13px; margin-top: 4px; }
+  .event-line { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; margin-top: 8px; }
+  .event { font-size: 18px; font-weight: 700; }
+  .meta { color: var(--muted); font-size: 12px; }
 
-  .totals { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
-  .stat {
-    background: var(--panel); border: 1px solid var(--border); border-radius: 8px;
-    padding: 10px 14px; min-width: 96px;
+  /* -- tabs -- */
+  nav.tabs {
+    display: flex; gap: 4px; flex-wrap: wrap; margin: 16px 0 18px;
+    border-bottom: 1px solid var(--border); position: sticky; top: 0;
+    background: var(--bg); z-index: 5; padding-top: 6px;
   }
-  .stat b { display: block; font-size: 20px; }
-  .stat span { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .04em; }
+  nav.tabs button {
+    background: none; border: 0; border-bottom: 2px solid transparent;
+    color: var(--muted); font: inherit; font-weight: 600; font-size: 14px;
+    padding: 8px 12px; cursor: pointer;
+  }
+  nav.tabs button:hover { color: var(--text); }
+  nav.tabs button.active { color: var(--accent); border-bottom-color: var(--accent); }
 
-  .fight {
+  /* -- controls -- */
+  .controls {
+    display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center;
     background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
-    margin-bottom: 18px; overflow: hidden;
+    padding: 10px 14px; margin-bottom: 16px; font-size: 13px;
   }
-  .fight > h2 {
-    margin: 0; padding: 14px 18px; font-size: 18px;
-    border-bottom: 1px solid var(--border); display: flex;
-    justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap;
+  .controls label { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; color: var(--muted); }
+  .controls label:hover { color: var(--text); }
+  .controls select, .controls input[type=range] { accent-color: var(--accent); }
+  .controls select {
+    background: var(--panel-2); color: var(--text); border: 1px solid var(--border);
+    border-radius: 6px; padding: 4px 8px; font: inherit;
   }
-  .fight > h2 small { color: var(--muted); font-size: 12px; font-weight: 400; }
+  .controls .hint { color: var(--weak); font-size: 12px; }
+  .count-note { color: var(--muted); font-size: 12px; margin: -8px 0 12px 2px; }
 
-  .market { padding: 14px 18px; border-bottom: 1px solid var(--border); }
-  .market:last-child { border-bottom: 0; }
-  .market > h3 {
-    margin: 0 0 10px; font-size: 12px; text-transform: uppercase;
-    letter-spacing: .07em; color: var(--muted); font-weight: 600;
+  /* -- fight card, two sides -- */
+  .duel {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+    margin-bottom: 14px; overflow: hidden;
   }
+  .duel > h2 {
+    margin: 0; padding: 10px 16px 8px; font-size: 15px; font-weight: 700;
+    display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; align-items: baseline;
+  }
+  .duel > h2 .badges { display: flex; gap: 6px; }
+  .badge {
+    font-size: 10px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+    padding: 2px 8px; border-radius: 999px; border: 1px solid var(--border); color: var(--muted);
+  }
+  .badge.lock { color: var(--strong); border-color: var(--strong); }
+  .badge.pickem { color: var(--split); border-color: var(--split); }
+  .badge.dog { color: var(--dog); border-color: var(--dog); }
 
-  details.option { border-top: 1px solid var(--border); }
-  details.option:first-of-type { border-top: 0; }
-  details.option > summary {
-    list-style: none; cursor: pointer; padding: 9px 0;
-    display: grid; grid-template-columns: 1fr auto; gap: 4px 14px; align-items: center;
-  }
-  details.option > summary::-webkit-details-marker { display: none; }
-  .sel { font-weight: 600; }
-  .pct { font-variant-numeric: tabular-nums; font-weight: 700; }
-  .bar { grid-column: 1 / -1; height: 6px; border-radius: 3px; background: var(--panel-2); overflow: hidden; }
+  .sides { display: grid; grid-template-columns: 1fr 1fr; }
+  .side { padding: 10px 16px 14px; border-top: 1px solid var(--border); min-width: 0; }
+  .side + .side { border-left: 1px solid var(--border); }
+  .side.lead { background: var(--strong-dim); }
+  .side.split-side { background: var(--split-dim); }
+  .side h3 { margin: 0 0 2px; font-size: 15px; display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+  .side .pct { font-variant-numeric: tabular-nums; font-weight: 800; font-size: 17px; }
+  .side.lead .pct { color: var(--strong); }
+  .side.split-side .pct { color: var(--split); }
+  .statline { color: var(--muted); font-size: 12px; margin-bottom: 6px; }
+  .statline b { color: var(--text); font-variant-numeric: tabular-nums; }
+  .bar { height: 5px; border-radius: 3px; background: var(--panel-2); overflow: hidden; margin: 4px 0 8px; }
   .bar i { display: block; height: 100%; background: var(--weak); }
-  .bar.is-strong i { background: var(--strong); }
-  .bar.is-split i { background: var(--split); }
-  .sub { grid-column: 1 / -1; color: var(--muted); font-size: 12px; }
+  .side.lead .bar i { background: var(--strong); }
+  .side.split-side .bar i { background: var(--split); }
 
-  table { width: 100%; border-collapse: collapse; margin: 6px 0 14px; font-size: 14px; }
+  ul.why { margin: 6px 0 8px; padding-left: 18px; color: var(--muted); font-size: 12.5px; }
+  ul.why li { margin: 2px 0; }
+
+  button.cappers-btn {
+    background: var(--panel-2); border: 1px solid var(--border); color: var(--text);
+    font: inherit; font-size: 12px; border-radius: 999px; padding: 3px 12px; cursor: pointer;
+  }
+  button.cappers-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .none { color: var(--weak); font-size: 12.5px; font-style: italic; padding: 4px 0; }
+
+  .mov-row { border-top: 1px dashed var(--border); padding: 6px 0 2px; margin-top: 6px; }
+  .mov-row:first-of-type { border-top: 0; margin-top: 0; }
+  .mov-row .mv-label { font-weight: 600; font-size: 13px; }
+
+  /* -- cappers tab -- */
+  .capper-row {
+    display: grid; grid-template-columns: auto 1fr auto auto; gap: 12px; align-items: center;
+    background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+    padding: 10px 16px; margin-bottom: 8px; cursor: pointer;
+  }
+  .capper-row:hover { border-color: var(--accent); }
+  .capper-row .rank { color: var(--weak); font-variant-numeric: tabular-nums; width: 24px; }
+  .capper-row .cname { font-weight: 700; }
+  .capper-row .cstat { color: var(--muted); font-size: 12px; text-align: right; font-variant-numeric: tabular-nums; }
+  .capper-row .cstat b { color: var(--text); display: block; font-size: 15px; }
+
+  /* -- parlay -- */
+  .leg {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+    padding: 10px 16px; margin-bottom: 8px; display: grid;
+    grid-template-columns: auto 1fr auto; gap: 4px 14px; align-items: center;
+  }
+  .leg .lnum {
+    background: var(--panel-2); border-radius: 50%; width: 26px; height: 26px;
+    display: grid; place-items: center; font-weight: 700; font-size: 13px; color: var(--accent);
+  }
+  .leg .lmain { min-width: 0; }
+  .leg .lsel { font-weight: 700; }
+  .leg .lsub { color: var(--muted); font-size: 12px; }
+  .leg .lstats { text-align: right; font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .leg .lstats b { color: var(--text); }
+
+  /* -- overlay -- */
+  .overlay {
+    position: fixed; inset: 0; background: rgba(2, 6, 12, .72); z-index: 50;
+    display: none; align-items: flex-start; justify-content: center; padding: 40px 14px;
+    overflow-y: auto;
+  }
+  .overlay.open { display: flex; }
+  .sheet {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 12px;
+    max-width: 760px; width: 100%; padding: 18px 20px 20px; position: relative;
+  }
+  .sheet h3 { margin: 0 32px 4px 0; font-size: 17px; }
+  .sheet .sub { color: var(--muted); font-size: 12px; margin-bottom: 12px; }
+  .sheet .close {
+    position: absolute; top: 12px; right: 12px; background: var(--panel-2);
+    border: 1px solid var(--border); color: var(--muted); border-radius: 8px;
+    font-size: 14px; width: 30px; height: 30px; cursor: pointer;
+  }
+  .sheet .close:hover { color: var(--text); border-color: var(--accent); }
+
+  table { width: 100%; border-collapse: collapse; margin: 6px 0 4px; font-size: 13.5px; }
   th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
   th { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .05em; font-weight: 600; }
   td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
-  .why { color: var(--muted); }
+  .why-cell { color: var(--muted); }
   .tag {
     display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 999px;
     border: 1px solid var(--border); color: var(--muted);
   }
-  .tag.underdog { color: var(--accent); border-color: var(--accent); }
+  .tag.underdog { color: var(--dog); border-color: var(--dog); }
   .tag.favorite { color: var(--strong); border-color: var(--strong); }
   .table-wrap { overflow-x: auto; }
   a { color: var(--accent); }
+
+  .pick-group { margin-bottom: 14px; }
+  .pick-group h4 { margin: 0 0 4px; font-size: 14px; }
+  .pick-line { padding: 5px 0 5px 12px; border-left: 2px solid var(--border); margin: 4px 0; }
+  .pick-line .psel { font-weight: 600; font-size: 13.5px; }
+  .pick-line .pmeta { color: var(--muted); font-size: 12px; }
+  .pick-line .pwhy { color: var(--muted); font-size: 12.5px; margin-top: 2px; }
 
   .notice {
     background: var(--panel); border: 1px solid var(--border); border-left: 3px solid var(--accent);
@@ -95,83 +192,599 @@
   .notice code { color: var(--text); }
   footer { margin-top: 40px; color: var(--muted); font-size: 12px; }
   footer details summary { cursor: pointer; }
+
+  @media (max-width: 700px) {
+    .sides { grid-template-columns: 1fr; }
+    .side + .side { border-left: 0; }
+    .capper-row { grid-template-columns: auto 1fr auto; }
+    .capper-row .cstat.picks { display: none; }
+  }
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
     <h1>MMA <span>Consensus</span> Engine</h1>
-    <div class="meta">Trust-weighted betting consensus from tracked YouTube cappers.</div>
-    <div id="event"></div>
+    <div class="event-line"><div class="event" id="event-name"></div><div class="meta" id="event-meta"></div></div>
   </header>
 
+  <nav class="tabs" id="tabs"></nav>
   <main id="main"><p class="notice">Loading&hellip;</p></main>
-
   <footer id="footer"></footer>
 </div>
 
+<div class="overlay" id="overlay"><div class="sheet" id="sheet"></div></div>
+
 <script>
+"use strict";
 const $ = (sel) => document.querySelector(sel);
 
 const esc = (value) =>
   String(value ?? "").replace(/[&<>"']/g, (c) =>
     ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
-function barClass(pct, optionCount) {
-  if (optionCount < 2) return "";
-  if (pct >= 70) return " is-strong";
-  if (pct >= 45) return " is-split";
-  return "";
+const fmt1 = (n) => (Math.round(n * 10) / 10).toFixed(1);
+
+/* ---------- thresholds (shown to the user in the controls) ---------- */
+const LOCK = { minShare: 75, minConf: 7.5, minPicks: 2 };
+const PICKEM_MAX_SHARE = 62;
+
+/* ---------- state ---------- */
+const state = {
+  data: null,
+  model: null,
+  tab: "ml",
+  ml:  { sort: "card", hidePickems: false, locksOnly: false },
+  mov: { sort: "card", hidePickems: false, locksOnly: false },
+  dc:  { sort: "card", hidePickems: false, locksOnly: false },
+  dog: { sort: "card" },
+  parlay: { types: { ml: true, mov: true, dc: false, props: false }, legs: 3, useConf: false, minConf: 6 },
+};
+
+/* ---------- model building ---------- */
+const lastToken = (name) =>
+  (name || "").toLowerCase().replace(/[^a-z0-9\s]/g, "").trim().split(/\s+/).pop() || "";
+
+function sideOfSelection(fight, selection) {
+  const s = (selection || "").toLowerCase();
+  const ta = lastToken(fight.fighter_a), tb = lastToken(fight.fighter_b);
+  const hasA = ta && s.includes(ta), hasB = tb && s.includes(tb);
+  if (hasA && !hasB) return "a";
+  if (hasB && !hasA) return "b";
+  // fall back to any-token match on the full name
+  const anyTok = (full) => (full || "").toLowerCase().split(/\s+/).some((t) => t.length > 3 && s.includes(t));
+  if (anyTok(fight.fighter_a) && !anyTok(fight.fighter_b)) return "a";
+  if (anyTok(fight.fighter_b) && !anyTok(fight.fighter_a)) return "b";
+  return null;
 }
 
-function renderCappers(cappers) {
-  const rows = cappers.map((c) => `
+function majorityRole(cappers) {
+  const counts = {};
+  for (const c of cappers || []) counts[c.role] = (counts[c.role] || 0) + 1;
+  if ((counts.underdog || 0) > (counts.favorite || 0)) return "underdog";
+  if ((counts.favorite || 0) > (counts.underdog || 0)) return "favorite";
+  return "unknown";
+}
+
+function methodShort(selection) {
+  const s = (selection || "").toLowerCase();
+  if (/(ko|tko|knock)/.test(s)) return "KO/TKO";
+  if (/(sub|choke|tap|armbar|guillotine|kimura)/.test(s)) return "SUB";
+  if (/(dec|cards|judges|points)/.test(s)) return "DEC";
+  if (/inside the distance|finish|stoppage/.test(s)) return "Inside distance";
+  const round = s.match(/round\s*(\d)/);
+  if (round) return "R" + round[1];
+  return null;
+}
+
+function buildModel(data) {
+  const fights = (data.fights || []).map((f, index) => {
+    const markets = {};
+    for (const m of f.markets || []) markets[m.bet_type] = m;
+
+    const ml = { a: null, b: null, other: [] };
+    for (const o of markets.moneyline?.options || []) {
+      const side = sideOfSelection(f, o.selection);
+      if (side && !ml[side]) ml[side] = o; else ml.other.push(o);
+    }
+    const mov = { a: [], b: [], other: [] };
+    for (const o of markets.method_of_victory?.options || []) {
+      const side = sideOfSelection(f, o.selection);
+      (side ? mov[side] : mov.other).push(o);
+    }
+    const props = [];
+    for (const type of ["over_under", "round", "prop"]) {
+      for (const o of markets[type]?.options || []) props.push({ ...o, bet_label: markets[type].label });
+    }
+
+    // underdog side, judged by how the cappers framed their moneyline picks
+    let dogSide = null;
+    for (const side of ["a", "b"]) {
+      const backers = [...(ml[side]?.cappers || []), ...mov[side].flatMap((o) => o.cappers || [])];
+      if (majorityRole(backers) === "underdog") dogSide = side;
+    }
+
+    return { ...f, cardIndex: index, ml, mov, props, dogSide };
+  });
+  return { fights };
+}
+
+/* ---------- ML side stats ---------- */
+function mlShare(fight, side) {
+  const opt = fight.ml[side];
+  if (!opt) return 0;
+  return opt.consensus_pct;
+}
+function mlLead(fight) {
+  const a = mlShare(fight, "a"), b = mlShare(fight, "b");
+  if (!fight.ml.a && !fight.ml.b) return null;
+  const side = a >= b ? "a" : "b";
+  return { side, share: Math.max(a, b), opt: fight.ml[side] };
+}
+function isLock(share, opt) {
+  return opt && share >= LOCK.minShare && opt.avg_confidence >= LOCK.minConf && opt.pick_count >= LOCK.minPicks;
+}
+function isPickem(fight) {
+  const lead = mlLead(fight);
+  if (!lead) return false;
+  const other = lead.side === "a" ? fight.ml.b : fight.ml.a;
+  return !!other && lead.share < PICKEM_MAX_SHARE;
+}
+
+/* ---------- reasoning bullets ---------- */
+function shortWhy(text, max = 140) {
+  let t = (text || "").trim();
+  if (!t) return "";
+  const sentence = t.match(/^.{20,}?[.!?](\s|$)/);
+  if (sentence && sentence[0].length <= max) t = sentence[0].trim();
+  if (t.length > max) t = t.slice(0, max - 1).replace(/\s+\S*$/, "") + "…";
+  return t;
+}
+function bullets(cappers, cap = 3) {
+  const ranked = [...(cappers || [])]
+    .sort((x, y) => y.trust * y.confidence - x.trust * x.confidence)
+    .map((c) => shortWhy(c.reasoning)).filter(Boolean);
+  const seen = new Set(), out = [];
+  for (const b of ranked) {
+    const key = b.toLowerCase().slice(0, 60);
+    if (seen.has(key)) continue;
+    seen.add(key); out.push(b);
+    if (out.length >= cap) break;
+  }
+  return out;
+}
+
+/* ---------- overlay ---------- */
+function openOverlay(html) {
+  $("#sheet").innerHTML = `<button class="close" aria-label="Close">&times;</button>` + html;
+  $("#overlay").classList.add("open");
+}
+function closeOverlay() { $("#overlay").classList.remove("open"); }
+$("#overlay").addEventListener("click", (e) => { if (e.target.id === "overlay" || e.target.classList.contains("close")) closeOverlay(); });
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeOverlay(); });
+
+function capperTable(cappers) {
+  const rows = (cappers || []).map((c) => `
     <tr>
       <td>${esc(c.name)}</td>
       <td class="num">${esc(c.confidence)}/10</td>
       <td class="num">${esc(c.trust)}</td>
       <td>${c.role && c.role !== "unknown" ? `<span class="tag ${esc(c.role)}">${esc(c.role)}</span>` : ""}</td>
       <td class="num">${esc(c.odds || "—")}</td>
-      <td class="why">${esc(c.reasoning || "")}</td>
+      <td class="why-cell">${esc(c.reasoning || "")}</td>
     </tr>`).join("");
   return `<div class="table-wrap"><table>
     <thead><tr><th>Capper</th><th>Conf</th><th>Trust</th><th>Framed as</th><th>Odds</th><th>Stated reasoning</th></tr></thead>
     <tbody>${rows}</tbody></table></div>`;
 }
 
-function renderOption(option, optionCount) {
-  const plural = option.pick_count === 1 ? "capper" : "cappers";
-  return `<details class="option">
-    <summary>
-      <span class="sel">${esc(option.selection)}</span>
-      <span class="pct">${esc(option.consensus_pct)}%</span>
-      <span class="bar${barClass(option.consensus_pct, optionCount)}"><i style="width:${Math.max(0, Math.min(100, option.consensus_pct))}%"></i></span>
-      <span class="sub">${option.pick_count} ${plural} &middot; avg confidence ${esc(option.avg_confidence)}/10 &middot; weight ${esc(option.weight)}</span>
-    </summary>
-    ${renderCappers(option.cappers)}
-  </details>`;
+const overlayPayloads = [];
+function capperBtn(title, subtitle, cappers) {
+  if (!cappers || !cappers.length) return "";
+  const id = overlayPayloads.length;
+  overlayPayloads.push({ title, subtitle, cappers });
+  const label = cappers.length === 1 ? "1 capper" : `${cappers.length} cappers`;
+  return `<button class="cappers-btn" data-ov="${id}">${label} — names</button>`;
+}
+document.addEventListener("click", (e) => {
+  const btn = e.target.closest("[data-ov]");
+  if (!btn) return;
+  const p = overlayPayloads[Number(btn.dataset.ov)];
+  if (p) openOverlay(`<h3>${esc(p.title)}</h3><div class="sub">${esc(p.subtitle)}</div>${capperTable(p.cappers)}`);
+});
+
+/* ---------- shared controls ---------- */
+function controlsHtml(key, { sorts = true, filters = true } = {}) {
+  const s = state[key];
+  return `<div class="controls" data-ctl="${key}">
+    ${sorts ? `<label>Sort
+      <select data-ctl-sort>
+        <option value="card"${s.sort === "card" ? " selected" : ""}>Biggest fights first</option>
+        <option value="conf"${s.sort === "conf" ? " selected" : ""}>Confidence (high → low)</option>
+      </select></label>` : ""}
+    ${filters ? `
+    <label><input type="checkbox" data-ctl-pickems${s.hidePickems ? " checked" : ""}> Hide pick&rsquo;ems <span class="hint">(&lt;${PICKEM_MAX_SHARE}% lead)</span></label>
+    <label><input type="checkbox" data-ctl-locks${s.locksOnly ? " checked" : ""}> Locks only <span class="hint">(&ge;${LOCK.minShare}% share, conf &ge;${LOCK.minConf}, &ge;${LOCK.minPicks} cappers)</span></label>` : ""}
+  </div>`;
+}
+document.addEventListener("change", (e) => {
+  const box = e.target.closest("[data-ctl]");
+  if (!box) return;
+  const s = state[box.dataset.ctl];
+  if (e.target.matches("[data-ctl-sort]")) s.sort = e.target.value;
+  if (e.target.matches("[data-ctl-pickems]")) s.hidePickems = e.target.checked;
+  if (e.target.matches("[data-ctl-locks]")) s.locksOnly = e.target.checked;
+  render();
+});
+
+function sortFights(fights, mode, confOf) {
+  const list = [...fights];
+  if (mode === "conf") list.sort((x, y) => confOf(y) - confOf(x));
+  return list;
 }
 
-function renderFight(fight) {
-  const markets = fight.markets.map((market) => `
-    <section class="market">
-      <h3>${esc(market.label)}</h3>
-      ${market.options.map((o) => renderOption(o, market.options.length)).join("")}
-    </section>`).join("");
-  const plural = fight.capper_count === 1 ? "capper" : "cappers";
-  return `<article class="fight">
-    <h2>${esc(fight.display)}<small>${fight.capper_count} ${plural} &middot; ${fight.pick_count} picks</small></h2>
-    ${markets}
-  </article>`;
+/* ---------- side rendering ---------- */
+function sideClass(share, otherShare, hasPicks) {
+  if (!hasPicks) return "";
+  if (share >= otherShare && share >= PICKEM_MAX_SHARE) return " lead";
+  if (share >= 38) return " split-side";
+  return "";
 }
 
+function mlSideHtml(fight, side) {
+  const opt = fight.ml[side];
+  const name = side === "a" ? fight.fighter_a : fight.fighter_b;
+  const other = mlShare(fight, side === "a" ? "b" : "a");
+  const share = mlShare(fight, side);
+  const dog = fight.dogSide === side ? ` <span class="badge dog">underdog</span>` : "";
+  if (!opt) {
+    return `<div class="side"><h3>${esc(name)}${dog}</h3><div class="none">No cappers on this side</div></div>`;
+  }
+  const why = bullets(opt.cappers);
+  return `<div class="side${sideClass(share, other, true)}">
+    <h3>${esc(name)} <span class="pct">${esc(share)}%</span>${dog}</h3>
+    <div class="bar"><i style="width:${Math.max(0, Math.min(100, share))}%"></i></div>
+    <div class="statline">weight <b>${esc(opt.weight)}</b> &middot; avg conf <b>${esc(opt.avg_confidence)}/10</b> &middot; <b>${esc(opt.pick_count)}</b> pick${opt.pick_count === 1 ? "" : "s"}</div>
+    ${why.length ? `<ul class="why">${why.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>` : ""}
+    ${capperBtn(`${name} — moneyline`, fight.display, opt.cappers)}
+  </div>`;
+}
+
+function badgesHtml(fight) {
+  const lead = mlLead(fight);
+  const badges = [];
+  if (lead && isLock(lead.share, lead.opt)) badges.push(`<span class="badge lock">Lock</span>`);
+  if (isPickem(fight)) badges.push(`<span class="badge pickem">Pick&rsquo;em</span>`);
+  return badges.length ? `<span class="badges">${badges.join("")}</span>` : "";
+}
+
+/* ---------- tab: moneylines ---------- */
+function renderML() {
+  const s = state.ml;
+  let fights = state.model.fights.filter((f) => f.ml.a || f.ml.b);
+  if (s.hidePickems) fights = fights.filter((f) => !isPickem(f));
+  if (s.locksOnly) fights = fights.filter((f) => { const l = mlLead(f); return l && isLock(l.share, l.opt); });
+  fights = sortFights(fights, s.sort, (f) => mlLead(f)?.opt.avg_confidence ?? 0);
+
+  const cards = fights.map((f) => `<article class="duel">
+    <h2><span>${esc(f.display)}</span>${badgesHtml(f)}</h2>
+    <div class="sides">${mlSideHtml(f, "a")}${mlSideHtml(f, "b")}</div>
+  </article>`).join("");
+
+  return controlsHtml("ml")
+    + `<div class="count-note">${fights.length} fight${fights.length === 1 ? "" : "s"} with moneyline picks</div>`
+    + (cards || `<p class="notice">Nothing matches the current filters.</p>`);
+}
+
+/* ---------- tab: method of victory ---------- */
+function movLeadConf(fight) {
+  const all = [...fight.mov.a, ...fight.mov.b];
+  return all.length ? Math.max(...all.map((o) => o.avg_confidence)) : 0;
+}
+function movRows(fight, side, title) {
+  const options = fight.mov[side];
+  const name = side === "a" ? fight.fighter_a : fight.fighter_b;
+  const dog = fight.dogSide === side ? ` <span class="badge dog">underdog</span>` : "";
+  if (!options.length) {
+    return `<div class="side"><h3>${esc(name)}${dog}</h3><div class="none">No method picks for this side</div></div>`;
+  }
+  const total = Math.max(...options.map((o) => o.consensus_pct));
+  const rows = options.map((o) => {
+    const why = bullets(o.cappers, 2);
+    return `<div class="mov-row">
+      <div class="mv-label">${esc(o.selection)} <span class="pct" style="font-size:14px">${esc(o.consensus_pct)}%</span></div>
+      <div class="bar"><i style="width:${Math.max(0, Math.min(100, o.consensus_pct))}%"></i></div>
+      <div class="statline">weight <b>${esc(o.weight)}</b> &middot; avg conf <b>${esc(o.avg_confidence)}/10</b> &middot; <b>${esc(o.pick_count)}</b> pick${o.pick_count === 1 ? "" : "s"}</div>
+      ${why.length ? `<ul class="why">${why.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>` : ""}
+      ${capperBtn(o.selection, fight.display, o.cappers)}
+    </div>`;
+  }).join("");
+  return `<div class="side${total >= PICKEM_MAX_SHARE ? " lead" : ""}"><h3>${esc(name)}${dog}</h3>${rows}</div>`;
+}
+function renderMOV() {
+  const s = state.mov;
+  let fights = state.model.fights.filter((f) => f.mov.a.length || f.mov.b.length);
+  if (s.hidePickems) fights = fights.filter((f) => !isPickem(f));
+  if (s.locksOnly) fights = fights.filter((f) => {
+    const best = [...f.mov.a, ...f.mov.b].sort((x, y) => y.consensus_pct - x.consensus_pct)[0];
+    return best && isLock(best.consensus_pct, best);
+  });
+  fights = sortFights(fights, s.sort, movLeadConf);
+
+  const cards = fights.map((f) => `<article class="duel">
+    <h2><span>${esc(f.display)}</span>${badgesHtml(f)}</h2>
+    <div class="sides">${movRows(f, "a")}${movRows(f, "b")}</div>
+  </article>`).join("");
+
+  return controlsHtml("mov")
+    + `<div class="count-note">${fights.length} fight${fights.length === 1 ? "" : "s"} with method-of-victory picks</div>`
+    + (cards || `<p class="notice">Nothing matches the current filters.</p>`);
+}
+
+/* ---------- tab: double chance (top-2 methods pooled) ---------- */
+function doubleChance(fight, side) {
+  const options = [...fight.mov[side]].sort((x, y) => y.weight - x.weight);
+  if (!options.length) return null;
+  const top = options.slice(0, 2);
+  const picks = top.reduce((n, o) => n + o.pick_count, 0);
+  const weight = top.reduce((n, o) => n + o.weight, 0);
+  const share = Math.min(100, top.reduce((n, o) => n + o.consensus_pct, 0));
+  const conf = picks ? top.reduce((n, o) => n + o.avg_confidence * o.pick_count, 0) / picks : 0;
+  const cappers = top.flatMap((o) => o.cappers || []);
+  const methods = top.map((o) => methodShort(o.selection) || o.selection);
+  const name = side === "a" ? fight.fighter_a : fight.fighter_b;
+  const label = methods.length === 2 ? `${methods[0]} or ${methods[1]}` : `${methods[0]} <span class="hint">(only method picked)</span>`;
+  return { name, label, share: Math.round(share * 10) / 10, weight: Math.round(weight * 100) / 100, conf: Math.round(conf * 10) / 10, picks, cappers };
+}
+function dcSideHtml(fight, side) {
+  const dc = doubleChance(fight, side);
+  const name = side === "a" ? fight.fighter_a : fight.fighter_b;
+  const dog = fight.dogSide === side ? ` <span class="badge dog">underdog</span>` : "";
+  if (!dc) return `<div class="side"><h3>${esc(name)}${dog}</h3><div class="none">No method picks for this side</div></div>`;
+  const other = doubleChance(fight, side === "a" ? "b" : "a");
+  const why = bullets(dc.cappers, 2);
+  return `<div class="side${sideClass(dc.share, other ? other.share : 0, true)}">
+    <h3>${esc(dc.name)} <span class="pct">${esc(dc.share)}%</span>${dog}</h3>
+    <div class="mv-label">${dc.label}</div>
+    <div class="bar"><i style="width:${Math.max(0, Math.min(100, dc.share))}%"></i></div>
+    <div class="statline">weight <b>${esc(dc.weight)}</b> &middot; avg conf <b>${esc(dc.conf)}/10</b> &middot; <b>${esc(dc.picks)}</b> pick${dc.picks === 1 ? "" : "s"}</div>
+    ${why.length ? `<ul class="why">${why.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>` : ""}
+    ${capperBtn(`${dc.name} — double chance (${dc.label.replace(/<[^>]*>/g, "")})`, fight.display, dc.cappers)}
+  </div>`;
+}
+function renderDC() {
+  const s = state.dc;
+  let fights = state.model.fights.filter((f) => f.mov.a.length || f.mov.b.length);
+  if (s.hidePickems) fights = fights.filter((f) => !isPickem(f));
+  if (s.locksOnly) fights = fights.filter((f) => {
+    const best = [doubleChance(f, "a"), doubleChance(f, "b")].filter(Boolean).sort((x, y) => y.share - x.share)[0];
+    return best && best.share >= LOCK.minShare && best.conf >= LOCK.minConf && best.picks >= LOCK.minPicks;
+  });
+  fights = sortFights(fights, s.sort, (f) =>
+    Math.max(...[doubleChance(f, "a"), doubleChance(f, "b")].filter(Boolean).map((d) => d.conf), 0));
+
+  const cards = fights.map((f) => `<article class="duel">
+    <h2><span>${esc(f.display)}</span>${badgesHtml(f)}</h2>
+    <div class="sides">${dcSideHtml(f, "a")}${dcSideHtml(f, "b")}</div>
+  </article>`).join("");
+
+  return controlsHtml("dc")
+    + `<div class="count-note">Each fighter&rsquo;s two most-backed methods pooled together</div>`
+    + (cards || `<p class="notice">Nothing matches the current filters.</p>`);
+}
+
+/* ---------- tab: underdogs ---------- */
+function renderDogs() {
+  const s = state.dog;
+  let fights = state.model.fights.filter((f) => f.dogSide);
+  fights = sortFights(fights, s.sort, (f) => f.ml[f.dogSide]?.avg_confidence ?? movLeadConf(f));
+
+  const cards = fights.map((f) => {
+    const side = f.dogSide;
+    const name = side === "a" ? f.fighter_a : f.fighter_b;
+    const ml = f.ml[side];
+    const dc = doubleChance(f, side);
+    const movList = f.mov[side];
+    const sections = [];
+    if (ml) {
+      const why = bullets(ml.cappers);
+      sections.push(`<div class="side lead" style="background:none">
+        <h3>Moneyline <span class="pct">${esc(ml.consensus_pct)}%</span></h3>
+        <div class="statline">weight <b>${esc(ml.weight)}</b> &middot; avg conf <b>${esc(ml.avg_confidence)}/10</b> &middot; <b>${esc(ml.pick_count)}</b> pick${ml.pick_count === 1 ? "" : "s"}</div>
+        ${why.length ? `<ul class="why">${why.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>` : ""}
+        ${capperBtn(`${name} — moneyline`, f.display, ml.cappers)}
+      </div>`);
+    }
+    if (movList.length) {
+      const rows = movList.map((o) => `<div class="mov-row">
+        <div class="mv-label">${esc(o.selection)} <span class="pct" style="font-size:14px">${esc(o.consensus_pct)}%</span></div>
+        <div class="statline">weight <b>${esc(o.weight)}</b> &middot; avg conf <b>${esc(o.avg_confidence)}/10</b> &middot; <b>${esc(o.pick_count)}</b> pick${o.pick_count === 1 ? "" : "s"}</div>
+        ${capperBtn(o.selection, f.display, o.cappers)}
+      </div>`).join("");
+      sections.push(`<div class="side" style="background:none"><h3>Method of victory</h3>${rows}</div>`);
+    }
+    if (dc && dc.picks > 1) {
+      sections.push(`<div class="side" style="background:none">
+        <h3>Double chance</h3>
+        <div class="mv-label">${dc.label} <span class="pct" style="font-size:14px">${esc(dc.share)}%</span></div>
+        <div class="statline">weight <b>${esc(dc.weight)}</b> &middot; avg conf <b>${esc(dc.conf)}/10</b> &middot; <b>${esc(dc.picks)}</b> picks</div>
+      </div>`);
+    }
+    return `<article class="duel">
+      <h2><span>${esc(name)} <span class="badge dog">underdog</span> <span class="meta">— ${esc(f.display)}</span></span>${badgesHtml(f)}</h2>
+      <div class="sides" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">${sections.join("")}</div>
+    </article>`;
+  }).join("");
+
+  return controlsHtml("dog", { filters: false })
+    + `<div class="count-note">Fights where cappers backed the underdog (by their own framing)</div>`
+    + (cards || `<p class="notice">No underdog picks in this event&rsquo;s data.</p>`);
+}
+
+/* ---------- tab: cappers ---------- */
+function aggregateCappers() {
+  const map = new Map();
+  for (const f of state.model.fights) {
+    for (const m of f.markets || []) {
+      for (const o of m.options || []) {
+        for (const c of o.cappers || []) {
+          if (!map.has(c.id)) map.set(c.id, { id: c.id, name: c.name, weight: 0, picks: [], maxTrust: 0 });
+          const entry = map.get(c.id);
+          entry.weight += c.trust * (c.confidence / 10);
+          entry.maxTrust = Math.max(entry.maxTrust, c.trust);
+          entry.picks.push({
+            fight: f.display, market: m.label, selection: o.selection,
+            confidence: c.confidence, odds: c.odds, role: c.role,
+            why: shortWhy(c.reasoning, 110), video_url: c.video_url,
+          });
+        }
+      }
+    }
+  }
+  return [...map.values()].sort((x, y) => y.weight - x.weight);
+}
+function renderCappersTab() {
+  const cappers = aggregateCappers();
+  const rows = cappers.map((c, i) => `
+    <div class="capper-row" data-capper="${esc(c.id)}">
+      <span class="rank">${i + 1}</span>
+      <span class="cname">${esc(c.name)}</span>
+      <span class="cstat picks"><b>${c.picks.length}</b>picks</span>
+      <span class="cstat"><b>${fmt1(c.weight)}</b>total weight</span>
+    </div>`).join("");
+  return `<div class="count-note">Ordered by total weight contributed (trust &times; confidence across all picks). Click a capper for their full card.</div>` + rows;
+}
+document.addEventListener("click", (e) => {
+  const row = e.target.closest("[data-capper]");
+  if (!row) return;
+  const capper = aggregateCappers().find((c) => c.id === row.dataset.capper);
+  if (!capper) return;
+  const groups = new Map();
+  for (const p of capper.picks) {
+    if (!groups.has(p.fight)) groups.set(p.fight, []);
+    groups.get(p.fight).push(p);
+  }
+  const body = [...groups.entries()].map(([fight, picks]) => `
+    <div class="pick-group"><h4>${esc(fight)}</h4>
+      ${picks.map((p) => `<div class="pick-line">
+        <div class="psel">${esc(p.selection)} <span class="tag">${esc(p.market)}</span>
+          ${p.role && p.role !== "unknown" ? `<span class="tag ${esc(p.role)}">${esc(p.role)}</span>` : ""}</div>
+        <div class="pmeta">confidence ${esc(p.confidence)}/10${p.odds ? ` &middot; odds ${esc(p.odds)}` : ""}</div>
+        ${p.why ? `<div class="pwhy">${esc(p.why)}</div>` : ""}
+      </div>`).join("")}
+    </div>`).join("");
+  openOverlay(`<h3>${esc(capper.name)}</h3>
+    <div class="sub">${capper.picks.length} picks &middot; total weight ${fmt1(capper.weight)}</div>${body}`);
+});
+
+/* ---------- tab: parlay builder ---------- */
+function parlayCandidates() {
+  const p = state.parlay;
+  const legs = [];
+  for (const f of state.model.fights) {
+    const perFight = [];
+    if (p.types.ml) {
+      const lead = mlLead(f);
+      if (lead && lead.opt) perFight.push({
+        fight: f.display, type: "Moneyline", label: lead.opt.selection,
+        share: lead.share, conf: lead.opt.avg_confidence, weight: lead.opt.weight,
+        picks: lead.opt.pick_count, cappers: lead.opt.cappers,
+      });
+    }
+    if (p.types.mov) {
+      const best = [...f.mov.a, ...f.mov.b, ...f.mov.other].sort((x, y) => y.weight - x.weight)[0];
+      if (best) perFight.push({
+        fight: f.display, type: "Method of victory", label: best.selection,
+        share: best.consensus_pct, conf: best.avg_confidence, weight: best.weight,
+        picks: best.pick_count, cappers: best.cappers,
+      });
+    }
+    if (p.types.dc) {
+      const best = [doubleChance(f, "a"), doubleChance(f, "b")].filter((d) => d && d.picks > 1)
+        .sort((x, y) => y.weight - x.weight)[0];
+      if (best) perFight.push({
+        fight: f.display, type: "Double chance", label: `${best.name}: ${best.label.replace(/<[^>]*>/g, "")}`,
+        share: best.share, conf: best.conf, weight: best.weight, picks: best.picks, cappers: best.cappers,
+      });
+    }
+    if (p.types.props) {
+      for (const o of f.props) perFight.push({
+        fight: f.display, type: o.bet_label, label: o.selection,
+        share: o.consensus_pct, conf: o.avg_confidence, weight: o.weight,
+        picks: o.pick_count, cappers: o.cappers,
+      });
+    }
+    let usable = perFight;
+    if (p.useConf) usable = usable.filter((l) => l.conf >= p.minConf);
+    if (!usable.length) continue;
+    // one leg per fight — parlay legs should be independent fights
+    usable.sort((x, y) => y.weight * y.conf - x.weight * x.conf);
+    legs.push(usable[0]);
+  }
+  legs.sort((x, y) => y.weight * y.conf - x.weight * x.conf);
+  return legs;
+}
+function renderParlay() {
+  const p = state.parlay;
+  const candidates = parlayCandidates();
+  const chosen = candidates.slice(0, p.legs);
+  const typeToggle = (key, label) =>
+    `<label><input type="checkbox" data-pl-type="${key}"${p.types[key] ? " checked" : ""}> ${label}</label>`;
+  const controls = `<div class="controls" id="parlay-controls">
+    ${typeToggle("ml", "Moneyline")}
+    ${typeToggle("mov", "Method of victory")}
+    ${typeToggle("dc", "Double chance")}
+    ${typeToggle("props", "Other props")}
+    <label>Legs
+      <select data-pl-legs>${[2,3,4,5,6,7,8].map((n) => `<option${n === p.legs ? " selected" : ""}>${n}</option>`).join("")}</select>
+    </label>
+    <label><input type="checkbox" data-pl-useconf${p.useConf ? " checked" : ""}> Min confidence</label>
+    <label style="${p.useConf ? "" : "opacity:.4;pointer-events:none"}">
+      <input type="range" min="1" max="10" step="0.5" value="${p.minConf}" data-pl-minconf>
+      <b id="pl-conf-val">${p.minConf}</b>/10</label>
+  </div>`;
+
+  const legsHtml = chosen.map((l, i) => `<div class="leg">
+    <span class="lnum">${i + 1}</span>
+    <span class="lmain">
+      <div class="lsel">${esc(l.label)}</div>
+      <div class="lsub">${esc(l.type)} &middot; ${esc(l.fight)}</div>
+    </span>
+    <span class="lstats"><b>${esc(l.share)}%</b> consensus<br>conf <b>${esc(fmt1(l.conf))}</b>/10 &middot; weight <b>${esc(l.weight)}</b><br>${capperBtn(l.label, l.fight, l.cappers)}</span>
+  </div>`).join("");
+
+  const note = chosen.length < p.legs
+    ? `<p class="notice">Only ${chosen.length} leg${chosen.length === 1 ? "" : "s"} match the current filters — loosen the confidence bar or enable more bet types.</p>`
+    : "";
+  return controls
+    + `<div class="count-note">Best ${p.legs} legs by weight &times; confidence, max one leg per fight (${candidates.length} candidate${candidates.length === 1 ? "" : "s"} matched)</div>`
+    + legsHtml + note;
+}
+document.addEventListener("change", (e) => {
+  if (!e.target.closest("#parlay-controls")) return;
+  const p = state.parlay;
+  const type = e.target.closest("[data-pl-type]");
+  if (type) p.types[type.dataset.plType] = e.target.checked;
+  if (e.target.matches("[data-pl-legs]")) p.legs = Number(e.target.value);
+  if (e.target.matches("[data-pl-useconf]")) p.useConf = e.target.checked;
+  if (e.target.matches("[data-pl-minconf]")) p.minConf = Number(e.target.value);
+  render();
+});
+document.addEventListener("input", (e) => {
+  if (e.target.matches("[data-pl-minconf]")) {
+    const label = document.getElementById("pl-conf-val");
+    if (label) label.textContent = e.target.value;
+  }
+});
+
+/* ---------- footer ---------- */
 function renderSources(sources) {
   if (!sources.length) return "";
   const rows = sources.map((s) => `
     <tr>
       <td>${esc(s.capper)}</td>
       <td><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.video_id)}</a></td>
-      <td>${esc(s.status)}${s.error ? ` — ${esc(s.error)}` : ""}</td>
+      <td>${esc(s.status)}${s.error ? ` — ${esc(shortWhy(s.error, 160))}` : ""}</td>
       <td class="num">${esc(s.pick_count)}</td>
     </tr>`).join("");
   return `<details><summary>Sources (${sources.length} videos)</summary>
@@ -179,16 +792,15 @@ function renderSources(sources) {
       <thead><tr><th>Capper</th><th>Video</th><th>Status</th><th>Picks</th></tr></thead>
       <tbody>${rows}</tbody></table></div></details>`;
 }
-
 function renderDiscovery(entries) {
   if (!entries.length) return "";
   const rows = entries.map((e) => {
     const found = (e.selected || []).map((v) => esc(v.title)).join("<br>") || "—";
     return `<tr>
       <td>${esc(e.capper)}</td>
-      <td>${esc(e.status)}${e.error ? ` — ${esc(e.error)}` : ""}</td>
+      <td>${esc(e.status)}${e.error ? ` — ${esc(shortWhy(e.error, 160))}` : ""}</td>
       <td class="num">${esc((e.selected || []).length)}</td>
-      <td class="why">${found}</td>
+      <td class="why-cell">${found}</td>
     </tr>`;
   }).join("");
   const failed = entries.filter((e) => e.status !== "ok").length;
@@ -198,39 +810,49 @@ function renderDiscovery(entries) {
       <tbody>${rows}</tbody></table></div></details>`;
 }
 
-function render(data) {
-  const event = data.event || {};
-  const generated = data.generated_at
-    ? new Date(data.generated_at).toLocaleString()
-    : "unknown";
-  const totals = data.totals || {};
+/* ---------- shell ---------- */
+const TABS = [
+  { id: "ml", label: "Moneylines", render: renderML },
+  { id: "mov", label: "Method of Victory", render: renderMOV },
+  { id: "dc", label: "Double Chance", render: renderDC },
+  { id: "dog", label: "Underdogs", render: renderDogs },
+  { id: "cappers", label: "Cappers", render: renderCappersTab },
+  { id: "parlay", label: "Parlay Builder", render: renderParlay },
+];
 
-  $("#event").innerHTML = `
-    <div class="event">${esc(event.name || "Unnamed event")}${event.date ? ` &middot; ${esc(event.date)}` : ""}</div>
-    <div class="meta">Generated ${esc(generated)}</div>
-    <div class="totals">
-      <div class="stat"><b>${esc(totals.fights ?? 0)}</b><span>Fights</span></div>
-      <div class="stat"><b>${esc(totals.picks ?? 0)}</b><span>Picks</span></div>
-      <div class="stat"><b>${esc(totals.cappers ?? 0)}</b><span>Cappers</span></div>
-      <div class="stat"><b>${esc(totals.videos ?? 0)}</b><span>Videos</span></div>
-    </div>`;
-
-  $("#main").innerHTML = (data.fights || []).length
-    ? data.fights.map(renderFight).join("")
-    : `<p class="notice">No picks yet. Add this week's videos to
-       <code>config.json</code> and run the pipeline
-       (<code>python -m mma_engine</code> or the <em>Build consensus</em> GitHub Action).</p>`;
-
-  $("#footer").innerHTML =
-    renderSources(data.sources || []) + renderDiscovery(data.discovery || []);
+function render() {
+  overlayPayloads.length = 0;
+  $("#tabs").innerHTML = TABS.map((t) =>
+    `<button data-tab="${t.id}" class="${state.tab === t.id ? "active" : ""}">${t.label}</button>`).join("");
+  const tab = TABS.find((t) => t.id === state.tab) || TABS[0];
+  $("#main").innerHTML = tab.render();
 }
+document.addEventListener("click", (e) => {
+  const btn = e.target.closest("[data-tab]");
+  if (!btn) return;
+  state.tab = btn.dataset.tab;
+  render();
+  window.scrollTo({ top: 0 });
+});
 
 fetch(`data.json?t=${Date.now()}`)
   .then((response) => {
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     return response.json();
   })
-  .then(render)
+  .then((data) => {
+    state.data = data;
+    state.model = buildModel(data);
+    const event = data.event || {};
+    const generated = data.generated_at ? new Date(data.generated_at).toLocaleString() : "unknown";
+    const totals = data.totals || {};
+    $("#event-name").textContent = event.name || "Unnamed event";
+    $("#event-meta").innerHTML =
+      `${esc(totals.fights ?? 0)} fights &middot; ${esc(totals.picks ?? 0)} picks &middot; ` +
+      `${esc(totals.cappers ?? 0)} cappers &middot; generated ${esc(generated)}`;
+    $("#footer").innerHTML = renderSources(data.sources || []) + renderDiscovery(data.discovery || []);
+    render();
+  })
   .catch((error) => {
     $("#main").innerHTML = `<p class="notice">Could not load <code>data.json</code>
       (${esc(error.message)}). Run the pipeline to generate it, and serve this

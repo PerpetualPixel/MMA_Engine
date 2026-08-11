@@ -310,3 +310,20 @@ def test_short_surnames_never_canonicalized_together():
         [source(p1, make_capper("a")), source(p2, make_capper("b"), video_id="vid00000002")]
     )
     assert len(payload["fights"]) == 2
+
+
+def test_same_capper_two_videos_counts_once_per_option():
+    # A capper with a shorts video and a full breakdown of the same card must
+    # not get two votes on the same option — keep their strongest statement.
+    capper = make_capper("larry", overall=8.0)
+    weak = make_pick(confidence=5)
+    strong = make_pick(confidence=8)
+    payload = build_consensus([
+        source(weak, capper, video_id="vid00000001"),
+        source(strong, capper, video_id="vid00000002"),
+    ])
+
+    option = payload["fights"][0]["markets"][0]["options"][0]
+    assert option["pick_count"] == 1
+    assert option["cappers"][0]["confidence"] == 8
+    assert option["weight"] == pytest.approx(8.0 * 0.8)
