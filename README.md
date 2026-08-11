@@ -427,9 +427,17 @@ failed. Two things fix it on the consuming side:
 already written for PerpetualPicks.com. Apply it in the PerpetualCode checkout:
 
 ```powershell
-git am ..\MMA_Engine\integrations\perpetualcode-instant-consensus-refresh.patch
+git am C:\path\to\MMA_Engine\integrations\perpetualcode-instant-consensus-refresh.patch
 node --test test\capper-consensus.test.mjs
 ```
+
+**On Windows, hand `git am` the file path — never a PowerShell pipe.**
+`git show ... | git am` looks equivalent but isn't: Windows PowerShell re-encodes
+a native command's output through the console code page, which corrupts the
+non-ASCII characters in the patch (em dashes in the comments, mostly). The
+hunks whose context lines happen to be pure ASCII still apply, the rest are
+rejected with `patch does not apply` — which reads exactly like the patch
+being out of date against a drifted checkout, and isn't.
 
 Then push `docs/` (the site) and `npx wrangler deploy` from `worker\` (the
 locked daily picks read the same feed, so both sides stay in agreement). After
