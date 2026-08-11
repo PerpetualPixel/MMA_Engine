@@ -689,3 +689,33 @@ def test_api_discovery_applies_same_selection_filters():
 
     # The mailbag fails the title filter; the 40-day-old video fails lookback.
     assert [v.video_id for v in videos] == ["aaaaaaaaaaa"]
+
+
+def test_zero_matches_reports_recent_titles_for_diagnosis():
+    # Feed reads fine but nothing passes the title filter — the report should
+    # show what was there, so the user can fix title_contains.
+    xml = feed_xml(
+        [
+            ("aaaaaaaaaaa", "UFC 999 Full Card", iso(1)),
+            ("bbbbbbbbbbb", "Weekly mailbag", iso(2)),
+        ]
+    )
+    discovery = make_discovery(
+        {"videos.xml": StubResponse(xml)}, title_contains=["ufc 320"]
+    )
+    videos, report = discovery.discover([capper()])
+
+    assert videos == []
+    assert report[0]["status"] == "ok"
+    titles = "\n".join(report[0]["recent_titles"])
+    assert "UFC 999 Full Card" in titles
+    assert "Weekly mailbag" in titles
+
+
+def test_successful_match_does_not_report_recent_titles():
+    xml = feed_xml([("aaaaaaaaaaa", "UFC 320 Picks", iso(1))])
+    discovery = make_discovery(
+        {"videos.xml": StubResponse(xml)}, title_contains=["ufc 320"]
+    )
+    _, report = discovery.discover([capper()])
+    assert "recent_titles" not in report[0]

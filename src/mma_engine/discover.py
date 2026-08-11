@@ -459,6 +459,14 @@ class ChannelDiscovery:
                     for v in selected
                 ],
             )
+            if videos and not selected:
+                # The channel is readable but every upload was filtered out.
+                # Surface what was actually there, so a too-narrow
+                # title_contains or lookback window is visible instead of
+                # silently producing an empty consensus.
+                entry["recent_titles"] = [
+                    f"{v.published.date()}  {v.title}" for v in videos[:5]
+                ]
             log.info(
                 "  %s: %d recent video(s) of %d in feed",
                 capper.name,
