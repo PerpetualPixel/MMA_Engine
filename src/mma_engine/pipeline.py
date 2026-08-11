@@ -21,6 +21,7 @@ from .aggregate import SourcedPick, build_consensus
 from .config import Config, ConfigError, VideoRef, extract_video_id, load_config
 from .discover import ChannelDiscovery
 from .extract import PickExtractor
+from .proxy import ProxyConfigError, build_proxy_config, build_requests_proxies
 from .roster import RosterExtractor, build_capper_entry, merge_into_config
 from .transcripts import TranscriptFetcher
 
@@ -50,6 +51,7 @@ def resolve_videos(config: Config) -> tuple[list[VideoRef], list[dict]]:
         max_per_channel=int(discovery_settings["max_videos_per_channel"]),
         title_contains=discovery_settings.get("title_contains", ""),
         use_cache=bool(config.settings["use_cache"]),
+        proxies=build_requests_proxies(config.settings),
     )
     discovered, report = discovery.discover(cappers)
 
@@ -86,6 +88,7 @@ def run_pipeline(
         min_delay=float(settings["min_delay_seconds"]),
         max_delay=float(settings["max_delay_seconds"]),
         use_cache=bool(settings["use_cache"]),
+        proxy_config=build_proxy_config(settings),
     )
     extractor = (
         None
@@ -190,6 +193,7 @@ def run_roster(
         min_delay=float(settings["min_delay_seconds"]),
         max_delay=float(settings["max_delay_seconds"]),
         use_cache=bool(settings["use_cache"]),
+        proxy_config=build_proxy_config(settings),
     )
     transcript = fetcher.fetch(video_id)
     if not transcript.ok:
@@ -393,21 +397,25 @@ def main(argv: list[str] | None = None) -> int:
     if args.no_cache:
         config.settings["use_cache"] = False
 
-    if args.roster_from:
-        return run_roster(
-            config,
-            video_url=args.roster_from,
-            mode=args.roster_mode,
-            apply_changes=args.apply_roster,
-            proposal_path=Path(args.roster_output),
-        )
+    try:
+        if args.roster_from:
+            return run_roster(
+                config,
+                video_url=args.roster_from,
+                mode=args.roster_mode,
+                apply_changes=args.apply_roster,
+                proposal_path=Path(args.roster_output),
+            )
 
-    if args.discover or args.discover_only:
-        config.settings["discovery"]["enabled"] = True
-    if args.no_discover:
-        config.settings["discovery"]["enabled"] = False
+        if args.discover or args.discover_only:
+            config.settings["discovery"]["enabled"] = True
+        if args.no_discover:
+            config.settings["discovery"]["enabled"] = False
 
-    videos, discovery_report = resolve_videos(config)
+        videos, discovery_report = resolve_videos(config)
+    except ProxyConfigError as exc:
+        log.error("%s", exc)
+        return 2
 
     if args.discover_only:
         print(_summarize_discovery(config, videos, discovery_report))
@@ -422,13 +430,17 @@ def main(argv: list[str] | None = None) -> int:
         )
         return 2
 
-    payload = run_pipeline(
-        config,
-        Path(args.output),
-        skip_extraction=args.skip_extraction,
-        videos=videos,
-        discovery_report=discovery_report,
-    )
+    try:
+        payload = run_pipeline(
+            config,
+            Path(args.output),
+            skip_extraction=args.skip_extraction,
+            videos=videos,
+            discovery_report=discovery_report,
+        )
+    except ProxyConfigError as exc:
+        log.error("%s", exc)
+        return 2
     print(_summarize(payload))
 
     # Every video failing is a real failure, not an empty report.

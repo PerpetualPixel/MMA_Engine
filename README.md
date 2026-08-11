@@ -73,6 +73,9 @@ Exit codes: `0` success, `1` every video failed, `2` bad or empty config.
 | `ANTHROPIC_API_KEY` | yes | Claude API key ([console](https://platform.claude.com/settings/keys)). |
 | `MMA_MODEL` | no | Overrides `settings.model` (default `claude-opus-5`). |
 | `MMA_EFFORT` | no | Overrides `settings.effort` (`low`/`medium`/`high`/`xhigh`/`max`). |
+| `MMA_PROXY_ENABLED` | no | Overrides `settings.proxy.enabled` (`true`/`false`). Only relevant if you set up the optional unattended GitHub Actions path; local runs don't need it. |
+| `WEBSHARE_PROXY_USERNAME` / `WEBSHARE_PROXY_PASSWORD` | only for the optional unattended path, `settings.proxy.provider` = `webshare` | Proxy credentials, **not** your Webshare account login. See **Optional: fully unattended runs on GitHub Actions** below. |
+| `MMA_PROXY_URL` | only for the optional unattended path, `settings.proxy.provider` = `generic` | A full proxy URL, e.g. `http://user:pass@host:port`, for any other residential/rotating proxy provider. |
 
 **Locally:** put the key in `.env` — `.gitignore` already excludes it, and the
 pipeline loads it via `python-dotenv`.
@@ -227,17 +230,148 @@ before you spend a cent.
 
 ---
 
-## Weekly workflow
+## Weekly workflow (run it locally — no cost, no setup)
+
+GitHub's shared `ubuntu-latest` runners sit on cloud-provider IP ranges, and
+YouTube blocks those outright — not a rate limit, confirmed via
+`youtube-transcript-api`'s own `RequestBlocked` error, and confirmed again
+against a paid-tier proxy's datacenter IPs (same block). Your own computer
+almost certainly isn't on a blocked range — that's exactly why fetching a
+transcript by hand already works fine — so **the free, zero-setup path is to
+just run it from your own machine each week**:
 
 1. Update `event.name` and `settings.discovery.title_contains` in `config.json`
    for the new event.
-2. Run the **Build consensus** action with *discover_only* ticked to confirm it
-   finds the right videos.
-3. Run it again unticked. It also runs Fridays at 15:00 UTC.
-4. The action commits a refreshed `docs/data.json`; the dashboard picks it up.
+2. `PYTHONPATH=src python -m mma_engine --discover-only` — confirm it finds
+   the right videos.
+3. `PYTHONPATH=src python -m mma_engine` — writes `docs/data.json`.
+4. Commit and push `docs/data.json`; the dashboard (GitHub Pages) picks it up.
+
+Takes a couple of minutes. `.github/workflows/consensus.yml` has no
+`schedule:` trigger — only `workflow_dispatch` (manual, from the Actions tab)
+— specifically so it doesn't run automatically on GitHub's runners and fail
+every week for the reason above.
 
 To publish the dashboard: *Settings → Pages → Source: Deploy from a branch →
 `main` / `/docs`*.
+
+---
+
+## Optional: fully unattended runs on GitHub Actions (needs a paid proxy)
+
+Skip this section unless you want the schedule to run itself with zero
+weekly effort from you. It costs money and isn't required — the section
+above is the default, free way to run this.
+
+To make GitHub's cloud runners look like a normal visitor instead of a
+blocked datacenter, the pipeline supports routing through a proxy
+(`settings.proxy` in `config.json`, credentials from env vars — see
+`src/mma_engine/proxy.py`). **The critical detail learned the hard way:**
+this only works with a **residential** proxy plan. A free-trial or
+Datacenter-tier plan gives you datacenter IPs, which YouTube blocks exactly
+like it blocks GitHub's own runners — confirmed by testing Webshare's free
+tier against the same RSS endpoint and getting the same block signature
+(a fake-looking "Error 500" page from Google, not a real server error).
+
+### Setup
+
+1. Sign up for [Webshare](https://www.webshare.io/)'s **Residential** plan
+   specifically (not the free trial, not Datacenter) — `youtube_transcript_api`
+   has first-class built-in support for it.
+2. In the dashboard, under *Proxy → Connection*, set **Connection Method** to
+   **Backbone Connection** and confirm it shows a working proxy row under
+   **Username/Password** auth (not just the same handful of datacenter IPs
+   from a free trial). Copy that username and password — not your account
+   login.
+3. Add them as repo secrets: *Settings → Secrets and variables → Actions → New
+   repository secret* → `WEBSHARE_PROXY_USERNAME` and `WEBSHARE_PROXY_PASSWORD`.
+4. Sanity-check from your own machine before touching CI:
+   ```bash
+   curl --proxy "http://USERNAME:PASSWORD@p.webshare.io:80/" \
+     "https://www.youtube.com/feeds/videos.xml?channel_id=UCpSQhfFzpZ9COp_WiKSUEkQ"
+   ```
+   Real `<entry>` XML back means it works; an HTML error page means the plan
+   still isn't giving you residential IPs.
+5. Uncomment a `schedule:` trigger in `.github/workflows/consensus.yml` (see
+   the comment left in its place) and set it to whenever you want the run to
+   fire — the `Build consensus` and `Extract roster from a tracker video`
+   steps already set `MMA_PROXY_ENABLED=true` and pass the two secrets
+   through; `config.json`'s `settings.proxy.enabled` stays `false` so local
+   runs are still unaffected.
+
+Using a different residential proxy provider instead of Webshare? Set
+`settings.proxy.provider` to `"generic"` in `config.json` and add one secret,
+`MMA_PROXY_URL` (a full `http://user:pass@host:port` string), instead of the
+two Webshare ones.
+
+Without valid credentials, a run fails fast with a clear
+`WEBSHARE_PROXY_USERNAME / WEBSHARE_PROXY_PASSWORD are not set` error rather
+than the confusing IP-block failures seen before — so it's obvious what's
+missing if it's ever misconfigured.
+
+---
+
+## Integrating with other systems (e.g. PerpetualPicks.com)
+
+`docs/data.json` is the entire output of a run and the thing GitHub Pages
+serves — anything that can fetch a URL can read it:
+
+```
+https://<your-username>.github.io/MMA_Engine/data.json
+```
+
+It refreshes every time the Action runs, so a puller on a similar or looser
+schedule always sees the latest event's consensus. The shape is:
+
+```jsonc
+{
+  "schema_version": 1,           // bump on any breaking shape change
+  "generated_at": "2026-08-08T15:04:12+00:00",
+  "event": { "name": "UFC 320", "date": "" },
+  "totals": { "fights": 12, "picks": 84, "cappers": 8, "videos": 8 },
+  "fights": [
+    {
+      "fight_id": "...",
+      "display": "Ankalaev vs Pereira",
+      "fighter_a": "Ankalaev", "fighter_b": "Pereira",
+      "pick_count": 8, "capper_count": 8,
+      "markets": [
+        {
+          "bet_type": "moneyline",           // or method_of_victory / over_under / round / prop
+          "label": "Moneyline",
+          "total_weight": 41.2,
+          "options": [
+            {
+              "selection": "Ankalaev",
+              "consensus_pct": 73.9,          // this option's share of market_weight
+              "weight": 30.5,
+              "pick_count": 6,
+              "avg_confidence": 7.8,
+              "cappers": [
+                { "id": "artem_mma", "name": "Artem MMA", "confidence": 8,
+                  "trust": 7.5, "role": "favorite", "odds": -150,
+                  "stake": 2.0, "reasoning": "...", "video_url": "https://youtu.be/..." }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "sources": [ /* one row per video processed, incl. failures */ ]
+}
+```
+
+For a MMA-specific feed into an external algorithm, the two fields worth
+pulling per fight/market are `options[].selection` and `options[].consensus_pct`
+— the trust-weighted probability this project exists to produce. `weight` and
+`pick_count` are there if you want to apply your own confidence threshold
+(e.g. ignore any option under 3 picks) before importing it.
+
+If PerpetualPicks.com needs push delivery instead of pulling the static file
+(a webhook, a different schema, authentication), that's a small addition to
+the `Commit updated data.json` step in `consensus.yml` — happy to wire it up
+once you know what shape it expects on the other end.
 
 ---
 
@@ -273,6 +407,8 @@ accounts at 5.0 and adjust once you have a sample of their results.
 | `discovery.lookback_days` | `14` | Only consider uploads this recent. |
 | `discovery.max_videos_per_channel` | `3` | Cap per channel, newest first. |
 | `discovery.title_contains` | `[]` | Title must contain any of these (case-insensitive). |
+| `proxy.enabled` | `false` | Route YouTube requests through a proxy. Only used for the optional unattended path — see **Optional: fully unattended runs on GitHub Actions**. |
+| `proxy.provider` | `webshare` | `webshare` (built-in support) or `generic` (any provider via `MMA_PROXY_URL`). |
 
 ---
 
@@ -300,12 +436,15 @@ src/mma_engine/
   extract.py                 # Claude structured-output extraction, chunking
   normalize.py               # fighter-name and selection matching
   aggregate.py               # trust-weighted consensus math
+  proxy.py                   # optional proxy for GitHub Actions' cloud IPs
   pipeline.py                # orchestration + CLI
 docs/index.html              # static dashboard (no build step, no CDN)
-docs/data.json               # generated output
+docs/data.json               # generated output — also the integration feed
 tests/test_aggregate.py      # normalization + aggregation tests
 tests/test_discover.py       # feed parsing, filtering, merge behavior
 tests/test_roster.py         # trust arithmetic, pooling, config merge
+tests/test_proxy.py          # proxy config from env vars
+tests/test_config.py         # settings defaults, merging, env overrides
 .github/workflows/consensus.yml
 ```
 
@@ -329,9 +468,13 @@ tracker-derived trust arithmetic against constructed fixtures.
 - **Transcript quality.** Auto-generated captions mangle fighter names. The
   extraction prompt corrects obvious cases, but a garbled name can produce a
   stray fight entry.
-- **YouTube blocking.** Datacenter IPs get rate-limited or blocked. Delays and
-  caching mitigate it; if the runner starts failing, `youtube-transcript-api`
-  supports proxy configuration.
+- **YouTube blocks cloud IPs outright** (GitHub Actions' shared runners
+  included) **and blocks flagged datacenter IPs too** — confirmed both against
+  live GitHub runs and against a Webshare free-trial/Datacenter proxy, which
+  hit the identical block. A local run from your own computer doesn't need
+  any of this — see **Weekly workflow** above. If you want it to run itself,
+  see **Optional: fully unattended runs on GitHub Actions**, which needs a
+  paid *Residential* proxy plan specifically — Datacenter tiers don't help.
 - **Discovery is title-based.** It cannot tell a betting preview from a recap or
   a vlog except by title text and date. Dry-run with `--discover-only` before
   each event and adjust `title_contains` — a wrong filter silently produces an

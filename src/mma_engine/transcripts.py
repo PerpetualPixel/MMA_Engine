@@ -23,6 +23,7 @@ from youtube_transcript_api import (
     VideoUnavailable,
     YouTubeTranscriptApiException,
 )
+from youtube_transcript_api.proxies import ProxyConfig
 
 log = logging.getLogger(__name__)
 
@@ -50,13 +51,14 @@ class TranscriptFetcher:
         min_delay: float = 4.0,
         max_delay: float = 12.0,
         use_cache: bool = True,
+        proxy_config: ProxyConfig | None = None,
     ) -> None:
         self.cache_dir = Path(cache_dir)
         self.languages = languages or ["en"]
         self.min_delay = min_delay
         self.max_delay = max_delay
         self.use_cache = use_cache
-        self._api = YouTubeTranscriptApi()
+        self._api = YouTubeTranscriptApi(proxy_config=proxy_config)
         self._requests_made = 0
 
     # -- caching -----------------------------------------------------------
