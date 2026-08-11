@@ -1,0 +1,237 @@
+From 8503ae45871cbe0aaac672f1dd0ba139ff6c3e64 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Tue, 11 Aug 2026 19:55:54 +0000
+Subject: [PATCH] fix: show a fight's consensus on whichever market the drawer
+ opened
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+The consensus attaches to the moneyline, because that is the only market
+with a fighter side for it to be with or against. But Full Slate's "More
+info" opens openStatsDrawer on bestCandidateForGame() — the best-scoring
+candidate across h2h, spreads and totals — and for MMA that is routinely the
+rounds total. So the section rendered as nothing on exactly the drawer people
+open, which reads as the feed not arriving at all.
+
+The drawer now falls back to the fight's own feed entry when the leg it
+opened on has no swing of its own. `scored` carries whether the swing
+actually moved THIS pick's grade, so a totals drawer says the consensus is
+context for the fight rather than claiming it changed a grade it never
+touched. Scoring is unchanged: still moneyline-only.
+
+Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01Ko7MvVdXhjZNR67gyhzZq3
+---
+ docs/app.js                    | 42 +++++++++++++++----------
+ docs/capper-consensus.js       | 56 +++++++++++++++++++++++++++++-----
+ test/capper-consensus.test.mjs | 28 +++++++++++++++++
+ 3 files changed, 102 insertions(+), 24 deletions(-)
+
+diff --git a/docs/app.js b/docs/app.js
+index 64b7761..bbe753b 100644
+--- a/docs/app.js
++++ b/docs/app.js
+@@ -39,7 +39,13 @@ import {
+   teamQualitativeSignal,
+   supportsQualitativeSignal,
+ } from './qualitative.js';
+-import { fetchCapperConsensus, capperConsensusSignal } from './capper-consensus.js';
++import {
++  fetchCapperConsensus,
++  capperConsensusSignal,
++  consensusRecord,
++  fightConsensusRecord,
++  cachedConsensusFeed,
++} from './capper-consensus.js';
+ import {
+   buildInsights,
+   insightTexts,
+@@ -2554,19 +2560,28 @@ async function openStatsDrawer(leg, opposite = null, { fullscreen = false, oddsO
+         : `MMA picks are chosen on this price math alone. This app applies no fighter-quality or form scoring to MMA (the research below is for context, not scoring). An underdog pick like this one means the market itself disagrees with the favorite's price; it isn't a projection that this fighter is actually better.`)
+     : null;
+ 
+-  // The capper consensus's own section — only for an MMA leg that actually
+-  // matched a feed entry, so its absence honestly means "no consensus data
+-  // for this fight," never a silently-skipped lookup.
+-  const cc = leg.capperConsensus;
++  // The capper consensus's own section. The swing only ever attaches to a
++  // moneyline (a rounds total has no fighter side to be with or against), but
++  // Full Slate's "More info" opens on the best-scoring candidate of the three
++  // markets — usually the total. Falling back to the fight's own entry means
++  // the consensus shows on whichever market you happened to open, and `scored`
++  // keeps the wording honest about whether it moved THIS pick's grade.
++  // A null here still means what it always did: no consensus data for this
++  // fight, never a silently-skipped lookup.
++  const cc = isMma(leg.sportKey)
++    ? (leg.capperConsensus ?? fightConsensusRecord(cachedConsensusFeed(), leg))
++    : null;
+   const capperConsensusHtml = cc
+     ? `
+       <div class="stats-section capper-consensus">
+         <h3>Capper Consensus</h3>
+         <p>${esc(String(cc.pickCount))} capper${cc.pickCount === 1 ? '' : 's'} back <strong>${esc(cc.selection)}</strong> — ` +
+       `${esc(String(cc.consensusPct))}% of the trust-weighted picks on this fight, consensus strength ${esc(String(cc.strength))}/10 (${esc(cc.tier)}). ` +
+-      `${cc.aligned
+-        ? `This pick agrees with the consensus, which raised its grade by up to ${QUALITATIVE.MAX_SWING} points.`
+-        : `This pick goes against the consensus, which lowered its grade by up to ${QUALITATIVE.MAX_SWING} points.`}</p>` +
++      `${!cc.scored
++        ? `That's a read on who wins, so it doesn't move the grade of a ${esc(leg.marketLabel)} bet like this one — it's here as context for the fight.`
++        : cc.aligned
++          ? `This pick agrees with the consensus, which raised its grade by up to ${QUALITATIVE.MAX_SWING} points.`
++          : `This pick goes against the consensus, which lowered its grade by up to ${QUALITATIVE.MAX_SWING} points.`}</p>` +
+       (cc.generatedAt
+         ? `<p class="consensus-meta">Consensus last updated ${esc(dateFmt.format(new Date(cc.generatedAt)))} — refreshed by each MMA_Engine weekly run.</p>`
+         : '') +
+@@ -2910,16 +2925,11 @@ function applyConsensusToCandidates(candidates, feed) {
+       Object.assign(c, scoreCandidate(c, { now, qualitative: 0 }));
+       continue;
+     }
+-    c.capperConsensus = {
+-      selection: match.pick.selection,
+-      consensusPct: match.pick.consensus_pct,
+-      strength: match.pick.strength,
+-      tier: match.pick.tier,
+-      pickCount: match.pick.pick_count,
++    c.capperConsensus = consensusRecord(match.pick, feed, {
+       aligned: match.aligned,
+       signal: match.signal,
+-      generatedAt: feed.generated_at ?? null,
+-    };
++      scored: true,
++    });
+     Object.assign(c, scoreCandidate(c, { now, qualitative: match.signal }));
+   }
+ }
+diff --git a/docs/capper-consensus.js b/docs/capper-consensus.js
+index b9b48eb..4a1c3e4 100644
+--- a/docs/capper-consensus.js
++++ b/docs/capper-consensus.js
+@@ -98,6 +98,41 @@ export function capperConsensusSignal(feed, candidate) {
+   return { signal: aligned ? magnitude : -magnitude, aligned, pick };
+ }
+ 
++/**
++ * The feed entry flattened into the shape the UI renders.
++ *
++ * `scored` is the honest part: a fighter-consensus can only move the grade of
++ * a bet that HAS a fighter side, so an h2h candidate gets scored: true while
++ * a rounds total or spread on the same fight gets scored: false — the
++ * consensus is real context for that fight either way, but claiming it
++ * changed a totals grade would be a lie. `aligned` is null in that case too,
++ * since a total is neither with nor against the cappers' pick.
++ */
++export function consensusRecord(pick, feed, { aligned = null, signal = null, scored = false } = {}) {
++  return {
++    selection: pick.selection,
++    consensusPct: pick.consensus_pct,
++    strength: pick.strength,
++    tier: pick.tier,
++    pickCount: pick.pick_count,
++    aligned,
++    signal,
++    scored,
++    generatedAt: feed?.generated_at ?? null,
++  };
++}
++
++/**
++ * The consensus for a candidate's FIGHT, whatever market it is — the drawer
++ * needs this because Full Slate's "More info" opens on the best-scoring
++ * candidate of the three markets, which for MMA is usually a rounds total,
++ * not the moneyline the swing attached to. Null when the feed has no entry.
++ */
++export function fightConsensusRecord(feed, candidate) {
++  const pick = findConsensusPick(feed, candidate);
++  return pick ? consensusRecord(pick, feed) : null;
++}
++
+ /**
+  * Re-score every MMA h2h candidate that has a consensus entry, attaching
+  * what was found as `capperConsensus` so the UI can show its work. Every
+@@ -113,16 +148,11 @@ export function applyCapperConsensus(candidates, feed, { now = Date.now() } = {}
+     if (!match) return c;
+     const rescored = {
+       ...c,
+-      capperConsensus: {
+-        selection: match.pick.selection,
+-        consensusPct: match.pick.consensus_pct,
+-        strength: match.pick.strength,
+-        tier: match.pick.tier,
+-        pickCount: match.pick.pick_count,
++      capperConsensus: consensusRecord(match.pick, feed, {
+         aligned: match.aligned,
+         signal: match.signal,
+-        generatedAt: feed.generated_at ?? null,
+-      },
++        scored: true,
++      }),
+     };
+     return Object.assign(rescored, scoreCandidate(rescored, { now, qualitative: match.signal }));
+   });
+@@ -132,6 +162,16 @@ let feedCache = null;
+ let feedFetchedAt = 0;
+ export const FEED_TTL_MS = 60 * 1000;
+ 
++/**
++ * The last feed successfully fetched, or null before the first one lands.
++ * Synchronous on purpose: the stats drawer renders its first paint without
++ * awaiting anything, and a fight's consensus should appear in that paint or
++ * not at all rather than popping in a moment later.
++ */
++export function cachedConsensusFeed() {
++  return feedCache;
++}
++
+ /**
+  * Fetch the picks feed, cached for a minute.
+  *
+diff --git a/test/capper-consensus.test.mjs b/test/capper-consensus.test.mjs
+index f8e9964..50b0aac 100644
+--- a/test/capper-consensus.test.mjs
++++ b/test/capper-consensus.test.mjs
+@@ -7,6 +7,7 @@ import {
+   capperConsensusSignal,
+   applyCapperConsensus,
+   fetchCapperConsensus,
++  fightConsensusRecord,
+   FEED_TTL_MS,
+ } from '../docs/capper-consensus.js';
+ import { QUALITATIVE, scoreCandidate } from '../docs/engine.js';
+@@ -141,6 +142,33 @@ test('applyCapperConsensus passes through on an empty feed', () => {
+   assert.equal(applyCapperConsensus(candidates, { picks: [] }), candidates);
+ });
+ 
++/* --- the fight's consensus, for a drawer opened on any market --- */
++
++test('a totals candidate still resolves its fight, marked as not scored', () => {
++  // Full Slate's "More info" opens on the best-scoring candidate of the three
++  // markets, which for MMA is routinely the rounds total, not the moneyline.
++  const total = mmaCandidate({ marketKey: 'totals', outcomeName: 'Under' });
++  assert.equal(capperConsensusSignal(FEED, total), null); // no swing, correctly
++
++  const record = fightConsensusRecord(FEED, total);
++  assert.equal(record.selection, 'Islam Makhachev');
++  assert.equal(record.pickCount, 3);
++  assert.equal(record.scored, false); // never claims it moved a totals grade
++  assert.equal(record.aligned, null); // a total is neither with nor against
++});
++
++test('the scored record from applyCapperConsensus is marked as such', () => {
++  const [c] = applyCapperConsensus([mmaCandidate()], FEED, { now: NOW });
++  assert.equal(c.capperConsensus.scored, true);
++  assert.equal(c.capperConsensus.aligned, true);
++});
++
++test('fightConsensusRecord is null for an unknown fight or a missing feed', () => {
++  const unknown = mmaCandidate({ home: 'Jon Jones', away: 'Stipe Miocic', outcomeName: 'Jon Jones' });
++  assert.equal(fightConsensusRecord(FEED, unknown), null);
++  assert.equal(fightConsensusRecord(null, mmaCandidate()), null);
++});
++
+ /* --- fetching: freshness is the whole point after a weekly.bat push --- */
+ 
+ // The module's feed cache is process-wide, so each test starts from a clock
+-- 
+2.43.0
+
