@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-11T09:02:48+00:00",
+  "generated_at": "2026-08-11T19:36:59+00:00",
   "event": {
     "name": "UFC 330",
     "date": "",
@@ -8,9 +8,9 @@
   },
   "totals": {
     "fights": 18,
-    "picks": 98,
+    "picks": 99,
     "cappers": 5,
-    "videos": 7
+    "videos": 8
   },
   "sources": [
     {
@@ -52,6 +52,16 @@
       "status": "transcript_failed",
       "pick_count": 0,
       "error": "No usable transcript: TranscriptsDisabled"
+    },
+    {
+      "video_id": "-ccyBFXR9Ys",
+      "url": "https://www.youtube.com/watch?v=-ccyBFXR9Ys",
+      "capper_id": "livid_larry",
+      "capper": "Livid Larry MMA",
+      "title": "Ian Garry CAN Beat Islam Makhachev... Here's How",
+      "status": "ok",
+      "pick_count": 1,
+      "transcript_chars": 7077
     },
     {
       "video_id": "_W88avBaqqc",
@@ -505,15 +515,15 @@
         {
           "bet_type": "method_of_victory",
           "label": "Method of Victory",
-          "total_weight": 17.31,
+          "total_weight": 17.81,
           "pick_count": 4,
           "options": [
             {
               "selection": "Islam Makhachev by submission in round 4",
-              "consensus_pct": 73.7,
-              "weight": 12.75,
+              "consensus_pct": 74.4,
+              "weight": 13.25,
               "pick_count": 3,
-              "avg_confidence": 7.0,
+              "avg_confidence": 7.3,
               "cappers": [
                 {
                   "id": "tony_has_died",
@@ -540,19 +550,19 @@
                 {
                   "id": "livid_larry",
                   "name": "Livid Larry MMA",
-                  "confidence": 5,
+                  "confidence": 6,
                   "trust": 5.0,
-                  "role": "unknown",
+                  "role": "favorite",
                   "odds": "",
                   "stake": "",
-                  "reasoning": "Expects the win most likely by submission.",
-                  "video_url": "https://www.youtube.com/watch?v=_W88avBaqqc"
+                  "reasoning": "Despite giving Garry a 35-40% chance and outlining a game plan for him, he still picks Islam by submission, believing Islam should be able to secure takedowns and control time.",
+                  "video_url": "https://www.youtube.com/watch?v=-ccyBFXR9Ys"
                 }
               ]
             },
             {
               "selection": "Islam Makhachev inside the distance",
-              "consensus_pct": 26.3,
+              "consensus_pct": 25.6,
               "weight": 4.56,
               "pick_count": 1,
               "avg_confidence": 8.0,
@@ -1950,7 +1960,7 @@
       "feed_videos": 15,
       "selected": [],
       "recent_titles": [
-        "2026-08-10  Contender Series 2026 Week 1: Wint vs Adams Full Card Predictions & Betting Breakdown",
+        "2026-08-10  Contender Series 2026 Week 1 Predictions & Betting Breakdown + Most Confident Picks",
         "2026-08-07  UFC Vegas 120 Best Bets! Gamrot vs Salkilld Betting Breakdown & Underdog Lock",
         "2026-08-06  PFL Charlotte: Battle vs Rosta Full Card Predictions & Betting Breakdown + Underdog Lock",
         "2026-08-05  UFC Vegas 120: Gamrot vs Salkilld Full Card Predictions & Betting Breakdown",
@@ -2003,6 +2013,11 @@
       "channel_id": "UUuJCJmR5QdtA2Iv3nwJXMJA",
       "feed_videos": 15,
       "selected": [
+        {
+          "video_id": "-ccyBFXR9Ys",
+          "title": "Ian Garry CAN Beat Islam Makhachev... Here's How",
+          "published": "2026-08-11T13:15:57+00:00"
+        },
         {
           "video_id": "_W88avBaqqc",
           "title": "UFC 330: Makhachev vs Garry | Main Card Picks #ufc330 #ufc #fightpicks #ufcpicks",

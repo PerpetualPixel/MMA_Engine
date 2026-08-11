@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-11T09:02:48+00:00",
+  "generated_at": "2026-08-11T19:36:59+00:00",
   "event": {
     "name": "UFC 330",
     "date": "",
@@ -113,6 +113,20 @@
       "suggested_units": 1.0
     },
     {
+      "fight_id": "garry|makhachev",
+      "fight": "Ian Machado Garry vs Islam Makhache",
+      "market": "method_of_victory",
+      "market_label": "Method of Victory",
+      "selection": "Islam Makhachev by submission in round 4",
+      "consensus_pct": 74.4,
+      "weight": 13.25,
+      "pick_count": 3,
+      "avg_confidence": 7.3,
+      "strength": 6.2,
+      "tier": "lean",
+      "suggested_units": 1.0
+    },
+    {
       "fight_id": "johnson|ochoa",
       "fight": "Charles Johnson vs Jose Ochoa",
       "market": "method_of_victory",
@@ -151,20 +165,6 @@
       "pick_count": 2,
       "avg_confidence": 4.5,
       "strength": 6.1,
-      "tier": "lean",
-      "suggested_units": 1.0
-    },
-    {
-      "fight_id": "garry|makhachev",
-      "fight": "Ian Machado Garry vs Islam Makhache",
-      "market": "method_of_victory",
-      "market_label": "Method of Victory",
-      "selection": "Islam Makhachev by submission in round 4",
-      "consensus_pct": 73.7,
-      "weight": 12.75,
-      "pick_count": 3,
-      "avg_confidence": 7.0,
-      "strength": 6.0,
       "tier": "lean",
       "suggested_units": 1.0
     },
