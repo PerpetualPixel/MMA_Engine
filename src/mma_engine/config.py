@@ -48,6 +48,14 @@ DEFAULT_SETTINGS: dict[str, Any] = {
         # Useful when a channel posts non-betting content in the same window.
         "title_contains": "",
     },
+    "proxy": {
+        # Route YouTube requests through a proxy — required for the pipeline to
+        # run unattended on GitHub Actions' shared runners, since YouTube blocks
+        # their cloud IP ranges outright. Credentials come from environment
+        # variables (see mma_engine.proxy), never from this file.
+        "enabled": False,
+        "provider": "webshare",  # "webshare" or "generic"
+    },
 }
 
 
@@ -140,11 +148,24 @@ def load_config(path: str | Path = "config.json") -> Config:
         **DEFAULT_SETTINGS["discovery"],
         **(raw_settings.get("discovery") or {}),
     }
+    settings["proxy"] = {
+        **DEFAULT_SETTINGS["proxy"],
+        **(raw_settings.get("proxy") or {}),
+    }
     # Environment wins over the file so CI can override without a commit.
     if os.environ.get("MMA_MODEL"):
         settings["model"] = os.environ["MMA_MODEL"]
     if os.environ.get("MMA_EFFORT"):
         settings["effort"] = os.environ["MMA_EFFORT"]
+    if os.environ.get("MMA_PROXY_ENABLED"):
+        # Lets GitHub Actions turn proxying on for its cloud runners without
+        # forcing it on for local runs, which don't need it and may not have
+        # proxy credentials configured.
+        settings["proxy"]["enabled"] = os.environ["MMA_PROXY_ENABLED"].strip().lower() in (
+            "1",
+            "true",
+            "yes",
+        )
 
     if settings["min_delay_seconds"] > settings["max_delay_seconds"]:
         raise ConfigError("settings.min_delay_seconds exceeds max_delay_seconds")

@@ -170,6 +170,7 @@ class ChannelDiscovery:
         session: requests.Session | None = None,
         max_retries: int = 3,
         retry_backoff: float = 2.0,
+        proxies: dict[str, str] | None = None,
     ) -> None:
         self.lookback_days = lookback_days
         self.max_per_channel = max_per_channel
@@ -181,6 +182,8 @@ class ChannelDiscovery:
         self.retry_backoff = retry_backoff
         self.session = session or requests.Session()
         self.session.headers.setdefault("User-Agent", _USER_AGENT)
+        if proxies:
+            self.session.proxies.update(proxies)
         self._channel_ids: dict[str, str] = self._load_cache()
 
     # -- channel ID cache --------------------------------------------------

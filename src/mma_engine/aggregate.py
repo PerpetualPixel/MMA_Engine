@@ -182,6 +182,9 @@ def build_consensus(
     fights.sort(key=lambda f: (f["capper_count"], f["pick_count"]), reverse=True)
 
     return {
+        # Bump this if the payload shape changes in a way that could break an
+        # external consumer (e.g. PerpetualPicks.com) reading docs/data.json.
+        "schema_version": 1,
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "event": event or {},
         "totals": {
