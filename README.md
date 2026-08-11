@@ -350,14 +350,16 @@ missing if it's ever misconfigured.
 
 ## Integrating with other systems (e.g. PerpetualPicks.com)
 
+### Option 1: Pull the static `data.json` feed (simple)
+
 `docs/data.json` is the entire output of a run and the thing GitHub Pages
 serves — anything that can fetch a URL can read it:
 
 ```
-https://<your-username>.github.io/MMA_Engine/data.json
+https://perpetualpixel.github.io/MMA_Engine/docs/data.json
 ```
 
-It refreshes every time the Action runs, so a puller on a similar or looser
+It refreshes every time you run `weekly.bat`, so a puller on a similar or looser
 schedule always sees the latest event's consensus. The shape is:
 
 ```jsonc
@@ -405,10 +407,110 @@ pulling per fight/market are `options[].selection` and `options[].consensus_pct`
 `pick_count` are there if you want to apply your own confidence threshold
 (e.g. ignore any option under 3 picks) before importing it.
 
-If PerpetualPicks.com needs push delivery instead of pulling the static file
-(a webhook, a different schema, authentication), that's a small addition to
-the `Commit updated data.json` step in `consensus.yml` — happy to wire it up
-once you know what shape it expects on the other end.
+### Option 2: Use the Python `ConsensusClient` (recommended for blending)
+
+If you're writing Python code (e.g., your PerpetualPicks.com algorithm), use the
+`ConsensusClient` to fetch and query the data programmatically. **It's a Python library,
+not a CLI tool** — you run it inside your Python code, not from the command line.
+
+#### Installation
+
+Add the MMA_Engine repo as a dependency or copy `consensus_client.py` into your project:
+
+```bash
+# In your Python project
+pip install requests  # if not already installed
+```
+
+#### Usage
+
+```python
+from mma_engine.consensus_client import ConsensusClient
+
+# Fetch the live consensus
+client = ConsensusClient()
+data = client.fetch()
+
+# Find a specific fight
+fight = client.fight_by_display("Islam Makhachev vs Ian Machado Garry")
+if fight:
+    # Get the moneyline market
+    market = client.market_by_type(fight, "moneyline")
+    
+    # Get the top consensus pick
+    consensus = client.consensus_for_option(market, "Islam Makhachev")
+    
+    print(f"{consensus['selection']}: {consensus['consensus_pct']}%")
+    print(f"  Weight: {consensus['weight']}")
+    print(f"  Pick count: {consensus['pick_count']}")
+    print(f"  Capper details: {consensus['cappers']}")
+```
+
+#### Blend with your algorithm
+
+```python
+from mma_engine.consensus_client import ConsensusClient
+
+client = ConsensusClient()
+
+# Your algorithm's prediction
+your_pick_pct = 65.0
+your_confidence = 7.0
+
+# Get consensus
+fight = client.fight_by_display("Islam Makhachev vs Ian Machado Garry")
+market = client.market_by_type(fight, "moneyline")
+consensus = client.consensus_for_option(market, "Islam Makhachev")
+
+# Blend: 40% consensus, 60% your algorithm
+blended = (
+    your_pick_pct * your_confidence * 0.6 +
+    consensus["consensus_pct"] * (consensus["weight"] / 10.0) * 0.4
+) / (your_confidence * 0.6 + (consensus["weight"] / 10.0) * 0.4)
+
+print(f"Blended prediction: {blended:.1f}%")
+```
+
+#### API reference
+
+| Method | Returns | Purpose |
+|--------|---------|---------|
+| `fetch(use_cache=True)` | dict | Fetch the entire consensus payload |
+| `fight_by_display(name)` | dict or None | Find a fight by display name (e.g. "Fighter A vs Fighter B") |
+| `fight_by_id(fight_id)` | dict or None | Find a fight by its ID |
+| `market_by_type(fight, bet_type)` | dict or None | Find a market within a fight (moneyline, method_of_victory, etc.) |
+| `consensus_for_option(market, selection)` | dict or None | Find an option and return its full consensus data |
+| `all_fights()` | list | Get all fights from the latest consensus |
+| `event_info()` | dict | Get event metadata (name, date) |
+| `totals()` | dict | Get aggregate counts (fights, picks, cappers, videos) |
+| `clear_cache()` | None | Clear cached data so the next fetch hits the network |
+
+See `examples/perpetual_picks_integration.py` for a complete working example.
+
+#### Where does ConsensusClient run?
+
+**In your Python code**, not in PowerShell or as a CLI. It's a library you import and call from within your application. For example:
+
+- If PerpetualPicks.com is a **Python web app** (Flask, Django, FastAPI, etc.), import it in your route or job handler
+- If it's a **scheduled task**, call it from your Python script or cron job
+- If it's a **batch process**, import it and fetch the consensus at the start
+
+Example: running it from a Python script on your machine:
+
+```bash
+python -c "
+from mma_engine.consensus_client import ConsensusClient
+client = ConsensusClient()
+fight = client.fight_by_display('Islam Makhachev vs Ian Machado Garry')
+print(fight)
+"
+```
+
+But normally it's imported inside your algorithm and called as part of your prediction pipeline, not as a standalone tool.
+
+---
+
+If you need push delivery instead of pulling the static file (a webhook, a different schema, authentication), that's a small addition to the `Commit updated data.json` step in `consensus.yml` — happy to wire it up once you know what shape it expects on the other end.
 
 ---
 
