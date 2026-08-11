@@ -14,6 +14,12 @@ IDs.
 Discovery is a convenience, not a requirement: anything listed explicitly in
 `config.json`'s `videos` array is always used, and explicit entries win over
 discovered ones for the same video.
+
+YouTube's RSS feeds are documented as flaky in practice — multiple RSS-reader
+projects (rss-bridge #2113, miniflux #4261, newsboat #3269) report the same
+endpoint returning a transient 404 for channels that plainly exist and have
+public videos. A single 404 on this endpoint is therefore treated as
+retryable, not as proof the channel or ID is wrong.
 """
 
 from __future__ import annotations
@@ -21,6 +27,7 @@ from __future__ import annotations
 import json
 import logging
 import re
+import time
 import xml.etree.ElementTree as ET
 from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
@@ -143,6 +150,8 @@ class ChannelDiscovery:
         timeout: float = 20.0,
         use_cache: bool = True,
         session: requests.Session | None = None,
+        max_retries: int = 3,
+        retry_backoff: float = 2.0,
     ) -> None:
         self.lookback_days = lookback_days
         self.max_per_channel = max_per_channel
@@ -150,6 +159,8 @@ class ChannelDiscovery:
         self.cache_path = Path(cache_path)
         self.timeout = timeout
         self.use_cache = use_cache
+        self.max_retries = max_retries
+        self.retry_backoff = retry_backoff
         self.session = session or requests.Session()
         self.session.headers.setdefault("User-Agent", _USER_AGENT)
         self._channel_ids: dict[str, str] = self._load_cache()
@@ -173,6 +184,39 @@ class ChannelDiscovery:
             json.dumps(self._channel_ids, indent=2, sort_keys=True), encoding="utf-8"
         )
 
+    # -- retrying HTTP GET ---------------------------------------------------
+
+    def _get_with_retry(self, url: str) -> requests.Response:
+        """GET a URL, retrying transient failures with backoff.
+
+        YouTube's RSS surface flakes intermittently (see module docstring) — a
+        404 or 5xx here is not reliable evidence the URL is wrong. A connection
+        failure (proxy, DNS, timeout) is retried the same way. The final
+        attempt's exception propagates so the caller still sees a real error.
+        """
+        last_exc: Exception | None = None
+        for attempt in range(1, self.max_retries + 1):
+            try:
+                response = self.session.get(url, timeout=self.timeout)
+                response.raise_for_status()
+                return response
+            except requests.exceptions.RequestException as exc:
+                last_exc = exc
+                if attempt == self.max_retries:
+                    break
+                delay = self.retry_backoff * (2 ** (attempt - 1))
+                log.info(
+                    "  request failed (%s), retry %d/%d in %.0fs: %s",
+                    type(exc).__name__,
+                    attempt,
+                    self.max_retries - 1,
+                    delay,
+                    url,
+                )
+                time.sleep(delay)
+        assert last_exc is not None  # loop always sets it before falling through
+        raise last_exc
+
     # -- resolution --------------------------------------------------------
 
     def resolve_channel_id(self, channel_url: str, channel_id: str = "") -> str:
@@ -189,8 +233,7 @@ class ChannelDiscovery:
             return cached
 
         log.info("Resolving channel ID for %s", channel_url)
-        response = self.session.get(channel_url, timeout=self.timeout)
-        response.raise_for_status()
+        response = self._get_with_retry(channel_url)
         resolved = parse_channel_id_from_page(response.text)
         if not resolved:
             raise ValueError(
@@ -204,10 +247,7 @@ class ChannelDiscovery:
     # -- discovery ---------------------------------------------------------
 
     def fetch_channel_videos(self, channel_id: str, capper_id: str) -> list[DiscoveredVideo]:
-        response = self.session.get(
-            FEED_URL.format(channel_id=channel_id), timeout=self.timeout
-        )
-        response.raise_for_status()
+        response = self._get_with_retry(FEED_URL.format(channel_id=channel_id))
         return parse_feed(response.text, capper_id)
 
     def _select(self, videos: list[DiscoveredVideo]) -> list[DiscoveredVideo]:

@@ -78,6 +78,10 @@ class StubSession:
 
 def make_discovery(routes, **kwargs) -> ChannelDiscovery:
     kwargs.setdefault("use_cache", False)
+    # Single attempt by default so failure-path tests stay fast; tests that
+    # specifically exercise retrying set max_retries themselves.
+    kwargs.setdefault("max_retries", 1)
+    kwargs.setdefault("retry_backoff", 0.0)
     return ChannelDiscovery(session=StubSession(routes), **kwargs)
 
 
@@ -367,6 +371,75 @@ def test_resolve_videos_skips_discovery_when_disabled(tmp_path):
     videos, report = pipeline.resolve_videos(load_config(config_path))
     assert [v.video_id for v in videos] == ["onlymineaaa"]
     assert report == []
+
+
+class FlakyThenOkSession:
+    """Fails the first `fail_times` calls to a given URL, then serves it.
+
+    Models exactly what happened against real YouTube: a 404 that clears on
+    retry, not a persistently broken URL.
+    """
+
+    def __init__(self, fragment: str, fail_times: int, ok_response: StubResponse):
+        self.fragment = fragment
+        self.fail_times = fail_times
+        self.ok_response = ok_response
+        self.headers: dict[str, str] = {}
+        self.calls = 0
+
+    def get(self, url: str, timeout: float = 0):
+        if self.fragment in url:
+            self.calls += 1
+            if self.calls <= self.fail_times:
+                raise requests.exceptions.HTTPError("404 Client Error: Not Found")
+            return self.ok_response
+        raise requests.exceptions.ConnectionError(f"no stub route for {url}")
+
+
+def test_transient_feed_404_recovers_on_retry(monkeypatch):
+    monkeypatch.setattr("mma_engine.discover.time.sleep", lambda _seconds: None)
+    xml = feed_xml([("aaaaaaaaaaa", "Picks", iso(1))])
+    session = FlakyThenOkSession("videos.xml", fail_times=2, ok_response=StubResponse(xml))
+    discovery = ChannelDiscovery(
+        session=session, use_cache=False, max_retries=3, retry_backoff=1.0
+    )
+
+    videos, report = discovery.discover([capper()])
+
+    assert session.calls == 3, "must have retried, not given up after the first 404"
+    assert [v.video_id for v in videos] == ["aaaaaaaaaaa"]
+    assert report[0]["status"] == "ok"
+
+
+def test_retries_are_exhausted_before_reporting_failure(monkeypatch):
+    monkeypatch.setattr("mma_engine.discover.time.sleep", lambda _seconds: None)
+    session = FlakyThenOkSession(
+        "videos.xml", fail_times=99, ok_response=StubResponse("unreachable")
+    )
+    discovery = ChannelDiscovery(
+        session=session, use_cache=False, max_retries=3, retry_backoff=1.0
+    )
+
+    videos, report = discovery.discover([capper()])
+
+    assert session.calls == 3, "must not retry forever, and must not give up early"
+    assert videos == []
+    assert report[0]["status"] == "failed"
+
+
+def test_retry_backoff_is_exponential(monkeypatch):
+    delays: list[float] = []
+    monkeypatch.setattr("mma_engine.discover.time.sleep", delays.append)
+    session = FlakyThenOkSession(
+        "videos.xml", fail_times=99, ok_response=StubResponse("unreachable")
+    )
+    discovery = ChannelDiscovery(
+        session=session, use_cache=False, max_retries=4, retry_backoff=2.0
+    )
+
+    discovery.discover([capper()])
+
+    assert delays == [2.0, 4.0, 8.0]
 
 
 def test_http_error_on_feed_is_captured():
