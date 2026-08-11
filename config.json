@@ -50,13 +50,27 @@
       "channel_id": "UCpSQhfFzpZ9COp_WiKSUEkQ",
       "discover": true,
       "trust": {
-        "overall": 7.5,
-        "underdog": 9.0,
-        "favorite": 6.5
+        "overall": 5.0,
+        "underdog": 6.3,
+        "favorite": 5.0
       },
       "aliases": [
         "Artem"
-      ]
+      ],
+      "tracked": {
+        "notes": "Third in 2026 underdog accuracy (percentage not stated) and first in underdog accuracy over the last 50 events at 43.3%.",
+        "videos": [
+          "rLxl9yy3Tbc"
+        ],
+        "record": {
+          "underdog": {
+            "roi": {
+              "picks": 25,
+              "value": 15.3
+            }
+          }
+        }
+      }
     },
     {
       "id": "axel_mma",
@@ -64,14 +78,21 @@
       "channel_url": "https://www.youtube.com/@AlexTalksFights",
       "discover": true,
       "trust": {
-        "overall": 7.5,
-        "underdog": 9.0,
-        "favorite": 9.0
+        "overall": 5.0,
+        "underdog": 5.0,
+        "favorite": 5.0
       },
       "aliases": [
         "Axel Talks Fights",
         "Alex Talks Fights"
-      ]
+      ],
+      "tracked": {
+        "notes": "Second in underdog accuracy over the last 50 events at 43%.",
+        "videos": [
+          "rLxl9yy3Tbc"
+        ],
+        "record": {}
+      }
     },
     {
       "id": "betslam_sam",
@@ -79,15 +100,43 @@
       "channel_url": "https://www.youtube.com/@BetSlamWithSam",
       "discover": true,
       "trust": {
-        "overall": 7.5,
-        "underdog": 9.0,
-        "favorite": 9.0
+        "overall": 5.7,
+        "underdog": 6.8,
+        "favorite": 5.7
       },
       "aliases": [
         "Bet Sam",
         "BetSlam Sam",
         "Bet Slam with Sam"
-      ]
+      ],
+      "tracked": {
+        "notes": "Also ranked third in underdog accuracy over the last 50 events (either 42.6% or 42.2%, not specified).",
+        "videos": [
+          "rLxl9yy3Tbc"
+        ],
+        "record": {
+          "overall": {
+            "roi": {
+              "picks": 25,
+              "value": 8.4
+            },
+            "correct": {
+              "picks": 25,
+              "value": 70.6
+            }
+          },
+          "underdog": {
+            "roi": {
+              "picks": 25,
+              "value": 22.0
+            },
+            "correct": {
+              "picks": 25,
+              "value": 45.9
+            }
+          }
+        }
+      }
     },
     {
       "id": "funky_picks",
@@ -95,15 +144,35 @@
       "channel_url": "https://www.youtube.com/@FunkyPicks",
       "discover": true,
       "trust": {
-        "overall": 7.5,
-        "underdog": 9.0,
-        "favorite": 9.0
+        "overall": 5.8,
+        "underdog": 5.8,
+        "favorite": 6.8
       },
       "aliases": [
         "Funky Bunch MMA",
         "Funky Picks",
         "Funkybunch"
-      ]
+      ],
+      "tracked": {
+        "notes": "Also second in overall ROI over the last 50 events (4.7%), third in 50-event underdog ROI (9.1%), and a top-three method-of-victory predictor (40.3% in 2026, 38.6% over 50 events, 2% MoV ROI).",
+        "videos": [
+          "rLxl9yy3Tbc"
+        ],
+        "record": {
+          "overall": {
+            "roi": {
+              "picks": 25,
+              "value": 9.9
+            }
+          },
+          "favorite": {
+            "correct": {
+              "picks": 25,
+              "value": 76.8
+            }
+          }
+        }
+      }
     },
     {
       "id": "livid_larry",
@@ -111,15 +180,22 @@
       "channel_url": "https://www.youtube.com/@LividLarryMMA",
       "discover": true,
       "trust": {
-        "overall": 7.5,
-        "underdog": 9.0,
-        "favorite": 6.5
+        "overall": 5.0,
+        "underdog": 5.0,
+        "favorite": 5.0
       },
       "aliases": [
         "Live It Larry MMA",
         "Live It Larry",
         "Livid Larry"
-      ]
+      ],
+      "tracked": {
+        "notes": "Fifth in underdog accuracy over the last 50 events (either 42.6% or 42.2%, not specified).",
+        "videos": [
+          "rLxl9yy3Tbc"
+        ],
+        "record": {}
+      }
     },
     {
       "id": "pure_picks",
@@ -127,13 +203,20 @@
       "channel_url": "https://www.youtube.com/@PurePicksMMA",
       "discover": true,
       "trust": {
-        "overall": 7.5,
-        "underdog": 6.5,
-        "favorite": 9.0
+        "overall": 5.0,
+        "underdog": 5.0,
+        "favorite": 5.0
       },
       "aliases": [
         "Pure Picks"
-      ]
+      ],
+      "tracked": {
+        "notes": "Fifth in favorite accuracy over the last 50 events (either 74.9% or 74.7%, not specified).",
+        "videos": [
+          "rLxl9yy3Tbc"
+        ],
+        "record": {}
+      }
     },
     {
       "id": "couch_warrior",
@@ -141,13 +224,20 @@
       "channel_url": "https://www.youtube.com/@couchwarriorpodcast",
       "discover": true,
       "trust": {
-        "overall": 7.5,
-        "underdog": 6.5,
-        "favorite": 9.0
+        "overall": 5.0,
+        "underdog": 5.0,
+        "favorite": 5.0
       },
       "aliases": [
         "Couch Warrior"
-      ]
+      ],
+      "tracked": {
+        "notes": "Over the last 50 events: fifth in overall accuracy (67.9%), second in favorite accuracy (75.3%), first in favorite ROI (5.4%), and third in method-of-victory accuracy (38.2%).",
+        "videos": [
+          "rLxl9yy3Tbc"
+        ],
+        "record": {}
+      }
     },
     {
       "id": "tony_has_died",
@@ -171,13 +261,20 @@
       "discover": true,
       "trust": {
         "overall": 5.0,
-        "underdog": 4.0,
-        "favorite": 8.0
+        "underdog": 5.0,
+        "favorite": 5.0
       },
       "aliases": [
         "Double Vision MMA",
         "Double Vision"
-      ]
+      ],
+      "tracked": {
+        "notes": "Third most accurate overall predictor over the last 50 events at 68.2% on 494 predictions.",
+        "videos": [
+          "rLxl9yy3Tbc"
+        ],
+        "record": {}
+      }
     },
     {
       "id": "we_want_picks",
@@ -186,13 +283,360 @@
       "discover": true,
       "trust": {
         "overall": 5.0,
-        "underdog": 4.0,
-        "favorite": 8.0
+        "underdog": 5.0,
+        "favorite": 5.8
       },
       "aliases": [
         "Jacob from We Want Picks",
         "We Want Picks"
-      ]
+      ],
+      "tracked": {
+        "notes": "Best favorite predictor of 2026 in both accuracy and ROI; also first in 50-event favorite accuracy (75.6%) and second in 50-event favorite ROI (5.1%).",
+        "videos": [
+          "rLxl9yy3Tbc"
+        ],
+        "record": {
+          "favorite": {
+            "roi": {
+              "picks": 25,
+              "value": 9.4
+            },
+            "correct": {
+              "picks": 25,
+              "value": 78.4
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "mma_husky_hustler",
+      "name": "MMA Husky Hustler",
+      "channel_url": "",
+      "discover": false,
+      "trust": {
+        "overall": 8.7,
+        "underdog": 8.7,
+        "favorite": 8.7
+      },
+      "tracked": {
+        "notes": "Most accurate overall predictor of 2026 (175 of 241 correct) and also the only channel above 70% over the last 50 events at 70.7%.",
+        "videos": [
+          "rLxl9yy3Tbc"
+        ],
+        "record": {
+          "overall": {
+            "correct": {
+              "picks": 241,
+              "value": 72.6
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "mma_lock_of_the_night",
+      "name": "MMA Lock of the Night",
+      "channel_url": "",
+      "discover": false,
+      "trust": {
+        "overall": 5.8,
+        "underdog": 8.2,
+        "favorite": 5.7
+      },
+      "tracked": {
+        "notes": "Only channel over 50% on underdog picks in 2026 (24 of 47) and also the most profitable method-of-victory predictor for 2026 (16.3% ROI) and over the last 50 events (3.6%).",
+        "videos": [
+          "rLxl9yy3Tbc"
+        ],
+        "record": {
+          "overall": {
+            "roi": {
+              "picks": 25,
+              "value": 10.1
+            }
+          },
+          "favorite": {
+            "roi": {
+              "picks": 25,
+              "value": 8.9
+            },
+            "correct": {
+              "picks": 25,
+              "value": 78.1
+            }
+          },
+          "underdog": {
+            "roi": {
+              "picks": 47,
+              "value": 26.4
+            },
+            "correct": {
+              "picks": 47,
+              "value": 51.1
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "art_of_mma",
+      "name": "Art of MMA",
+      "channel_url": "",
+      "discover": false,
+      "trust": {
+        "overall": 6.3,
+        "underdog": 6.3,
+        "favorite": 6.3
+      },
+      "tracked": {
+        "notes": "Fifth most accurate overall predictor of 2026.",
+        "videos": [
+          "rLxl9yy3Tbc"
+        ],
+        "record": {
+          "overall": {
+            "correct": {
+              "picks": 25,
+              "value": 70.0
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "a_train_from_premium_picks",
+      "name": "A-Train from Premium Picks",
+      "channel_url": "",
+      "discover": false,
+      "trust": {
+        "overall": 5.0,
+        "underdog": 5.0,
+        "favorite": 5.7
+      },
+      "tracked": {
+        "notes": "Third in both favorite accuracy and favorite ROI for 2026.",
+        "videos": [
+          "rLxl9yy3Tbc"
+        ],
+        "record": {
+          "favorite": {
+            "roi": {
+              "picks": 25,
+              "value": 8.4
+            },
+            "correct": {
+              "picks": 25,
+              "value": 77.7
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "pick_em_mma",
+      "name": "Pick 'em MMA",
+      "channel_url": "",
+      "discover": false,
+      "trust": {
+        "overall": 5.0,
+        "underdog": 5.0,
+        "favorite": 6.8
+      },
+      "tracked": {
+        "notes": "",
+        "videos": [
+          "rLxl9yy3Tbc"
+        ],
+        "record": {
+          "favorite": {
+            "correct": {
+              "picks": 25,
+              "value": 77.4
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "keith_shillan_from_sherdog_com",
+      "name": "Keith Shillan from Sherdog.com",
+      "channel_url": "",
+      "discover": false,
+      "trust": {
+        "overall": 5.0,
+        "underdog": 5.0,
+        "favorite": 5.0
+      },
+      "tracked": {
+        "notes": "Shared fourth in 2026 underdog accuracy; also third in 50-event overall ROI (3.7%) and third in 50-event favorite ROI (3.1%).",
+        "videos": [
+          "rLxl9yy3Tbc"
+        ],
+        "record": {}
+      }
+    },
+    {
+      "id": "left_lane_mma",
+      "name": "Left Lane MMA",
+      "channel_url": "",
+      "discover": false,
+      "trust": {
+        "overall": 5.0,
+        "underdog": 5.0,
+        "favorite": 5.0
+      },
+      "tracked": {
+        "notes": "Second most accurate overall predictor over the last 50 events at 68.2% on 613 predictions.",
+        "videos": [
+          "rLxl9yy3Tbc"
+        ],
+        "record": {}
+      }
+    },
+    {
+      "id": "actual_mma",
+      "name": "Actual MMA",
+      "channel_url": "",
+      "discover": false,
+      "trust": {
+        "overall": 5.0,
+        "underdog": 5.0,
+        "favorite": 5.0
+      },
+      "tracked": {
+        "notes": "Fourth in 50-event overall accuracy at 68.1%.",
+        "videos": [
+          "rLxl9yy3Tbc"
+        ],
+        "record": {}
+      }
+    },
+    {
+      "id": "fight_ferry",
+      "name": "Fight Ferry",
+      "channel_url": "",
+      "discover": false,
+      "trust": {
+        "overall": 5.0,
+        "underdog": 5.0,
+        "favorite": 5.0
+      },
+      "tracked": {
+        "notes": "Over the last 50 events: most profitable overall predictor (6% ROI), most profitable underdog predictor (10.1% ROI), third in favorite accuracy, and fourth in underdog accuracy.",
+        "videos": [
+          "rLxl9yy3Tbc"
+        ],
+        "record": {}
+      }
+    },
+    {
+      "id": "mma_addict",
+      "name": "MMA Addict",
+      "channel_url": "",
+      "discover": false,
+      "trust": {
+        "overall": 5.0,
+        "underdog": 5.0,
+        "favorite": 5.0
+      },
+      "tracked": {
+        "notes": "Fourth in favorite accuracy over the last 50 events (either 74.9% or 74.7%, not specified).",
+        "videos": [
+          "rLxl9yy3Tbc"
+        ],
+        "record": {}
+      }
+    },
+    {
+      "id": "the_wager_zone",
+      "name": "The Wager Zone",
+      "channel_url": "",
+      "discover": false,
+      "trust": {
+        "overall": 5.0,
+        "underdog": 5.0,
+        "favorite": 5.0
+      },
+      "tracked": {
+        "notes": "Second most profitable underdog predictor over the last 50 events at 9.6% ROI.",
+        "videos": [
+          "rLxl9yy3Tbc"
+        ],
+        "record": {}
+      }
+    },
+    {
+      "id": "useless",
+      "name": "Useless",
+      "channel_url": "",
+      "discover": false,
+      "trust": {
+        "overall": 5.0,
+        "underdog": 5.0,
+        "favorite": 5.0
+      },
+      "tracked": {
+        "notes": "Most accurate method-of-victory predictor of 2026: 88 of 214 correct for 41.1%.",
+        "videos": [
+          "rLxl9yy3Tbc"
+        ],
+        "record": {}
+      }
+    },
+    {
+      "id": "mma_bg",
+      "name": "MMA BG",
+      "channel_url": "",
+      "discover": false,
+      "trust": {
+        "overall": 5.0,
+        "underdog": 5.0,
+        "favorite": 5.0
+      },
+      "tracked": {
+        "notes": "Second in 2026 method-of-victory accuracy (40.8%), first over the last 43 tracked events (39.8%), and second in 50-event MoV ROI (2.1%).",
+        "videos": [
+          "rLxl9yy3Tbc"
+        ],
+        "record": {}
+      }
+    },
+    {
+      "id": "mma_ldnt",
+      "name": "MMA LDNT",
+      "channel_url": "",
+      "discover": false,
+      "trust": {
+        "overall": 5.0,
+        "underdog": 5.0,
+        "favorite": 5.0
+      },
+      "tracked": {
+        "notes": "Second most profitable method-of-victory predictor of 2026 with 12.3% ROI.",
+        "videos": [
+          "rLxl9yy3Tbc"
+        ],
+        "record": {}
+      }
+    },
+    {
+      "id": "mma_prediction_guru",
+      "name": "MMA Prediction Guru",
+      "channel_url": "",
+      "discover": false,
+      "trust": {
+        "overall": 5.0,
+        "underdog": 5.0,
+        "favorite": 5.0
+      },
+      "tracked": {
+        "notes": "Third most profitable method-of-victory predictor of 2026 with 12% ROI.",
+        "videos": [
+          "rLxl9yy3Tbc"
+        ],
+        "record": {}
+      }
     }
   ],
   "videos": []
