@@ -11,6 +11,10 @@ on:
         description: "Fetch transcripts only (no Claude API calls)"
         type: boolean
         default: false
+      roster_video_url:
+        description: "Optional: run --roster-from on this video URL instead of the normal pipeline (diagnostic / one-off roster update)"
+        type: string
+        default: ""
   schedule:
     # Fridays 15:00 UTC — after most cappers have posted their fight-week videos.
     - cron: "0 15 * * 5"
@@ -45,7 +49,18 @@ jobs:
           key: mma-cache-${{ github.run_id }}
           restore-keys: mma-cache-
 
+      - name: Extract roster from a tracker video
+        if: ${{ inputs.roster_video_url != '' }}
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          PYTHONPATH: src
+        run: |
+          python -m mma_engine \
+            --config config.json \
+            --roster-from "${{ inputs.roster_video_url }}"
+
       - name: Build consensus
+        if: ${{ inputs.roster_video_url == '' }}
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           PYTHONPATH: src
@@ -56,9 +71,16 @@ jobs:
             ${{ inputs.discover_only && '--discover-only' || '' }} \
             ${{ inputs.skip_extraction && '--skip-extraction' || '' }}
 
+      - name: Upload roster proposal
+        if: ${{ inputs.roster_video_url != '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: roster_proposal
+          path: roster_proposal.json
+
       - name: Commit updated data.json
         # A dry run writes no output, so there is nothing to commit.
-        if: ${{ !inputs.discover_only }}
+        if: ${{ !inputs.discover_only && inputs.roster_video_url == '' }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
