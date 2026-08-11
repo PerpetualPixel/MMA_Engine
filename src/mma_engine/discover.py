@@ -18,8 +18,16 @@ discovered ones for the same video.
 YouTube's RSS feeds are documented as flaky in practice — multiple RSS-reader
 projects (rss-bridge #2113, miniflux #4261, newsboat #3269) report the same
 endpoint returning a transient 404 for channels that plainly exist and have
-public videos. A single 404 on this endpoint is therefore treated as
-retryable, not as proof the channel or ID is wrong.
+public videos. A single 404 on this endpoint is therefore retried, not treated
+as proof the channel or ID is wrong.
+
+If the `channel_id` query form is still failing after retries, the feed is
+tried again with the channel's *uploads playlist* instead — the same feed
+endpoint, addressed by `playlist_id=UU...` instead of `channel_id=UC...`
+(every channel has a standard, deterministic uploads playlist: swap the `UC`
+prefix of its channel ID for `UU`). This is a documented YouTube convention,
+not a guess, and it is a different enough request shape that it survives
+failures specific to the `channel_id` form.
 """
 
 from __future__ import annotations
@@ -38,6 +46,16 @@ import requests
 log = logging.getLogger(__name__)
 
 FEED_URL = "https://www.youtube.com/feeds/videos.xml?channel_id={channel_id}"
+FEED_URL_BY_PLAYLIST = "https://www.youtube.com/feeds/videos.xml?playlist_id={playlist_id}"
+
+
+def uploads_playlist_id(channel_id: str) -> str:
+    """A channel's uploads-playlist ID: its channel ID with UC swapped for UU.
+
+    Every channel has one — this is a stable, documented YouTube convention,
+    not something specific to any single channel.
+    """
+    return "UU" + channel_id[2:] if channel_id.startswith("UC") else channel_id
 
 _NS = {
     "atom": "http://www.w3.org/2005/Atom",
@@ -247,8 +265,25 @@ class ChannelDiscovery:
     # -- discovery ---------------------------------------------------------
 
     def fetch_channel_videos(self, channel_id: str, capper_id: str) -> list[DiscoveredVideo]:
-        response = self._get_with_retry(FEED_URL.format(channel_id=channel_id))
-        return parse_feed(response.text, capper_id)
+        try:
+            response = self._get_with_retry(FEED_URL.format(channel_id=channel_id))
+            return parse_feed(response.text, capper_id)
+        except requests.exceptions.RequestException as channel_form_error:
+            log.info(
+                "  channel_id feed form failed after retries, trying the "
+                "uploads-playlist form instead"
+            )
+            try:
+                response = self._get_with_retry(
+                    FEED_URL_BY_PLAYLIST.format(
+                        playlist_id=uploads_playlist_id(channel_id)
+                    )
+                )
+            except requests.exceptions.RequestException:
+                # Neither request shape worked — surface the original error,
+                # since channel_id is the primary, documented form.
+                raise channel_form_error from None
+            return parse_feed(response.text, capper_id)
 
     def _select(self, videos: list[DiscoveredVideo]) -> list[DiscoveredVideo]:
         """Apply the lookback window, the title filter, and the per-channel cap."""

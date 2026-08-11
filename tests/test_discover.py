@@ -17,6 +17,7 @@ from mma_engine.discover import (
     parse_channel_id,
     parse_channel_id_from_page,
     parse_feed,
+    uploads_playlist_id,
 )
 
 CHANNEL_ID = "UCpSQhfFzpZ9COp_WiKSUEkQ"
@@ -412,6 +413,8 @@ def test_transient_feed_404_recovers_on_retry(monkeypatch):
 
 
 def test_retries_are_exhausted_before_reporting_failure(monkeypatch):
+    """When BOTH the channel_id and uploads-playlist forms are broken, each
+    exhausts its own retries independently — not more, not fewer."""
     monkeypatch.setattr("mma_engine.discover.time.sleep", lambda _seconds: None)
     session = FlakyThenOkSession(
         "videos.xml", fail_times=99, ok_response=StubResponse("unreachable")
@@ -422,12 +425,17 @@ def test_retries_are_exhausted_before_reporting_failure(monkeypatch):
 
     videos, report = discovery.discover([capper()])
 
-    assert session.calls == 3, "must not retry forever, and must not give up early"
+    assert session.calls == 6, (
+        "must not retry forever, and must exhaust both the channel_id form "
+        "(3 attempts) and the uploads-playlist fallback (3 more) before giving up"
+    )
     assert videos == []
     assert report[0]["status"] == "failed"
 
 
 def test_retry_backoff_is_exponential(monkeypatch):
+    """The backoff schedule restarts for the uploads-playlist fallback — it is
+    a fresh set of retries, not a continuation of the first form's."""
     delays: list[float] = []
     monkeypatch.setattr("mma_engine.discover.time.sleep", delays.append)
     session = FlakyThenOkSession(
@@ -439,7 +447,71 @@ def test_retry_backoff_is_exponential(monkeypatch):
 
     discovery.discover([capper()])
 
-    assert delays == [2.0, 4.0, 8.0]
+    assert delays == [2.0, 4.0, 8.0, 2.0, 4.0, 8.0]
+
+
+def test_uploads_playlist_id_swaps_uc_for_uu():
+    assert uploads_playlist_id(CHANNEL_ID) == "UU" + CHANNEL_ID[2:]
+    assert uploads_playlist_id(CHANNEL_ID).startswith("UU")
+
+
+class ChannelFormFailsPlaylistFormWorksSession:
+    """channel_id=... always errors; playlist_id=... always succeeds.
+
+    Models what would happen if only the channel_id request shape is broken.
+    """
+
+    def __init__(self, ok_response: StubResponse):
+        self.ok_response = ok_response
+        self.headers: dict[str, str] = {}
+        self.channel_id_calls = 0
+        self.playlist_id_calls = 0
+
+    def get(self, url: str, timeout: float = 0):
+        if "channel_id=" in url:
+            self.channel_id_calls += 1
+            raise requests.exceptions.HTTPError("404 Client Error: Not Found")
+        if "playlist_id=" in url:
+            self.playlist_id_calls += 1
+            return self.ok_response
+        raise requests.exceptions.ConnectionError(f"no stub route for {url}")
+
+
+def test_falls_back_to_uploads_playlist_when_channel_id_form_fails(monkeypatch):
+    monkeypatch.setattr("mma_engine.discover.time.sleep", lambda _seconds: None)
+    xml = feed_xml([("aaaaaaaaaaa", "Picks", iso(1))])
+    session = ChannelFormFailsPlaylistFormWorksSession(StubResponse(xml))
+    discovery = ChannelDiscovery(session=session, use_cache=False, max_retries=2)
+
+    videos, report = discovery.discover([capper()])
+
+    assert session.channel_id_calls == 2, "must exhaust retries before falling back"
+    assert session.playlist_id_calls == 1, "the fallback request must use playlist_id="
+    assert [v.video_id for v in videos] == ["aaaaaaaaaaa"]
+    assert report[0]["status"] == "ok"
+
+
+def test_reports_the_channel_id_error_when_both_forms_fail(monkeypatch):
+    monkeypatch.setattr("mma_engine.discover.time.sleep", lambda _seconds: None)
+
+    class BothFailSession:
+        headers: dict[str, str] = {}
+
+        def get(self, url, timeout=0):
+            if "channel_id=" in url:
+                raise requests.exceptions.HTTPError("404 channel_id form")
+            if "playlist_id=" in url:
+                raise requests.exceptions.HTTPError("404 playlist_id form")
+            raise requests.exceptions.ConnectionError("unexpected url")
+
+    discovery = ChannelDiscovery(session=BothFailSession(), use_cache=False, max_retries=1)
+    videos, report = discovery.discover([capper()])
+
+    assert videos == []
+    assert report[0]["status"] == "failed"
+    # The reported error is the primary (channel_id) form's, not the fallback's —
+    # channel_id is the documented, expected-to-work shape.
+    assert "channel_id form" in report[0]["error"]
 
 
 def test_http_error_on_feed_is_captured():
