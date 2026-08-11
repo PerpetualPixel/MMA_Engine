@@ -58,6 +58,11 @@ class StubResponse:
         if self._error:
             raise self._error
 
+    def json(self):
+        import json
+
+        return json.loads(self.text)
+
 
 class StubSession:
     """Maps URL substrings to responses; records what was requested."""
@@ -526,3 +531,161 @@ def test_http_error_on_feed_is_captured():
     assert videos == []
     assert report[0]["status"] == "failed"
     assert "429" in report[0]["error"]
+
+
+# -- YouTube Data API path -------------------------------------------------
+
+
+import json as _json
+
+from mma_engine.discover import parse_handle, parse_playlist_items, redact_key
+
+
+def api_playlist_json(entries: list[tuple[str, str, str]]) -> str:
+    """Build a Data API playlistItems.list response from (id, title, published)."""
+    return _json.dumps(
+        {
+            "items": [
+                {
+                    "snippet": {"title": title, "publishedAt": published},
+                    "contentDetails": {"videoId": vid, "videoPublishedAt": published},
+                }
+                for vid, title, published in entries
+            ]
+        }
+    )
+
+
+def test_parse_handle():
+    assert parse_handle("https://www.youtube.com/@FunkyPicks") == "FunkyPicks"
+    assert parse_handle("https://youtube.com/@Some.Name_1/videos") == "Some.Name_1"
+    assert parse_handle("https://www.youtube.com/channel/UCabc") is None
+    assert parse_handle("") is None
+
+
+def test_redact_key_masks_only_the_key():
+    url = "https://www.googleapis.com/youtube/v3/channels?part=x&key=AIzaSecret123&other=1"
+    redacted = redact_key(url)
+    assert "AIzaSecret123" not in redacted
+    assert "key=***" in redacted
+    assert "part=x" in redacted
+
+
+def test_parse_playlist_items_reads_id_title_and_date():
+    payload = _json.loads(
+        api_playlist_json([("dQw4w9WgXcQ", "UFC 320 Picks", "2026-08-09T18:00:00Z")])
+    )
+    videos = parse_playlist_items(payload, "artem_mma")
+
+    assert len(videos) == 1
+    video = videos[0]
+    assert video.video_id == "dQw4w9WgXcQ"
+    assert video.title == "UFC 320 Picks"
+    assert video.capper_id == "artem_mma"
+    assert video.published == datetime(2026, 8, 9, 18, tzinfo=timezone.utc)
+
+
+def test_parse_playlist_items_skips_broken_entries_and_sorts():
+    payload = {
+        "items": [
+            {"snippet": {"title": "No id"}, "contentDetails": {}},
+            {
+                "snippet": {"title": "Older", "publishedAt": iso(5)},
+                "contentDetails": {"videoId": "aaaaaaaaaaa", "videoPublishedAt": iso(5)},
+            },
+            {
+                "snippet": {"title": "Newest", "publishedAt": iso(1)},
+                "contentDetails": {"videoId": "bbbbbbbbbbb", "videoPublishedAt": iso(1)},
+            },
+        ]
+    }
+    videos = parse_playlist_items(payload, "c")
+    assert [v.title for v in videos] == ["Newest", "Older"]
+
+
+def test_api_discovery_with_pinned_channel_id_skips_channels_lookup():
+    # A known UC... ID converts to the UU... uploads playlist locally — the only
+    # API call should be playlistItems.list.
+    routes = {
+        "playlistItems": StubResponse(
+            api_playlist_json([("aaaaaaaaaaa", "UFC 320 Picks", iso(1))])
+        )
+    }
+    discovery = make_discovery(routes, api_key="AIzaTest")
+    videos, report = discovery.discover([capper(channel_id=CHANNEL_ID)])
+
+    assert [v.video_id for v in videos] == ["aaaaaaaaaaa"]
+    assert report[0]["status"] == "ok"
+    session = discovery.session
+    assert len(session.requested) == 1
+    assert "playlistId=UU" + CHANNEL_ID[2:] in session.requested[0]
+
+
+def test_api_discovery_resolves_handle_via_channels_endpoint():
+    routes = {
+        "youtube/v3/channels": StubResponse(
+            _json.dumps({"items": [{"id": CHANNEL_ID}]})
+        ),
+        "playlistItems": StubResponse(
+            api_playlist_json([("bbbbbbbbbbb", "UFC 320 Best Bets", iso(2))])
+        ),
+    }
+    discovery = make_discovery(routes, api_key="AIzaTest")
+    handle_capper = Capper(
+        id="funky_picks",
+        name="Funkybunch MMA",
+        channel_url="https://www.youtube.com/@FunkyPicks",
+    )
+    videos, report = discovery.discover([handle_capper])
+
+    assert [v.video_id for v in videos] == ["bbbbbbbbbbb"]
+    assert report[0]["status"] == "ok"
+    assert any("forHandle=FunkyPicks" in url for url in discovery.session.requested)
+
+
+def test_api_discovery_unknown_handle_is_isolated_failure():
+    routes = {
+        "youtube/v3/channels": StubResponse(_json.dumps({"items": []})),
+    }
+    discovery = make_discovery(routes, api_key="AIzaTest")
+    ghost = Capper(id="g", name="Ghost", channel_url="https://www.youtube.com/@Ghost")
+    videos, report = discovery.discover([ghost])
+
+    assert videos == []
+    assert report[0]["status"] == "failed"
+    assert "@Ghost" in report[0]["error"]
+
+
+def test_api_discovery_error_report_never_leaks_the_key():
+    routes = {
+        "playlistItems": requests.exceptions.HTTPError(
+            "403 Client Error for url: https://www.googleapis.com/youtube/v3/"
+            "playlistItems?part=snippet&key=AIzaSecret123"
+        )
+    }
+    discovery = make_discovery(routes, api_key="AIzaSecret123")
+    videos, report = discovery.discover([capper(channel_id=CHANNEL_ID)])
+
+    assert report[0]["status"] == "failed"
+    assert "AIzaSecret123" not in report[0]["error"]
+
+
+def test_api_discovery_applies_same_selection_filters():
+    routes = {
+        "playlistItems": StubResponse(
+            api_playlist_json(
+                [
+                    ("aaaaaaaaaaa", "UFC 320 Full Card", iso(1)),
+                    ("bbbbbbbbbbb", "Weekly mailbag", iso(2)),
+                    ("ccccccccccc", "UFC 320 Best Bets", iso(40)),
+                ]
+            )
+        )
+    }
+    discovery = make_discovery(
+        routes, api_key="AIzaTest", lookback_days=10, title_contains=["ufc 320"]
+    )
+    videos, _ = discovery.discover([capper(channel_id=CHANNEL_ID)])
+
+    # The mailbag fails the title filter; the 40-day-old video fails lookback.
+    assert [v.video_id for v in videos] == ["aaaaaaaaaaa"]

@@ -1,33 +1,35 @@
 """Step 0 (optional) — find each capper's recent videos from their channel.
 
 Instead of pasting eight URLs into `config.json` every week, list the channels
-once and let the pipeline pull the latest uploads from YouTube's per-channel RSS
-feed:
+once and let the pipeline pull the latest uploads from each one.
+
+Two ways to do that, chosen automatically:
+
+**YouTube Data API v3 (primary — used when `YOUTUBE_API_KEY` is set).**
+The official API. A free key from the Google Cloud console covers this
+project's usage thousands of times over (listing one channel's uploads costs
+1 quota unit of a 10,000/day allowance). `@handle` URLs resolve via
+`channels.list?forHandle=...`; a known `UC...` channel ID skips that call
+entirely, because every channel's uploads playlist is its channel ID with the
+`UC` prefix swapped for `UU` — a stable, documented YouTube convention.
+Uploads then come from `playlistItems.list` with IDs, titles, and publish
+dates.
+
+**Channel RSS feed (fallback — no key needed, but now unreliable).**
 
     https://www.youtube.com/feeds/videos.xml?channel_id=UC...
 
-The feed is public, needs no API key or quota, and carries the last ~15 uploads
-with their IDs, titles, and publish dates. Channels given as `@handle` URLs are
-resolved to a channel ID once and cached, since the feed endpoint only accepts
-IDs.
+This endpoint served the same data with no key, but as of August 2026 it
+returns 404 for every channel tested — including the largest channels on the
+platform, from residential IPs and browsers alike — so YouTube appears to
+have discontinued it. The code path is kept in case it returns, and because
+its flakiness was already handled: 404s are retried with backoff, and the
+`playlist_id=UU...` form of the same endpoint is tried when the `channel_id`
+form fails.
 
 Discovery is a convenience, not a requirement: anything listed explicitly in
 `config.json`'s `videos` array is always used, and explicit entries win over
 discovered ones for the same video.
-
-YouTube's RSS feeds are documented as flaky in practice — multiple RSS-reader
-projects (rss-bridge #2113, miniflux #4261, newsboat #3269) report the same
-endpoint returning a transient 404 for channels that plainly exist and have
-public videos. A single 404 on this endpoint is therefore retried, not treated
-as proof the channel or ID is wrong.
-
-If the `channel_id` query form is still failing after retries, the feed is
-tried again with the channel's *uploads playlist* instead — the same feed
-endpoint, addressed by `playlist_id=UU...` instead of `channel_id=UC...`
-(every channel has a standard, deterministic uploads playlist: swap the `UC`
-prefix of its channel ID for `UU`). This is a documented YouTube convention,
-not a guess, and it is a different enough request shape that it survives
-failures specific to the `channel_id` form.
 """
 
 from __future__ import annotations
@@ -47,6 +49,21 @@ log = logging.getLogger(__name__)
 
 FEED_URL = "https://www.youtube.com/feeds/videos.xml?channel_id={channel_id}"
 FEED_URL_BY_PLAYLIST = "https://www.youtube.com/feeds/videos.xml?playlist_id={playlist_id}"
+
+# YouTube Data API v3 — the official, keyed replacement for the RSS feed.
+API_CHANNELS_URL = (
+    "https://www.googleapis.com/youtube/v3/channels"
+    "?part=contentDetails&forHandle={handle}&key={key}"
+)
+API_PLAYLIST_ITEMS_URL = (
+    "https://www.googleapis.com/youtube/v3/playlistItems"
+    "?part=snippet,contentDetails&playlistId={playlist_id}&maxResults=15&key={key}"
+)
+
+# An @handle as it appears in a channel URL: youtube.com/@SomeName
+_HANDLE_RE = re.compile(r"@([A-Za-z0-9._-]+)")
+# The API key travels as a query parameter; keep it out of logs and reports.
+_KEY_PARAM_RE = re.compile(r"([?&]key=)[^&\s]+")
 
 
 def uploads_playlist_id(channel_id: str) -> str:
@@ -106,6 +123,49 @@ def parse_channel_id(text: str) -> str | None:
     """Pull a channel ID straight out of a `/channel/UC...` URL, if present."""
     match = _CHANNEL_ID_RE.search(text or "")
     return match.group(0) if match else None
+
+
+def parse_handle(channel_url: str) -> str | None:
+    """Pull the handle out of a `youtube.com/@SomeName` URL, without the @."""
+    match = _HANDLE_RE.search(channel_url or "")
+    return match.group(1) if match else None
+
+
+def redact_key(url: str) -> str:
+    """Mask the API key query parameter so it never lands in logs or reports."""
+    return _KEY_PARAM_RE.sub(r"\1***", url or "")
+
+
+def parse_playlist_items(payload: dict, capper_id: str) -> list[DiscoveredVideo]:
+    """Parse a Data API playlistItems.list response into videos, newest first."""
+    videos: list[DiscoveredVideo] = []
+    for item in payload.get("items") or []:
+        details = item.get("contentDetails") or {}
+        snippet = item.get("snippet") or {}
+        video_id = (details.get("videoId") or "").strip()
+        if not video_id:
+            continue
+
+        raw_date = details.get("videoPublishedAt") or snippet.get("publishedAt") or ""
+        try:
+            published = datetime.fromisoformat(raw_date.replace("Z", "+00:00"))
+        except ValueError:
+            continue  # no usable date means we can't apply the lookback window
+        if published.tzinfo is None:
+            published = published.replace(tzinfo=timezone.utc)
+
+        videos.append(
+            DiscoveredVideo(
+                video_id=video_id,
+                capper_id=capper_id,
+                url=f"https://www.youtube.com/watch?v={video_id}",
+                title=(snippet.get("title") or "").strip(),
+                published=published,
+            )
+        )
+
+    videos.sort(key=lambda v: v.published, reverse=True)
+    return videos
 
 
 def parse_channel_id_from_page(html: str) -> str | None:
@@ -171,7 +231,9 @@ class ChannelDiscovery:
         max_retries: int = 3,
         retry_backoff: float = 2.0,
         proxies: dict[str, str] | None = None,
+        api_key: str = "",
     ) -> None:
+        self.api_key = api_key.strip()
         self.lookback_days = lookback_days
         self.max_per_channel = max_per_channel
         self.title_contains = _as_patterns(title_contains)
@@ -232,7 +294,7 @@ class ChannelDiscovery:
                     attempt,
                     self.max_retries - 1,
                     delay,
-                    url,
+                    redact_key(url),
                 )
                 time.sleep(delay)
         assert last_exc is not None  # loop always sets it before falling through
@@ -265,7 +327,51 @@ class ChannelDiscovery:
         self._save_cache()
         return resolved
 
-    # -- discovery ---------------------------------------------------------
+    # -- YouTube Data API path ---------------------------------------------
+
+    def resolve_uploads_playlist(self, capper) -> str:
+        """The UU... uploads-playlist ID for a capper, via the Data API if needed.
+
+        A known channel ID converts locally (UC → UU) with no API call; only an
+        unresolved @handle costs a channels.list request, and the result is
+        cached alongside RSS-era resolutions.
+        """
+        channel_id = capper.channel_id or parse_channel_id(capper.channel_url)
+        if not channel_id:
+            channel_id = self._channel_ids.get(capper.channel_url, "")
+
+        if not channel_id:
+            handle = parse_handle(capper.channel_url)
+            if not handle:
+                raise ValueError(
+                    f"Could not parse a channel ID or @handle from "
+                    f"{capper.channel_url!r}. Use a /channel/UC... or @handle URL."
+                )
+            log.info("Resolving @%s via the YouTube Data API", handle)
+            response = self._get_with_retry(
+                API_CHANNELS_URL.format(handle=handle, key=self.api_key)
+            )
+            items = response.json().get("items") or []
+            if not items:
+                raise ValueError(
+                    f"The YouTube Data API found no channel for @{handle}. "
+                    f"Check the channel_url in config.json."
+                )
+            channel_id = items[0]["id"]
+            self._channel_ids[capper.channel_url] = channel_id
+            self._save_cache()
+
+        return uploads_playlist_id(channel_id)
+
+    def fetch_playlist_videos_api(
+        self, playlist_id: str, capper_id: str
+    ) -> list[DiscoveredVideo]:
+        response = self._get_with_retry(
+            API_PLAYLIST_ITEMS_URL.format(playlist_id=playlist_id, key=self.api_key)
+        )
+        return parse_playlist_items(response.json(), capper_id)
+
+    # -- RSS fallback path -------------------------------------------------
 
     def fetch_channel_videos(self, channel_id: str, capper_id: str) -> list[DiscoveredVideo]:
         try:
@@ -317,18 +423,25 @@ class ChannelDiscovery:
                 continue
 
             try:
-                channel_id = self.resolve_channel_id(
-                    capper.channel_url, capper.channel_id
-                )
-                videos = self.fetch_channel_videos(channel_id, capper.id)
+                if self.api_key:
+                    channel_id = self.resolve_uploads_playlist(capper)
+                    videos = self.fetch_playlist_videos_api(channel_id, capper.id)
+                else:
+                    channel_id = self.resolve_channel_id(
+                        capper.channel_url, capper.channel_id
+                    )
+                    videos = self.fetch_channel_videos(channel_id, capper.id)
             except (requests.exceptions.RequestException, ValueError) as exc:
-                entry.update(status="failed", error=f"{type(exc).__name__}: {exc}")
-                log.warning("  discovery failed for %s: %s", capper.name, exc)
+                error_text = redact_key(f"{type(exc).__name__}: {exc}")
+                entry.update(status="failed", error=error_text)
+                log.warning("  discovery failed for %s: %s", capper.name, error_text)
                 report.append(entry)
                 continue
             except Exception as exc:  # never let one channel abort the sweep
                 log.exception("Unexpected discovery error for %s", capper.name)
-                entry.update(status="failed", error=f"{type(exc).__name__}: {exc}")
+                entry.update(
+                    status="failed", error=redact_key(f"{type(exc).__name__}: {exc}")
+                )
                 report.append(entry)
                 continue
 
