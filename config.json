@@ -1,0 +1,84 @@
+{
+  "event": {
+    "name": "Upcoming Event",
+    "date": "",
+    "notes": "Set the event name/date, then add this week's videos to the \"videos\" array below."
+  },
+
+  "settings": {
+    "model": "claude-opus-5",
+    "effort": "high",
+    "max_tokens": 20000,
+    "transcript_languages": ["en"],
+    "min_delay_seconds": 4,
+    "max_delay_seconds": 12,
+    "max_transcript_chars": 60000,
+    "min_confidence": 1,
+    "use_cache": true
+  },
+
+  "cappers": [
+    {
+      "id": "artem_mma",
+      "name": "Artem MMA",
+      "channel_url": "https://www.youtube.com/channel/UCpSQhfFzpZ9COp_WiKSUEkQ",
+      "trust": { "overall": 7.5, "underdog": 9.0, "favorite": 6.5 }
+    },
+    {
+      "id": "axel_mma",
+      "name": "Axel MMA",
+      "channel_url": "https://www.youtube.com/@AlexTalksFights",
+      "trust": { "overall": 7.5, "underdog": 9.0, "favorite": 9.0 }
+    },
+    {
+      "id": "betslam_sam",
+      "name": "BetSlam with Sam",
+      "channel_url": "https://www.youtube.com/@BetSlamWithSam",
+      "trust": { "overall": 7.5, "underdog": 9.0, "favorite": 9.0 }
+    },
+    {
+      "id": "funky_picks",
+      "name": "Funkybunch MMA",
+      "channel_url": "https://www.youtube.com/@FunkyPicks",
+      "trust": { "overall": 7.5, "underdog": 9.0, "favorite": 9.0 }
+    },
+    {
+      "id": "livid_larry",
+      "name": "Livid Larry MMA",
+      "channel_url": "https://www.youtube.com/@LividLarryMMA",
+      "trust": { "overall": 7.5, "underdog": 9.0, "favorite": 6.5 }
+    },
+    {
+      "id": "pure_picks",
+      "name": "Pure Picks MMA",
+      "channel_url": "https://www.youtube.com/@PurePicksMMA",
+      "trust": { "overall": 7.5, "underdog": 6.5, "favorite": 9.0 }
+    },
+    {
+      "id": "couch_warrior",
+      "name": "Couch Warrior Podcast",
+      "channel_url": "https://www.youtube.com/@couchwarriorpodcast",
+      "trust": { "overall": 7.5, "underdog": 6.5, "favorite": 9.0 }
+    },
+    {
+      "id": "tony_has_died",
+      "name": "TonyHasDiedMMA",
+      "channel_url": "https://www.youtube.com/@TonyHasDiedMMA",
+      "trust": { "overall": 7.5, "underdog": 9.0, "favorite": 6.5 }
+    },
+    {
+      "id": "double_vision",
+      "name": "Double Vision MMA 365",
+      "channel_url": "https://www.youtube.com/@DoubleVisionMMA365",
+      "trust": { "overall": 5.0, "underdog": 4.0, "favorite": 8.0 }
+    },
+    {
+      "id": "we_want_picks",
+      "name": "We Want Picks (Jacob)",
+      "channel_url": "https://www.youtube.com/@WeWantPicks",
+      "trust": { "overall": 5.0, "underdog": 4.0, "favorite": 8.0 }
+    }
+  ],
+
+  "videos": []
+}

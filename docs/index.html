@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MMA Consensus Engine</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>%F0%9F%A5%8A</text></svg>" />
+<style>
+  :root {
+    --bg: #0d1117;
+    --panel: #161b22;
+    --panel-2: #1c2430;
+    --border: #2b3440;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #f0883e;
+    --strong: #3fb950;
+    --weak: #6e7681;
+    --split: #d29922;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 32px 20px 80px; }
+
+  header { border-bottom: 1px solid var(--border); padding-bottom: 20px; margin-bottom: 28px; }
+  h1 { margin: 0 0 4px; font-size: 26px; letter-spacing: -0.02em; }
+  h1 span { color: var(--accent); }
+  .event { font-size: 19px; font-weight: 600; margin-top: 12px; }
+  .meta { color: var(--muted); font-size: 13px; margin-top: 4px; }
+
+  .totals { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+  .stat {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 8px;
+    padding: 10px 14px; min-width: 96px;
+  }
+  .stat b { display: block; font-size: 20px; }
+  .stat span { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .04em; }
+
+  .fight {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+    margin-bottom: 18px; overflow: hidden;
+  }
+  .fight > h2 {
+    margin: 0; padding: 14px 18px; font-size: 18px;
+    border-bottom: 1px solid var(--border); display: flex;
+    justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap;
+  }
+  .fight > h2 small { color: var(--muted); font-size: 12px; font-weight: 400; }
+
+  .market { padding: 14px 18px; border-bottom: 1px solid var(--border); }
+  .market:last-child { border-bottom: 0; }
+  .market > h3 {
+    margin: 0 0 10px; font-size: 12px; text-transform: uppercase;
+    letter-spacing: .07em; color: var(--muted); font-weight: 600;
+  }
+
+  details.option { border-top: 1px solid var(--border); }
+  details.option:first-of-type { border-top: 0; }
+  details.option > summary {
+    list-style: none; cursor: pointer; padding: 9px 0;
+    display: grid; grid-template-columns: 1fr auto; gap: 4px 14px; align-items: center;
+  }
+  details.option > summary::-webkit-details-marker { display: none; }
+  .sel { font-weight: 600; }
+  .pct { font-variant-numeric: tabular-nums; font-weight: 700; }
+  .bar { grid-column: 1 / -1; height: 6px; border-radius: 3px; background: var(--panel-2); overflow: hidden; }
+  .bar i { display: block; height: 100%; background: var(--weak); }
+  .bar.is-strong i { background: var(--strong); }
+  .bar.is-split i { background: var(--split); }
+  .sub { grid-column: 1 / -1; color: var(--muted); font-size: 12px; }
+
+  table { width: 100%; border-collapse: collapse; margin: 6px 0 14px; font-size: 14px; }
+  th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .05em; font-weight: 600; }
+  td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .why { color: var(--muted); }
+  .tag {
+    display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 999px;
+    border: 1px solid var(--border); color: var(--muted);
+  }
+  .tag.underdog { color: var(--accent); border-color: var(--accent); }
+  .tag.favorite { color: var(--strong); border-color: var(--strong); }
+  .table-wrap { overflow-x: auto; }
+  a { color: var(--accent); }
+
+  .notice {
+    background: var(--panel); border: 1px solid var(--border); border-left: 3px solid var(--accent);
+    border-radius: 8px; padding: 16px 18px; color: var(--muted);
+  }
+  .notice code { color: var(--text); }
+  footer { margin-top: 40px; color: var(--muted); font-size: 12px; }
+  footer details summary { cursor: pointer; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>MMA <span>Consensus</span> Engine</h1>
+    <div class="meta">Trust-weighted betting consensus from tracked YouTube cappers.</div>
+    <div id="event"></div>
+  </header>
+
+  <main id="main"><p class="notice">Loading&hellip;</p></main>
+
+  <footer id="footer"></footer>
+</div>
+
+<script>
+const $ = (sel) => document.querySelector(sel);
+
+const esc = (value) =>
+  String(value ?? "").replace(/[&<>"']/g, (c) =>
+    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+function barClass(pct, optionCount) {
+  if (optionCount < 2) return "";
+  if (pct >= 70) return " is-strong";
+  if (pct >= 45) return " is-split";
+  return "";
+}
+
+function renderCappers(cappers) {
+  const rows = cappers.map((c) => `
+    <tr>
+      <td>${esc(c.name)}</td>
+      <td class="num">${esc(c.confidence)}/10</td>
+      <td class="num">${esc(c.trust)}</td>
+      <td>${c.role && c.role !== "unknown" ? `<span class="tag ${esc(c.role)}">${esc(c.role)}</span>` : ""}</td>
+      <td class="num">${esc(c.odds || "—")}</td>
+      <td class="why">${esc(c.reasoning || "")}</td>
+    </tr>`).join("");
+  return `<div class="table-wrap"><table>
+    <thead><tr><th>Capper</th><th>Conf</th><th>Trust</th><th>Framed as</th><th>Odds</th><th>Stated reasoning</th></tr></thead>
+    <tbody>${rows}</tbody></table></div>`;
+}
+
+function renderOption(option, optionCount) {
+  const plural = option.pick_count === 1 ? "capper" : "cappers";
+  return `<details class="option">
+    <summary>
+      <span class="sel">${esc(option.selection)}</span>
+      <span class="pct">${esc(option.consensus_pct)}%</span>
+      <span class="bar${barClass(option.consensus_pct, optionCount)}"><i style="width:${Math.max(0, Math.min(100, option.consensus_pct))}%"></i></span>
+      <span class="sub">${option.pick_count} ${plural} &middot; avg confidence ${esc(option.avg_confidence)}/10 &middot; weight ${esc(option.weight)}</span>
+    </summary>
+    ${renderCappers(option.cappers)}
+  </details>`;
+}
+
+function renderFight(fight) {
+  const markets = fight.markets.map((market) => `
+    <section class="market">
+      <h3>${esc(market.label)}</h3>
+      ${market.options.map((o) => renderOption(o, market.options.length)).join("")}
+    </section>`).join("");
+  const plural = fight.capper_count === 1 ? "capper" : "cappers";
+  return `<article class="fight">
+    <h2>${esc(fight.display)}<small>${fight.capper_count} ${plural} &middot; ${fight.pick_count} picks</small></h2>
+    ${markets}
+  </article>`;
+}
+
+function renderSources(sources) {
+  if (!sources.length) return "";
+  const rows = sources.map((s) => `
+    <tr>
+      <td>${esc(s.capper)}</td>
+      <td><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.video_id)}</a></td>
+      <td>${esc(s.status)}${s.error ? ` — ${esc(s.error)}` : ""}</td>
+      <td class="num">${esc(s.pick_count)}</td>
+    </tr>`).join("");
+  return `<details><summary>Sources (${sources.length} videos)</summary>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Capper</th><th>Video</th><th>Status</th><th>Picks</th></tr></thead>
+      <tbody>${rows}</tbody></table></div></details>`;
+}
+
+function render(data) {
+  const event = data.event || {};
+  const generated = data.generated_at
+    ? new Date(data.generated_at).toLocaleString()
+    : "unknown";
+  const totals = data.totals || {};
+
+  $("#event").innerHTML = `
+    <div class="event">${esc(event.name || "Unnamed event")}${event.date ? ` &middot; ${esc(event.date)}` : ""}</div>
+    <div class="meta">Generated ${esc(generated)}</div>
+    <div class="totals">
+      <div class="stat"><b>${esc(totals.fights ?? 0)}</b><span>Fights</span></div>
+      <div class="stat"><b>${esc(totals.picks ?? 0)}</b><span>Picks</span></div>
+      <div class="stat"><b>${esc(totals.cappers ?? 0)}</b><span>Cappers</span></div>
+      <div class="stat"><b>${esc(totals.videos ?? 0)}</b><span>Videos</span></div>
+    </div>`;
+
+  $("#main").innerHTML = (data.fights || []).length
+    ? data.fights.map(renderFight).join("")
+    : `<p class="notice">No picks yet. Add this week's videos to
+       <code>config.json</code> and run the pipeline
+       (<code>python -m mma_engine</code> or the <em>Build consensus</em> GitHub Action).</p>`;
+
+  $("#footer").innerHTML = renderSources(data.sources || []);
+}
+
+fetch(`data.json?t=${Date.now()}`)
+  .then((response) => {
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return response.json();
+  })
+  .then(render)
+  .catch((error) => {
+    $("#main").innerHTML = `<p class="notice">Could not load <code>data.json</code>
+      (${esc(error.message)}). Run the pipeline to generate it, and serve this
+      directory over HTTP (<code>python -m http.server -d docs</code>) rather than
+      opening the file directly.</p>`;
+  });
+</script>
+</body>
+</html>
