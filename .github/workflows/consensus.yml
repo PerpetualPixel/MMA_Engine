@@ -15,9 +15,12 @@ on:
         description: "Optional: run --roster-from on this video URL instead of the normal pipeline (diagnostic / one-off roster update)"
         type: string
         default: ""
-  schedule:
-    # Fridays 15:00 UTC — after most cappers have posted their fight-week videos.
-    - cron: "0 15 * * 5"
+  # No `schedule:` trigger. GitHub's shared runners sit on cloud IP ranges
+  # YouTube blocks outright, and running unattended here requires a paid
+  # residential proxy (see README.md "Running unattended on GitHub Actions").
+  # Until that's set up, the weekly run happens locally instead — see
+  # README.md "Weekly workflow". Add back a `schedule:` block here once a
+  # working residential proxy is in place.
 
 permissions:
   contents: write
