@@ -374,28 +374,40 @@ and a run with no cookies configured behaves exactly as before.
 "settings": {
   "transcript_cookies": {
     "enabled": true,
-    "from_browser": "chrome",   // read cookies straight from a local browser
-    "file": ""                   // ...or set a cookies.txt path instead
+    "from_browser": "",          // a browser name to read cookies directly...
+    "file": "cookies.txt"        // ...or a path to an exported cookies.txt
   }
 }
 ```
 
-- `from_browser` — a browser profile `yt-dlp` can read directly (`chrome`,
-  `firefox`, `edge`, `brave`, …). Easiest for local runs; the browser should
-  be closed when the pipeline runs, since some OSes lock the cookie database.
-  If both fields are set, `from_browser` wins.
-- `file` — a Netscape-format `cookies.txt` exported from a logged-in session
-  (a "Get cookies.txt" browser extension, or `yt-dlp --cookies`). Use this for
-  unattended/GitHub Actions runs, where there's no browser to read from: write
-  the file from a repo secret and point `MMA_TRANSCRIPT_COOKIES_FILE` at it
-  (which also flips `enabled` on).
+- `file` — a Netscape-format `cookies.txt` exported from a logged-in session.
+  **This is the recommended option on Windows** (see the Chrome note below).
+  Install a "Get cookies.txt LOCALLY" browser extension, sign into YouTube,
+  export from `youtube.com`, and save it as `cookies.txt` next to `weekly.bat`
+  (it's `.gitignore`d — a cookies file is a live session token, treat it like
+  an API key). A relative path resolves from the repo root the pipeline runs
+  in. For unattended/GitHub Actions runs, write the file from a repo secret and
+  point `MMA_TRANSCRIPT_COOKIES_FILE` at it (which also flips `enabled` on).
+- `from_browser` — a browser profile `yt-dlp` reads directly (`chrome`,
+  `firefox`, `edge`, `brave`, …). Close the browser first, since some OSes lock
+  the cookie database. If both fields are set, `from_browser` wins.
+
+> **Windows + Chrome/Edge:** Chrome 127+ (and Edge) encrypt cookies with
+> App-Bound Encryption that only the browser itself can decrypt, so
+> `from_browser: "chrome"` fails with `Failed to decrypt with DPAPI`
+> ([yt-dlp #10927](https://github.com/yt-dlp/yt-dlp/issues/10927)). Use the
+> `cookies.txt` **`file`** option instead — a "Get cookies.txt" extension reads
+> through the browser's own API and isn't affected. Firefox has no such
+> restriction, so `from_browser: "firefox"` also works if you prefer a browser
+> read.
 
 A dedicated throwaway Google account works fine — any 18+ account will do.
-Cookies expire, so a scheduled run will eventually need them refreshed;
-`yt-dlp` signals this with a "Sign in to confirm your age" error, at which
-point the affected videos fall back to the same clean `transcript_failed`
-they'd have without cookies rather than aborting the run. `yt-dlp` also
-resolves the `PoTokenRequired` case, so this same path fixes those too.
+Cookies expire, so a scheduled run will eventually need them refreshed
+(re-export the `cookies.txt`); `yt-dlp` signals staleness with a "Sign in to
+confirm your age" error, at which point the affected videos fall back to the
+same clean `transcript_failed` they'd have without cookies rather than aborting
+the run. `yt-dlp` also resolves the `PoTokenRequired` case, so this same path
+fixes those too.
 
 ---
 

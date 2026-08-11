@@ -43,8 +43,8 @@
     },
     "transcript_cookies": {
       "enabled": true,
-      "from_browser": "chrome",
-      "file": ""
+      "from_browser": "",
+      "file": "cookies.txt"
     }
   },
   "cappers": [

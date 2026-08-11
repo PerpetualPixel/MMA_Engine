@@ -304,6 +304,17 @@ class TranscriptFetcher:
                 # fix (pip install / rerun weekly.bat) is obvious.
                 if "No module named" in stderr and "yt_dlp" in stderr:
                     log.error("yt-dlp is not installed in this environment; run pip install -r requirements.txt")
+                elif "DPAPI" in stderr or "Failed to decrypt" in stderr:
+                    # Chrome 127+ (and Edge) wrap cookies in App-Bound Encryption
+                    # only Chrome itself can undo, so --cookies-from-browser can't
+                    # read them on Windows (yt-dlp issue #10927). Point straight at
+                    # the working alternative rather than logging a raw stderr line.
+                    log.error(
+                        "[%s] yt-dlp can't decrypt this browser's cookies (Chrome/Edge "
+                        "App-Bound Encryption). Export a cookies.txt and set "
+                        "settings.transcript_cookies.file instead of from_browser — see "
+                        "README \"Age-restricted videos\".", video_id,
+                    )
                 else:
                     log.warning("[%s] yt-dlp failed: %s", video_id, stderr.splitlines()[-1] if stderr else exc)
                 return None

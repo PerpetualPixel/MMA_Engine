@@ -238,6 +238,27 @@ def test_ytdlp_not_installed_returns_clean_error(tmp_path, monkeypatch):
     assert "did not return captions" in result.error
 
 
+def test_ytdlp_dpapi_decrypt_failure_returns_clean_error(tmp_path, monkeypatch, caplog):
+    # Chrome 127+ App-Bound Encryption: --cookies-from-browser fails to decrypt.
+    # Degrades cleanly, and the log points at the cookies.txt workaround.
+    fetcher = _fetcher_with_primary_error(
+        tmp_path, AgeRestricted("v"), cookie_config=CookieConfig(from_browser="chrome")
+    )
+
+    def fake_run(cmd, check, capture_output, timeout):  # noqa: ARG001
+        raise subprocess.CalledProcessError(
+            1, cmd, output=b"", stderr=b"ERROR: Failed to decrypt with DPAPI. See ...\n"
+        )
+
+    monkeypatch.setattr(subprocess, "run", fake_run)
+    import logging
+    with caplog.at_level(logging.ERROR):
+        result = fetcher.fetch("vid00000001")
+    assert not result.ok
+    assert "did not return captions" in result.error
+    assert any("cookies.txt" in r.message for r in caplog.records)
+
+
 def test_ytdlp_missing_interpreter_returns_clean_error(tmp_path, monkeypatch):
     fetcher = _fetcher_with_primary_error(
         tmp_path, AgeRestricted("v"), cookie_config=CookieConfig(from_browser="chrome")
