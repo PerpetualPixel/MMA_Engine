@@ -56,6 +56,26 @@ DEFAULT_SETTINGS: dict[str, Any] = {
         "enabled": False,
         "provider": "webshare",  # "webshare" or "generic"
     },
+    "transcript_cookies": {
+        # A signed-in-account fallback for the videos youtube-transcript-api
+        # can't read anonymously — chiefly age-restricted uploads (YouTube
+        # gates their captions behind an 18+ account) and the occasional
+        # PoToken-required video. When enabled, those specific failures retry
+        # once through yt-dlp using your own cookies, which authenticates the
+        # request as you and lets YouTube serve the captions it already would
+        # in your browser. Every other video still uses the faster anonymous
+        # path; disabled by default, so a run with no cookies configured
+        # behaves exactly as before.
+        "enabled": False,
+        # Read cookies straight from a local browser profile, e.g. "chrome",
+        # "firefox", "edge", "brave" (yt-dlp --cookies-from-browser). Empty to
+        # use a cookies.txt file instead.
+        "from_browser": "",
+        # Path to a Netscape-format cookies.txt exported from a logged-in
+        # session (yt-dlp --cookies). Empty to use from_browser instead. If
+        # both are set, from_browser wins.
+        "file": "",
+    },
 }
 
 
@@ -152,6 +172,10 @@ def load_config(path: str | Path = "config.json") -> Config:
         **DEFAULT_SETTINGS["proxy"],
         **(raw_settings.get("proxy") or {}),
     }
+    settings["transcript_cookies"] = {
+        **DEFAULT_SETTINGS["transcript_cookies"],
+        **(raw_settings.get("transcript_cookies") or {}),
+    }
     # Environment wins over the file so CI can override without a commit.
     if os.environ.get("MMA_MODEL"):
         settings["model"] = os.environ["MMA_MODEL"]
@@ -166,6 +190,17 @@ def load_config(path: str | Path = "config.json") -> Config:
             "true",
             "yes",
         )
+    # Same rationale as the proxy env overrides: cookies are a secret, so CI
+    # writes the exported cookies.txt to a path and points the pipeline at it
+    # via env rather than committing it. Setting the file path alone is enough
+    # to turn the fallback on.
+    if os.environ.get("MMA_TRANSCRIPT_COOKIES_FILE"):
+        settings["transcript_cookies"]["file"] = os.environ["MMA_TRANSCRIPT_COOKIES_FILE"].strip()
+        settings["transcript_cookies"]["enabled"] = True
+    if os.environ.get("MMA_TRANSCRIPT_COOKIES_ENABLED"):
+        settings["transcript_cookies"]["enabled"] = os.environ[
+            "MMA_TRANSCRIPT_COOKIES_ENABLED"
+        ].strip().lower() in ("1", "true", "yes")
 
     if settings["min_delay_seconds"] > settings["max_delay_seconds"]:
         raise ConfigError("settings.min_delay_seconds exceeds max_delay_seconds")
