@@ -57,6 +57,9 @@ python -m http.server -d docs 8000                    # open http://localhost:80
 | `--discover` / `--no-discover` | Force channel discovery on or off, overriding the config. |
 | `--no-cache` | Ignore cached transcripts/extractions and redo everything. |
 | `--config` / `--output` | Point at a different config or output path. |
+| `--roster-from URL` | Derive trust scores from a tracker results video. See below. |
+| `--roster-mode` | `accumulate` (post-event reviews) or `replace` (period recap). |
+| `--apply-roster` | Merge the extracted roster into `config.json`. |
 | `-v` | Debug logging. |
 
 Exit codes: `0` success, `1` every video failed, `2` bad or empty config.
@@ -108,22 +111,84 @@ consensus_pct = option_weight ÷ market_total_weight × 100
 So two 9.0-trust cappers at 8–9 confidence (weight 15.3) outrank one 9.0-trust
 capper at 6 confidence (weight 5.4) → 73.9% / 26.1%.
 
-### The trust scores in `config.json`
+### Where trust scores come from
 
-Derived from the tracked-performance lists this project started from — the
-roster is graded on three axes, and specialists get credit only where they're
-strong:
+They're plain numbers in `config.json` and nothing in the code hardcodes a
+capper, so you can always edit them by hand. But the better source is measured
+results — see **Trust scores from a tracker channel** below.
 
-| | Overall | Underdog | Favorite |
-| --- | --- | --- | --- |
-| Rated a top predictor | 7.5 | — | — |
-| Not on the top-predictor list | 5.0 | — | — |
-| Also strong on underdogs | — | 9.0 | — |
-| Also strong on favorites | — | — | 9.0 / 8.0 |
-| Not strong in that lane | — | 6.5 / 4.0 | 6.5 |
+The starting values were inferred from the tracked-performance lists this
+project began with (top predictors 7.5 overall, others 5.0; underdog and
+favorite specialists 9.0 in their lane, reduced outside it). Those are a
+placeholder for real ROI data, not a substitute for it.
 
-They're plain numbers in `config.json` — edit them as you track results. Nothing
-in the code hardcodes a capper.
+---
+
+## Trust scores from a tracker channel
+
+Channels like [@UFCPredictionsTracker](https://www.youtube.com/@UFCPredictionsTracker)
+publish recaps ranking MMA prediction channels by correct-pick rate and ROI,
+split into overall / favorite / underdog — the same three axes this project
+weights on. `--roster-from` turns one of those videos into capper entries with
+measured trust scores.
+
+```bash
+# 1. Reset the baseline from a long-period recap (writes a proposal only)
+PYTHONPATH=src python -m mma_engine \
+  --roster-from https://www.youtube.com/watch?v=rLxl9yy3Tbc \
+  --roster-mode replace
+
+# 2. Review roster_proposal.json, then apply it
+PYTHONPATH=src python -m mma_engine \
+  --roster-from https://www.youtube.com/watch?v=rLxl9yy3Tbc \
+  --roster-mode replace --apply-roster
+
+# 3. After each event, fold in that card's review (accumulate is the default)
+PYTHONPATH=src python -m mma_engine \
+  --roster-from https://www.youtube.com/watch?v=EVENT_REVIEW_ID --apply-roster
+```
+
+### The two modes
+
+| Mode | Use for | Effect |
+| --- | --- | --- |
+| `replace` | A long-period recap (6 months, 10 months) | Discards the stored record; this video alone sets the scores. |
+| `accumulate` *(default)* | A post-event review | Adds this card's picks to the running sample and recomputes. |
+
+Use `replace` for a period recap **because it covers the same picks the
+per-event videos already contributed** — pooling both would double-count. The
+normal rhythm is one `replace` to set a baseline, then `accumulate` after every
+card. Re-running the same video is a no-op, so a repeated run can't inflate
+anyone's sample.
+
+### How a figure becomes a weight
+
+```
+raw   = 5.0 + (roi_percent / 20.0) × 5.0        # +20% ROI → 10.0, 0% → 5.0
+trust = 5.0 + (raw − 5.0) × n / (n + 50)        # shrink toward neutral
+```
+
+ROI is preferred over correct-pick rate — profitability is what the weighting
+cares about, and a dog specialist can be very profitable while hitting under
+50%. Win rate is the fallback when a video reports only that.
+
+The second line is the important one. **A big number over a tiny sample is
+noise**, so scores are pulled toward neutral by their sample size:
+
+| Record | Trust |
+| --- | --- |
+| +55% ROI over 9 picks | 7.1 |
+| +14% ROI over 420 picks | 8.1 |
+| +26% ROI over 140 picks | 9.8 |
+| −18% ROI over 300 picks | 1.1 |
+
+Tune `ROI_AT_MAX_TRUST` and `PRIOR_PICKS` in `src/mma_engine/roster.py` if you
+disagree with the curve. A capper with no category-specific number inherits
+their overall score rather than getting an invented specialty rating.
+
+Extracted records are stored under each capper's `tracked` key in
+`config.json`, including which videos have been applied — that's what makes
+re-runs idempotent and the scores auditable.
 
 ---
 
@@ -230,6 +295,7 @@ config.json                  # the only file you edit weekly
 src/mma_engine/
   config.py                  # config loading, validation, URL → video ID
   discover.py                # channel RSS discovery, handle → channel ID
+  roster.py                  # tracker-video → measured capper trust scores
   transcripts.py             # YouTube fetching, caching, jittered delays
   extract.py                 # Claude structured-output extraction, chunking
   normalize.py               # fighter-name and selection matching
@@ -239,6 +305,7 @@ docs/index.html              # static dashboard (no build step, no CDN)
 docs/data.json               # generated output
 tests/test_aggregate.py      # normalization + aggregation tests
 tests/test_discover.py       # feed parsing, filtering, merge behavior
+tests/test_roster.py         # trust arithmetic, pooling, config merge
 .github/workflows/consensus.yml
 ```
 
@@ -249,8 +316,8 @@ PYTHONPATH=src python -m pytest -q
 ```
 
 No network or API key required — the tests cover name normalization, market
-grouping, the weighting math, RSS feed parsing, and discovery filtering against
-constructed fixtures.
+grouping, the weighting math, RSS feed parsing, discovery filtering, and the
+tracker-derived trust arithmetic against constructed fixtures.
 
 ---
 
@@ -269,6 +336,10 @@ constructed fixtures.
   a vlog except by title text and date. Dry-run with `--discover-only` before
   each event and adjust `title_contains` — a wrong filter silently produces an
   empty or off-topic consensus.
+- **Tracker extraction is one model reading one auto-generated transcript**
+  full of channel names, and channel names are exactly what auto-captions
+  mangle. Always review `roster_proposal.json` before `--apply-roster`, and
+  sanity-check that ROI figures landed in the right category.
 - **Handle resolution scrapes HTML.** Resolving `@handle` → channel ID parses the
   channel page, which YouTube can change. Pin `channel_id` in `config.json` to
   skip it entirely (Artem's is already pinned as an example).

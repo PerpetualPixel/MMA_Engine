@@ -4,6 +4,16 @@
     "date": "",
     "notes": "Discovery pulls recent uploads from each capper channel and keeps the ones whose title matches settings.discovery.title_contains. Add entries to \"videos\" only to pin a specific video by hand."
   },
+  "tracker": {
+    "channel_url": "https://www.youtube.com/@UFCPredictionsTracker",
+    "notes": "Source for capper trust scores. Feed a period recap with --roster-from ... --roster-mode replace to reset the baseline, then each post-event review with the default accumulate mode.",
+    "period_recaps": [
+      "https://www.youtube.com/watch?v=rLxl9yy3Tbc"
+    ],
+    "event_reviews": [
+      "https://www.youtube.com/watch?v=22nH0495ch4"
+    ]
+  },
   "settings": {
     "model": "claude-opus-5",
     "effort": "high",

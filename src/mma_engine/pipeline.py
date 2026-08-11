@@ -18,9 +18,10 @@ from typing import Any
 from dotenv import load_dotenv
 
 from .aggregate import SourcedPick, build_consensus
-from .config import Config, ConfigError, VideoRef, load_config
+from .config import Config, ConfigError, VideoRef, extract_video_id, load_config
 from .discover import ChannelDiscovery
 from .extract import PickExtractor
+from .roster import RosterExtractor, build_capper_entry, merge_into_config
 from .transcripts import TranscriptFetcher
 
 log = logging.getLogger("mma_engine")
@@ -173,6 +174,84 @@ def run_pipeline(
     return payload
 
 
+def run_roster(
+    config: Config,
+    video_url: str,
+    mode: str,
+    apply_changes: bool,
+    proposal_path: Path,
+) -> int:
+    """Extract a capper roster from a tracker results video."""
+    settings = config.settings
+    video_id = extract_video_id(video_url)
+
+    fetcher = TranscriptFetcher(
+        languages=settings["transcript_languages"],
+        min_delay=float(settings["min_delay_seconds"]),
+        max_delay=float(settings["max_delay_seconds"]),
+        use_cache=bool(settings["use_cache"]),
+    )
+    transcript = fetcher.fetch(video_id)
+    if not transcript.ok:
+        log.error("Could not read that video's transcript: %s", transcript.error)
+        return 1
+
+    extractor = RosterExtractor(
+        model=settings["model"],
+        effort=settings["effort"],
+        max_tokens=int(settings["max_tokens"]),
+    )
+    try:
+        report = extractor.extract(transcript.text, video_url)
+    except Exception as exc:
+        log.error("Roster extraction failed: %s: %s", type(exc).__name__, exc)
+        return 1
+
+    if not report.cappers:
+        log.error(
+            "No capper results found in that video. Check it is a tracker results "
+            "video rather than a picks video."
+        )
+        return 1
+
+    entries = [build_capper_entry(capper, video_id) for capper in report.cappers]
+    proposal = {
+        "source_video": video_url,
+        "video_id": video_id,
+        "period": report.period,
+        "mode": mode,
+        "cappers": entries,
+    }
+    proposal_path.write_text(
+        json.dumps(proposal, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+    )
+
+    print(f"\nTracked period: {report.period or '(not stated)'}")
+    print(f"Cappers found:  {len(entries)}\n")
+    print(f"{'Capper':<28}{'overall':>9}{'underdog':>10}{'favorite':>10}")
+    print("-" * 57)
+    for entry in sorted(entries, key=lambda e: e["trust"]["overall"], reverse=True):
+        trust = entry["trust"]
+        print(
+            f"{entry['name'][:27]:<28}{trust['overall']:>9}"
+            f"{trust['underdog']:>10}{trust['favorite']:>10}"
+        )
+    print(f"\nProposal written to {proposal_path}")
+
+    if not apply_changes:
+        print("Review it, then re-run with --apply-roster to merge into config.json.")
+        return 0
+
+    result = merge_into_config(config.path, entries, video_id=video_id, mode=mode)
+    print(f"\nMerged into {config.path} ({mode} mode):")
+    for outcome in ("added", "updated", "skipped"):
+        if result[outcome]:
+            print(f"  {outcome}: {', '.join(result[outcome])}")
+    if result["skipped"]:
+        print("  (skipped = this video was already applied to that capper)")
+    return 0
+
+
 def _summarize_discovery(
     config: Config, videos: list[VideoRef], report: list[dict]
 ) -> str:
@@ -267,6 +346,35 @@ def main(argv: list[str] | None = None) -> int:
             "are fetched and no Claude API calls are made."
         ),
     )
+    roster_group = parser.add_argument_group("capper roster (tracker videos)")
+    roster_group.add_argument(
+        "--roster-from",
+        metavar="VIDEO_URL",
+        help=(
+            "Extract capper results from a predictions-tracker video and derive "
+            "trust scores from them. Writes a proposal for review."
+        ),
+    )
+    roster_group.add_argument(
+        "--roster-mode",
+        choices=["accumulate", "replace"],
+        default="accumulate",
+        help=(
+            "accumulate (default): pool with previously recorded results — use "
+            "for post-event reviews. replace: use this video alone — use for a "
+            "long-period recap, which would double-count if pooled."
+        ),
+    )
+    roster_group.add_argument(
+        "--apply-roster",
+        action="store_true",
+        help="Merge the extracted roster into config.json instead of only proposing it.",
+    )
+    roster_group.add_argument(
+        "--roster-output",
+        default="roster_proposal.json",
+        help="Where to write the roster proposal (default: roster_proposal.json).",
+    )
     parser.add_argument("-v", "--verbose", action="store_true", help="Debug logging")
     args = parser.parse_args(argv)
 
@@ -284,6 +392,16 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.no_cache:
         config.settings["use_cache"] = False
+
+    if args.roster_from:
+        return run_roster(
+            config,
+            video_url=args.roster_from,
+            mode=args.roster_mode,
+            apply_changes=args.apply_roster,
+            proposal_path=Path(args.roster_output),
+        )
+
     if args.discover or args.discover_only:
         config.settings["discovery"]["enabled"] = True
     if args.no_discover:
