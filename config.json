@@ -40,6 +40,11 @@
     "proxy": {
       "enabled": false,
       "provider": "webshare"
+    },
+    "transcript_cookies": {
+      "enabled": true,
+      "from_browser": "chrome",
+      "file": ""
     }
   },
   "cappers": [
