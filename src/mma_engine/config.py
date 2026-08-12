@@ -108,11 +108,13 @@ class Capper:
     def trust_for(self, role: str) -> float:
         """Trust score for how this capper framed the bet.
 
-        `role` is "underdog" / "favorite" as reported by the extractor; anything
-        else (including "unknown") falls back to the overall score.
+        `role` is "underdog" / "favorite" as reported by the extractor, or
+        "method" for method-of-victory picks (the aggregation passes it for
+        that market regardless of dog/chalk framing); anything else
+        (including "unknown") falls back to the overall score.
         """
         overall = float(self.trust.get("overall", 5.0))
-        if role in ("underdog", "favorite"):
+        if role in ("underdog", "favorite", "method"):
             return float(self.trust.get(role, overall))
         return overall
 

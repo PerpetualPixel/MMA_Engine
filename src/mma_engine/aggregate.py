@@ -6,7 +6,8 @@ Each pick contributes a weight:
 
 `trust_for(role)` is the capper's underdog score when they framed the bet as a
 dog, their favorite score when they framed it as a chalk play, and their overall
-score otherwise. A market's consensus percentage for an option is that option's
+score otherwise — except method-of-victory picks, which always weight by the
+capper's method score: calling the finish is a separately-tracked skill. A market's consensus percentage for an option is that option's
 share of the total weight cast in that market:
 
     consensus_pct = option_weight / market_total_weight * 100
@@ -49,8 +50,21 @@ class SourcedPick:
     video_url: str
 
     @property
+    def trust_role(self) -> str:
+        """Which trust category prices this pick.
+
+        Method-of-victory picks are a distinct skill the tracker scores
+        separately (a capper can be sharp on winners and hopeless on finishes,
+        or the reverse), so they weight by the capper's method record instead
+        of the dog/chalk framing.
+        """
+        if self.pick.bet_type == "method_of_victory":
+            return "method"
+        return self.pick.role
+
+    @property
     def weight(self) -> float:
-        trust = self.capper.trust_for(self.pick.role)
+        trust = self.capper.trust_for(self.trust_role)
         return trust * (self.pick.confidence / 10.0)
 
 
@@ -170,7 +184,7 @@ def _option_payload(option: _Option, market_weight: float) -> dict[str, Any]:
                 "id": s.capper.id,
                 "name": s.capper.name,
                 "confidence": s.pick.confidence,
-                "trust": _round(s.capper.trust_for(s.pick.role)),
+                "trust": _round(s.capper.trust_for(s.trust_role)),
                 "role": s.pick.role,
                 "odds": s.pick.odds_american,
                 "stake": s.pick.stake_units,
