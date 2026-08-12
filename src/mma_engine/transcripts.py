@@ -40,6 +40,19 @@ from youtube_transcript_api.proxies import ProxyConfig
 
 log = logging.getLogger(__name__)
 
+# yt-dlp/YouTube phrasings that all mean the same thing: the cookies were read
+# fine but YouTube no longer accepts them. Google rotates and revokes sessions
+# server-side long before a cookie's nominal expiry date, so this is the
+# expected end-of-life for an exported cookies.txt — not a code failure. Matched
+# case-insensitively against stderr so it survives yt-dlp's wording drift.
+_COOKIES_EXPIRED_MARKERS = (
+    "cookies are no longer valid",
+    "sign in to confirm",
+    "please sign in",
+    "login required",
+    "account cookies are invalid",
+)
+
 
 @dataclass(frozen=True)
 class CookieConfig:
@@ -66,6 +79,18 @@ class CookieConfig:
         if self.file.strip():
             return ["--cookies", self.file.strip()]
         return []
+
+    def missing_file(self) -> str:
+        """The configured cookie file path when it is set but absent from disk,
+        else "". Worth catching before yt-dlp runs: yt-dlp reports a missing
+        --cookies path as a generic usage error on every single video, which
+        reads like a code regression rather than "the export never landed" or
+        "the file is relative to a different working directory"."""
+        path = self.file.strip()
+        # from_browser wins in ytdlp_args, so the file is irrelevant when set.
+        if not path or self.from_browser.strip():
+            return ""
+        return "" if Path(path).is_file() else path
 
 
 def build_cookie_config(settings: dict) -> CookieConfig | None:
@@ -230,6 +255,20 @@ class TranscriptFetcher:
                 ),
             )
 
+        missing = self.cookie_config.missing_file()
+        if missing:
+            log.error(
+                "Cookie file %r not found (looked from %s) — the age-restricted "
+                "fallback can't run. Export a fresh cookies.txt next to weekly.bat, "
+                "or point settings.transcript_cookies.file at an absolute path.",
+                missing, Path.cwd(),
+            )
+            return TranscriptResult(
+                video_id,
+                ok=False,
+                error=f"{reason}: cookie file {missing!r} not found",
+            )
+
         text = self._fetch_via_ytdlp(video_id)
         if not text:
             return TranscriptResult(
@@ -312,6 +351,10 @@ class TranscriptFetcher:
                 # fix (pip install / rerun weekly.bat) is obvious.
                 if "No module named" in stderr and "yt_dlp" in stderr:
                     log.error("yt-dlp is not installed in this environment; run pip install -r requirements.txt")
+                # DPAPI is checked before the expiry markers below: a decrypt
+                # failure can cascade into a "sign in to confirm" line once the
+                # cookie jar comes back empty, and misreporting that as expiry
+                # would send you re-exporting a file that was never the problem.
                 elif "DPAPI" in stderr or "Failed to decrypt" in stderr:
                     # Chrome 127+ (and Edge) wrap cookies in App-Bound Encryption
                     # only Chrome itself can undo, so --cookies-from-browser can't
@@ -322,6 +365,16 @@ class TranscriptFetcher:
                         "App-Bound Encryption). Export a cookies.txt and set "
                         "settings.transcript_cookies.file instead of from_browser — see "
                         "README \"Age-restricted videos\".", video_id,
+                    )
+                elif any(m in stderr.lower() for m in _COOKIES_EXPIRED_MARKERS):
+                    # The predictable end-of-life for an exported cookies.txt.
+                    # Name it as expiry so a stale file isn't mistaken for a bug
+                    # in this code months from now.
+                    log.error(
+                        "[%s] YouTube rejected the configured cookies — they have most "
+                        "likely expired or been rotated. Re-export cookies.txt from a "
+                        "signed-in browser session and rerun; see README "
+                        "\"Age-restricted videos\".", video_id,
                     )
                 else:
                     log.warning("[%s] yt-dlp failed: %s", video_id, stderr.splitlines()[-1] if stderr else exc)

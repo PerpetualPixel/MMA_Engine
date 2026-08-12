@@ -43,6 +43,27 @@ def test_cookie_config_unconfigured_is_empty():
     assert CookieConfig(from_browser="  ").ytdlp_args() == []
 
 
+def test_missing_file_reports_absent_path(tmp_path):
+    absent = tmp_path / "cookies.txt"
+    assert CookieConfig(file=str(absent)).missing_file() == str(absent)
+
+
+def test_missing_file_empty_when_file_present(tmp_path):
+    present = tmp_path / "cookies.txt"
+    present.write_text("# Netscape HTTP Cookie File\n", encoding="utf-8")
+    assert CookieConfig(file=str(present)).missing_file() == ""
+
+
+def test_missing_file_ignored_when_reading_from_browser(tmp_path):
+    # from_browser wins in ytdlp_args, so an absent file path is irrelevant.
+    cfg = CookieConfig(from_browser="firefox", file=str(tmp_path / "nope.txt"))
+    assert cfg.missing_file() == ""
+
+
+def test_missing_file_empty_when_unconfigured():
+    assert CookieConfig().missing_file() == ""
+
+
 def test_build_cookie_config_disabled_returns_none():
     assert build_cookie_config({"transcript_cookies": {"enabled": False, "from_browser": "chrome"}}) is None
     assert build_cookie_config({}) is None
@@ -199,8 +220,10 @@ def test_age_restricted_with_cookies_uses_ytdlp(tmp_path, monkeypatch):
 
 
 def test_potoken_required_also_triggers_fallback(tmp_path, monkeypatch):
+    cookies = tmp_path / "c.txt"
+    cookies.write_text("# Netscape HTTP Cookie File\n", encoding="utf-8")
     fetcher = _fetcher_with_primary_error(
-        tmp_path, PoTokenRequired("v"), cookie_config=CookieConfig(file="c.txt")
+        tmp_path, PoTokenRequired("v"), cookie_config=CookieConfig(file=str(cookies))
     )
     ran = {"count": 0}
 
@@ -284,6 +307,78 @@ def test_ytdlp_missing_interpreter_returns_clean_error(tmp_path, monkeypatch):
     result = fetcher.fetch("vid00000001")
     assert not result.ok
     assert "did not return captions" in result.error
+
+
+def test_missing_cookie_file_short_circuits_before_subprocess(tmp_path, monkeypatch, caplog):
+    # The likeliest future breakage: cookies.txt never landed, got moved, or the
+    # relative path resolves against a different working directory. Catch it once
+    # with a clear message instead of shelling out per video for a usage error.
+    absent = tmp_path / "gone.txt"
+    fetcher = _fetcher_with_primary_error(
+        tmp_path, AgeRestricted("v"), cookie_config=CookieConfig(file=str(absent))
+    )
+
+    def explode(*a, **k):  # noqa: ARG001
+        raise AssertionError("yt-dlp must not run when the cookie file is absent")
+
+    monkeypatch.setattr(subprocess, "run", explode)
+    import logging
+    with caplog.at_level(logging.ERROR):
+        result = fetcher.fetch("vid00000001")
+    assert not result.ok
+    assert "not found" in result.error
+    assert any("cookies.txt" in r.message for r in caplog.records)
+
+
+@pytest.mark.parametrize(
+    "stderr",
+    [
+        b"ERROR: The provided YouTube account cookies are no longer valid.",
+        b"ERROR: [youtube] x: Sign in to confirm you're not a bot.",
+        b"ERROR: Please sign in to view this video.",
+    ],
+)
+def test_expired_cookies_are_named_as_expiry(tmp_path, monkeypatch, caplog, stderr):
+    # Google revokes sessions server-side well before a cookie's nominal expiry,
+    # so this is the expected end-of-life of an exported cookies.txt. The log has
+    # to say "re-export", or months from now it reads as a code regression.
+    fetcher = _fetcher_with_primary_error(
+        tmp_path, AgeRestricted("v"), cookie_config=CookieConfig(from_browser="chrome")
+    )
+
+    def fake_run(cmd, check, capture_output, timeout):  # noqa: ARG001
+        raise subprocess.CalledProcessError(1, cmd, output=b"", stderr=stderr)
+
+    monkeypatch.setattr(subprocess, "run", fake_run)
+    import logging
+    with caplog.at_level(logging.ERROR):
+        result = fetcher.fetch("vid00000001")
+    assert not result.ok
+    assert "did not return captions" in result.error
+    assert any("expired" in r.message.lower() for r in caplog.records)
+
+
+def test_dpapi_wins_over_expiry_when_stderr_has_both(tmp_path, monkeypatch, caplog):
+    # A decrypt failure empties the cookie jar, which can make YouTube emit a
+    # "sign in to confirm" line too. Reporting expiry there would send the user
+    # re-exporting a file that was never the problem — DPAPI must win.
+    fetcher = _fetcher_with_primary_error(
+        tmp_path, AgeRestricted("v"), cookie_config=CookieConfig(from_browser="chrome")
+    )
+
+    def fake_run(cmd, check, capture_output, timeout):  # noqa: ARG001
+        raise subprocess.CalledProcessError(
+            1, cmd, output=b"",
+            stderr=b"ERROR: Failed to decrypt with DPAPI\nERROR: Sign in to confirm you're not a bot.",
+        )
+
+    monkeypatch.setattr(subprocess, "run", fake_run)
+    import logging
+    with caplog.at_level(logging.ERROR):
+        fetcher.fetch("vid00000001")
+    messages = " ".join(r.message for r in caplog.records)
+    assert "App-Bound Encryption" in messages
+    assert "expired" not in messages.lower()
 
 
 def test_ytdlp_no_captions_written_returns_error(tmp_path, monkeypatch):
