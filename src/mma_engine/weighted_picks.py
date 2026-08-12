@@ -32,10 +32,42 @@ from __future__ import annotations
 import argparse
 import json
 import logging
+import re
 from pathlib import Path
 from typing import Any
 
 log = logging.getLogger(__name__)
+
+_AMERICAN_RE = re.compile(r"([+-])\s?(\d{2,4})(?!\d)")
+
+
+def _parse_american(text: Any) -> int | None:
+    match = _AMERICAN_RE.search(str(text or ""))
+    if not match:
+        return None
+    value = int(match.group(2)) * (-1 if match.group(1) == "-" else 1)
+    return value if abs(value) >= 100 else None
+
+
+def _to_decimal(american: int) -> float:
+    return 1 + american / 100 if american > 0 else 1 + 100 / abs(american)
+
+
+def quoted_odds(cappers: list[dict[str, Any]]) -> dict[str, Any] | None:
+    """The consensus price of an option: the median of its backers' quoted
+    odds (they watch different books, so quotes differ a little). None when
+    nobody stated a price — a missing price is never guessed at."""
+    decimals = sorted(
+        _to_decimal(a)
+        for a in (_parse_american(c.get("odds")) for c in cappers)
+        if a is not None
+    )
+    if not decimals:
+        return None
+    mid = len(decimals) // 2
+    median = decimals[mid] if len(decimals) % 2 else (decimals[mid - 1] + decimals[mid]) / 2
+    american = round((median - 1) * 100) if median >= 2 else -round(100 / (median - 1))
+    return {"american": american, "decimal": round(median, 3), "count": len(decimals)}
 
 FULL_BACKING_WEIGHT = 20.0
 STRONG_THRESHOLD = 7.5
@@ -96,6 +128,12 @@ def build_picks(consensus: dict[str, Any]) -> dict[str, Any]:
             top = max(options, key=lambda o: (o["weight"], o["pick_count"]))
             strength = _strength(top["consensus_pct"], top["weight"])
             tier = _tier(strength)
+            # The backers' own price for the selection, and the value score
+            # the dashboard's Straights tab ranks on: potential profit per $1
+            # x strength/10. Lets the website judge "is this worth running as
+            # a single?" without re-deriving anything. Additive fields —
+            # schema_version stays 1; entries nobody priced simply omit both.
+            odds = quoted_odds(top.get("cappers", []))
             picks.append(
                 {
                     "fight_id": fight["fight_id"],
@@ -111,6 +149,14 @@ def build_picks(consensus: dict[str, Any]) -> dict[str, Any]:
                     "strength": strength,
                     "tier": tier,
                     "suggested_units": UNITS[tier],
+                    **(
+                        {
+                            "quoted_odds": odds,
+                            "value": round((odds["decimal"] - 1) * strength, 1),
+                        }
+                        if odds
+                        else {}
+                    ),
                     "comments": _comments(top),
                 }
             )
