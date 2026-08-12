@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-12T00:07:37+00:00",
+  "generated_at": "2026-08-12T03:41:32+00:00",
   "event": {
     "name": "UFC 330",
     "date": "",
@@ -22,6 +22,16 @@
       "status": "ok",
       "pick_count": 12,
       "transcript_chars": 42902
+    },
+    {
+      "video_id": "9SlcNEqV9CE",
+      "url": "https://www.youtube.com/watch?v=9SlcNEqV9CE",
+      "capper_id": "axel_mma",
+      "capper": "Axel MMA",
+      "title": "UFC 330: Makhachev vs Machado Garry Full Card Predictions & Betting Breakdown",
+      "status": "transcript_failed",
+      "pick_count": 0,
+      "error": "No usable transcript: TranscriptsDisabled"
     },
     {
       "video_id": "Kzsm8s6hlgQ",
@@ -91,7 +101,7 @@
       "title": "UFC 330: Islam Makhachev vs Ian Garry | Full Card Betting Breakdowns, Predictions & Picks",
       "status": "transcript_failed",
       "pick_count": 0,
-      "error": "VideoUnplayable: \nCould not retrieve a transcript for the video https://www.youtube.com/watch?v=NcuMaBvFdss! This is most likely caused by:\n\nThe video is unplayable for the following reason: This live event will begin in 23 hours.\n\nIf you are sure that the described cause is not responsible for this error and that a transcript should be retrievable, please create an issue at https://github.com/jdepoix/youtube-transcript-api/issues. Please add which version of youtube_transcript_api you are using and provide the information needed to replicate the error. Also make sure that there are no open issues which already describe your problem!"
+      "error": "VideoUnplayable: \nCould not retrieve a transcript for the video https://www.youtube.com/watch?v=NcuMaBvFdss! This is most likely caused by:\n\nThe video is unplayable for the following reason: This live event will begin in 20 hours.\n\nIf you are sure that the described cause is not responsible for this error and that a transcript should be retrievable, please create an issue at https://github.com/jdepoix/youtube-transcript-api/issues. Please add which version of youtube_transcript_api you are using and provide the information needed to replicate the error. Also make sure that there are no open issues which already describe your problem!"
     },
     {
       "video_id": "mlVG4gepZ9Y",
@@ -2673,13 +2683,12 @@
       "status": "ok",
       "channel_id": "UUa5_vw8K2CzUhsWJIJ7UT3g",
       "feed_videos": 15,
-      "selected": [],
-      "recent_titles": [
-        "2026-08-10  Contender Series 2026 Week 1 Predictions & Betting Breakdown + Most Confident Picks",
-        "2026-08-07  UFC Vegas 120 Best Bets! Gamrot vs Salkilld Betting Breakdown & Underdog Lock",
-        "2026-08-06  PFL Charlotte: Battle vs Rosta Full Card Predictions & Betting Breakdown + Underdog Lock",
-        "2026-08-05  UFC Vegas 120: Gamrot vs Salkilld Full Card Predictions & Betting Breakdown",
-        "2026-07-31  UFC Serbia Best Bets! Medic vs Rodriguez Betting Breakdown & Underdog Lock"
+      "selected": [
+        {
+          "video_id": "9SlcNEqV9CE",
+          "title": "UFC 330: Makhachev vs Machado Garry Full Card Predictions & Betting Breakdown",
+          "published": "2026-08-12T03:38:32+00:00"
+        }
       ]
     },
     {
