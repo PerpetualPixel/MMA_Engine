@@ -55,23 +55,30 @@
       "channel_id": "UCpSQhfFzpZ9COp_WiKSUEkQ",
       "discover": true,
       "trust": {
-        "overall": 5.0,
+        "overall": 8.8,
         "underdog": 6.3,
-        "favorite": 5.0
+        "favorite": 8.8
       },
       "aliases": [
         "Artem"
       ],
       "tracked": {
-        "notes": "Third in 2026 underdog accuracy (percentage not stated) and first in underdog accuracy over the last 50 events at 43.3%.",
+        "notes": "#4 in the tracker's 2026 P4P overall accuracy at 72.0% (231/321).",
         "videos": [
-          "rLxl9yy3Tbc"
+          "rLxl9yy3Tbc",
+          "p4p-2026-aug-recap"
         ],
         "record": {
           "underdog": {
             "roi": {
               "picks": 25,
               "value": 15.3
+            }
+          },
+          "overall": {
+            "correct": {
+              "picks": 321,
+              "value": 72.0
             }
           }
         }
@@ -83,20 +90,28 @@
       "channel_url": "https://www.youtube.com/@AlexTalksFights",
       "discover": true,
       "trust": {
-        "overall": 5.0,
-        "underdog": 5.0,
-        "favorite": 5.0
+        "overall": 8.7,
+        "underdog": 8.7,
+        "favorite": 8.7
       },
       "aliases": [
         "Axel Talks Fights",
         "Alex Talks Fights"
       ],
       "tracked": {
-        "notes": "Second in underdog accuracy over the last 50 events at 43%.",
+        "notes": "#7 in the tracker's 2026 P4P overall accuracy at 71.2% (227/319).",
         "videos": [
-          "rLxl9yy3Tbc"
+          "rLxl9yy3Tbc",
+          "p4p-2026-aug-recap"
         ],
-        "record": {}
+        "record": {
+          "overall": {
+            "correct": {
+              "picks": 319,
+              "value": 71.2
+            }
+          }
+        }
       }
     },
     {
@@ -105,9 +120,9 @@
       "channel_url": "https://www.youtube.com/@BetSlamWithSam",
       "discover": true,
       "trust": {
-        "overall": 5.7,
+        "overall": 8.9,
         "underdog": 6.8,
-        "favorite": 5.7
+        "favorite": 8.9
       },
       "aliases": [
         "Bet Sam",
@@ -115,19 +130,16 @@
         "Bet Slam with Sam"
       ],
       "tracked": {
-        "notes": "Also ranked third in underdog accuracy over the last 50 events (either 42.6% or 42.2%, not specified).",
+        "notes": "#2 in the tracker's 2026 P4P overall accuracy at 72.6% (230/317).",
         "videos": [
-          "rLxl9yy3Tbc"
+          "rLxl9yy3Tbc",
+          "p4p-2026-aug-recap"
         ],
         "record": {
           "overall": {
-            "roi": {
-              "picks": 25,
-              "value": 8.4
-            },
             "correct": {
-              "picks": 25,
-              "value": 70.6
+              "picks": 317,
+              "value": 72.6
             }
           },
           "underdog": {
@@ -149,8 +161,8 @@
       "channel_url": "https://www.youtube.com/@FunkyPicks",
       "discover": true,
       "trust": {
-        "overall": 5.8,
-        "underdog": 5.8,
+        "overall": 8.8,
+        "underdog": 8.8,
         "favorite": 6.8
       },
       "aliases": [
@@ -159,15 +171,16 @@
         "Funkybunch"
       ],
       "tracked": {
-        "notes": "Also second in overall ROI over the last 50 events (4.7%), third in 50-event underdog ROI (9.1%), and a top-three method-of-victory predictor (40.3% in 2026, 38.6% over 50 events, 2% MoV ROI).",
+        "notes": "#3 in the tracker's 2026 P4P overall accuracy at 72.0% (232/322).",
         "videos": [
-          "rLxl9yy3Tbc"
+          "rLxl9yy3Tbc",
+          "p4p-2026-aug-recap"
         ],
         "record": {
           "overall": {
-            "roi": {
-              "picks": 25,
-              "value": 9.9
+            "correct": {
+              "picks": 322,
+              "value": 72.0
             }
           },
           "favorite": {
@@ -229,19 +242,27 @@
       "channel_url": "https://www.youtube.com/@couchwarriorpodcast",
       "discover": true,
       "trust": {
-        "overall": 5.0,
-        "underdog": 5.0,
-        "favorite": 5.0
+        "overall": 8.6,
+        "underdog": 8.6,
+        "favorite": 8.6
       },
       "aliases": [
         "Couch Warrior"
       ],
       "tracked": {
-        "notes": "Over the last 50 events: fifth in overall accuracy (67.9%), second in favorite accuracy (75.3%), first in favorite ROI (5.4%), and third in method-of-victory accuracy (38.2%).",
+        "notes": "#8 in the tracker's 2026 P4P overall accuracy at 71.0% (225/317).",
         "videos": [
-          "rLxl9yy3Tbc"
+          "rLxl9yy3Tbc",
+          "p4p-2026-aug-recap"
         ],
-        "record": {}
+        "record": {
+          "overall": {
+            "correct": {
+              "picks": 317,
+              "value": 71.0
+            }
+          }
+        }
       }
     },
     {
@@ -317,23 +338,24 @@
     {
       "id": "mma_husky_hustler",
       "name": "MMA Husky Hustler",
-      "channel_url": "",
-      "discover": false,
+      "channel_url": "https://www.youtube.com/@mmahuskyhustler",
+      "discover": true,
       "trust": {
-        "overall": 8.7,
-        "underdog": 8.7,
-        "favorite": 8.7
+        "overall": 9.2,
+        "underdog": 9.2,
+        "favorite": 9.2
       },
       "tracked": {
-        "notes": "Most accurate overall predictor of 2026 (175 of 241 correct) and also the only channel above 70% over the last 50 events at 70.7%.",
+        "notes": "#1 in the tracker's 2026 P4P overall accuracy at 74.7% (227/304).",
         "videos": [
-          "rLxl9yy3Tbc"
+          "rLxl9yy3Tbc",
+          "p4p-2026-aug-recap"
         ],
         "record": {
           "overall": {
             "correct": {
-              "picks": 241,
-              "value": 72.6
+              "picks": 304,
+              "value": 74.7
             }
           }
         }
@@ -342,23 +364,24 @@
     {
       "id": "mma_lock_of_the_night",
       "name": "MMA Lock of the Night",
-      "channel_url": "",
-      "discover": false,
+      "channel_url": "https://www.youtube.com/channel/UClwn3zgkfyne2Ecj36Dl7ZQ",
+      "discover": true,
       "trust": {
-        "overall": 5.8,
+        "overall": 8.7,
         "underdog": 8.2,
         "favorite": 5.7
       },
       "tracked": {
-        "notes": "Only channel over 50% on underdog picks in 2026 (24 of 47) and also the most profitable method-of-victory predictor for 2026 (16.3% ROI) and over the last 50 events (3.6%).",
+        "notes": "#6 in the tracker's 2026 P4P overall accuracy at 71.3% (226/317).",
         "videos": [
-          "rLxl9yy3Tbc"
+          "rLxl9yy3Tbc",
+          "p4p-2026-aug-recap"
         ],
         "record": {
           "overall": {
-            "roi": {
-              "picks": 25,
-              "value": 10.1
+            "correct": {
+              "picks": 317,
+              "value": 71.3
             }
           },
           "favorite": {
@@ -382,7 +405,8 @@
             }
           }
         }
-      }
+      },
+      "channel_id": "UClwn3zgkfyne2Ecj36Dl7ZQ"
     },
     {
       "id": "art_of_mma",
@@ -441,23 +465,30 @@
     {
       "id": "pick_em_mma",
       "name": "Pick 'em MMA",
-      "channel_url": "",
-      "discover": false,
+      "channel_url": "https://www.youtube.com/@PickemMMA",
+      "discover": true,
       "trust": {
-        "overall": 5.0,
-        "underdog": 5.0,
+        "overall": 8.6,
+        "underdog": 8.6,
         "favorite": 6.8
       },
       "tracked": {
-        "notes": "",
+        "notes": "#5 in the tracker's 2026 P4P overall accuracy at 71.8% (181/252).",
         "videos": [
-          "rLxl9yy3Tbc"
+          "rLxl9yy3Tbc",
+          "p4p-2026-aug-recap"
         ],
         "record": {
           "favorite": {
             "correct": {
               "picks": 25,
               "value": 77.4
+            }
+          },
+          "overall": {
+            "correct": {
+              "picks": 252,
+              "value": 71.8
             }
           }
         }
@@ -484,19 +515,27 @@
     {
       "id": "left_lane_mma",
       "name": "Left Lane MMA",
-      "channel_url": "",
-      "discover": false,
+      "channel_url": "https://www.youtube.com/@LeftLaneMMA",
+      "discover": true,
       "trust": {
-        "overall": 5.0,
-        "underdog": 5.0,
-        "favorite": 5.0
+        "overall": 8.7,
+        "underdog": 8.7,
+        "favorite": 8.7
       },
       "tracked": {
-        "notes": "Second most accurate overall predictor over the last 50 events at 68.2% on 613 predictions.",
+        "notes": "#7 in the tracker's 2026 P4P overall accuracy at 71.2% (227/319).",
         "videos": [
-          "rLxl9yy3Tbc"
+          "rLxl9yy3Tbc",
+          "p4p-2026-aug-recap"
         ],
-        "record": {}
+        "record": {
+          "overall": {
+            "correct": {
+              "picks": 319,
+              "value": 71.2
+            }
+          }
+        }
       }
     },
     {
@@ -592,19 +631,27 @@
     {
       "id": "mma_bg",
       "name": "MMA BG",
-      "channel_url": "",
-      "discover": false,
+      "channel_url": "https://www.youtube.com/@TheMMABG",
+      "discover": true,
       "trust": {
-        "overall": 5.0,
-        "underdog": 5.0,
-        "favorite": 5.0
+        "overall": 8.6,
+        "underdog": 8.6,
+        "favorite": 8.6
       },
       "tracked": {
-        "notes": "Second in 2026 method-of-victory accuracy (40.8%), first over the last 43 tracked events (39.8%), and second in 50-event MoV ROI (2.1%).",
+        "notes": "#9 in the tracker's 2026 P4P overall accuracy at 70.8% (226/319).",
         "videos": [
-          "rLxl9yy3Tbc"
+          "rLxl9yy3Tbc",
+          "p4p-2026-aug-recap"
         ],
-        "record": {}
+        "record": {
+          "overall": {
+            "correct": {
+              "picks": 319,
+              "value": 70.8
+            }
+          }
+        }
       }
     },
     {
@@ -641,6 +688,156 @@
           "rLxl9yy3Tbc"
         ],
         "record": {}
+      }
+    },
+    {
+      "id": "locked_door_mma",
+      "name": "Locked Door MMA",
+      "channel_url": "https://www.youtube.com/channel/UC4HFh-HteQUcPzwsvpog94A",
+      "channel_id": "UC4HFh-HteQUcPzwsvpog94A",
+      "discover": true,
+      "aliases": [
+        "Locked Door",
+        "MMA Lock-Cast"
+      ],
+      "tracked": {
+        "notes": "#10 in the tracker's 2026 P4P overall accuracy at 70.6% (226/320).",
+        "videos": [
+          "p4p-2026-aug-recap"
+        ],
+        "record": {
+          "overall": {
+            "correct": {
+              "picks": 320,
+              "value": 70.6
+            }
+          }
+        }
+      },
+      "trust": {
+        "overall": 8.6,
+        "underdog": 8.6,
+        "favorite": 8.6
+      }
+    },
+    {
+      "id": "mma_parlay_king_23",
+      "name": "MMAParlayKing23",
+      "channel_url": "https://www.youtube.com/c/MMAParlayKing",
+      "discover": true,
+      "aliases": [
+        "MMA Parlay King",
+        "Parlay King"
+      ],
+      "tracked": {
+        "notes": "#11 in the tracker's 2026 P4P overall accuracy at 70.5% (182/258).",
+        "videos": [
+          "p4p-2026-aug-recap"
+        ],
+        "record": {
+          "overall": {
+            "correct": {
+              "picks": 258,
+              "value": 70.5
+            }
+          }
+        }
+      },
+      "trust": {
+        "overall": 8.4,
+        "underdog": 8.4,
+        "favorite": 8.4
+      }
+    },
+    {
+      "id": "mma_odds_breaker_adam",
+      "name": "MMA OddsBreaker (Adam)",
+      "channel_url": "https://www.youtube.com/channel/UCxVb-x5w0Dh4DxYaizCTbZg",
+      "channel_id": "UCxVb-x5w0Dh4DxYaizCTbZg",
+      "discover": true,
+      "aliases": [
+        "MMA OddsBreaker",
+        "MMAOddsBreaker",
+        "Adam Martin"
+      ],
+      "tracked": {
+        "notes": "#12 in the tracker's 2026 P4P overall accuracy at 70.3% (218/310).",
+        "videos": [
+          "p4p-2026-aug-recap"
+        ],
+        "record": {
+          "overall": {
+            "correct": {
+              "picks": 310,
+              "value": 70.3
+            }
+          }
+        }
+      },
+      "trust": {
+        "overall": 8.5,
+        "underdog": 8.5,
+        "favorite": 8.5
+      }
+    },
+    {
+      "id": "the_weasle",
+      "name": "TheWeasle",
+      "channel_url": "https://www.youtube.com/channel/UCZD2qRU8J82XGdGdUWYneNQ",
+      "channel_id": "UCZD2qRU8J82XGdGdUWYneNQ",
+      "discover": true,
+      "aliases": [
+        "The Weasle",
+        "The Weasel",
+        "TheWeasleMMA"
+      ],
+      "tracked": {
+        "notes": "#13 in the tracker's 2026 P4P overall accuracy at 70.3% (137/195).",
+        "videos": [
+          "p4p-2026-aug-recap"
+        ],
+        "record": {
+          "overall": {
+            "correct": {
+              "picks": 195,
+              "value": 70.3
+            }
+          }
+        }
+      },
+      "trust": {
+        "overall": 8.2,
+        "underdog": 8.2,
+        "favorite": 8.2
+      }
+    },
+    {
+      "id": "kenny_okoye_mma",
+      "name": "KennyOkoyeMMA",
+      "channel_url": "https://www.youtube.com/@KennyOkoyeMMA",
+      "discover": true,
+      "aliases": [
+        "Kenny Okoye",
+        "Kenny Okoye MMA"
+      ],
+      "tracked": {
+        "notes": "#14 in the tracker's 2026 P4P overall accuracy at 70.1% (197/281).",
+        "videos": [
+          "p4p-2026-aug-recap"
+        ],
+        "record": {
+          "overall": {
+            "correct": {
+              "picks": 281,
+              "value": 70.1
+            }
+          }
+        }
+      },
+      "trust": {
+        "overall": 8.4,
+        "underdog": 8.4,
+        "favorite": 8.4
       }
     }
   ],
