@@ -1,10 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-12T04:13:34+00:00",
+  "generated_at": "2026-08-12T04:55:32+00:00",
   "event": {
     "name": "UFC 330",
     "date": "",
-    "notes": "Discovery pulls recent uploads from each capper channel and keeps the ones whose title matches settings.discovery.title_contains. Add entries to \"videos\" only to pin a specific video by hand."
+    "notes": "Discovery pulls recent uploads from each capper channel and keeps the ones whose title matches settings.discovery.title_contains. Add entries to \"videos\" only to pin a specific video by hand.",
+    "card": {
+      "source": "espn",
+      "name": "UFC 330: Makhachev vs. Machado Garry",
+      "date": "2026-08-15T21:00Z",
+      "bouts": 12
+    }
   },
   "source": "MMA_Engine trust-weighted capper consensus",
   "totals": {
@@ -16,7 +22,8 @@
   "picks": [
     {
       "fight_id": "malik|stoltzfus",
-      "fight": "Mansour Abdul-Malik vs Dustin Stoltzfu",
+      "fight": "Mansur Abdul-Malik vs Dustin Stoltzfus",
+      "card_status": "on_card",
       "market": "moneyline",
       "market_label": "Moneyline",
       "selection": "Mansur Abdul-Malik",
@@ -72,7 +79,8 @@
     },
     {
       "fight_id": "barboza|ribovics",
-      "fight": "Edson Barboza vs Esteban Ribovic",
+      "fight": "Edson Barboza vs Esteban Ribovics",
+      "card_status": "on_card",
       "market": "moneyline",
       "market_label": "Moneyline",
       "selection": "Esteban Ribovics",
@@ -123,7 +131,8 @@
     },
     {
       "fight_id": "malik|stoltzfus",
-      "fight": "Mansour Abdul-Malik vs Dustin Stoltzfu",
+      "fight": "Mansur Abdul-Malik vs Dustin Stoltzfus",
+      "card_status": "on_card",
       "market": "method_of_victory",
       "market_label": "Method of Victory",
       "selection": "Mansur Abdul-Malik by KO/TKO in round 1 or 2",
@@ -164,7 +173,8 @@
     },
     {
       "fight_id": "orolbai|wells",
-      "fight": "Muktarbek Orolbai vs Jeremiah Well",
+      "fight": "Myktybek Orolbai vs Jeremiah Wells",
+      "card_status": "on_card",
       "market": "moneyline",
       "market_label": "Moneyline",
       "selection": "Myktybek Orolbai",
@@ -200,7 +210,8 @@
     },
     {
       "fight_id": "barboza|ribovics",
-      "fight": "Edson Barboza vs Esteban Ribovic",
+      "fight": "Edson Barboza vs Esteban Ribovics",
+      "card_status": "on_card",
       "market": "method_of_victory",
       "market_label": "Method of Victory",
       "selection": "Esteban Ribovics by KO/TKO",
@@ -256,7 +267,8 @@
     },
     {
       "fight_id": "alvarez|njokuani",
-      "fight": "Joel Alvarez vs Chidi Njokuani",
+      "fight": "Joel Álvarez vs Chidi Njokuani",
+      "card_status": "on_card",
       "market": "moneyline",
       "market_label": "Moneyline",
       "selection": "Joel Alvarez",
@@ -292,7 +304,8 @@
     },
     {
       "fight_id": "dern|robertson",
-      "fight": "Mackenzie Dern vs Jillian Robertson",
+      "fight": "Mackenzie Dern vs Gillian Robertson",
+      "card_status": "on_card",
       "market": "moneyline",
       "market_label": "Moneyline",
       "selection": "Mackenzie Dern",
@@ -338,7 +351,8 @@
     },
     {
       "fight_id": "fernando|tobias",
-      "fight": "Lucas Fernando vs Raphael Tobia",
+      "fight": "Lucas Fernando vs Rafael Tobias",
+      "card_status": "on_card",
       "market": "moneyline",
       "market_label": "Moneyline",
       "selection": "Lucas Fernando",
@@ -374,7 +388,8 @@
     },
     {
       "fight_id": "orolbai|wells",
-      "fight": "Muktarbek Orolbai vs Jeremiah Well",
+      "fight": "Myktybek Orolbai vs Jeremiah Wells",
+      "card_status": "on_card",
       "market": "method_of_victory",
       "market_label": "Method of Victory",
       "selection": "Myktybek Orolbai by submission",
@@ -410,7 +425,8 @@
     },
     {
       "fight_id": "garry|makhachev",
-      "fight": "Ian Machado Garry vs Islam Makhache",
+      "fight": "Ian Machado Garry vs Islam Makhachev",
+      "card_status": "on_card",
       "market": "moneyline",
       "market_label": "Moneyline",
       "selection": "Islam Makhachev",
@@ -462,6 +478,7 @@
     {
       "fight_id": "brahimaj|magny",
       "fight": "Ramiz Brahimaj vs Neil Magny",
+      "card_status": "on_card",
       "market": "round",
       "market_label": "Round",
       "selection": "Ramiz Brahimaj in round 1",
@@ -487,7 +504,8 @@
     },
     {
       "fight_id": "garry|makhachev",
-      "fight": "Ian Machado Garry vs Islam Makhache",
+      "fight": "Ian Machado Garry vs Islam Makhachev",
+      "card_status": "on_card",
       "market": "round",
       "market_label": "Round",
       "selection": "Islam Makhachev by submission in round 3",
@@ -514,6 +532,7 @@
     {
       "fight_id": "adams|wint",
       "fight": "Matt Adams vs Anthony Wint",
+      "card_status": "off_card",
       "market": "over_under",
       "market_label": "Over / Under",
       "selection": "Under 1.5 rounds",
@@ -535,6 +554,7 @@
     {
       "fight_id": "khalidov|wells",
       "fight": "Mamed Khalidov vs Jeremiah Well",
+      "card_status": "off_card",
       "market": "moneyline",
       "market_label": "Moneyline",
       "selection": "Mamed Khalidov",
@@ -556,6 +576,7 @@
     {
       "fight_id": "gore|luque",
       "fight": "Tresean Gore vs Vicente Luque",
+      "card_status": "on_card",
       "market": "round",
       "market_label": "Round",
       "selection": "Tresean Gore by submission in round 1",
@@ -577,6 +598,7 @@
     {
       "fight_id": "delvalle|elkins",
       "fight": "Yadier del Valle vs Darren Elkin",
+      "card_status": "off_card",
       "market": "method_of_victory",
       "market_label": "Method of Victory",
       "selection": "Darren Elkins by decision",
@@ -598,6 +620,7 @@
     {
       "fight_id": "adams|wint",
       "fight": "Matt Adams vs Anthony Wint",
+      "card_status": "off_card",
       "market": "round",
       "market_label": "Round",
       "selection": "Anthony Wint in round 1 by KO",
@@ -619,6 +642,7 @@
     {
       "fight_id": "oralby|wells",
       "fight": "Motobek Oralby vs Jeremiah Well",
+      "card_status": "off_card",
       "market": "moneyline",
       "market_label": "Moneyline",
       "selection": "Motobek Oralby",
@@ -640,6 +664,7 @@
     {
       "fight_id": "montana|sutherland",
       "fight": "Jose Montana vs Louis Sutherland",
+      "card_status": "off_card",
       "market": "method_of_victory",
       "market_label": "Method of Victory",
       "selection": "Louis Sutherland by decision",
@@ -661,6 +686,7 @@
     {
       "fight_id": "adams|wint",
       "fight": "Matt Adams vs Anthony Wint",
+      "card_status": "off_card",
       "market": "method_of_victory",
       "market_label": "Method of Victory",
       "selection": "Anthony Wint by KO/TKO",
@@ -682,6 +708,7 @@
     {
       "fight_id": "elsigar|escaria",
       "fight": "Abe Elsigar vs Fabricio Escaria",
+      "card_status": "off_card",
       "market": "moneyline",
       "market_label": "Moneyline",
       "selection": "Abe Elsigar",
@@ -703,6 +730,7 @@
     {
       "fight_id": "gamrot|salkilld",
       "fight": "Mateusz Gamrot vs Quillan Salkilld",
+      "card_status": "off_card",
       "market": "moneyline",
       "market_label": "Moneyline",
       "selection": "Mateusz Gamrot",
@@ -724,6 +752,7 @@
     {
       "fight_id": "miller|oliveira",
       "fight": "Juliana Miller vs Ravena Oliveira",
+      "card_status": "off_card",
       "market": "moneyline",
       "market_label": "Moneyline",
       "selection": "Juliana Miller",
@@ -745,6 +774,7 @@
     {
       "fight_id": "aspelund|pat",
       "fight": "Steven Aspelund vs Guilherme Pat",
+      "card_status": "off_card",
       "market": "moneyline",
       "market_label": "Moneyline",
       "selection": "Steven Aspelund",
@@ -766,6 +796,7 @@
     {
       "fight_id": "montana|sutherland",
       "fight": "Jose Montana vs Louis Sutherland",
+      "card_status": "off_card",
       "market": "moneyline",
       "market_label": "Moneyline",
       "selection": "Louis Sutherland",
@@ -787,6 +818,7 @@
     {
       "fight_id": "lemos|thainara",
       "fight": "Amanda Lemos vs Alexia Thainara",
+      "card_status": "off_card",
       "market": "moneyline",
       "market_label": "Moneyline",
       "selection": "Alexia Thainara",
@@ -808,6 +840,7 @@
     {
       "fight_id": "adams|wint",
       "fight": "Matt Adams vs Anthony Wint",
+      "card_status": "off_card",
       "market": "moneyline",
       "market_label": "Moneyline",
       "selection": "Anthony Wint",
@@ -829,6 +862,7 @@
     {
       "fight_id": "malumba|pegalurulo",
       "fight": "Ananias Malumba vs Tom Pegalurulo",
+      "card_status": "off_card",
       "market": "method_of_victory",
       "market_label": "Method of Victory",
       "selection": "Ananias Malumba by KO",
@@ -850,6 +884,7 @@
     {
       "fight_id": "khalidov|wells",
       "fight": "Mamed Khalidov vs Jeremiah Well",
+      "card_status": "off_card",
       "market": "method_of_victory",
       "market_label": "Method of Victory",
       "selection": "Mamed Khalidov by submission (rounds 2-3)",
@@ -870,7 +905,8 @@
     },
     {
       "fight_id": "johnson|mcconico",
-      "fight": "Dante Johnson vs Eric McConico",
+      "fight": "Donte Johnson vs Eric McConico",
+      "card_status": "on_card",
       "market": "moneyline",
       "market_label": "Moneyline",
       "selection": "Eric McConico",
@@ -911,7 +947,8 @@
     },
     {
       "fight_id": "alvarez|njokuani",
-      "fight": "Joel Alvarez vs Chidi Njokuani",
+      "fight": "Joel Álvarez vs Chidi Njokuani",
+      "card_status": "on_card",
       "market": "round",
       "market_label": "Round",
       "selection": "Joel Alvarez by submission in round 1",
@@ -933,6 +970,7 @@
     {
       "fight_id": "johnson|ochoa",
       "fight": "Charles Johnson vs Jose Ochoa",
+      "card_status": "on_card",
       "market": "round",
       "market_label": "Round",
       "selection": "Jose Ochoa by KO/TKO in round 2",
@@ -953,7 +991,8 @@
     },
     {
       "fight_id": "barboza|ribovics",
-      "fight": "Edson Barboza vs Esteban Ribovic",
+      "fight": "Edson Barboza vs Esteban Ribovics",
+      "card_status": "on_card",
       "market": "over_under",
       "market_label": "Over / Under",
       "selection": "Over 1.5 rounds",
@@ -974,7 +1013,8 @@
     },
     {
       "fight_id": "malik|stoltzfus",
-      "fight": "Mansour Abdul-Malik vs Dustin Stoltzfu",
+      "fight": "Mansur Abdul-Malik vs Dustin Stoltzfus",
+      "card_status": "on_card",
       "market": "over_under",
       "market_label": "Over / Under",
       "selection": "Under 1.5 rounds",
@@ -996,6 +1036,7 @@
     {
       "fight_id": "gore|luque",
       "fight": "Tresean Gore vs Vicente Luque",
+      "card_status": "on_card",
       "market": "prop",
       "market_label": "Prop",
       "selection": "Tresean Gore to win inside the distance",
@@ -1017,6 +1058,7 @@
     {
       "fight_id": "orazbai|wells",
       "fight": "Mukhitbek Orazbai vs Jeremiah Well",
+      "card_status": "off_card",
       "market": "method_of_victory",
       "market_label": "Method of Victory",
       "selection": "Mukhitbek Orazbai by decision",
@@ -1038,6 +1080,7 @@
     {
       "fight_id": "malik|stolz",
       "fight": "Mansour Abdul-Malik vs Stolz",
+      "card_status": "off_card",
       "market": "method_of_victory",
       "market_label": "Method of Victory",
       "selection": "Mansour Abdul-Malik by KO/TKO",
@@ -1059,6 +1102,7 @@
     {
       "fight_id": "hassan|sika",
       "fight": "Bal Hassan vs Raju Sika",
+      "card_status": "off_card",
       "market": "method_of_victory",
       "market_label": "Method of Victory",
       "selection": "Bal Hassan by KO/TKO in round 1",
@@ -1080,6 +1124,7 @@
     {
       "fight_id": "cropshot|kudman",
       "fight": "Joseph Cropshot vs Jonathan Kudman",
+      "card_status": "off_card",
       "market": "method_of_victory",
       "market_label": "Method of Victory",
       "selection": "Jonathan Kudman by submission",
@@ -1101,6 +1146,7 @@
     {
       "fight_id": "gorimbo|wells",
       "fight": "Themba Gorimbo vs Jeremiah Well",
+      "card_status": "off_card",
       "market": "moneyline",
       "market_label": "Moneyline",
       "selection": "Themba Gorimbo",
@@ -1122,6 +1168,7 @@
     {
       "fight_id": "fakhretdinov|magny",
       "fight": "Rinat Fakhretdinov vs Neil Magny",
+      "card_status": "off_card",
       "market": "moneyline",
       "market_label": "Moneyline",
       "selection": "Neil Magny",
@@ -1143,6 +1190,7 @@
     {
       "fight_id": "furro|kanuto",
       "fight": "Carol Furro vs Giovana Kanuto",
+      "card_status": "off_card",
       "market": "method_of_victory",
       "market_label": "Method of Victory",
       "selection": "Giovana Kanuto by submission",
@@ -1164,6 +1212,7 @@
     {
       "fight_id": "miller|oliveira",
       "fight": "Juliana Miller vs Ravena Oliveira",
+      "card_status": "off_card",
       "market": "method_of_victory",
       "market_label": "Method of Victory",
       "selection": "Juliana Miller by submission",
@@ -1185,6 +1234,7 @@
     {
       "fight_id": "gamrot|salkilld",
       "fight": "Mateusz Gamrot vs Quillan Salkilld",
+      "card_status": "off_card",
       "market": "prop",
       "market_label": "Prop",
       "selection": "Gamrot point spread (to survive/win on points)",
@@ -1206,6 +1256,7 @@
     {
       "fight_id": "goff|miller",
       "fight": "Billy Ray Goff vs Tai Miller",
+      "card_status": "off_card",
       "market": "moneyline",
       "market_label": "Moneyline",
       "selection": "Tai Miller",
@@ -1227,6 +1278,7 @@
     {
       "fight_id": "cropshot|cunnaman",
       "fight": "Joe Cropshot vs John Cunnaman",
+      "card_status": "off_card",
       "market": "moneyline",
       "market_label": "Moneyline",
       "selection": "John Cunnaman",
@@ -1248,6 +1300,7 @@
     {
       "fight_id": "gamrot|salkilld",
       "fight": "Mateusz Gamrot vs Quillan Salkilld",
+      "card_status": "off_card",
       "market": "over_under",
       "market_label": "Over / Under",
       "selection": "Over 3.5 rounds",
@@ -1269,6 +1322,7 @@
     {
       "fight_id": "delvalle|elkins",
       "fight": "Yadier del Valle vs Darren Elkin",
+      "card_status": "off_card",
       "market": "moneyline",
       "market_label": "Moneyline",
       "selection": "Darren Elkins",
@@ -1290,6 +1344,7 @@
     {
       "fight_id": "goff|miller",
       "fight": "Billy Ray Goff vs Tai Miller",
+      "card_status": "off_card",
       "market": "over_under",
       "market_label": "Over / Under",
       "selection": "Over 1.5 rounds",
@@ -1311,6 +1366,7 @@
     {
       "fight_id": "lopez|nurgai",
       "fight": "Bruno Lopez vs Dr. Nurgai",
+      "card_status": "off_card",
       "market": "moneyline",
       "market_label": "Moneyline",
       "selection": "Dr. Nurgai",
@@ -1332,6 +1388,7 @@
     {
       "fight_id": "miranda|sosa",
       "fight": "Richie Miranda vs Manuel Sosa",
+      "card_status": "off_card",
       "market": "over_under",
       "market_label": "Over / Under",
       "selection": "Over",
@@ -1353,6 +1410,7 @@
     {
       "fight_id": "cropshot|cunnaman",
       "fight": "Joe Cropshot vs John Cunnaman",
+      "card_status": "off_card",
       "market": "method_of_victory",
       "market_label": "Method of Victory",
       "selection": "John Cunnaman by submission (club and sub)",
@@ -1373,7 +1431,8 @@
     },
     {
       "fight_id": "barboza|ribovics",
-      "fight": "Edson Barboza vs Esteban Ribovic",
+      "fight": "Edson Barboza vs Esteban Ribovics",
+      "card_status": "on_card",
       "market": "round",
       "market_label": "Round",
       "selection": "Esteban Ribovics by KO in round 1",
@@ -1395,6 +1454,7 @@
     {
       "fight_id": "lazzez|wells",
       "fight": "Mounir Lazzez vs Jeremiah Well",
+      "card_status": "off_card",
       "market": "round",
       "market_label": "Round",
       "selection": "Mounir Lazzez by submission in round 1",
@@ -1415,7 +1475,8 @@
     },
     {
       "fight_id": "fernandes|turner",
-      "fight": "Kaue Fernandes vs Jalin Turner",
+      "fight": "Kauê Fernandes vs Jalin Turner",
+      "card_status": "on_card",
       "market": "over_under",
       "market_label": "Over / Under",
       "selection": "Under 1.5 rounds",
@@ -1437,6 +1498,7 @@
     {
       "fight_id": "malumba|pegalurulo",
       "fight": "Ananias Malumba vs Tom Pegalurulo",
+      "card_status": "off_card",
       "market": "over_under",
       "market_label": "Over / Under",
       "selection": "Under 1.5 rounds",
@@ -1458,6 +1520,7 @@
     {
       "fight_id": "johnson|nolan",
       "fight": "Don'Tae Johnson vs Eric Nolan",
+      "card_status": "off_card",
       "market": "moneyline",
       "market_label": "Moneyline",
       "selection": "Eric Nolan",
@@ -1479,6 +1542,7 @@
     {
       "fight_id": "urbay|wells",
       "fight": "Medbek Urbay vs Jeremiah Well",
+      "card_status": "off_card",
       "market": "method_of_victory",
       "market_label": "Method of Victory",
       "selection": "Medbek Urbay by submission (around round 2)",
@@ -1500,6 +1564,7 @@
     {
       "fight_id": "aliger|escoga",
       "fight": "Aliger vs Fabricio Escoga",
+      "card_status": "off_card",
       "market": "method_of_victory",
       "market_label": "Method of Victory",
       "selection": "Aliger by decision",
@@ -1521,6 +1586,7 @@
     {
       "fight_id": "malumba|pagliarulo",
       "fight": "Balumba vs Tom Pagliarulo",
+      "card_status": "off_card",
       "market": "method_of_victory",
       "market_label": "Method of Victory",
       "selection": "Tom Pagliarulo by KO/TKO",
@@ -1542,6 +1608,7 @@
     {
       "fight_id": "gaethje|makhachev",
       "fight": "Justin Gaethje vs Islam Makhache",
+      "card_status": "off_card",
       "market": "moneyline",
       "market_label": "Moneyline",
       "selection": "Islam Makhachev",
@@ -1563,6 +1630,7 @@
     {
       "fight_id": "hassan|sakia",
       "fight": "Bilal Hassan vs Mudal Sakia",
+      "card_status": "off_card",
       "market": "moneyline",
       "market_label": "Moneyline",
       "selection": "Bilal Hassan",
@@ -1584,6 +1652,7 @@
     {
       "fight_id": "furro|kanuto",
       "fight": "Carol Furro vs Giovana Kanuto",
+      "card_status": "off_card",
       "market": "moneyline",
       "market_label": "Moneyline",
       "selection": "Giovana Kanuto",
@@ -1604,7 +1673,8 @@
     },
     {
       "fight_id": "fernandes|turner",
-      "fight": "Kaue Fernandes vs Jalin Turner",
+      "fight": "Kauê Fernandes vs Jalin Turner",
+      "card_status": "on_card",
       "market": "method_of_victory",
       "market_label": "Method of Victory",
       "selection": "Jalin Turner by KO/TKO in round 1",
@@ -1645,7 +1715,8 @@
     },
     {
       "fight_id": "dern|robertson",
-      "fight": "Mackenzie Dern vs Jillian Robertson",
+      "fight": "Mackenzie Dern vs Gillian Robertson",
+      "card_status": "on_card",
       "market": "round",
       "market_label": "Round",
       "selection": "Gillian Robertson by submission in round 2",
@@ -1667,6 +1738,7 @@
     {
       "fight_id": "brahimaj|magny",
       "fight": "Ramiz Brahimaj vs Neil Magny",
+      "card_status": "on_card",
       "market": "over_under",
       "market_label": "Over / Under",
       "selection": "Under 2.5 rounds",
@@ -1687,7 +1759,8 @@
     },
     {
       "fight_id": "orolbai|wells",
-      "fight": "Muktarbek Orolbai vs Jeremiah Well",
+      "fight": "Myktybek Orolbai vs Jeremiah Wells",
+      "card_status": "on_card",
       "market": "round",
       "market_label": "Round",
       "selection": "Myktybek Orolbai by submission in round 1",
@@ -1708,7 +1781,8 @@
     },
     {
       "fight_id": "johnson|mcconico",
-      "fight": "Dante Johnson vs Eric McConico",
+      "fight": "Donte Johnson vs Eric McConico",
+      "card_status": "on_card",
       "market": "method_of_victory",
       "market_label": "Method of Victory",
       "selection": "Dante Johnson by KO/TKO",
@@ -1745,6 +1819,7 @@
     {
       "fight_id": "hassan|sakia",
       "fight": "Bilal Hassan vs Mudal Sakia",
+      "card_status": "off_card",
       "market": "round",
       "market_label": "Round",
       "selection": "Bilal Hassan in round 1 by KO",
@@ -1766,6 +1841,7 @@
     {
       "fight_id": "kai|luque",
       "fight": "Tang Kai vs Vicente Luque",
+      "card_status": "off_card",
       "market": "moneyline",
       "market_label": "Moneyline",
       "selection": "Vicente Luque",
@@ -1787,6 +1863,7 @@
     {
       "fight_id": "johns|rosas",
       "fight": "Miles Johns vs Jesse Rosa",
+      "card_status": "off_card",
       "market": "moneyline",
       "market_label": "Moneyline",
       "selection": "Miles Johns",
@@ -1808,6 +1885,7 @@
     {
       "fight_id": "gorimbo|luque",
       "fight": "Themba Gorimbo vs Vicente Luque",
+      "card_status": "off_card",
       "market": "round",
       "market_label": "Round",
       "selection": "Themba Gorimbo by KO in round 1",
@@ -1829,6 +1907,7 @@
     {
       "fight_id": "elsigar|escaria",
       "fight": "Abe Elsigar vs Fabricio Escaria",
+      "card_status": "off_card",
       "market": "over_under",
       "market_label": "Over / Under",
       "selection": "Over (pick'em total)",
@@ -1850,6 +1929,7 @@
     {
       "fight_id": "miller|oliveira",
       "fight": "Juliana Miller vs Ravena Oliveira",
+      "card_status": "off_card",
       "market": "round",
       "market_label": "Round",
       "selection": "Juliana Miller to win in round 2 or 3",
@@ -1871,6 +1951,7 @@
     {
       "fight_id": "aspelund|pat",
       "fight": "Steven Aspelund vs Guilherme Pat",
+      "card_status": "off_card",
       "market": "round",
       "market_label": "Round",
       "selection": "Steven Aspelund to finish in round 2 or 3",
@@ -1892,6 +1973,7 @@
     {
       "fight_id": "furro|kanuto",
       "fight": "Carol Furro vs Giovana Kanuto",
+      "card_status": "off_card",
       "market": "round",
       "market_label": "Round",
       "selection": "Carol Furro to win in round 2 or 3",
@@ -1913,6 +1995,7 @@
     {
       "fight_id": "delvalle|elkins",
       "fight": "Yadier del Valle vs Darren Elkin",
+      "card_status": "off_card",
       "market": "round",
       "market_label": "Round",
       "selection": "Darren Elkins to win in round 2 or 3",
@@ -1933,7 +2016,8 @@
     },
     {
       "fight_id": "fernando|tobias",
-      "fight": "Lucas Fernando vs Raphael Tobia",
+      "fight": "Lucas Fernando vs Rafael Tobias",
+      "card_status": "on_card",
       "market": "method_of_victory",
       "market_label": "Method of Victory",
       "selection": "Lucas Fernando by KO",
@@ -1974,7 +2058,8 @@
     },
     {
       "fight_id": "garry|makhachev",
-      "fight": "Ian Machado Garry vs Islam Makhache",
+      "fight": "Ian Machado Garry vs Islam Makhachev",
+      "card_status": "on_card",
       "market": "method_of_victory",
       "market_label": "Method of Victory",
       "selection": "Islam Makhachev by submission in round 4",
@@ -2015,7 +2100,8 @@
     },
     {
       "fight_id": "malik|stoltzfus",
-      "fight": "Mansour Abdul-Malik vs Dustin Stoltzfu",
+      "fight": "Mansur Abdul-Malik vs Dustin Stoltzfus",
+      "card_status": "on_card",
       "market": "round",
       "market_label": "Round",
       "selection": "Mansur Abdul-Malik in round 1",
@@ -2041,7 +2127,8 @@
     },
     {
       "fight_id": "fernandes|turner",
-      "fight": "Kaue Fernandes vs Jalin Turner",
+      "fight": "Kauê Fernandes vs Jalin Turner",
+      "card_status": "on_card",
       "market": "moneyline",
       "market_label": "Moneyline",
       "selection": "Kaue Fernandes",
@@ -2083,6 +2170,7 @@
     {
       "fight_id": "brahimaj|magny",
       "fight": "Ramiz Brahimaj vs Neil Magny",
+      "card_status": "on_card",
       "market": "method_of_victory",
       "market_label": "Method of Victory",
       "selection": "Ramiz Brahimaj by submission in round 1",
@@ -2124,6 +2212,7 @@
     {
       "fight_id": "brahimaj|magny",
       "fight": "Ramiz Brahimaj vs Neil Magny",
+      "card_status": "on_card",
       "market": "moneyline",
       "market_label": "Moneyline",
       "selection": "Ramiz Brahimaj",
@@ -2155,6 +2244,7 @@
     {
       "fight_id": "johnson|ochoa",
       "fight": "Charles Johnson vs Jose Ochoa",
+      "card_status": "on_card",
       "market": "moneyline",
       "market_label": "Moneyline",
       "selection": "Jose Ochoa",
@@ -2186,6 +2276,7 @@
     {
       "fight_id": "johnson|ochoa",
       "fight": "Charles Johnson vs Jose Ochoa",
+      "card_status": "on_card",
       "market": "method_of_victory",
       "market_label": "Method of Victory",
       "selection": "Jose Ochoa by KO/TKO in round 2",
@@ -2222,6 +2313,7 @@
     {
       "fight_id": "gore|luque",
       "fight": "Tresean Gore vs Vicente Luque",
+      "card_status": "on_card",
       "market": "moneyline",
       "market_label": "Moneyline",
       "selection": "Tresean Gore",
@@ -2252,7 +2344,8 @@
     },
     {
       "fight_id": "fernandes|turner",
-      "fight": "Kaue Fernandes vs Jalin Turner",
+      "fight": "Kauê Fernandes vs Jalin Turner",
+      "card_status": "on_card",
       "market": "round",
       "market_label": "Round",
       "selection": "Jalin Turner in round 1",
@@ -2278,7 +2371,8 @@
     },
     {
       "fight_id": "fernando|tobias",
-      "fight": "Lucas Fernando vs Raphael Tobia",
+      "fight": "Lucas Fernando vs Rafael Tobias",
+      "card_status": "on_card",
       "market": "round",
       "market_label": "Round",
       "selection": "Lucas Fernando in round 2",
@@ -2305,6 +2399,7 @@
     {
       "fight_id": "gorimbo|luque",
       "fight": "Themba Gorimbo vs Vicente Luque",
+      "card_status": "off_card",
       "market": "moneyline",
       "market_label": "Moneyline",
       "selection": "Themba Gorimbo",
@@ -2325,7 +2420,8 @@
     },
     {
       "fight_id": "garry|makhachev",
-      "fight": "Ian Machado Garry vs Islam Makhache",
+      "fight": "Ian Machado Garry vs Islam Makhachev",
+      "card_status": "on_card",
       "market": "over_under",
       "market_label": "Over / Under",
       "selection": "Fight does not go the distance",
@@ -2346,7 +2442,8 @@
     },
     {
       "fight_id": "alvarez|njokuani",
-      "fight": "Joel Alvarez vs Chidi Njokuani",
+      "fight": "Joel Álvarez vs Chidi Njokuani",
+      "card_status": "on_card",
       "market": "method_of_victory",
       "market_label": "Method of Victory",
       "selection": "Joel Alvarez by submission or ground-and-pound TKO",
@@ -2377,7 +2474,8 @@
     },
     {
       "fight_id": "dern|robertson",
-      "fight": "Mackenzie Dern vs Jillian Robertson",
+      "fight": "Mackenzie Dern vs Gillian Robertson",
+      "card_status": "on_card",
       "market": "method_of_victory",
       "market_label": "Method of Victory",
       "selection": "Mackenzie Dern by decision",
@@ -2408,7 +2506,8 @@
     },
     {
       "fight_id": "dern|robertson",
-      "fight": "Mackenzie Dern vs Jillian Robertson",
+      "fight": "Mackenzie Dern vs Gillian Robertson",
+      "card_status": "on_card",
       "market": "over_under",
       "market_label": "Over / Under",
       "selection": "Under 3.5 rounds",
@@ -2430,6 +2529,7 @@
     {
       "fight_id": "oralby|wells",
       "fight": "Motobek Oralby vs Jeremiah Well",
+      "card_status": "off_card",
       "market": "method_of_victory",
       "market_label": "Method of Victory",
       "selection": "Mkhit Oralbay by decision",
@@ -2451,6 +2551,7 @@
     {
       "fight_id": "gorimbo|luque",
       "fight": "Themba Gorimbo vs Vicente Luque",
+      "card_status": "off_card",
       "market": "method_of_victory",
       "market_label": "Method of Victory",
       "selection": "Vicente Luque by submission",
@@ -2471,7 +2572,8 @@
     },
     {
       "fight_id": "johnson|mcconico",
-      "fight": "Dante Johnson vs Eric McConico",
+      "fight": "Donte Johnson vs Eric McConico",
+      "card_status": "on_card",
       "market": "round",
       "market_label": "Round",
       "selection": "Dante Johnson in round 1 by KO",
@@ -2493,6 +2595,7 @@
     {
       "fight_id": "gore|luque",
       "fight": "Tresean Gore vs Vicente Luque",
+      "card_status": "on_card",
       "market": "method_of_victory",
       "market_label": "Method of Victory",
       "selection": "Tresean Gore by submission",

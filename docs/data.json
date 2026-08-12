@@ -1,10 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-12T04:13:34+00:00",
+  "generated_at": "2026-08-12T04:55:32+00:00",
   "event": {
     "name": "UFC 330",
     "date": "",
-    "notes": "Discovery pulls recent uploads from each capper channel and keeps the ones whose title matches settings.discovery.title_contains. Add entries to \"videos\" only to pin a specific video by hand."
+    "notes": "Discovery pulls recent uploads from each capper channel and keeps the ones whose title matches settings.discovery.title_contains. Add entries to \"videos\" only to pin a specific video by hand.",
+    "card": {
+      "source": "espn",
+      "name": "UFC 330: Makhachev vs. Machado Garry",
+      "date": "2026-08-15T21:00Z",
+      "bouts": 12
+    }
   },
   "totals": {
     "fights": 44,
@@ -144,6 +150,16 @@
       "transcript_chars": 15882
     },
     {
+      "video_id": "EKbUwHe88VE",
+      "url": "https://www.youtube.com/watch?v=EKbUwHe88VE",
+      "capper_id": "mma_lock_of_the_night",
+      "capper": "MMA Lock of the Night",
+      "title": "UFC 330 Full Card Picks & Predictions | Makhachev vs Garry | The MMA Lock-Cast #396",
+      "status": "transcript_failed",
+      "pick_count": 0,
+      "error": "No usable transcript: TranscriptsDisabled"
+    },
+    {
       "video_id": "Yl9Tlj7jeZE",
       "url": "https://www.youtube.com/watch?v=Yl9Tlj7jeZE",
       "capper_id": "mma_lock_of_the_night",
@@ -244,6 +260,16 @@
       "transcript_chars": 43054
     },
     {
+      "video_id": "Po8Q8QMAfXI",
+      "url": "https://www.youtube.com/watch?v=Po8Q8QMAfXI",
+      "capper_id": "young_pastey",
+      "capper": "Young Pastey",
+      "title": "UFC 330 Makhachev vs Garry Full Card Picks and Predictions!",
+      "status": "transcript_failed",
+      "pick_count": 0,
+      "error": "No usable transcript: TranscriptsDisabled"
+    },
+    {
       "video_id": "dyROzEUyvSI",
       "url": "https://www.youtube.com/watch?v=dyROzEUyvSI",
       "capper_id": "mma_al_dente",
@@ -257,7 +283,7 @@
   "fights": [
     {
       "fight_id": "garry|makhachev",
-      "display": "Ian Machado Garry vs Islam Makhache",
+      "display": "Ian Machado Garry vs Islam Makhachev",
       "fighter_a": "Ian Machado Garry",
       "fighter_b": "Islam Makhachev",
       "pick_count": 24,
@@ -640,12 +666,15 @@
             }
           ]
         }
-      ]
+      ],
+      "card_status": "on_card",
+      "card_order": 0,
+      "card_date": "2026-08-16T01:00Z"
     },
     {
       "fight_id": "fernandes|turner",
-      "display": "Kaue Fernandes vs Jalin Turner",
-      "fighter_a": "Kaue Fernandes",
+      "display": "Kauê Fernandes vs Jalin Turner",
+      "fighter_a": "Kauê Fernandes",
       "fighter_b": "Jalin Turner",
       "pick_count": 23,
       "capper_count": 13,
@@ -1034,11 +1063,14 @@
             }
           ]
         }
-      ]
+      ],
+      "card_status": "on_card",
+      "card_order": 6,
+      "card_date": "2026-08-15T23:00Z"
     },
     {
       "fight_id": "barboza|ribovics",
-      "display": "Edson Barboza vs Esteban Ribovic",
+      "display": "Edson Barboza vs Esteban Ribovics",
       "fighter_a": "Edson Barboza",
       "fighter_b": "Esteban Ribovics",
       "pick_count": 18,
@@ -1319,12 +1351,15 @@
             }
           ]
         }
-      ]
+      ],
+      "card_status": "on_card",
+      "card_order": 4,
+      "card_date": "2026-08-16T01:00Z"
     },
     {
       "fight_id": "johnson|mcconico",
-      "display": "Dante Johnson vs Eric McConico",
-      "fighter_a": "Dante Johnson",
+      "display": "Donte Johnson vs Eric McConico",
+      "fighter_a": "Donte Johnson",
       "fighter_b": "Eric McConico",
       "pick_count": 16,
       "capper_count": 13,
@@ -1583,13 +1618,16 @@
             }
           ]
         }
-      ]
+      ],
+      "card_status": "on_card",
+      "card_order": 7,
+      "card_date": "2026-08-15T23:00Z"
     },
     {
       "fight_id": "dern|robertson",
-      "display": "Mackenzie Dern vs Jillian Robertson",
+      "display": "Mackenzie Dern vs Gillian Robertson",
       "fighter_a": "Mackenzie Dern",
-      "fighter_b": "Jillian Robertson",
+      "fighter_b": "Gillian Robertson",
       "pick_count": 18,
       "capper_count": 12,
       "markets": [
@@ -1904,12 +1942,15 @@
             }
           ]
         }
-      ]
+      ],
+      "card_status": "on_card",
+      "card_order": 1,
+      "card_date": "2026-08-16T01:00Z"
     },
     {
       "fight_id": "malik|stoltzfus",
-      "display": "Mansour Abdul-Malik vs Dustin Stoltzfu",
-      "fighter_a": "Mansour Abdul-Malik",
+      "display": "Mansur Abdul-Malik vs Dustin Stoltzfus",
+      "fighter_a": "Mansur Abdul-Malik",
       "fighter_b": "Dustin Stoltzfus",
       "pick_count": 17,
       "capper_count": 12,
@@ -2178,13 +2219,16 @@
             }
           ]
         }
-      ]
+      ],
+      "card_status": "on_card",
+      "card_order": 3,
+      "card_date": "2026-08-16T01:00Z"
     },
     {
       "fight_id": "fernando|tobias",
-      "display": "Lucas Fernando vs Raphael Tobia",
+      "display": "Lucas Fernando vs Rafael Tobias",
       "fighter_a": "Lucas Fernando",
-      "fighter_b": "Raphael Tobias",
+      "fighter_b": "Rafael Tobias",
       "pick_count": 15,
       "capper_count": 12,
       "markets": [
@@ -2431,12 +2475,15 @@
             }
           ]
         }
-      ]
+      ],
+      "card_status": "on_card",
+      "card_order": 9,
+      "card_date": "2026-08-15T21:30Z"
     },
     {
       "fight_id": "alvarez|njokuani",
-      "display": "Joel Alvarez vs Chidi Njokuani",
-      "fighter_a": "Joel Alvarez",
+      "display": "Joel Álvarez vs Chidi Njokuani",
+      "fighter_a": "Joel Álvarez",
       "fighter_b": "Chidi Njokuani",
       "pick_count": 14,
       "capper_count": 12,
@@ -2673,7 +2720,10 @@
             }
           ]
         }
-      ]
+      ],
+      "card_status": "on_card",
+      "card_order": 5,
+      "card_date": "2026-08-15T23:00Z"
     },
     {
       "fight_id": "brahimaj|magny",
@@ -2998,7 +3048,10 @@
             }
           ]
         }
-      ]
+      ],
+      "card_status": "on_card",
+      "card_order": 10,
+      "card_date": "2026-08-15T21:30Z"
     },
     {
       "fight_id": "johnson|ochoa",
@@ -3249,7 +3302,10 @@
             }
           ]
         }
-      ]
+      ],
+      "card_status": "on_card",
+      "card_order": 2,
+      "card_date": "2026-08-16T01:00Z"
     },
     {
       "fight_id": "gore|luque",
@@ -3495,12 +3551,15 @@
             }
           ]
         }
-      ]
+      ],
+      "card_status": "on_card",
+      "card_order": 8,
+      "card_date": "2026-08-15T23:00Z"
     },
     {
       "fight_id": "orolbai|wells",
-      "display": "Muktarbek Orolbai vs Jeremiah Well",
-      "fighter_a": "Muktarbek Orolbai",
+      "display": "Myktybek Orolbai vs Jeremiah Wells",
+      "fighter_a": "Myktybek Orolbai",
       "fighter_b": "Jeremiah Wells",
       "pick_count": 10,
       "capper_count": 8,
@@ -3675,7 +3734,10 @@
             }
           ]
         }
-      ]
+      ],
+      "card_status": "on_card",
+      "card_order": 11,
+      "card_date": "2026-08-15T21:30Z"
     },
     {
       "fight_id": "gorimbo|luque",
@@ -3809,7 +3871,8 @@
             }
           ]
         }
-      ]
+      ],
+      "card_status": "off_card"
     },
     {
       "fight_id": "adams|wint",
@@ -3931,7 +3994,8 @@
             }
           ]
         }
-      ]
+      ],
+      "card_status": "off_card"
     },
     {
       "fight_id": "oralby|wells",
@@ -4017,7 +4081,8 @@
             }
           ]
         }
-      ]
+      ],
+      "card_status": "off_card"
     },
     {
       "fight_id": "furro|kanuto",
@@ -4111,7 +4176,8 @@
             }
           ]
         }
-      ]
+      ],
+      "card_status": "off_card"
     },
     {
       "fight_id": "gamrot|salkilld",
@@ -4205,7 +4271,8 @@
             }
           ]
         }
-      ]
+      ],
+      "card_status": "off_card"
     },
     {
       "fight_id": "delvalle|elkins",
@@ -4299,7 +4366,8 @@
             }
           ]
         }
-      ]
+      ],
+      "card_status": "off_card"
     },
     {
       "fight_id": "miller|oliveira",
@@ -4393,7 +4461,8 @@
             }
           ]
         }
-      ]
+      ],
+      "card_status": "off_card"
     },
     {
       "fight_id": "elsigar|escaria",
@@ -4459,7 +4528,8 @@
             }
           ]
         }
-      ]
+      ],
+      "card_status": "off_card"
     },
     {
       "fight_id": "hassan|sakia",
@@ -4525,7 +4595,8 @@
             }
           ]
         }
-      ]
+      ],
+      "card_status": "off_card"
     },
     {
       "fight_id": "malumba|pegalurulo",
@@ -4591,7 +4662,8 @@
             }
           ]
         }
-      ]
+      ],
+      "card_status": "off_card"
     },
     {
       "fight_id": "cropshot|cunnaman",
@@ -4657,7 +4729,8 @@
             }
           ]
         }
-      ]
+      ],
+      "card_status": "off_card"
     },
     {
       "fight_id": "khalidov|wells",
@@ -4723,7 +4796,8 @@
             }
           ]
         }
-      ]
+      ],
+      "card_status": "off_card"
     },
     {
       "fight_id": "goff|miller",
@@ -4789,7 +4863,8 @@
             }
           ]
         }
-      ]
+      ],
+      "card_status": "off_card"
     },
     {
       "fight_id": "aspelund|pat",
@@ -4855,7 +4930,8 @@
             }
           ]
         }
-      ]
+      ],
+      "card_status": "off_card"
     },
     {
       "fight_id": "montana|sutherland",
@@ -4921,7 +4997,8 @@
             }
           ]
         }
-      ]
+      ],
+      "card_status": "off_card"
     },
     {
       "fight_id": "urbay|wells",
@@ -4959,7 +5036,8 @@
             }
           ]
         }
-      ]
+      ],
+      "card_status": "off_card"
     },
     {
       "fight_id": "johnson|nolan",
@@ -4997,7 +5075,8 @@
             }
           ]
         }
-      ]
+      ],
+      "card_status": "off_card"
     },
     {
       "fight_id": "kai|luque",
@@ -5035,7 +5114,8 @@
             }
           ]
         }
-      ]
+      ],
+      "card_status": "off_card"
     },
     {
       "fight_id": "orazbai|wells",
@@ -5073,7 +5153,8 @@
             }
           ]
         }
-      ]
+      ],
+      "card_status": "off_card"
     },
     {
       "fight_id": "malik|stolz",
@@ -5111,7 +5192,8 @@
             }
           ]
         }
-      ]
+      ],
+      "card_status": "off_card"
     },
     {
       "fight_id": "aliger|escoga",
@@ -5149,7 +5231,8 @@
             }
           ]
         }
-      ]
+      ],
+      "card_status": "off_card"
     },
     {
       "fight_id": "hassan|sika",
@@ -5187,7 +5270,8 @@
             }
           ]
         }
-      ]
+      ],
+      "card_status": "off_card"
     },
     {
       "fight_id": "malumba|pagliarulo",
@@ -5225,7 +5309,8 @@
             }
           ]
         }
-      ]
+      ],
+      "card_status": "off_card"
     },
     {
       "fight_id": "cropshot|kudman",
@@ -5263,7 +5348,8 @@
             }
           ]
         }
-      ]
+      ],
+      "card_status": "off_card"
     },
     {
       "fight_id": "gaethje|makhachev",
@@ -5301,7 +5387,8 @@
             }
           ]
         }
-      ]
+      ],
+      "card_status": "off_card"
     },
     {
       "fight_id": "gorimbo|wells",
@@ -5339,7 +5426,8 @@
             }
           ]
         }
-      ]
+      ],
+      "card_status": "off_card"
     },
     {
       "fight_id": "fakhretdinov|magny",
@@ -5377,7 +5465,8 @@
             }
           ]
         }
-      ]
+      ],
+      "card_status": "off_card"
     },
     {
       "fight_id": "lazzez|wells",
@@ -5415,7 +5504,8 @@
             }
           ]
         }
-      ]
+      ],
+      "card_status": "off_card"
     },
     {
       "fight_id": "lemos|thainara",
@@ -5453,7 +5543,8 @@
             }
           ]
         }
-      ]
+      ],
+      "card_status": "off_card"
     },
     {
       "fight_id": "lopez|nurgai",
@@ -5491,7 +5582,8 @@
             }
           ]
         }
-      ]
+      ],
+      "card_status": "off_card"
     },
     {
       "fight_id": "miranda|sosa",
@@ -5529,7 +5621,8 @@
             }
           ]
         }
-      ]
+      ],
+      "card_status": "off_card"
     },
     {
       "fight_id": "johns|rosas",
@@ -5567,7 +5660,8 @@
             }
           ]
         }
-      ]
+      ],
+      "card_status": "off_card"
     }
   ],
   "discovery": [
@@ -5761,6 +5855,11 @@
       "feed_videos": 15,
       "selected": [
         {
+          "video_id": "EKbUwHe88VE",
+          "title": "UFC 330 Full Card Picks & Predictions | Makhachev vs Garry | The MMA Lock-Cast #396",
+          "published": "2026-08-12T04:28:58+00:00"
+        },
+        {
           "video_id": "Yl9Tlj7jeZE",
           "title": "UFC 330 | Was Garry the right choice? | Salkilld's stock skyrockets | Live Steam #028",
           "published": "2026-08-11T13:54:48+00:00"
@@ -5821,10 +5920,10 @@
       "selected": [],
       "recent_titles": [
         "2026-08-11  🎾💰#atp #wta #tennis #sportsbetting",
-        "2026-08-11  🚨 DWCS WEEK 1 LIVE! Dana White’s Contender Series Watch Along | Who Gets Signed? 🔥",
         "2026-08-11  ⚾🔥 MLB BEST BETS & PICKS | Full Slate Breakdown, Predictions & Player Props! 💰",
         "2026-08-11  🇧🇷 Juan Pablo “Problema” Vieira on His MMA Rise & What’s Next 🔥🥊",
-        "2026-08-11  🥊Dana White’s Contender Series Week 1 | BEST BETS & Predictions 🔥💰"
+        "2026-08-11  🥊Dana White’s Contender Series Week 1 | BEST BETS & Predictions 🔥💰",
+        "2026-08-10  🎾💰 #tennis #sportsbetting #tennispicks #nationalbankopen"
       ]
     },
     {
@@ -6004,13 +6103,12 @@
       "status": "ok",
       "channel_id": "UUu5vfcRDIrSDSxQpd2Cf3cw",
       "feed_videos": 15,
-      "selected": [],
-      "recent_titles": [
-        "2026-08-07  UFC Vegas 120 Gamrot vs Salkilld Official Bets!!!",
-        "2026-08-05  UFC Vegas 120 Gamrot vs Salkilld Full Card Picks and Predictions!",
-        "2026-07-31  UFC Belgrade Medic vs Rodriguez Official Bets!!!",
-        "2026-07-24  UFC Abu Dhabi Ankalaev vs Guskov Official Bets!!!",
-        "2026-07-17  UFC OKC Du Plessis vs Usman Official Bets"
+      "selected": [
+        {
+          "video_id": "Po8Q8QMAfXI",
+          "title": "UFC 330 Makhachev vs Garry Full Card Picks and Predictions!",
+          "published": "2026-08-12T04:31:57+00:00"
+        }
       ]
     },
     {
