@@ -163,6 +163,27 @@ def test_role_selects_the_matching_trust_score():
     assert chalk.weight == pytest.approx(2.0)
 
 
+def test_method_picks_weight_by_the_method_score_not_the_framing():
+    # Calling the finish is a separately-tracked skill: a method pick uses the
+    # capper's method trust even when they framed the side as a dog or chalk.
+    finisher = Capper(
+        id="finisher",
+        name="Finisher",
+        trust={"overall": 5.0, "underdog": 9.0, "favorite": 2.0, "method": 8.0},
+    )
+    method_pick = make_pick(
+        bet_type="method_of_victory",
+        selection="Jon Jones by KO/TKO",
+        confidence=10,
+        role="favorite",  # chalk framing must NOT drag the weight to 2.0
+    )
+    assert source(method_pick, finisher).weight == pytest.approx(8.0)
+
+    # Without a method score the pick falls back to overall, not the framing.
+    no_method_record = make_capper("plain", overall=6.0, underdog=9.0, favorite=2.0)
+    assert source(method_pick, no_method_record).weight == pytest.approx(6.0)
+
+
 def test_markets_are_kept_separate():
     capper = make_capper("a")
     payload = build_consensus(

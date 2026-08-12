@@ -59,11 +59,32 @@ def test_roi_is_preferred_over_correct_percent():
 
 
 def test_correct_percent_used_when_no_roi():
-    assert trust_from_totals(totals(correct=50.0)) == pytest.approx(
+    # Break-even for an overall (favorite-heavy) slate is ~62.5% accuracy, not
+    # 50% — the tracker's tables show 68-75% accuracy maps to just 4-10% ROI.
+    assert trust_from_totals(totals(correct=62.5)) == pytest.approx(
         NEUTRAL_TRUST, abs=0.2
     )
-    assert trust_from_totals(totals(correct=65.0)) > NEUTRAL_TRUST
-    assert trust_from_totals(totals(correct=35.0)) < NEUTRAL_TRUST
+    assert trust_from_totals(totals(correct=70.0)) > NEUTRAL_TRUST
+    assert trust_from_totals(totals(correct=55.0)) < NEUTRAL_TRUST
+
+
+def test_accuracy_neutral_is_category_aware():
+    # The same 45% hit rate is dreadful on favorites, solid on dogs, and elite
+    # on method props — the neutral point must move with the odds the
+    # category's picks carry.
+    rate = totals(correct=45.0)
+    assert trust_from_totals(rate, "favorite") < NEUTRAL_TRUST
+    assert trust_from_totals(rate, "underdog") > NEUTRAL_TRUST
+    assert trust_from_totals(rate, "method") > trust_from_totals(rate, "underdog")
+
+
+def test_accuracy_and_roi_derived_trust_land_on_the_same_scale():
+    # Real pairings from the tracker's 2026 tables: ~71% overall accuracy came
+    # with ~6% ROI. The two derivations must agree within a point, or cappers
+    # with only one metric known would be systematically mis-ranked.
+    from_accuracy = trust_from_totals(totals(correct=71.0, picks=300))
+    from_roi = trust_from_totals(totals(roi=6.0, picks=300))
+    assert abs(from_accuracy - from_roi) < 1.0
 
 
 def test_no_usable_metric_returns_none():
@@ -195,7 +216,21 @@ def test_trust_from_record_defaults_to_neutral():
         "overall": NEUTRAL_TRUST,
         "underdog": NEUTRAL_TRUST,
         "favorite": NEUTRAL_TRUST,
+        "method": NEUTRAL_TRUST,
     }
+
+
+def test_trust_from_record_scores_method_from_its_own_record():
+    # Lock of the Night's real shape: modest overall ROI, elite method ROI.
+    trust = trust_from_record(
+        {
+            "overall": {"roi": {"picks": 253, "value": 10.1}},
+            "method": {"roi": {"picks": 223, "value": 16.3}},
+        }
+    )
+    assert trust["method"] > trust["overall"] > NEUTRAL_TRUST
+    # No dog/favorite record -> both inherit overall, not method.
+    assert trust["underdog"] == trust["overall"]
 
 
 # -- config merge ----------------------------------------------------------

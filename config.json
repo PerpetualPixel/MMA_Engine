@@ -55,9 +55,10 @@
       "channel_id": "UCpSQhfFzpZ9COp_WiKSUEkQ",
       "discover": true,
       "trust": {
-        "overall": 8.8,
-        "underdog": 6.3,
-        "favorite": 8.8
+        "overall": 6.2,
+        "underdog": 6.6,
+        "favorite": 6.1,
+        "method": 5.6
       },
       "aliases": [
         "Artem"
@@ -66,12 +67,13 @@
         "notes": "#4 in the tracker's 2026 P4P overall accuracy at 72.0% (231/321).",
         "videos": [
           "rLxl9yy3Tbc",
-          "p4p-2026-aug-recap"
+          "p4p-2026-aug-recap",
+          "p4p-2026-aug-category-slides"
         ],
         "record": {
           "underdog": {
             "roi": {
-              "picks": 25,
+              "picks": 35,
               "value": 15.3
             }
           },
@@ -79,6 +81,26 @@
             "correct": {
               "picks": 321,
               "value": 72.0
+            },
+            "roi": {
+              "picks": 257,
+              "value": 5.6
+            }
+          },
+          "favorite": {
+            "roi": {
+              "picks": 212,
+              "value": 5.4
+            }
+          },
+          "method": {
+            "correct": {
+              "picks": 181,
+              "value": 38.7
+            },
+            "roi": {
+              "picks": 181,
+              "value": 3.1
             }
           }
         }
@@ -90,9 +112,10 @@
       "channel_url": "https://www.youtube.com/@AlexTalksFights",
       "discover": true,
       "trust": {
-        "overall": 8.7,
-        "underdog": 8.7,
-        "favorite": 8.7
+        "overall": 5.4,
+        "underdog": 5.6,
+        "favorite": 5.4,
+        "method": 4.2
       },
       "aliases": [
         "Axel Talks Fights",
@@ -102,13 +125,34 @@
         "notes": "#7 in the tracker's 2026 P4P overall accuracy at 71.2% (227/319).",
         "videos": [
           "rLxl9yy3Tbc",
-          "p4p-2026-aug-recap"
+          "p4p-2026-aug-recap",
+          "p4p-2026-aug-category-slides"
         ],
         "record": {
           "overall": {
             "correct": {
               "picks": 319,
               "value": 71.2
+            },
+            "roi": {
+              "picks": 608,
+              "value": 1.9
+            }
+          },
+          "underdog": {
+            "roi": {
+              "picks": 93,
+              "value": 3.5
+            }
+          },
+          "method": {
+            "correct": {
+              "picks": 429,
+              "value": 37.5
+            },
+            "roi": {
+              "picks": 429,
+              "value": -3.5
             }
           }
         }
@@ -120,9 +164,10 @@
       "channel_url": "https://www.youtube.com/@BetSlamWithSam",
       "discover": true,
       "trust": {
-        "overall": 8.9,
-        "underdog": 6.8,
-        "favorite": 8.9
+        "overall": 6.8,
+        "underdog": 7.3,
+        "favorite": 6.1,
+        "method": 7.1
       },
       "aliases": [
         "Bet Sam",
@@ -133,23 +178,40 @@
         "notes": "#2 in the tracker's 2026 P4P overall accuracy at 72.6% (230/317).",
         "videos": [
           "rLxl9yy3Tbc",
-          "p4p-2026-aug-recap"
+          "p4p-2026-aug-recap",
+          "p4p-2026-aug-category-slides"
         ],
         "record": {
           "overall": {
             "correct": {
               "picks": 317,
               "value": 72.6
+            },
+            "roi": {
+              "picks": 255,
+              "value": 8.4
             }
           },
           "underdog": {
             "roi": {
-              "picks": 25,
+              "picks": 37,
               "value": 22.0
-            },
+            }
+          },
+          "favorite": {
+            "roi": {
+              "picks": 208,
+              "value": 5.7
+            }
+          },
+          "method": {
             "correct": {
-              "picks": 25,
-              "value": 45.9
+              "picks": 182,
+              "value": 39.0
+            },
+            "roi": {
+              "picks": 182,
+              "value": 10.8
             }
           }
         }
@@ -161,9 +223,10 @@
       "channel_url": "https://www.youtube.com/@FunkyPicks",
       "discover": true,
       "trust": {
-        "overall": 8.8,
-        "underdog": 8.8,
-        "favorite": 6.8
+        "overall": 7.1,
+        "underdog": 6.5,
+        "favorite": 6.4,
+        "method": 6.7
       },
       "aliases": [
         "Funky Bunch MMA",
@@ -174,19 +237,44 @@
         "notes": "#3 in the tracker's 2026 P4P overall accuracy at 72.0% (232/322).",
         "videos": [
           "rLxl9yy3Tbc",
-          "p4p-2026-aug-recap"
+          "p4p-2026-aug-recap",
+          "p4p-2026-aug-category-slides"
         ],
         "record": {
           "overall": {
             "correct": {
               "picks": 322,
               "value": 72.0
+            },
+            "roi": {
+              "picks": 258,
+              "value": 9.9
             }
           },
           "favorite": {
             "correct": {
-              "picks": 25,
+              "picks": 198,
               "value": 76.8
+            },
+            "roi": {
+              "picks": 198,
+              "value": 7.2
+            }
+          },
+          "underdog": {
+            "roi": {
+              "picks": 50,
+              "value": 12.2
+            }
+          },
+          "method": {
+            "correct": {
+              "picks": 258,
+              "value": 40.3
+            },
+            "roi": {
+              "picks": 258,
+              "value": 8.3
             }
           }
         }
@@ -198,9 +286,10 @@
       "channel_url": "https://www.youtube.com/@LividLarryMMA",
       "discover": true,
       "trust": {
-        "overall": 5.0,
-        "underdog": 5.0,
-        "favorite": 5.0
+        "overall": 5.5,
+        "underdog": 5.9,
+        "favorite": 5.5,
+        "method": 5.5
       },
       "aliases": [
         "Live It Larry MMA",
@@ -210,9 +299,23 @@
       "tracked": {
         "notes": "Fifth in underdog accuracy over the last 50 events (either 42.6% or 42.2%, not specified).",
         "videos": [
-          "rLxl9yy3Tbc"
+          "rLxl9yy3Tbc",
+          "p4p-2026-aug-category-slides"
         ],
-        "record": {}
+        "record": {
+          "overall": {
+            "roi": {
+              "picks": 591,
+              "value": 2.1
+            }
+          },
+          "underdog": {
+            "roi": {
+              "picks": 116,
+              "value": 5.0
+            }
+          }
+        }
       }
     },
     {
@@ -221,9 +324,10 @@
       "channel_url": "https://www.youtube.com/@PurePicksMMA",
       "discover": true,
       "trust": {
-        "overall": 5.0,
-        "underdog": 5.0,
-        "favorite": 5.0
+        "overall": 5.4,
+        "underdog": 5.4,
+        "favorite": 6.0,
+        "method": 5.4
       },
       "aliases": [
         "Pure Picks"
@@ -231,9 +335,23 @@
       "tracked": {
         "notes": "Fifth in favorite accuracy over the last 50 events (either 74.9% or 74.7%, not specified).",
         "videos": [
-          "rLxl9yy3Tbc"
+          "rLxl9yy3Tbc",
+          "p4p-2026-aug-category-slides"
         ],
-        "record": {}
+        "record": {
+          "overall": {
+            "roi": {
+              "picks": 502,
+              "value": 1.6
+            }
+          },
+          "favorite": {
+            "correct": {
+              "picks": 167,
+              "value": 76.6
+            }
+          }
+        }
       }
     },
     {
@@ -242,9 +360,10 @@
       "channel_url": "https://www.youtube.com/@couchwarriorpodcast",
       "discover": true,
       "trust": {
-        "overall": 8.6,
-        "underdog": 8.6,
-        "favorite": 8.6
+        "overall": 5.4,
+        "underdog": 5.4,
+        "favorite": 5.4,
+        "method": 5.0
       },
       "aliases": [
         "Couch Warrior"
@@ -253,13 +372,28 @@
         "notes": "#8 in the tracker's 2026 P4P overall accuracy at 71.0% (225/317).",
         "videos": [
           "rLxl9yy3Tbc",
-          "p4p-2026-aug-recap"
+          "p4p-2026-aug-recap",
+          "p4p-2026-aug-category-slides"
         ],
         "record": {
           "overall": {
             "correct": {
               "picks": 317,
               "value": 71.0
+            },
+            "roi": {
+              "picks": 340,
+              "value": 1.8
+            }
+          },
+          "method": {
+            "correct": {
+              "picks": 325,
+              "value": 38.2
+            },
+            "roi": {
+              "picks": 325,
+              "value": -0.2
             }
           }
         }
@@ -271,14 +405,35 @@
       "channel_url": "https://www.youtube.com/@TonyHasDiedMMA",
       "discover": true,
       "trust": {
-        "overall": 7.5,
-        "underdog": 9.0,
-        "favorite": 6.5
+        "overall": 5.4,
+        "underdog": 5.4,
+        "favorite": 5.4,
+        "method": 5.4
       },
       "aliases": [
         "Tony Has Died",
         "Tony Has Died MMA"
-      ]
+      ],
+      "tracked": {
+        "notes": "",
+        "videos": [
+          "p4p-2026-aug-category-slides"
+        ],
+        "record": {
+          "overall": {
+            "roi": {
+              "picks": 523,
+              "value": 1.6
+            }
+          },
+          "underdog": {
+            "roi": {
+              "picks": 118,
+              "value": 2.0
+            }
+          }
+        }
+      }
     },
     {
       "id": "double_vision",
@@ -308,9 +463,10 @@
       "channel_url": "https://www.youtube.com/@WeWantPicks",
       "discover": true,
       "trust": {
-        "overall": 5.0,
-        "underdog": 5.0,
-        "favorite": 5.8
+        "overall": 6.1,
+        "underdog": 6.1,
+        "favorite": 6.8,
+        "method": 6.1
       },
       "aliases": [
         "Jacob from We Want Picks",
@@ -319,17 +475,24 @@
       "tracked": {
         "notes": "Best favorite predictor of 2026 in both accuracy and ROI; also first in 50-event favorite accuracy (75.6%) and second in 50-event favorite ROI (5.1%).",
         "videos": [
-          "rLxl9yy3Tbc"
+          "rLxl9yy3Tbc",
+          "p4p-2026-aug-category-slides"
         ],
         "record": {
           "favorite": {
-            "roi": {
-              "picks": 25,
-              "value": 9.4
-            },
             "correct": {
-              "picks": 25,
+              "picks": 153,
               "value": 78.4
+            },
+            "roi": {
+              "picks": 153,
+              "value": 9.4
+            }
+          },
+          "overall": {
+            "roi": {
+              "picks": 231,
+              "value": 5.5
             }
           }
         }
@@ -341,21 +504,39 @@
       "channel_url": "https://www.youtube.com/@mmahuskyhustler",
       "discover": true,
       "trust": {
-        "overall": 9.2,
-        "underdog": 9.2,
-        "favorite": 9.2
+        "overall": 6.2,
+        "underdog": 6.2,
+        "favorite": 6.1,
+        "method": 6.5
       },
       "tracked": {
         "notes": "#1 in the tracker's 2026 P4P overall accuracy at 74.7% (227/304).",
         "videos": [
           "rLxl9yy3Tbc",
-          "p4p-2026-aug-recap"
+          "p4p-2026-aug-recap",
+          "p4p-2026-aug-category-slides"
         ],
         "record": {
           "overall": {
             "correct": {
               "picks": 304,
               "value": 74.7
+            },
+            "roi": {
+              "picks": 241,
+              "value": 5.9
+            }
+          },
+          "favorite": {
+            "roi": {
+              "picks": 212,
+              "value": 5.4
+            }
+          },
+          "method": {
+            "correct": {
+              "picks": 240,
+              "value": 38.8
             }
           }
         }
@@ -367,41 +548,53 @@
       "channel_url": "https://www.youtube.com/channel/UClwn3zgkfyne2Ecj36Dl7ZQ",
       "discover": true,
       "trust": {
-        "overall": 8.7,
+        "overall": 7.1,
         "underdog": 8.2,
-        "favorite": 5.7
+        "favorite": 6.8,
+        "method": 8.3
       },
       "tracked": {
         "notes": "#6 in the tracker's 2026 P4P overall accuracy at 71.3% (226/317).",
         "videos": [
           "rLxl9yy3Tbc",
-          "p4p-2026-aug-recap"
+          "p4p-2026-aug-recap",
+          "p4p-2026-aug-category-slides"
         ],
         "record": {
           "overall": {
             "correct": {
               "picks": 317,
               "value": 71.3
+            },
+            "roi": {
+              "picks": 253,
+              "value": 10.1
             }
           },
           "favorite": {
-            "roi": {
-              "picks": 25,
-              "value": 8.9
-            },
             "correct": {
-              "picks": 25,
+              "picks": 196,
               "value": 78.1
+            },
+            "roi": {
+              "picks": 196,
+              "value": 8.9
             }
           },
           "underdog": {
             "roi": {
               "picks": 47,
               "value": 26.4
-            },
+            }
+          },
+          "method": {
             "correct": {
-              "picks": 47,
-              "value": 51.1
+              "picks": 223,
+              "value": 39.9
+            },
+            "roi": {
+              "picks": 223,
+              "value": 16.3
             }
           }
         }
@@ -414,9 +607,10 @@
       "channel_url": "",
       "discover": false,
       "trust": {
-        "overall": 6.3,
-        "underdog": 6.3,
-        "favorite": 6.3
+        "overall": 5.5,
+        "underdog": 5.5,
+        "favorite": 5.5,
+        "method": 5.5
       },
       "tracked": {
         "notes": "Fifth most accurate overall predictor of 2026.",
@@ -441,26 +635,33 @@
       "trust": {
         "overall": 5.0,
         "underdog": 5.0,
-        "favorite": 5.7
+        "favorite": 6.5,
+        "method": 5.0
       },
       "tracked": {
         "notes": "Third in both favorite accuracy and favorite ROI for 2026.",
         "videos": [
-          "rLxl9yy3Tbc"
+          "rLxl9yy3Tbc",
+          "p4p-2026-aug-category-slides"
         ],
         "record": {
           "favorite": {
-            "roi": {
-              "picks": 25,
-              "value": 8.4
-            },
             "correct": {
-              "picks": 25,
+              "picks": 112,
               "value": 77.7
+            },
+            "roi": {
+              "picks": 112,
+              "value": 8.4
             }
           }
         }
-      }
+      },
+      "aliases": [
+        "Premium-Picks (A-Train)",
+        "Premium Picks (A-Train)",
+        "A-Train"
+      ]
     },
     {
       "id": "pick_em_mma",
@@ -468,27 +669,43 @@
       "channel_url": "https://www.youtube.com/@PickemMMA",
       "discover": true,
       "trust": {
-        "overall": 8.6,
-        "underdog": 8.6,
-        "favorite": 6.8
+        "overall": 6.3,
+        "underdog": 5.5,
+        "favorite": 6.4,
+        "method": 6.3
       },
       "tracked": {
         "notes": "#5 in the tracker's 2026 P4P overall accuracy at 71.8% (181/252).",
         "videos": [
           "rLxl9yy3Tbc",
-          "p4p-2026-aug-recap"
+          "p4p-2026-aug-recap",
+          "p4p-2026-aug-category-slides"
         ],
         "record": {
           "favorite": {
             "correct": {
-              "picks": 25,
+              "picks": 146,
               "value": 77.4
+            },
+            "roi": {
+              "picks": 146,
+              "value": 7.7
             }
           },
           "overall": {
             "correct": {
               "picks": 252,
               "value": 71.8
+            },
+            "roi": {
+              "picks": 191,
+              "value": 6.6
+            }
+          },
+          "underdog": {
+            "roi": {
+              "picks": 39,
+              "value": 4.4
             }
           }
         }
@@ -500,17 +717,57 @@
       "channel_url": "",
       "discover": false,
       "trust": {
-        "overall": 5.0,
-        "underdog": 5.0,
-        "favorite": 5.0
+        "overall": 6.6,
+        "underdog": 6.7,
+        "favorite": 6.3,
+        "method": 5.8
       },
       "tracked": {
         "notes": "Shared fourth in 2026 underdog accuracy; also third in 50-event overall ROI (3.7%) and third in 50-event favorite ROI (3.1%).",
         "videos": [
-          "rLxl9yy3Tbc"
+          "rLxl9yy3Tbc",
+          "p4p-2026-aug-category-slides"
         ],
-        "record": {}
-      }
+        "record": {
+          "overall": {
+            "correct": {
+              "picks": 251,
+              "value": 68.9
+            },
+            "roi": {
+              "picks": 251,
+              "value": 7.5
+            }
+          },
+          "favorite": {
+            "correct": {
+              "picks": 191,
+              "value": 76.4
+            },
+            "roi": {
+              "picks": 191,
+              "value": 6.4
+            }
+          },
+          "underdog": {
+            "roi": {
+              "picks": 50,
+              "value": 13.8
+            }
+          },
+          "method": {
+            "roi": {
+              "picks": 251,
+              "value": 3.7
+            }
+          }
+        }
+      },
+      "aliases": [
+        "Sherdog.com (Keith Shillan)",
+        "Sherdog.com",
+        "Keith Shillan"
+      ]
     },
     {
       "id": "left_lane_mma",
@@ -518,21 +775,29 @@
       "channel_url": "https://www.youtube.com/@LeftLaneMMA",
       "discover": true,
       "trust": {
-        "overall": 8.7,
-        "underdog": 8.7,
-        "favorite": 8.7
+        "overall": 6.5,
+        "underdog": 6.5,
+        "favorite": 6.5,
+        "method": 6.5
       },
       "tracked": {
         "notes": "#7 in the tracker's 2026 P4P overall accuracy at 71.2% (227/319).",
         "videos": [
           "rLxl9yy3Tbc",
-          "p4p-2026-aug-recap"
+          "p4p-2026-aug-recap",
+          "p4p-2026-aug-category-slides"
         ],
         "record": {
           "overall": {
             "correct": {
               "picks": 319,
               "value": 71.2
+            }
+          },
+          "method": {
+            "correct": {
+              "picks": 255,
+              "value": 38.8
             }
           }
         }
@@ -558,21 +823,40 @@
     },
     {
       "id": "fight_ferry",
-      "name": "Fight Ferry",
-      "channel_url": "",
-      "discover": false,
+      "name": "FightFairy",
+      "channel_url": "https://www.youtube.com/@mmafightfairy",
+      "discover": true,
       "trust": {
-        "overall": 5.0,
-        "underdog": 5.0,
-        "favorite": 5.0
+        "overall": 6.3,
+        "underdog": 6.6,
+        "favorite": 6.3,
+        "method": 6.3
       },
       "tracked": {
         "notes": "Over the last 50 events: most profitable overall predictor (6% ROI), most profitable underdog predictor (10.1% ROI), third in favorite accuracy, and fourth in underdog accuracy.",
         "videos": [
-          "rLxl9yy3Tbc"
+          "rLxl9yy3Tbc",
+          "p4p-2026-aug-category-slides"
         ],
-        "record": {}
-      }
+        "record": {
+          "overall": {
+            "roi": {
+              "picks": 392,
+              "value": 6.0
+            }
+          },
+          "underdog": {
+            "roi": {
+              "picks": 94,
+              "value": 10.1
+            }
+          }
+        }
+      },
+      "aliases": [
+        "Fight Ferry",
+        "Fight Fairy"
+      ]
     },
     {
       "id": "mma_addict",
@@ -595,38 +879,79 @@
     {
       "id": "the_wager_zone",
       "name": "The Wager Zone",
-      "channel_url": "",
-      "discover": false,
+      "channel_url": "https://www.youtube.com/channel/UCifVih_HPGoctNCg0gO-VqQ",
+      "discover": true,
       "trust": {
-        "overall": 5.0,
-        "underdog": 5.0,
-        "favorite": 5.0
+        "overall": 6.3,
+        "underdog": 5.5,
+        "favorite": 5.9,
+        "method": 6.3
       },
       "tracked": {
         "notes": "Second most profitable underdog predictor over the last 50 events at 9.6% ROI.",
         "videos": [
-          "rLxl9yy3Tbc"
+          "rLxl9yy3Tbc",
+          "p4p-2026-aug-category-slides"
         ],
-        "record": {}
-      }
+        "record": {
+          "overall": {
+            "correct": {
+              "picks": 258,
+              "value": 69.0
+            },
+            "roi": {
+              "picks": 258,
+              "value": 6.3
+            }
+          },
+          "favorite": {
+            "correct": {
+              "picks": 199,
+              "value": 75.9
+            }
+          },
+          "underdog": {
+            "roi": {
+              "picks": 49,
+              "value": 4.1
+            }
+          }
+        }
+      },
+      "aliases": [
+        "TheWagerZone"
+      ],
+      "channel_id": "UCifVih_HPGoctNCg0gO-VqQ"
     },
     {
       "id": "useless",
-      "name": "Useless",
+      "name": "Uselyis",
       "channel_url": "",
       "discover": false,
       "trust": {
         "overall": 5.0,
         "underdog": 5.0,
-        "favorite": 5.0
+        "favorite": 5.0,
+        "method": 6.8
       },
       "tracked": {
         "notes": "Most accurate method-of-victory predictor of 2026: 88 of 214 correct for 41.1%.",
         "videos": [
-          "rLxl9yy3Tbc"
+          "rLxl9yy3Tbc",
+          "p4p-2026-aug-category-slides"
         ],
-        "record": {}
-      }
+        "record": {
+          "method": {
+            "correct": {
+              "picks": 214,
+              "value": 41.1
+            }
+          }
+        }
+      },
+      "aliases": [
+        "Useless"
+      ]
     },
     {
       "id": "mma_bg",
@@ -634,21 +959,43 @@
       "channel_url": "https://www.youtube.com/@TheMMABG",
       "discover": true,
       "trust": {
-        "overall": 8.6,
-        "underdog": 8.6,
-        "favorite": 8.6
+        "overall": 6.0,
+        "underdog": 4.9,
+        "favorite": 6.0,
+        "method": 5.6
       },
       "tracked": {
         "notes": "#9 in the tracker's 2026 P4P overall accuracy at 70.8% (226/319).",
         "videos": [
           "rLxl9yy3Tbc",
-          "p4p-2026-aug-recap"
+          "p4p-2026-aug-recap",
+          "p4p-2026-aug-category-slides"
         ],
         "record": {
           "overall": {
             "correct": {
               "picks": 319,
               "value": 70.8
+            },
+            "roi": {
+              "picks": 255,
+              "value": 4.9
+            }
+          },
+          "underdog": {
+            "roi": {
+              "picks": 35,
+              "value": -0.9
+            }
+          },
+          "method": {
+            "correct": {
+              "picks": 255,
+              "value": 40.8
+            },
+            "roi": {
+              "picks": 255,
+              "value": 3.1
             }
           }
         }
@@ -675,20 +1022,59 @@
     {
       "id": "mma_prediction_guru",
       "name": "MMA Prediction Guru",
-      "channel_url": "",
-      "discover": false,
+      "channel_url": "https://www.youtube.com/channel/UC_Y5a5fuf58q7EJpqnvtV2w",
+      "discover": true,
       "trust": {
-        "overall": 5.0,
+        "overall": 6.0,
         "underdog": 5.0,
-        "favorite": 5.0
+        "favorite": 6.1,
+        "method": 7.5
       },
       "tracked": {
         "notes": "Third most profitable method-of-victory predictor of 2026 with 12% ROI.",
         "videos": [
-          "rLxl9yy3Tbc"
+          "rLxl9yy3Tbc",
+          "p4p-2026-aug-category-slides"
         ],
-        "record": {}
-      }
+        "record": {
+          "overall": {
+            "roi": {
+              "picks": 245,
+              "value": 4.6
+            }
+          },
+          "favorite": {
+            "correct": {
+              "picks": 170,
+              "value": 75.9
+            },
+            "roi": {
+              "picks": 170,
+              "value": 5.8
+            }
+          },
+          "underdog": {
+            "roi": {
+              "picks": 65,
+              "value": 0.2
+            }
+          },
+          "method": {
+            "correct": {
+              "picks": 232,
+              "value": 39.7
+            },
+            "roi": {
+              "picks": 232,
+              "value": 12.0
+            }
+          }
+        }
+      },
+      "aliases": [
+        "MMAPREDICTIONGURU"
+      ],
+      "channel_id": "UC_Y5a5fuf58q7EJpqnvtV2w"
     },
     {
       "id": "locked_door_mma",
@@ -703,7 +1089,8 @@
       "tracked": {
         "notes": "#10 in the tracker's 2026 P4P overall accuracy at 70.6% (226/320).",
         "videos": [
-          "p4p-2026-aug-recap"
+          "p4p-2026-aug-recap",
+          "p4p-2026-aug-category-slides"
         ],
         "record": {
           "overall": {
@@ -715,9 +1102,10 @@
         }
       },
       "trust": {
-        "overall": 8.6,
-        "underdog": 8.6,
-        "favorite": 8.6
+        "overall": 6.4,
+        "underdog": 6.4,
+        "favorite": 6.4,
+        "method": 6.4
       }
     },
     {
@@ -732,7 +1120,8 @@
       "tracked": {
         "notes": "#11 in the tracker's 2026 P4P overall accuracy at 70.5% (182/258).",
         "videos": [
-          "p4p-2026-aug-recap"
+          "p4p-2026-aug-recap",
+          "p4p-2026-aug-category-slides"
         ],
         "record": {
           "overall": {
@@ -744,9 +1133,10 @@
         }
       },
       "trust": {
-        "overall": 8.4,
-        "underdog": 8.4,
-        "favorite": 8.4
+        "overall": 6.3,
+        "underdog": 6.3,
+        "favorite": 6.3,
+        "method": 6.3
       }
     },
     {
@@ -763,7 +1153,8 @@
       "tracked": {
         "notes": "#12 in the tracker's 2026 P4P overall accuracy at 70.3% (218/310).",
         "videos": [
-          "p4p-2026-aug-recap"
+          "p4p-2026-aug-recap",
+          "p4p-2026-aug-category-slides"
         ],
         "record": {
           "overall": {
@@ -775,9 +1166,10 @@
         }
       },
       "trust": {
-        "overall": 8.5,
-        "underdog": 8.5,
-        "favorite": 8.5
+        "overall": 6.3,
+        "underdog": 6.3,
+        "favorite": 6.3,
+        "method": 6.3
       }
     },
     {
@@ -794,7 +1186,8 @@
       "tracked": {
         "notes": "#13 in the tracker's 2026 P4P overall accuracy at 70.3% (137/195).",
         "videos": [
-          "p4p-2026-aug-recap"
+          "p4p-2026-aug-recap",
+          "p4p-2026-aug-category-slides"
         ],
         "record": {
           "overall": {
@@ -802,13 +1195,20 @@
               "picks": 195,
               "value": 70.3
             }
+          },
+          "favorite": {
+            "correct": {
+              "picks": 116,
+              "value": 76.7
+            }
           }
         }
       },
       "trust": {
-        "overall": 8.2,
-        "underdog": 8.2,
-        "favorite": 8.2
+        "overall": 6.2,
+        "underdog": 6.2,
+        "favorite": 5.9,
+        "method": 6.2
       }
     },
     {
@@ -823,7 +1223,8 @@
       "tracked": {
         "notes": "#14 in the tracker's 2026 P4P overall accuracy at 70.1% (197/281).",
         "videos": [
-          "p4p-2026-aug-recap"
+          "p4p-2026-aug-recap",
+          "p4p-2026-aug-category-slides"
         ],
         "record": {
           "overall": {
@@ -835,9 +1236,637 @@
         }
       },
       "trust": {
-        "overall": 8.4,
-        "underdog": 8.4,
-        "favorite": 8.4
+        "overall": 6.3,
+        "underdog": 6.3,
+        "favorite": 6.3,
+        "method": 6.3
+      }
+    },
+    {
+      "id": "mma_bet_viper",
+      "name": "MMA Bet viper",
+      "channel_url": "",
+      "discover": false,
+      "aliases": [
+        "MMA Bet Viper",
+        "Bet Viper"
+      ],
+      "trust": {
+        "overall": 6.0,
+        "underdog": 5.9,
+        "favorite": 6.1,
+        "method": 6.0
+      },
+      "tracked": {
+        "notes": "From the tracker's 2026 P4P category slides.",
+        "videos": [
+          "p4p-2026-aug-category-slides"
+        ],
+        "record": {
+          "overall": {
+            "roi": {
+              "picks": 257,
+              "value": 4.6
+            }
+          },
+          "favorite": {
+            "correct": {
+              "picks": 177,
+              "value": 76.8
+            },
+            "roi": {
+              "picks": 177,
+              "value": 5.6
+            }
+          },
+          "underdog": {
+            "roi": {
+              "picks": 70,
+              "value": 6.0
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "bedtime_mma",
+      "name": "Bedtime MMA",
+      "channel_url": "https://www.youtube.com/@bedtimemma",
+      "discover": true,
+      "aliases": [
+        "BedtimeMMA"
+      ],
+      "trust": {
+        "overall": 5.0,
+        "underdog": 5.6,
+        "favorite": 6.1,
+        "method": 5.0
+      },
+      "tracked": {
+        "notes": "From the tracker's 2026 P4P category slides.",
+        "videos": [
+          "p4p-2026-aug-category-slides"
+        ],
+        "record": {
+          "favorite": {
+            "correct": {
+              "picks": 189,
+              "value": 76.2
+            },
+            "roi": {
+              "picks": 189,
+              "value": 5.7
+            }
+          },
+          "underdog": {
+            "roi": {
+              "picks": 57,
+              "value": 4.4
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "ufc_genie",
+      "name": "UFC Genie",
+      "channel_url": "https://www.youtube.com/channel/UCLes56YLqgcm7S9PUrzTmmA",
+      "channel_id": "UCLes56YLqgcm7S9PUrzTmmA",
+      "discover": true,
+      "aliases": [],
+      "trust": {
+        "overall": 5.9,
+        "underdog": 5.9,
+        "favorite": 5.9,
+        "method": 5.9
+      },
+      "tracked": {
+        "notes": "From the tracker's 2026 P4P category slides.",
+        "videos": [
+          "p4p-2026-aug-category-slides"
+        ],
+        "record": {
+          "overall": {
+            "roi": {
+              "picks": 257,
+              "value": 4.3
+            }
+          },
+          "favorite": {
+            "correct": {
+              "picks": 190,
+              "value": 75.8
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "lets_talk_mma",
+      "name": "Let's Talk MMA (Colby)",
+      "channel_url": "https://www.youtube.com/@LetsTalkMMA11626",
+      "discover": true,
+      "aliases": [
+        "Let's Talk MMA",
+        "Lets Talk MMA"
+      ],
+      "trust": {
+        "overall": 5.0,
+        "underdog": 5.6,
+        "favorite": 5.9,
+        "method": 5.0
+      },
+      "tracked": {
+        "notes": "From the tracker's 2026 P4P category slides.",
+        "videos": [
+          "p4p-2026-aug-category-slides"
+        ],
+        "record": {
+          "favorite": {
+            "correct": {
+              "picks": 152,
+              "value": 75.7
+            }
+          },
+          "underdog": {
+            "roi": {
+              "picks": 49,
+              "value": 4.7
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "the_mma_guru",
+      "name": "THE MMA GURU",
+      "channel_url": "https://www.youtube.com/@the-mma-guru",
+      "discover": true,
+      "aliases": [
+        "The MMA Guru",
+        "MMA Guru"
+      ],
+      "trust": {
+        "overall": 5.0,
+        "underdog": 5.0,
+        "favorite": 5.9,
+        "method": 5.0
+      },
+      "tracked": {
+        "notes": "From the tracker's 2026 P4P category slides.",
+        "videos": [
+          "p4p-2026-aug-category-slides"
+        ],
+        "record": {
+          "favorite": {
+            "correct": {
+              "picks": 152,
+              "value": 75.7
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "young_pastey",
+      "name": "Young Pastey",
+      "channel_url": "https://www.youtube.com/@YoungPastey",
+      "discover": true,
+      "aliases": [
+        "YoungPastey"
+      ],
+      "trust": {
+        "overall": 6.0,
+        "underdog": 6.0,
+        "favorite": 6.0,
+        "method": 6.0
+      },
+      "tracked": {
+        "notes": "From the tracker's 2026 P4P category slides.",
+        "videos": [
+          "p4p-2026-aug-category-slides"
+        ],
+        "record": {
+          "overall": {
+            "correct": {
+              "picks": 252,
+              "value": 68.3
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "mma_al_dente",
+      "name": "MMA AL DENTE",
+      "channel_url": "https://www.youtube.com/@mmaaldente",
+      "discover": true,
+      "aliases": [
+        "MMA Al Dente"
+      ],
+      "trust": {
+        "overall": 6.0,
+        "underdog": 6.0,
+        "favorite": 6.2,
+        "method": 7.5
+      },
+      "tracked": {
+        "notes": "From the tracker's 2026 P4P category slides.",
+        "videos": [
+          "p4p-2026-aug-category-slides"
+        ],
+        "record": {
+          "overall": {
+            "roi": {
+              "picks": 231,
+              "value": 5.0
+            }
+          },
+          "favorite": {
+            "roi": {
+              "picks": 167,
+              "value": 6.2
+            }
+          },
+          "method": {
+            "correct": {
+              "picks": 230,
+              "value": 38.7
+            },
+            "roi": {
+              "picks": 230,
+              "value": 12.3
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "knockout_picks",
+      "name": "Knockout Picks",
+      "channel_url": "",
+      "discover": false,
+      "aliases": [],
+      "trust": {
+        "overall": 6.0,
+        "underdog": 6.0,
+        "favorite": 6.2,
+        "method": 6.0
+      },
+      "tracked": {
+        "notes": "From the tracker's 2026 P4P category slides.",
+        "videos": [
+          "p4p-2026-aug-category-slides"
+        ],
+        "record": {
+          "overall": {
+            "roi": {
+              "picks": 226,
+              "value": 4.9
+            }
+          },
+          "favorite": {
+            "roi": {
+              "picks": 176,
+              "value": 6.2
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "santino_defranco",
+      "name": "Santino DeFranco",
+      "channel_url": "",
+      "discover": false,
+      "aliases": [
+        "Santino DeFranco (Santino)",
+        "Santino DeFranco (Brandan)",
+        "Santino"
+      ],
+      "trust": {
+        "overall": 5.0,
+        "underdog": 5.2,
+        "favorite": 6.1,
+        "method": 5.0
+      },
+      "tracked": {
+        "notes": "From the tracker's 2026 P4P category slides.",
+        "videos": [
+          "p4p-2026-aug-category-slides"
+        ],
+        "record": {
+          "favorite": {
+            "roi": {
+              "picks": 129,
+              "value": 6.3
+            }
+          },
+          "underdog": {
+            "roi": {
+              "picks": 54,
+              "value": 1.2
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "dog_or_pass",
+      "name": "Dog or Pass (Michael)",
+      "channel_url": "",
+      "discover": false,
+      "aliases": [
+        "Dog or Pass"
+      ],
+      "trust": {
+        "overall": 5.0,
+        "underdog": 5.2,
+        "favorite": 5.0,
+        "method": 5.0
+      },
+      "tracked": {
+        "notes": "From the tracker's 2026 P4P category slides.",
+        "videos": [
+          "p4p-2026-aug-category-slides"
+        ],
+        "record": {
+          "underdog": {
+            "roi": {
+              "picks": 42,
+              "value": 1.9
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "sun_tzu_tips",
+      "name": "Sun Tzu Tips",
+      "channel_url": "",
+      "discover": false,
+      "aliases": [],
+      "trust": {
+        "overall": 5.0,
+        "underdog": 5.0,
+        "favorite": 5.0,
+        "method": 5.0
+      },
+      "tracked": {
+        "notes": "From the tracker's 2026 P4P category slides.",
+        "videos": [
+          "p4p-2026-aug-category-slides"
+        ],
+        "record": {
+          "underdog": {
+            "roi": {
+              "picks": 71,
+              "value": 0.3
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "mma_attic",
+      "name": "MMA Attic",
+      "channel_url": "",
+      "discover": false,
+      "aliases": [],
+      "trust": {
+        "overall": 5.7,
+        "underdog": 5.3,
+        "favorite": 5.7,
+        "method": 5.7
+      },
+      "tracked": {
+        "notes": "From the tracker's 2026 P4P category slides.",
+        "videos": [
+          "p4p-2026-aug-category-slides"
+        ],
+        "record": {
+          "overall": {
+            "roi": {
+              "picks": 605,
+              "value": 3.2
+            }
+          },
+          "underdog": {
+            "roi": {
+              "picks": 164,
+              "value": 1.7
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "lucrative_james",
+      "name": "Lucrative James",
+      "channel_url": "",
+      "discover": false,
+      "aliases": [],
+      "trust": {
+        "overall": 5.7,
+        "underdog": 5.8,
+        "favorite": 5.7,
+        "method": 5.7
+      },
+      "tracked": {
+        "notes": "From the tracker's 2026 P4P category slides.",
+        "videos": [
+          "p4p-2026-aug-category-slides"
+        ],
+        "record": {
+          "overall": {
+            "roi": {
+              "picks": 450,
+              "value": 3.0
+            }
+          },
+          "underdog": {
+            "roi": {
+              "picks": 87,
+              "value": 4.9
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "fight_iq_with_von",
+      "name": "Fight IQ with Von",
+      "channel_url": "",
+      "discover": false,
+      "aliases": [
+        "Fight IQ"
+      ],
+      "trust": {
+        "overall": 5.0,
+        "underdog": 5.7,
+        "favorite": 5.0,
+        "method": 5.0
+      },
+      "tracked": {
+        "notes": "From the tracker's 2026 P4P category slides.",
+        "videos": [
+          "p4p-2026-aug-category-slides"
+        ],
+        "record": {
+          "underdog": {
+            "roi": {
+              "picks": 88,
+              "value": 4.2
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "lucas_tracy_mma",
+      "name": "LucasTracyMMA",
+      "channel_url": "",
+      "discover": false,
+      "aliases": [
+        "Lucas Tracy MMA"
+      ],
+      "trust": {
+        "overall": 5.0,
+        "underdog": 5.4,
+        "favorite": 5.0,
+        "method": 5.0
+      },
+      "tracked": {
+        "notes": "From the tracker's 2026 P4P category slides.",
+        "videos": [
+          "p4p-2026-aug-category-slides"
+        ],
+        "record": {
+          "underdog": {
+            "roi": {
+              "picks": 93,
+              "value": 2.7
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "rparqs",
+      "name": "Rparqs",
+      "channel_url": "",
+      "discover": false,
+      "aliases": [],
+      "trust": {
+        "overall": 5.0,
+        "underdog": 5.0,
+        "favorite": 5.0,
+        "method": 5.3
+      },
+      "tracked": {
+        "notes": "From the tracker's 2026 P4P category slides.",
+        "videos": [
+          "p4p-2026-aug-category-slides"
+        ],
+        "record": {
+          "method": {
+            "correct": {
+              "picks": 331,
+              "value": 37.5
+            },
+            "roi": {
+              "picks": 207,
+              "value": 1.7
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "kunath",
+      "name": "Kunath",
+      "channel_url": "",
+      "discover": false,
+      "aliases": [],
+      "trust": {
+        "overall": 5.0,
+        "underdog": 5.0,
+        "favorite": 5.0,
+        "method": 4.8
+      },
+      "tracked": {
+        "notes": "From the tracker's 2026 P4P category slides.",
+        "videos": [
+          "p4p-2026-aug-category-slides"
+        ],
+        "record": {
+          "method": {
+            "correct": {
+              "picks": 320,
+              "value": 36.9
+            },
+            "roi": {
+              "picks": 320,
+              "value": -0.7
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "fight_society",
+      "name": "Fight Society",
+      "channel_url": "",
+      "discover": false,
+      "aliases": [],
+      "trust": {
+        "overall": 5.0,
+        "underdog": 5.0,
+        "favorite": 5.0,
+        "method": 5.7
+      },
+      "tracked": {
+        "notes": "From the tracker's 2026 P4P category slides.",
+        "videos": [
+          "p4p-2026-aug-category-slides"
+        ],
+        "record": {
+          "method": {
+            "roi": {
+              "picks": 149,
+              "value": 3.5
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "ufc_thoughts",
+      "name": "UFCThoughts",
+      "channel_url": "",
+      "discover": false,
+      "aliases": [
+        "UFC Thoughts"
+      ],
+      "trust": {
+        "overall": 5.0,
+        "underdog": 5.0,
+        "favorite": 5.0,
+        "method": 4.1
+      },
+      "tracked": {
+        "notes": "From the tracker's 2026 P4P category slides.",
+        "videos": [
+          "p4p-2026-aug-category-slides"
+        ],
+        "record": {
+          "method": {
+            "roi": {
+              "picks": 375,
+              "value": -4.1
+            }
+          }
+        }
       }
     }
   ],

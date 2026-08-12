@@ -26,12 +26,28 @@ from pydantic import BaseModel, Field
 
 log = logging.getLogger(__name__)
 
-Category = Literal["overall", "underdog", "favorite"]
+Category = Literal["overall", "underdog", "favorite", "method"]
 
 # ROI needed to reach the top of the trust scale. At +20% ROI a capper scores
 # 10.0, at 0% they sit at the 5.0 neutral mark, at -20% they bottom out.
 ROI_AT_MAX_TRUST = 20.0
 NEUTRAL_TRUST = 5.0
+
+# The correct-pick rate that counts as break-even, per category. 50% would be
+# right for coin-flips, but MMA picking is favorite-dominated: the tracker's
+# own tables show the field's 68-75% overall accuracy maps to just 4-10% ROI,
+# so treating 50% as neutral inflates accuracy-only cappers far above what
+# their profitability supports. These anchors come from those same tables —
+# typical break-even points for the odds each category's picks carry (about
+# -170 average for an overall slate, -230 for favorites, +150 for dogs, +230
+# for method props) — so an accuracy-derived score lands on the same scale as
+# an ROI-derived one.
+ACCURACY_NEUTRAL = {
+    "overall": 62.5,
+    "favorite": 70.0,
+    "underdog": 40.0,
+    "method": 30.0,
+}
 
 # Sample-size shrinkage: a 40% ROI over 12 picks is noise, not skill. Scores are
 # pulled toward neutral by n / (n + PRIOR_PICKS), so a capper needs roughly this
@@ -47,7 +63,8 @@ class CategoryStat(BaseModel):
     category: Category = Field(
         description=(
             "Which slice of their picks this covers: 'overall' for all picks, "
-            "'underdog' for their dog picks only, 'favorite' for favorites only."
+            "'underdog' for their dog picks only, 'favorite' for favorites "
+            "only, 'method' for method-of-victory picks."
         )
     )
     roi_percent: float | None = Field(
@@ -133,7 +150,8 @@ invented one corrupts the weighting.
 - Distinguish ROI (profitability) from correct-pick percentage (accuracy). They \
 are different metrics and the video usually reports both.
 - Categories: use 'overall' for all-picks figures, 'underdog' when the figure \
-covers only underdog picks, 'favorite' when it covers only favorites.
+covers only underdog picks, 'favorite' when it covers only favorites, and \
+'method' for method-of-victory (KO/sub/decision) figures.
 - Include every channel given results, including ones that performed badly.
 - Capture the sample size when stated — a rate over a handful of picks is \
 treated very differently from one over hundreds.
@@ -169,12 +187,14 @@ def _shrink(raw: float, picks: int) -> float:
     return round(max(1.0, min(10.0, NEUTRAL_TRUST + (raw - NEUTRAL_TRUST) * confidence)), 1)
 
 
-def trust_from_totals(totals: dict[str, Any]) -> float | None:
+def trust_from_totals(totals: dict[str, Any], category: str = "overall") -> float | None:
     """Convert a category's pooled record into a 1-10 trust score.
 
     ROI is preferred — profitability is what the weighting cares about. Falls
-    back to correct-pick rate, treating 50% as neutral. Small samples are pulled
-    toward neutral so a hot streak over ten picks cannot mint a 10.0.
+    back to correct-pick rate, measured against the category's break-even
+    accuracy (see ACCURACY_NEUTRAL — 70% on favorites is roughly break-even,
+    41% on method props is elite). Small samples are pulled toward neutral so
+    a hot streak over ten picks cannot mint a 10.0.
     """
     roi = totals.get("roi") or {}
     if roi.get("picks"):
@@ -183,8 +203,9 @@ def trust_from_totals(totals: dict[str, Any]) -> float | None:
 
     correct = totals.get("correct") or {}
     if correct.get("picks"):
-        # 50% correct is neutral; every point above adds 0.2 trust.
-        raw = NEUTRAL_TRUST + (correct["value"] - 50.0) * 0.2
+        # Break-even accuracy is neutral; every point above adds 0.2 trust.
+        neutral_accuracy = ACCURACY_NEUTRAL.get(category, ACCURACY_NEUTRAL["overall"])
+        raw = NEUTRAL_TRUST + (correct["value"] - neutral_accuracy) * 0.2
         return _shrink(raw, correct["picks"])
     return None
 
@@ -225,10 +246,10 @@ def pool_totals(existing: dict[str, Any], incoming: dict[str, Any]) -> dict[str,
 
 
 def trust_from_record(record: dict[str, Any]) -> dict[str, float]:
-    """Derive the three trust scores from a capper's pooled per-category record."""
+    """Derive the per-category trust scores from a capper's pooled record."""
     scores: dict[str, float] = {}
-    for category in ("overall", "underdog", "favorite"):
-        score = trust_from_totals(record.get(category) or {})
+    for category in ("overall", "underdog", "favorite", "method"):
+        score = trust_from_totals(record.get(category) or {}, category)
         if score is not None:
             scores[category] = score
 
@@ -239,6 +260,7 @@ def trust_from_record(record: dict[str, Any]) -> dict[str, float]:
         # rather than a made-up specialty rating.
         "underdog": scores.get("underdog", overall),
         "favorite": scores.get("favorite", overall),
+        "method": scores.get("method", overall),
     }
 
 
