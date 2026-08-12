@@ -21,6 +21,7 @@ from dotenv import load_dotenv
 from .aggregate import SourcedPick, build_consensus
 from .config import Config, ConfigError, VideoRef, extract_video_id, load_config
 from .discover import ChannelDiscovery
+from .event_card import annotate_consensus, fetch_event_card
 from .extract import PickExtractor
 from .proxy import ProxyConfigError, build_proxy_config, build_requests_proxies
 from .roster import RosterExtractor, build_capper_entry, merge_into_config
@@ -183,6 +184,23 @@ def run_pipeline(
     )
     if discovery_report:
         payload["discovery"] = discovery_report
+
+    # Pin the consensus to the event's official card (ESPN): off-card picks
+    # stop rendering as phantom fights, cancelled bouts get flagged rather
+    # than silently vanishing, and garbled fighter spellings are corrected.
+    # The previous run's payload is what detects a quiet cancellation — a
+    # bout ESPN removes from the card outright was on_card last run and
+    # unmatched now. Fail-open: no card, no annotation, pipeline continues.
+    previous_fights: list[dict[str, Any]] = []
+    if output_path.is_file():
+        try:
+            previous_fights = json.loads(output_path.read_text(encoding="utf-8")).get(
+                "fights", []
+            )
+        except (json.JSONDecodeError, OSError):
+            pass
+    card = fetch_event_card(event.get("name") or "")
+    annotate_consensus(payload, card, previous_fights)
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(
