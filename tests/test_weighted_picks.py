@@ -150,3 +150,26 @@ def test_build_picks_passes_card_status_through():
     # annotation (no card fetched that run) simply omits the field.
     assert by_fight["a|b"]["card_status"] == "cancelled"
     assert "card_status" not in by_fight["c|d"]
+
+
+def test_build_picks_carries_quoted_odds_and_value():
+    from mma_engine.weighted_picks import quoted_odds
+
+    # Median of the backers' quotes: +200, +250, -110 -> median +200.
+    option = _option("A by KO", 100.0, 12.0, picks=3)
+    option["cappers"] = [
+        {"name": "x", "odds": "+200"},
+        {"name": "y", "odds": "+250"},
+        {"name": "z", "odds": "-110"},
+    ]
+    picks = build_picks(_consensus([_fight("a|b", "A vs B", [option])]))["picks"]
+    assert picks[0]["quoted_odds"] == {"american": 200, "decimal": 3.0, "count": 3}
+    # strength for 100% at weight 12: 10 * 1.0 * (0.5 + 0.5*0.6) = 8.0
+    assert picks[0]["value"] == 16.0  # (3.0 - 1) * 8.0
+
+    # Nobody priced it -> both fields absent, never guessed.
+    unpriced = _option("B", 100.0, 12.0)
+    feed = build_picks(_consensus([_fight("c|d", "C vs D", [unpriced])]))["picks"]
+    assert "quoted_odds" not in feed[0] and "value" not in feed[0]
+
+    assert quoted_odds([{"odds": "no price stated"}]) is None
