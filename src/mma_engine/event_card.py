@@ -103,11 +103,13 @@ def _dates_param(now: datetime | None = None) -> str:
 def parse_card(event: dict[str, Any]) -> dict[str, Any]:
     """One ESPN scoreboard event -> the card shape the annotator consumes.
 
-    ESPN lists the main event first; `order` is chronological (0 = first bout
-    of the night), so it is the reverse of listing position.
+    ESPN's MMA scoreboard lists a card chronologically — earliest bout first,
+    main event LAST (confirmed live with UFC 330: the title fight named in
+    the event's own title sat at the end of the competitions array). So
+    `order` is simply the listing position: 0 = first bout of the night, the
+    maximum = the main event.
     """
     competitions = event.get("competitions") or []
-    total = len(competitions)
     fights = []
     for position, competition in enumerate(competitions):
         competitors = competition.get("competitors") or []
@@ -124,7 +126,7 @@ def parse_card(event: dict[str, Any]) -> dict[str, Any]:
             {
                 "fighter_a": names[0],
                 "fighter_b": names[1],
-                "order": total - 1 - position,
+                "order": position,
                 "date": competition.get("date") or event.get("date"),
                 "cancelled": status_name in CANCELLED_STATUSES,
             }

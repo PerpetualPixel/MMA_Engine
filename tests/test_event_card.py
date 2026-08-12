@@ -15,12 +15,13 @@ from mma_engine.event_card import (
 
 
 def espn_event(name="UFC 330: Makhachev vs. Garry", fights=None):
-    """A scoreboard event shaped like ESPN's MMA payload — main event FIRST,
-    the way ESPN lists a card."""
+    """A scoreboard event shaped like ESPN's MMA payload — listed
+    chronologically with the main event LAST, the way ESPN lists a card
+    (confirmed live with UFC 330)."""
     fights = fights if fights is not None else [
-        ("Islam Makhachev", "Ian Machado Garry", "STATUS_SCHEDULED"),
-        ("Mackenzie Dern", "Jillian Robertson", "STATUS_SCHEDULED"),
         ("Edson Barboza", "Esteban Ribovics", "STATUS_CANCELED"),
+        ("Mackenzie Dern", "Jillian Robertson", "STATUS_SCHEDULED"),
+        ("Islam Makhachev", "Ian Machado Garry", "STATUS_SCHEDULED"),
     ]
     return {
         "name": name,
@@ -52,13 +53,17 @@ def consensus_fight(fighter_a, fighter_b, **extra):
     }
 
 
-def test_parse_card_orders_chronologically_main_event_last():
+def test_parse_card_keeps_espn_chronological_order_main_event_last():
     card = parse_card(espn_event())
     orders = {f["fighter_a"]: f["order"] for f in card["fights"]}
-    # ESPN listed Makhachev first (main event) — chronologically he is last.
+    # ESPN lists earliest-first: Barboza opens (0), Makhachev — the main
+    # event, listed last — carries the maximum order. The dashboard derives
+    # the Main Event banner from that maximum, so getting this backwards
+    # crowns the first prelim (the exact bug this pins: the real UFC 330
+    # payload listed the title fight at the END of competitions).
     assert orders["Islam Makhachev"] == 2
     assert orders["Edson Barboza"] == 0
-    assert card["fights"][2]["cancelled"] is True
+    assert card["fights"][0]["cancelled"] is True
 
 
 def test_find_event_matches_configured_name_within_espn_title():
