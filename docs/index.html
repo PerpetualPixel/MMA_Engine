@@ -85,6 +85,30 @@
   .badge.lock { color: var(--strong); border-color: var(--strong); }
   .badge.pickem { color: var(--split); border-color: var(--split); }
   .badge.dog { color: var(--dog); border-color: var(--dog); }
+  .badge.cancelled { color: var(--danger, #f85149); border-color: #f85149; }
+
+  /* -- cancelled fights: banner, kept in place -- */
+  .duel.cancelled-fight { opacity: .75; }
+  .cancel-banner {
+    background: rgba(248, 81, 73, .12); color: #f85149; border-bottom: 1px solid var(--border);
+    font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+    padding: 5px 16px;
+  }
+
+  /* -- off-card section (picks from other events found in the same videos) -- */
+  .offcard-note {
+    color: var(--muted); font-size: 12.5px; border-top: 1px dashed var(--border);
+    margin-top: 26px; padding-top: 14px;
+  }
+
+  /* -- about button -- */
+  button.about-btn {
+    background: var(--panel-2); border: 1px solid var(--border); color: var(--muted);
+    font: inherit; font-size: 12px; border-radius: 999px; padding: 3px 12px; cursor: pointer;
+  }
+  button.about-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .legend dt { font-weight: 700; margin-top: 12px; }
+  .legend dd { margin: 2px 0 0; color: var(--muted); font-size: 13.5px; }
 
   .sides { display: grid; grid-template-columns: 1fr 1fr; }
   .side { padding: 10px 16px 14px; border-top: 1px solid var(--border); min-width: 0; }
@@ -205,7 +229,8 @@
 <div class="wrap">
   <header>
     <h1>MMA <span>Consensus</span> Engine</h1>
-    <div class="event-line"><div class="event" id="event-name"></div><div class="meta" id="event-meta"></div></div>
+    <div class="event-line"><div class="event" id="event-name"></div><div class="meta" id="event-meta"></div>
+      <button class="about-btn" id="about-btn">? About the numbers</button></div>
   </header>
 
   <nav class="tabs" id="tabs"></nav>
@@ -399,7 +424,7 @@ function controlsHtml(key, { sorts = true, filters = true } = {}) {
   return `<div class="controls" data-ctl="${key}">
     ${sorts ? `<label>Sort
       <select data-ctl-sort>
-        <option value="card"${s.sort === "card" ? " selected" : ""}>Biggest fights first</option>
+        <option value="card"${s.sort === "card" ? " selected" : ""}>Chronological (early → late)</option>
         <option value="conf"${s.sort === "conf" ? " selected" : ""}>Confidence (high → low)</option>
       </select></label>` : ""}
     ${filters ? `
@@ -419,8 +444,33 @@ document.addEventListener("change", (e) => {
 
 function sortFights(fights, mode, confOf) {
   const list = [...fights];
-  if (mode === "conf") list.sort((x, y) => confOf(y) - confOf(x));
+  if (mode === "conf") {
+    list.sort((x, y) => confOf(y) - confOf(x));
+  } else {
+    // Chronological: the official card's bout order (0 = first fight of the
+    // night, from ESPN — see event_card.py). Fights the card doesn't know
+    // (no annotation this run) keep their data order, after the card.
+    const orderOf = (f) => (Number.isFinite(f.card_order) ? f.card_order : 1e6 + f.cardIndex);
+    list.sort((x, y) => orderOf(x) - orderOf(y));
+  }
   return list;
+}
+
+/* ---------- card status (see event_card.py) ---------- */
+const isOffCard = (f) => f.card_status === "off_card";
+const isCancelled = (f) => f.card_status === "cancelled";
+const cancelBannerHtml = (f) =>
+  isCancelled(f) ? `<div class="cancel-banner">Fight cancelled — no longer on the card</div>` : "";
+const duelClass = (f) => `duel${isCancelled(f) ? " cancelled-fight" : ""}`;
+
+/** Off-card picks (a Contender Series bout in the same video) render below a
+ * divider instead of impersonating fights on this event's card. */
+function offCardSection(fights, cardHtml) {
+  if (!fights.length) return "";
+  return `<div class="offcard-note"><b>Not on this card</b> — picks for other
+    events (Contender Series, other promotions) that cappers made in the same
+    videos. Kept visible, but they are not part of this event.</div>`
+    + fights.map(cardHtml).join("");
 }
 
 /* ---------- side rendering ---------- */
@@ -461,19 +511,25 @@ function badgesHtml(fight) {
 /* ---------- tab: moneylines ---------- */
 function renderML() {
   const s = state.ml;
-  let fights = state.model.fights.filter((f) => f.ml.a || f.ml.b);
+  // Every bout on the official card shows here, picked or not — plus any
+  // picked fight the card annotation doesn't cover (no card fetched).
+  let fights = state.model.fights.filter((f) => f.ml.a || f.ml.b || (f.card_status && !isOffCard(f)));
   if (s.hidePickems) fights = fights.filter((f) => !isPickem(f));
   if (s.locksOnly) fights = fights.filter((f) => { const l = mlLead(f); return l && isLock(l.share, l.opt); });
   fights = sortFights(fights, s.sort, (f) => mlLead(f)?.opt.avg_confidence ?? 0);
 
-  const cards = fights.map((f) => `<article class="duel">
+  const cardHtml = (f) => `<article class="${duelClass(f)}">
     <h2><span>${esc(f.display)}</span>${badgesHtml(f)}</h2>
+    ${cancelBannerHtml(f)}
     <div class="sides">${mlSideHtml(f, "a")}${mlSideHtml(f, "b")}</div>
-  </article>`).join("");
+  </article>`;
+  const onCard = fights.filter((f) => !isOffCard(f));
+  const offCard = fights.filter(isOffCard);
 
   return controlsHtml("ml")
-    + `<div class="count-note">${fights.length} fight${fights.length === 1 ? "" : "s"} with moneyline picks</div>`
-    + (cards || `<p class="notice">Nothing matches the current filters.</p>`);
+    + `<div class="count-note">${onCard.length} fight${onCard.length === 1 ? "" : "s"}</div>`
+    + (onCard.map(cardHtml).join("") || `<p class="notice">Nothing matches the current filters.</p>`)
+    + offCardSection(offCard, cardHtml);
 }
 
 /* ---------- tab: method of victory ---------- */
@@ -511,14 +567,17 @@ function renderMOV() {
   });
   fights = sortFights(fights, s.sort, movLeadConf);
 
-  const cards = fights.map((f) => `<article class="duel">
+  const cardHtml = (f) => `<article class="${duelClass(f)}">
     <h2><span>${esc(f.display)}</span>${badgesHtml(f)}</h2>
+    ${cancelBannerHtml(f)}
     <div class="sides">${movRows(f, "a")}${movRows(f, "b")}</div>
-  </article>`).join("");
+  </article>`;
+  const onCard = fights.filter((f) => !isOffCard(f));
 
   return controlsHtml("mov")
-    + `<div class="count-note">${fights.length} fight${fights.length === 1 ? "" : "s"} with method-of-victory picks</div>`
-    + (cards || `<p class="notice">Nothing matches the current filters.</p>`);
+    + `<div class="count-note">${onCard.length} fight${onCard.length === 1 ? "" : "s"} with method-of-victory picks</div>`
+    + (onCard.map(cardHtml).join("") || `<p class="notice">Nothing matches the current filters.</p>`)
+    + offCardSection(fights.filter(isOffCard), cardHtml);
 }
 
 /* ---------- tab: double chance (top-2 methods pooled) ---------- */
@@ -563,14 +622,17 @@ function renderDC() {
   fights = sortFights(fights, s.sort, (f) =>
     Math.max(...[doubleChance(f, "a"), doubleChance(f, "b")].filter(Boolean).map((d) => d.conf), 0));
 
-  const cards = fights.map((f) => `<article class="duel">
+  const cardHtml = (f) => `<article class="${duelClass(f)}">
     <h2><span>${esc(f.display)}</span>${badgesHtml(f)}</h2>
+    ${cancelBannerHtml(f)}
     <div class="sides">${dcSideHtml(f, "a")}${dcSideHtml(f, "b")}</div>
-  </article>`).join("");
+  </article>`;
+  const onCard = fights.filter((f) => !isOffCard(f));
 
   return controlsHtml("dc")
     + `<div class="count-note">Each fighter&rsquo;s two most-backed methods pooled together</div>`
-    + (cards || `<p class="notice">Nothing matches the current filters.</p>`);
+    + (onCard.map(cardHtml).join("") || `<p class="notice">Nothing matches the current filters.</p>`)
+    + offCardSection(fights.filter(isOffCard), cardHtml);
 }
 
 /* ---------- tab: underdogs ---------- */
@@ -579,7 +641,7 @@ function renderDogs() {
   let fights = state.model.fights.filter((f) => f.dogSide);
   fights = sortFights(fights, s.sort, (f) => f.ml[f.dogSide]?.avg_confidence ?? movLeadConf(f));
 
-  const cards = fights.map((f) => {
+  const cardHtml = (f) => {
     const side = f.dogSide;
     const name = side === "a" ? f.fighter_a : f.fighter_b;
     const ml = f.ml[side];
@@ -610,15 +672,18 @@ function renderDogs() {
         <div class="statline">weight <b>${esc(dc.weight)}</b> &middot; avg conf <b>${esc(dc.conf)}/10</b> &middot; <b>${esc(dc.picks)}</b> picks</div>
       </div>`);
     }
-    return `<article class="duel">
+    return `<article class="${duelClass(f)}">
       <h2><span>${esc(name)} <span class="badge dog">underdog</span> <span class="meta">— ${esc(f.display)}</span></span>${badgesHtml(f)}</h2>
+      ${cancelBannerHtml(f)}
       <div class="sides" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">${sections.join("")}</div>
     </article>`;
-  }).join("");
+  };
+  const onCard = fights.filter((f) => !isOffCard(f));
 
   return controlsHtml("dog", { filters: false })
     + `<div class="count-note">Fights where cappers backed the underdog (by their own framing)</div>`
-    + (cards || `<p class="notice">No underdog picks in this event&rsquo;s data.</p>`);
+    + (onCard.map(cardHtml).join("") || `<p class="notice">No underdog picks in this event&rsquo;s data.</p>`)
+    + offCardSection(fights.filter(isOffCard), cardHtml);
 }
 
 /* ---------- tab: cappers ---------- */
@@ -682,6 +747,9 @@ function parlayCandidates() {
   const p = state.parlay;
   const legs = [];
   for (const f of state.model.fights) {
+    // A cancelled bout can't be a parlay leg, and an off-card pick belongs
+    // to a different event than the parlay being built.
+    if (isCancelled(f) || isOffCard(f)) continue;
     const perFight = [];
     if (p.types.ml) {
       const lead = mlLead(f);
@@ -810,6 +878,50 @@ function renderDiscovery(entries) {
       <tbody>${rows}</tbody></table></div></details>`;
 }
 
+/* ---------- about / legend ---------- */
+document.getElementById("about-btn").addEventListener("click", () => openOverlay(`
+  <h3>How to read these numbers</h3>
+  <div class="sub">Every number comes from real capper picks, weighted by each capper's tracked record.</div>
+  <dl class="legend">
+    <dt>Trust (1&ndash;10)</dt>
+    <dd>How good this capper's tracked record is, measured from the
+    @PredictionsTracker channel's published results (ROI preferred, accuracy
+    against the category's break-even rate otherwise, small samples pulled
+    toward neutral). 5.0 = unproven or break-even. Scored separately for
+    overall picks, underdog picks, favorite picks, and method-of-victory
+    picks &mdash; a pick is weighted by the score that matches how it was made.</dd>
+    <dt>weight</dt>
+    <dd>Total conviction behind an option: each backing capper contributes
+    <b>trust &times; (confidence &divide; 10)</b>, and the contributions are summed. A
+    9-trust capper at 10/10 confidence adds 9.0; a 5-trust capper at 4/10
+    adds 2.0. This is the number the consensus runs on.</dd>
+    <dt>Consensus %</dt>
+    <dd>This option's share of all the weight cast in its market:
+    <b>option weight &divide; market total weight &times; 100</b>. 100% means every
+    weighted voice that bet this market took this side &mdash; check the pick
+    count to see how many voices that actually was.</dd>
+    <dt>avg conf</dt>
+    <dd>The backers' own stated confidence (1&ndash;10, read from their language
+    and stake size in the video &mdash; a lean is ~3&ndash;5, a best bet ~9&ndash;10),
+    averaged across the cappers on this option. Unweighted &mdash; it answers
+    &ldquo;how sure do they say they are?&rdquo;, while weight answers &ldquo;how much
+    should we care?&rdquo;.</dd>
+    <dt>picks</dt>
+    <dd>How many cappers back this option. One capper counts once per option
+    &mdash; if they said it in two videos, only their strongest statement counts.</dd>
+    <dt>Lock badge</dt>
+    <dd>&ge;${LOCK.minShare}% consensus share, avg conf &ge;${LOCK.minConf}, and at least
+    ${LOCK.minPicks} cappers.</dd>
+    <dt>Pick&rsquo;em badge</dt>
+    <dd>The leading side has under ${PICKEM_MAX_SHARE}% of the weight &mdash; the cappers
+    are genuinely split.</dd>
+    <dt>Underdog tag</dt>
+    <dd>The side most of its backers described as the betting underdog.</dd>
+    <dt>Cancelled banner</dt>
+    <dd>The bout was on the official card (per ESPN) and no longer is. Kept
+    visible so its picks don't silently vanish, but excluded from parlays.</dd>
+  </dl>`));
+
 /* ---------- shell ---------- */
 const TABS = [
   { id: "ml", label: "Moneylines", render: renderML },
@@ -847,8 +959,11 @@ fetch(`data.json?t=${Date.now()}`)
     const generated = data.generated_at ? new Date(data.generated_at).toLocaleString() : "unknown";
     const totals = data.totals || {};
     $("#event-name").textContent = event.name || "Unnamed event";
+    const card = event.card || null;
+    const onCardCount = (data.fights || []).filter((f) => f.card_status && f.card_status !== "off_card").length;
     $("#event-meta").innerHTML =
-      `${esc(totals.fights ?? 0)} fights &middot; ${esc(totals.picks ?? 0)} picks &middot; ` +
+      (card ? `official card: ${esc(onCardCount)} bouts &middot; ` : `${esc(totals.fights ?? 0)} fights &middot; `) +
+      `${esc(totals.picks ?? 0)} picks &middot; ` +
       `${esc(totals.cappers ?? 0)} cappers &middot; generated ${esc(generated)}`;
     $("#footer").innerHTML = renderSources(data.sources || []) + renderDiscovery(data.discovery || []);
     render();

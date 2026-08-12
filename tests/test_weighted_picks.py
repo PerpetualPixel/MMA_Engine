@@ -137,3 +137,16 @@ def test_feed_metadata_carried_over():
     assert feed["generated_at"] == "2026-08-11T03:28:17+00:00"
     assert feed["event"]["name"] == "UFC 330"
     assert feed["totals"] == {"picks": 0, "strong": 0, "lean": 0, "pass": 0}
+
+
+def test_build_picks_passes_card_status_through():
+    fights = [
+        {**_fight("a|b", "A vs B", [_option("A", 100.0, 12.0)]), "card_status": "cancelled"},
+        _fight("c|d", "C vs D", [_option("C", 100.0, 12.0)]),
+    ]
+    picks = build_picks(_consensus(fights))["picks"]
+    by_fight = {p["fight_id"]: p for p in picks}
+    # The website reads this to banner cancelled fights; a fight with no
+    # annotation (no card fetched that run) simply omits the field.
+    assert by_fight["a|b"]["card_status"] == "cancelled"
+    assert "card_status" not in by_fight["c|d"]
