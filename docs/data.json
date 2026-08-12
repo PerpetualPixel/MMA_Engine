@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-12T03:41:32+00:00",
+  "generated_at": "2026-08-12T03:59:05+00:00",
   "event": {
     "name": "UFC 330",
     "date": "",
     "notes": "Discovery pulls recent uploads from each capper channel and keeps the ones whose title matches settings.discovery.title_contains. Add entries to \"videos\" only to pin a specific video by hand."
   },
   "totals": {
-    "fights": 23,
-    "picks": 134,
-    "cappers": 5,
-    "videos": 9
+    "fights": 32,
+    "picks": 210,
+    "cappers": 9,
+    "videos": 16
   },
   "sources": [
     {
@@ -29,9 +29,9 @@
       "capper_id": "axel_mma",
       "capper": "Axel MMA",
       "title": "UFC 330: Makhachev vs Machado Garry Full Card Predictions & Betting Breakdown",
-      "status": "transcript_failed",
-      "pick_count": 0,
-      "error": "No usable transcript: TranscriptsDisabled"
+      "status": "ok",
+      "pick_count": 23,
+      "transcript_chars": 22659
     },
     {
       "video_id": "Kzsm8s6hlgQ",
@@ -132,258 +132,153 @@
       "status": "ok",
       "pick_count": 13,
       "transcript_chars": 51193
+    },
+    {
+      "video_id": "AncCSMm5apQ",
+      "url": "https://www.youtube.com/watch?v=AncCSMm5apQ",
+      "capper_id": "mma_husky_hustler",
+      "capper": "MMA Husky Hustler",
+      "title": "UFC 330: Makhachev vs. Machado Garry. Full card predictions",
+      "status": "ok",
+      "pick_count": 12,
+      "transcript_chars": 15882
+    },
+    {
+      "video_id": "Yl9Tlj7jeZE",
+      "url": "https://www.youtube.com/watch?v=Yl9Tlj7jeZE",
+      "capper_id": "mma_lock_of_the_night",
+      "capper": "MMA Lock of the Night",
+      "title": "UFC 330 | Was Garry the right choice? | Salkilld's stock skyrockets | Live Steam #028",
+      "status": "transcript_failed",
+      "pick_count": 0,
+      "error": "No usable transcript: TranscriptsDisabled"
+    },
+    {
+      "video_id": "6WCOyPKb3Rs",
+      "url": "https://www.youtube.com/watch?v=6WCOyPKb3Rs",
+      "capper_id": "mma_odds_breaker_adam",
+      "capper": "MMA OddsBreaker (Adam)",
+      "title": "UFC 330 preview with MMA Rax💸 The Gamblers Perspective #168",
+      "status": "ok",
+      "pick_count": 7,
+      "transcript_chars": 42662
+    },
+    {
+      "video_id": "KIn4mpXQwBw",
+      "url": "https://www.youtube.com/watch?v=KIn4mpXQwBw",
+      "capper_id": "mma_odds_breaker_adam",
+      "capper": "MMA OddsBreaker (Adam)",
+      "title": "UFC 330: Makhachev vs. Machado Garry Preview MMAOB Daily Podcast For August 9th",
+      "status": "ok",
+      "pick_count": 17,
+      "transcript_chars": 59637
+    },
+    {
+      "video_id": "MOQalFHmWn8",
+      "url": "https://www.youtube.com/watch?v=MOQalFHmWn8",
+      "capper_id": "kenny_okoye_mma",
+      "capper": "KennyOkoyeMMA",
+      "title": "This Striking Flaw Has Me RETHINKING Islam vs Garry...",
+      "status": "ok",
+      "pick_count": 2,
+      "transcript_chars": 41682
+    },
+    {
+      "video_id": "T5Pj7sRwt0c",
+      "url": "https://www.youtube.com/watch?v=T5Pj7sRwt0c",
+      "capper_id": "kenny_okoye_mma",
+      "capper": "KennyOkoyeMMA",
+      "title": "Little bit handsome... #ufc330 #islammakhachev  #iangarry  #edit",
+      "status": "ok",
+      "pick_count": 1,
+      "transcript_chars": 323
+    },
+    {
+      "video_id": "DkINV1b3wvQ",
+      "url": "https://www.youtube.com/watch?v=DkINV1b3wvQ",
+      "capper_id": "kenny_okoye_mma",
+      "capper": "KennyOkoyeMMA",
+      "title": "UFC 330 Makhachev vs Garry FULL Card Predictions & Breakdown",
+      "status": "ok",
+      "pick_count": 14,
+      "transcript_chars": 43113
     }
   ],
   "fights": [
-    {
-      "fight_id": "brahimaj|magny",
-      "display": "Ramiz Brahimaj vs Neil Magny",
-      "fighter_a": "Ramiz Brahimaj",
-      "fighter_b": "Neil Magny",
-      "pick_count": 12,
-      "capper_count": 5,
-      "markets": [
-        {
-          "bet_type": "moneyline",
-          "label": "Moneyline",
-          "total_weight": 13.92,
-          "pick_count": 4,
-          "options": [
-            {
-              "selection": "Neil Magny",
-              "consensus_pct": 50.3,
-              "weight": 7.0,
-              "pick_count": 2,
-              "avg_confidence": 5.5,
-              "cappers": [
-                {
-                  "id": "tony_has_died",
-                  "name": "TonyHasDiedMMA",
-                  "confidence": 6,
-                  "trust": 7.5,
-                  "role": "unknown",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "Thinks Brahimaj is overrated with wins only over cans, while Magny has huge height/reach, experience and a grappling edge and can pick him apart off the back foot for a decision.",
-                  "video_url": "https://www.youtube.com/watch?v=mlVG4gepZ9Y"
-                },
-                {
-                  "id": "we_want_picks",
-                  "name": "We Want Picks (Jacob)",
-                  "confidence": 5,
-                  "trust": 5.0,
-                  "role": "underdog",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "Jacob takes the dog Magny as the safer pick, saying it's a tailor-made Magny fight where he weathers the early submission threat and wears Brahimaj down for the decision.",
-                  "video_url": "https://www.youtube.com/watch?v=i3kCMoEgBRE"
-                }
-              ]
-            },
-            {
-              "selection": "Ramiz Brahimaj",
-              "consensus_pct": 49.7,
-              "weight": 6.92,
-              "pick_count": 2,
-              "avg_confidence": 6.5,
-              "cappers": [
-                {
-                  "id": "we_want_picks",
-                  "name": "We Want Picks (Jacob)",
-                  "confidence": 7,
-                  "trust": 5.0,
-                  "role": "unknown",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "Magny is 40 and has been submitted in back-to-back fights while Brahimaj is a submission-or-bust grappler with a clear path to victory; the market is even and 75% of the public is on Magny.",
-                  "video_url": "https://www.youtube.com/watch?v=YIYbz6nEsiE"
-                },
-                {
-                  "id": "betslam_sam",
-                  "name": "BetSlam with Sam",
-                  "confidence": 6,
-                  "trust": 5.7,
-                  "role": "unknown",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "Magny has seven submission losses and his long limbs make him susceptible to chokes; Brahimaj is younger and a jiu-jitsu specialist.",
-                  "video_url": "https://www.youtube.com/watch?v=mVRby_GHCRo"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "bet_type": "method_of_victory",
-          "label": "Method of Victory",
-          "total_weight": 16.31,
-          "pick_count": 5,
-          "options": [
-            {
-              "selection": "Ramiz Brahimaj by submission in round 1",
-              "consensus_pct": 77.0,
-              "weight": 12.56,
-              "pick_count": 4,
-              "avg_confidence": 6.0,
-              "cappers": [
-                {
-                  "id": "betslam_sam",
-                  "name": "BetSlam with Sam",
-                  "confidence": 8,
-                  "trust": 5.7,
-                  "role": "unknown",
-                  "odds": "+175",
-                  "stake": "",
-                  "reasoning": "Magny has been submitted repeatedly, often in round one, and Brahimaj has ten first-round submission wins and constantly attacks chokes.",
-                  "video_url": "https://www.youtube.com/watch?v=Kzsm8s6hlgQ"
-                },
-                {
-                  "id": "livid_larry",
-                  "name": "Livid Larry MMA",
-                  "confidence": 6,
-                  "trust": 5.0,
-                  "role": "unknown",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "Even-odds fight but he favors Brahimaj's explosiveness and quick finishing ability, and Magny has repeatedly gotten into bad grappling spots and been submitted recently.",
-                  "video_url": "https://www.youtube.com/watch?v=cG8f50JIxWY"
-                },
-                {
-                  "id": "artem_mma",
-                  "name": "Artem MMA",
-                  "confidence": 6,
-                  "trust": 5.0,
-                  "role": "unknown",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "Brahimaj only wins by submission and usually in round one, and Magny has always struggled with submission defense; the fight is either a Brahimaj finish or a Magny decision.",
-                  "video_url": "https://www.youtube.com/watch?v=r1vAvvZ7-0o"
-                },
-                {
-                  "id": "we_want_picks",
-                  "name": "We Want Picks (Jacob)",
-                  "confidence": 4,
-                  "trust": 5.0,
-                  "role": "unknown",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "12 of Brahimaj's 13 wins are by submission and Magny has been submitted repeatedly; capper says he'll watch for the prop when it drops and take a shot at it.",
-                  "video_url": "https://www.youtube.com/watch?v=YIYbz6nEsiE"
-                }
-              ]
-            },
-            {
-              "selection": "Neil Magny by decision",
-              "consensus_pct": 23.0,
-              "weight": 3.75,
-              "pick_count": 1,
-              "avg_confidence": 5.0,
-              "cappers": [
-                {
-                  "id": "tony_has_died",
-                  "name": "TonyHasDiedMMA",
-                  "confidence": 5,
-                  "trust": 7.5,
-                  "role": "unknown",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "Expects Magny to keep it standing, use his length and win rounds on the outside rather than finish.",
-                  "video_url": "https://www.youtube.com/watch?v=mlVG4gepZ9Y"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "bet_type": "over_under",
-          "label": "Over / Under",
-          "total_weight": 2.28,
-          "pick_count": 1,
-          "options": [
-            {
-              "selection": "Under 2.5 rounds",
-              "consensus_pct": 100.0,
-              "weight": 2.28,
-              "pick_count": 1,
-              "avg_confidence": 4.0,
-              "cappers": [
-                {
-                  "id": "betslam_sam",
-                  "name": "BetSlam with Sam",
-                  "confidence": 4,
-                  "trust": 5.7,
-                  "role": "unknown",
-                  "odds": "-153",
-                  "stake": "",
-                  "reasoning": "Lists it as a decent price prop to target given he expects an early submission.",
-                  "video_url": "https://www.youtube.com/watch?v=Kzsm8s6hlgQ"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "bet_type": "round",
-          "label": "Round",
-          "total_weight": 6.99,
-          "pick_count": 2,
-          "options": [
-            {
-              "selection": "Ramiz Brahimaj in round 1",
-              "consensus_pct": 100.0,
-              "weight": 6.99,
-              "pick_count": 2,
-              "avg_confidence": 6.5,
-              "cappers": [
-                {
-                  "id": "betslam_sam",
-                  "name": "BetSlam with Sam",
-                  "confidence": 7,
-                  "trust": 5.7,
-                  "role": "unknown",
-                  "odds": "+350",
-                  "stake": "",
-                  "reasoning": "Expects Brahimaj to rush the guillotine/front choke early against a fighter who gets into precarious positions in the first round.",
-                  "video_url": "https://www.youtube.com/watch?v=Kzsm8s6hlgQ"
-                },
-                {
-                  "id": "we_want_picks",
-                  "name": "We Want Picks (Jacob)",
-                  "confidence": 6,
-                  "trust": 5.0,
-                  "role": "underdog",
-                  "odds": "+350",
-                  "stake": "",
-                  "reasoning": "Jacob says he will definitely have action on Brahimaj early — first or second round submission — since Brahimaj chases the guillotine relentlessly and Magny is lazy with his head position.",
-                  "video_url": "https://www.youtube.com/watch?v=i3kCMoEgBRE"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
     {
       "fight_id": "fernandes|turner",
       "display": "Kaue Fernandes vs Jalin Turner",
       "fighter_a": "Kaue Fernandes",
       "fighter_b": "Jalin Turner",
-      "pick_count": 9,
-      "capper_count": 5,
+      "pick_count": 18,
+      "capper_count": 9,
       "markets": [
         {
           "bet_type": "moneyline",
           "label": "Moneyline",
-          "total_weight": 4.5,
-          "pick_count": 2,
+          "total_weight": 26.64,
+          "pick_count": 6,
           "options": [
             {
-              "selection": "Kaue Fernandes",
-              "consensus_pct": 100.0,
-              "weight": 4.5,
-              "pick_count": 2,
-              "avg_confidence": 4.5,
+              "selection": "Jalin Turner",
+              "consensus_pct": 67.2,
+              "weight": 17.89,
+              "pick_count": 3,
+              "avg_confidence": 7.0,
               "cappers": [
+                {
+                  "id": "kenny_okoye_mma",
+                  "name": "KennyOkoyeMMA",
+                  "confidence": 8,
+                  "trust": 8.4,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "One of his more confident picks: Turner is the objectively better striker with height/reach, and Fernandes' boxing is overrated.",
+                  "video_url": "https://www.youtube.com/watch?v=DkINV1b3wvQ"
+                },
+                {
+                  "id": "mma_odds_breaker_adam",
+                  "name": "MMA OddsBreaker (Adam)",
+                  "confidence": 7,
+                  "trust": 8.5,
+                  "role": "favorite",
+                  "odds": "-162",
+                  "stake": "1.6u",
+                  "reasoning": "George likes Turner's size as a weight bully at lightweight, points to the good bounce-back finish and green flags from the fight-week interview and new contract.",
+                  "video_url": "https://www.youtube.com/watch?v=6WCOyPKb3Rs"
+                },
+                {
+                  "id": "axel_mma",
+                  "name": "Axel MMA",
+                  "confidence": 6,
+                  "trust": 8.7,
+                  "role": "favorite",
+                  "odds": "-158",
+                  "stake": "",
+                  "reasoning": "Turner is a slick kickboxer who will use his range; Fernandez throws wide hooks with a high chin and is only notable for leg kicks.",
+                  "video_url": "https://www.youtube.com/watch?v=9SlcNEqV9CE"
+                }
+              ]
+            },
+            {
+              "selection": "Kaue Fernandes",
+              "consensus_pct": 32.8,
+              "weight": 8.75,
+              "pick_count": 3,
+              "avg_confidence": 4.7,
+              "cappers": [
+                {
+                  "id": "mma_odds_breaker_adam",
+                  "name": "MMA OddsBreaker (Adam)",
+                  "confidence": 5,
+                  "trust": 8.5,
+                  "role": "underdog",
+                  "odds": "+140",
+                  "stake": "1u",
+                  "reasoning": "Nick doesn't trust Turner's fight IQ and notes Fernandes is well-rounded, hard to finish and has never been stopped, so he can weather the early storm.",
+                  "video_url": "https://www.youtube.com/watch?v=6WCOyPKb3Rs"
+                },
                 {
                   "id": "we_want_picks",
                   "name": "We Want Picks (Jacob)",
@@ -413,21 +308,21 @@
         {
           "bet_type": "method_of_victory",
           "label": "Method of Victory",
-          "total_weight": 15.41,
-          "pick_count": 4,
+          "total_weight": 38.74,
+          "pick_count": 7,
           "options": [
             {
               "selection": "Jalin Turner by KO/TKO in round 1",
-              "consensus_pct": 44.9,
-              "weight": 6.92,
-              "pick_count": 2,
-              "avg_confidence": 6.5,
+              "consensus_pct": 56.9,
+              "weight": 22.06,
+              "pick_count": 4,
+              "avg_confidence": 6.2,
               "cappers": [
                 {
                   "id": "artem_mma",
                   "name": "Artem MMA",
                   "confidence": 7,
-                  "trust": 5.0,
+                  "trust": 8.8,
                   "role": "unknown",
                   "odds": "",
                   "stake": "",
@@ -435,21 +330,83 @@
                   "video_url": "https://www.youtube.com/watch?v=r1vAvvZ7-0o"
                 },
                 {
+                  "id": "mma_husky_hustler",
+                  "name": "MMA Husky Hustler",
+                  "confidence": 6,
+                  "trust": 9.2,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Turner should have the cleaner early moments, punish Fernandez's entries with straight shots and knees, and eventually his size and power make the difference.",
+                  "video_url": "https://www.youtube.com/watch?v=AncCSMm5apQ"
+                },
+                {
                   "id": "betslam_sam",
                   "name": "BetSlam with Sam",
                   "confidence": 6,
-                  "trust": 5.7,
+                  "trust": 8.9,
                   "role": "unknown",
                   "odds": "",
                   "stake": "",
                   "reasoning": "Medium confidence: Turner is a gifted, huge, hard-hitting lightweight and Fernandes' opposition wouldn't beat him; a naked leg kick could get him cracked early.",
                   "video_url": "https://www.youtube.com/watch?v=mVRby_GHCRo"
+                },
+                {
+                  "id": "kenny_okoye_mma",
+                  "name": "KennyOkoyeMMA",
+                  "confidence": 6,
+                  "trust": 8.4,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Expects a striking masterclass from Turner, winning by knockout or on points.",
+                  "video_url": "https://www.youtube.com/watch?v=DkINV1b3wvQ"
+                }
+              ]
+            },
+            {
+              "selection": "Jalin Turner inside the distance",
+              "consensus_pct": 16.1,
+              "weight": 6.23,
+              "pick_count": 1,
+              "avg_confidence": 7.0,
+              "cappers": [
+                {
+                  "id": "betslam_sam",
+                  "name": "BetSlam with Sam",
+                  "confidence": 7,
+                  "trust": 8.9,
+                  "role": "favorite",
+                  "odds": "-105",
+                  "stake": "",
+                  "reasoning": "Since Turner has never won a decision, Sam says to attack the line and take inside the distance at -105 instead of the -160 moneyline.",
+                  "video_url": "https://www.youtube.com/watch?v=Kzsm8s6hlgQ"
+                }
+              ]
+            },
+            {
+              "selection": "Kaue Fernandez by KO/TKO",
+              "consensus_pct": 15.4,
+              "weight": 5.95,
+              "pick_count": 1,
+              "avg_confidence": 7.0,
+              "cappers": [
+                {
+                  "id": "mma_odds_breaker_adam",
+                  "name": "MMA OddsBreaker (Adam)",
+                  "confidence": 7,
+                  "trust": 8.5,
+                  "role": "underdog",
+                  "odds": "+150",
+                  "stake": "",
+                  "reasoning": "Adam doesn't trust Turner when he's the nail rather than the hammer, and Fernandez has four knockdowns in his last three fights with nasty leg kicks and punching power.",
+                  "video_url": "https://www.youtube.com/watch?v=KIn4mpXQwBw"
                 }
               ]
             },
             {
               "selection": "Jalin Turner by decision",
-              "consensus_pct": 29.2,
+              "consensus_pct": 11.6,
               "weight": 4.5,
               "pick_count": 1,
               "avg_confidence": 6.0,
@@ -466,39 +423,19 @@
                   "video_url": "https://www.youtube.com/watch?v=mlVG4gepZ9Y"
                 }
               ]
-            },
-            {
-              "selection": "Jalin Turner inside the distance",
-              "consensus_pct": 25.9,
-              "weight": 3.99,
-              "pick_count": 1,
-              "avg_confidence": 7.0,
-              "cappers": [
-                {
-                  "id": "betslam_sam",
-                  "name": "BetSlam with Sam",
-                  "confidence": 7,
-                  "trust": 5.7,
-                  "role": "favorite",
-                  "odds": "-105",
-                  "stake": "",
-                  "reasoning": "Since Turner has never won a decision, Sam says to attack the line and take inside the distance at -105 instead of the -160 moneyline.",
-                  "video_url": "https://www.youtube.com/watch?v=Kzsm8s6hlgQ"
-                }
-              ]
             }
           ]
         },
         {
           "bet_type": "over_under",
           "label": "Over / Under",
-          "total_weight": 2.85,
+          "total_weight": 4.45,
           "pick_count": 1,
           "options": [
             {
               "selection": "Under 1.5 rounds",
               "consensus_pct": 100.0,
-              "weight": 2.85,
+              "weight": 4.45,
               "pick_count": 1,
               "avg_confidence": 5.0,
               "cappers": [
@@ -506,7 +443,7 @@
                   "id": "betslam_sam",
                   "name": "BetSlam with Sam",
                   "confidence": 5,
-                  "trust": 5.7,
+                  "trust": 8.9,
                   "role": "unknown",
                   "odds": "-140",
                   "stake": "",
@@ -520,32 +457,63 @@
         {
           "bet_type": "round",
           "label": "Round",
-          "total_weight": 6.06,
-          "pick_count": 2,
+          "total_weight": 16.35,
+          "pick_count": 4,
           "options": [
             {
               "selection": "Jalin Turner in round 1",
-              "consensus_pct": 75.2,
-              "weight": 4.56,
-              "pick_count": 1,
-              "avg_confidence": 8.0,
+              "consensus_pct": 69.5,
+              "weight": 11.37,
+              "pick_count": 2,
+              "avg_confidence": 6.5,
               "cappers": [
                 {
                   "id": "betslam_sam",
                   "name": "BetSlam with Sam",
                   "confidence": 8,
-                  "trust": 5.7,
+                  "trust": 8.9,
                   "role": "favorite",
                   "odds": "+250",
                   "stake": "",
                   "reasoning": "Turner has zero decision wins in 15 victories and most of his finishes come in round one; Sam expects him to knock out or submit Fernandes early, saying 'don't get cute with it' at +250.",
                   "video_url": "https://www.youtube.com/watch?v=Kzsm8s6hlgQ"
+                },
+                {
+                  "id": "mma_odds_breaker_adam",
+                  "name": "MMA OddsBreaker (Adam)",
+                  "confidence": 5,
+                  "trust": 8.5,
+                  "role": "favorite",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "He suggests the round 1 prop because it could come as a knockout, a club-and-sub, or a submission off a back take — he expects Turner to get it done early.",
+                  "video_url": "https://www.youtube.com/watch?v=6WCOyPKb3Rs"
+                }
+              ]
+            },
+            {
+              "selection": "Jalin Turner in round 2",
+              "consensus_pct": 21.3,
+              "weight": 3.48,
+              "pick_count": 1,
+              "avg_confidence": 4.0,
+              "cappers": [
+                {
+                  "id": "axel_mma",
+                  "name": "Axel MMA",
+                  "confidence": 4,
+                  "trust": 8.7,
+                  "role": "favorite",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "He believes Fernandez's chin is exposed and Turner puts him out, calling a second-round finish.",
+                  "video_url": "https://www.youtube.com/watch?v=9SlcNEqV9CE"
                 }
               ]
             },
             {
               "selection": "Jalin Turner by first round finish",
-              "consensus_pct": 24.8,
+              "consensus_pct": 9.2,
               "weight": 1.5,
               "pick_count": 1,
               "avg_confidence": 3.0,
@@ -572,32 +540,65 @@
       "display": "Ian Machado Garry vs Islam Makhache",
       "fighter_a": "Ian Machado Garry",
       "fighter_b": "Islam Makhachev",
-      "pick_count": 9,
-      "capper_count": 5,
+      "pick_count": 17,
+      "capper_count": 9,
       "markets": [
         {
           "bet_type": "moneyline",
           "label": "Moneyline",
-          "total_weight": 12.11,
-          "pick_count": 3,
+          "total_weight": 38.53,
+          "pick_count": 7,
           "options": [
             {
               "selection": "Islam Makhachev",
-              "consensus_pct": 100.0,
-              "weight": 12.11,
-              "pick_count": 3,
-              "avg_confidence": 7.3,
+              "consensus_pct": 86.8,
+              "weight": 33.43,
+              "pick_count": 6,
+              "avg_confidence": 7.2,
               "cappers": [
                 {
                   "id": "betslam_sam",
                   "name": "BetSlam with Sam",
                   "confidence": 9,
-                  "trust": 5.7,
+                  "trust": 8.9,
                   "role": "favorite",
                   "odds": "",
                   "stake": "",
                   "reasoning": "One of his most confident favorites on the card: Makhachev has passed every test, is durable without the weight cut, and Garry's year with Oliveira won't be enough.",
                   "video_url": "https://www.youtube.com/watch?v=mVRby_GHCRo"
+                },
+                {
+                  "id": "axel_mma",
+                  "name": "Axel MMA",
+                  "confidence": 8,
+                  "trust": 8.7,
+                  "role": "favorite",
+                  "odds": "-335",
+                  "stake": "",
+                  "reasoning": "Makhachev's wrestling and pressure are too much; Garry won't stop the takedowns and Makhachev's striking is good enough to hold his own.",
+                  "video_url": "https://www.youtube.com/watch?v=9SlcNEqV9CE"
+                },
+                {
+                  "id": "mma_husky_hustler",
+                  "name": "MMA Husky Hustler",
+                  "confidence": 7,
+                  "trust": 9.2,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Garry will have success at range, but over five rounds Makhachev's adaptability and constant grappling threats should take over, and extended top time makes it hard for Garry to recover.",
+                  "video_url": "https://www.youtube.com/watch?v=AncCSMm5apQ"
+                },
+                {
+                  "id": "kenny_okoye_mma",
+                  "name": "KennyOkoyeMMA",
+                  "confidence": 6,
+                  "trust": 8.4,
+                  "role": "favorite",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "He concedes Garry likely has the striking advantage (length, movement, sharp counterboxing) and that Islam's inability to lead is a real flaw, but believes the grappling gap is even more significant — Islam's physicality, top pressure and fence wrestling should break the 'Garry lock'. He calls it roughly a 55-45 fight.",
+                  "video_url": "https://www.youtube.com/watch?v=MOQalFHmWn8"
                 },
                 {
                   "id": "livid_larry",
@@ -622,22 +623,53 @@
                   "video_url": "https://www.youtube.com/watch?v=i3kCMoEgBRE"
                 }
               ]
+            },
+            {
+              "selection": "Ian Machado Garry",
+              "consensus_pct": 13.2,
+              "weight": 5.1,
+              "pick_count": 1,
+              "avg_confidence": 6.0,
+              "cappers": [
+                {
+                  "id": "mma_odds_breaker_adam",
+                  "name": "MMA OddsBreaker (Adam)",
+                  "confidence": 6,
+                  "trust": 8.5,
+                  "role": "underdog",
+                  "odds": "+285",
+                  "stake": "1u",
+                  "reasoning": "Nick believes Garry is underrated, has the cleaner striking, will be well prepared and the takedowns won't come easily, making the fight much closer than the price indicates.",
+                  "video_url": "https://www.youtube.com/watch?v=6WCOyPKb3Rs"
+                }
+              ]
             }
           ]
         },
         {
           "bet_type": "method_of_victory",
           "label": "Method of Victory",
-          "total_weight": 22.37,
-          "pick_count": 5,
+          "total_weight": 41.15,
+          "pick_count": 7,
           "options": [
             {
               "selection": "Islam Makhachev by submission in round 4",
-              "consensus_pct": 79.6,
-              "weight": 17.81,
-              "pick_count": 4,
-              "avg_confidence": 7.5,
+              "consensus_pct": 66.2,
+              "weight": 27.23,
+              "pick_count": 5,
+              "avg_confidence": 7.0,
               "cappers": [
+                {
+                  "id": "betslam_sam",
+                  "name": "BetSlam with Sam",
+                  "confidence": 8,
+                  "trust": 8.9,
+                  "role": "favorite",
+                  "odds": "+200",
+                  "stake": "",
+                  "reasoning": "He expects Makhachev to get takedowns and choke Garry out, and is putting money on the submission at +200.",
+                  "video_url": "https://www.youtube.com/watch?v=Kzsm8s6hlgQ"
+                },
                 {
                   "id": "tony_has_died",
                   "name": "TonyHasDiedMMA",
@@ -650,26 +682,26 @@
                   "video_url": "https://www.youtube.com/watch?v=mlVG4gepZ9Y"
                 },
                 {
-                  "id": "betslam_sam",
-                  "name": "BetSlam with Sam",
-                  "confidence": 8,
-                  "trust": 5.7,
-                  "role": "favorite",
-                  "odds": "+200",
-                  "stake": "",
-                  "reasoning": "He expects Makhachev to get takedowns and choke Garry out, and is putting money on the submission at +200.",
-                  "video_url": "https://www.youtube.com/watch?v=Kzsm8s6hlgQ"
-                },
-                {
                   "id": "artem_mma",
                   "name": "Artem MMA",
                   "confidence": 7,
-                  "trust": 5.0,
+                  "trust": 8.8,
                   "role": "favorite",
                   "odds": "-500",
                   "stake": "",
                   "reasoning": "Nobody defends Makhachev's takedowns and Garry lacks one-punch power, so Garry would have to win a decision; Makhachev drags him late for a finish.",
                   "video_url": "https://www.youtube.com/watch?v=r1vAvvZ7-0o"
+                },
+                {
+                  "id": "kenny_okoye_mma",
+                  "name": "KennyOkoyeMMA",
+                  "confidence": 5,
+                  "trust": 8.4,
+                  "role": "favorite",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "He repeatedly says he thinks the arm triangle happens: once Islam opens the Garry lock and passes to half guard and mount, Garry hasn't shown the ability to scramble up off his back.",
+                  "video_url": "https://www.youtube.com/watch?v=MOQalFHmWn8"
                 },
                 {
                   "id": "livid_larry",
@@ -686,8 +718,8 @@
             },
             {
               "selection": "Islam Makhachev inside the distance",
-              "consensus_pct": 20.4,
-              "weight": 4.56,
+              "consensus_pct": 17.3,
+              "weight": 7.12,
               "pick_count": 1,
               "avg_confidence": 8.0,
               "cappers": [
@@ -695,12 +727,32 @@
                   "id": "betslam_sam",
                   "name": "BetSlam with Sam",
                   "confidence": 8,
-                  "trust": 5.7,
+                  "trust": 8.9,
                   "role": "favorite",
                   "odds": "",
                   "stake": "",
                   "reasoning": "Expects Makhachev to get takedowns, dominate and submit Garry's long neck.",
                   "video_url": "https://www.youtube.com/watch?v=mVRby_GHCRo"
+                }
+              ]
+            },
+            {
+              "selection": "Islam Makhachev by decision",
+              "consensus_pct": 16.5,
+              "weight": 6.8,
+              "pick_count": 1,
+              "avg_confidence": 8.0,
+              "cappers": [
+                {
+                  "id": "mma_odds_breaker_adam",
+                  "name": "MMA OddsBreaker (Adam)",
+                  "confidence": 8,
+                  "trust": 8.5,
+                  "role": "favorite",
+                  "odds": "-325",
+                  "stake": "",
+                  "reasoning": "Adam calls it an easy pick he isn't questioning: Garry's takedown defense won't hold up over five rounds, similar to the Shavkat fight, so Makhachev grinds out a decision.",
+                  "video_url": "https://www.youtube.com/watch?v=KIn4mpXQwBw"
                 }
               ]
             }
@@ -709,12 +761,32 @@
         {
           "bet_type": "over_under",
           "label": "Over / Under",
-          "total_weight": 3.5,
-          "pick_count": 1,
+          "total_weight": 8.54,
+          "pick_count": 2,
           "options": [
             {
+              "selection": "Over 2.5 rounds",
+              "consensus_pct": 59.0,
+              "weight": 5.04,
+              "pick_count": 1,
+              "avg_confidence": 6.0,
+              "cappers": [
+                {
+                  "id": "kenny_okoye_mma",
+                  "name": "KennyOkoyeMMA",
+                  "confidence": 6,
+                  "trust": 8.4,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Garry will be moving and hard to track early, so Islam needs an adjustment period before eventually getting a late finish.",
+                  "video_url": "https://www.youtube.com/watch?v=DkINV1b3wvQ"
+                }
+              ]
+            },
+            {
               "selection": "Fight does not go the distance",
-              "consensus_pct": 100.0,
+              "consensus_pct": 41.0,
               "weight": 3.5,
               "pick_count": 1,
               "avg_confidence": 7.0,
@@ -733,6 +805,305 @@
               ]
             }
           ]
+        },
+        {
+          "bet_type": "round",
+          "label": "Round",
+          "total_weight": 4.35,
+          "pick_count": 1,
+          "options": [
+            {
+              "selection": "Islam Makhachev by submission in round 3",
+              "consensus_pct": 100.0,
+              "weight": 4.35,
+              "pick_count": 1,
+              "avg_confidence": 5.0,
+              "cappers": [
+                {
+                  "id": "axel_mma",
+                  "name": "Axel MMA",
+                  "confidence": 5,
+                  "trust": 8.7,
+                  "role": "favorite",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "He thinks Garry survives to the third but gets taken down and choked out, so submission in round 3.",
+                  "video_url": "https://www.youtube.com/watch?v=9SlcNEqV9CE"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "fight_id": "dern|robertson",
+      "display": "Mackenzie Dern vs Jillian Robertson",
+      "fighter_a": "Mackenzie Dern",
+      "fighter_b": "Jillian Robertson",
+      "pick_count": 15,
+      "capper_count": 9,
+      "markets": [
+        {
+          "bet_type": "moneyline",
+          "label": "Moneyline",
+          "total_weight": 36.6,
+          "pick_count": 7,
+          "options": [
+            {
+              "selection": "Mackenzie Dern",
+              "consensus_pct": 71.8,
+              "weight": 26.28,
+              "pick_count": 5,
+              "avg_confidence": 7.2,
+              "cappers": [
+                {
+                  "id": "betslam_sam",
+                  "name": "BetSlam with Sam",
+                  "confidence": 7,
+                  "trust": 8.9,
+                  "role": "favorite",
+                  "odds": "-200",
+                  "stake": "",
+                  "reasoning": "Dern's jiu-jitsu is significantly better; Robertson was swept twice and nearly triangled by Amanda Lemos.",
+                  "video_url": "https://www.youtube.com/watch?v=Kzsm8s6hlgQ"
+                },
+                {
+                  "id": "mma_odds_breaker_adam",
+                  "name": "MMA OddsBreaker (Adam)",
+                  "confidence": 7,
+                  "trust": 8.5,
+                  "role": "favorite",
+                  "odds": "-200",
+                  "stake": "2u",
+                  "reasoning": "Nick calls it a nightmare matchup for Robertson, saying Dern is better everywhere, has the striking and durability edge and could even land takedowns of her own.",
+                  "video_url": "https://www.youtube.com/watch?v=6WCOyPKb3Rs"
+                },
+                {
+                  "id": "kenny_okoye_mma",
+                  "name": "KennyOkoyeMMA",
+                  "confidence": 7,
+                  "trust": 8.4,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Robertson's control-based game plan won't work on Dern, whose ugly but cleaner striking and BJJ scrambling should win her the later rounds.",
+                  "video_url": "https://www.youtube.com/watch?v=DkINV1b3wvQ"
+                },
+                {
+                  "id": "we_want_picks",
+                  "name": "We Want Picks (Jacob)",
+                  "confidence": 9,
+                  "trust": 5.8,
+                  "role": "favorite",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Dern is better everywhere - striking, grappling, even wrestling - and is all-time tough; Robertson has no path without takedowns, and capper says he can't see how she wins.",
+                  "video_url": "https://www.youtube.com/watch?v=YIYbz6nEsiE"
+                },
+                {
+                  "id": "livid_larry",
+                  "name": "Livid Larry MMA",
+                  "confidence": 6,
+                  "trust": 5.0,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Picks Dern in the co-main event.",
+                  "video_url": "https://www.youtube.com/watch?v=_W88avBaqqc"
+                }
+              ]
+            },
+            {
+              "selection": "Gillian Robertson",
+              "consensus_pct": 28.2,
+              "weight": 10.32,
+              "pick_count": 2,
+              "avg_confidence": 6.0,
+              "cappers": [
+                {
+                  "id": "axel_mma",
+                  "name": "Axel MMA",
+                  "confidence": 6,
+                  "trust": 8.7,
+                  "role": "underdog",
+                  "odds": "+182",
+                  "stake": "",
+                  "reasoning": "Robertson is the better wrestler, should take Dern down and hold top control; Dern isn't a dangerous enough striker to keep her off.",
+                  "video_url": "https://www.youtube.com/watch?v=9SlcNEqV9CE"
+                },
+                {
+                  "id": "mma_odds_breaker_adam",
+                  "name": "MMA OddsBreaker (Adam)",
+                  "confidence": 6,
+                  "trust": 8.5,
+                  "role": "underdog",
+                  "odds": "+185",
+                  "stake": "1u",
+                  "reasoning": "George thinks Dern's striking improvements are overstated, Robertson is a far more prolific finisher with a better ground-and-pound rate and can put the fight on the floor on her own terms.",
+                  "video_url": "https://www.youtube.com/watch?v=6WCOyPKb3Rs"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bet_type": "method_of_victory",
+          "label": "Method of Victory",
+          "total_weight": 30.18,
+          "pick_count": 6,
+          "options": [
+            {
+              "selection": "Mackenzie Dern by decision",
+              "consensus_pct": 46.0,
+              "weight": 13.88,
+              "pick_count": 3,
+              "avg_confidence": 6.3,
+              "cappers": [
+                {
+                  "id": "artem_mma",
+                  "name": "Artem MMA",
+                  "confidence": 6,
+                  "trust": 8.8,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Dern's improved striking wins the exchanges while the grappling cancels out; as an experienced champ ahead on the cards she won't risk chasing a finish.",
+                  "video_url": "https://www.youtube.com/watch?v=r1vAvvZ7-0o"
+                },
+                {
+                  "id": "mma_odds_breaker_adam",
+                  "name": "MMA OddsBreaker (Adam)",
+                  "confidence": 6,
+                  "trust": 8.5,
+                  "role": "favorite",
+                  "odds": "-260",
+                  "stake": "",
+                  "reasoning": "Robertson has a path on the ground, but Adam sees a big standup advantage for Dern and thinks she edges out a decision.",
+                  "video_url": "https://www.youtube.com/watch?v=KIn4mpXQwBw"
+                },
+                {
+                  "id": "livid_larry",
+                  "name": "Livid Larry MMA",
+                  "confidence": 7,
+                  "trust": 5.0,
+                  "role": "favorite",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Bad stylistic matchup for Robertson: Dern is dangerous on the ground and clearly more technical and dangerous on the feet, so if Robertson can't dominate with wrestling she loses; borderline confident-picks-list addition possibly in a two-legger.",
+                  "video_url": "https://www.youtube.com/watch?v=cG8f50JIxWY"
+                }
+              ]
+            },
+            {
+              "selection": "Mackenzie Dern by submission",
+              "consensus_pct": 20.6,
+              "weight": 6.23,
+              "pick_count": 1,
+              "avg_confidence": 7.0,
+              "cappers": [
+                {
+                  "id": "betslam_sam",
+                  "name": "BetSlam with Sam",
+                  "confidence": 7,
+                  "trust": 8.9,
+                  "role": "favorite",
+                  "odds": "+205",
+                  "stake": "",
+                  "reasoning": "Even off her back Dern threatens Robertson, and Sam calls +205 a decent number for the submission.",
+                  "video_url": "https://www.youtube.com/watch?v=Kzsm8s6hlgQ"
+                }
+              ]
+            },
+            {
+              "selection": "Gillian Robertson by decision",
+              "consensus_pct": 18.3,
+              "weight": 5.52,
+              "pick_count": 1,
+              "avg_confidence": 6.0,
+              "cappers": [
+                {
+                  "id": "mma_husky_hustler",
+                  "name": "MMA Husky Hustler",
+                  "confidence": 6,
+                  "trust": 9.2,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Robertson's steady pressure and composure should let her edge the positional battles and bank control time over five rounds without giving Dern openings.",
+                  "video_url": "https://www.youtube.com/watch?v=AncCSMm5apQ"
+                }
+              ]
+            },
+            {
+              "selection": "Mackenzie Dern by KO/TKO in round 4",
+              "consensus_pct": 15.1,
+              "weight": 4.55,
+              "pick_count": 1,
+              "avg_confidence": 7.0,
+              "cappers": [
+                {
+                  "id": "tony_has_died",
+                  "name": "TonyHasDiedMMA",
+                  "confidence": 7,
+                  "trust": 6.5,
+                  "role": "favorite",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Dern is better everywhere: good takedown defense, improved striking and elite jiu-jitsu, while Robertson is one-dimensional with abysmal striking, and Robertson is only a +190 dog.",
+                  "video_url": "https://www.youtube.com/watch?v=mlVG4gepZ9Y"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bet_type": "over_under",
+          "label": "Over / Under",
+          "total_weight": 10.38,
+          "pick_count": 2,
+          "options": [
+            {
+              "selection": "Under 3.5 rounds",
+              "consensus_pct": 51.4,
+              "weight": 5.34,
+              "pick_count": 1,
+              "avg_confidence": 6.0,
+              "cappers": [
+                {
+                  "id": "betslam_sam",
+                  "name": "BetSlam with Sam",
+                  "confidence": 6,
+                  "trust": 8.9,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Sam has taken the under expecting Dern to finish, likely by submission.",
+                  "video_url": "https://www.youtube.com/watch?v=Kzsm8s6hlgQ"
+                }
+              ]
+            },
+            {
+              "selection": "Over 3.5 rounds",
+              "consensus_pct": 48.6,
+              "weight": 5.04,
+              "pick_count": 1,
+              "avg_confidence": 6.0,
+              "cappers": [
+                {
+                  "id": "kenny_okoye_mma",
+                  "name": "KennyOkoyeMMA",
+                  "confidence": 6,
+                  "trust": 8.4,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Robertson's plan to hold Dern down won't work as Dern's defensive grappling forces scrambles; neither has finishing ability since their grappling cancels out.",
+                  "video_url": "https://www.youtube.com/watch?v=DkINV1b3wvQ"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -741,32 +1112,54 @@
       "display": "Edson Barboza vs Esteban Ribovic",
       "fighter_a": "Edson Barboza",
       "fighter_b": "Esteban Ribovics",
-      "pick_count": 8,
-      "capper_count": 5,
+      "pick_count": 13,
+      "capper_count": 9,
       "markets": [
         {
           "bet_type": "moneyline",
           "label": "Moneyline",
-          "total_weight": 10.49,
-          "pick_count": 3,
+          "total_weight": 23.86,
+          "pick_count": 5,
           "options": [
             {
               "selection": "Esteban Ribovics",
               "consensus_pct": 100.0,
-              "weight": 10.49,
-              "pick_count": 3,
-              "avg_confidence": 6.7,
+              "weight": 23.86,
+              "pick_count": 5,
+              "avg_confidence": 6.6,
               "cappers": [
                 {
                   "id": "betslam_sam",
                   "name": "BetSlam with Sam",
                   "confidence": 7,
-                  "trust": 5.7,
+                  "trust": 8.9,
                   "role": "favorite",
                   "odds": "-550",
                   "stake": "",
                   "reasoning": "He already bet the Ribovics moneyline around -400; Ribovics is young, insanely tough and high volume while Barboza is old, washed and coming off eye surgery.",
                   "video_url": "https://www.youtube.com/watch?v=Kzsm8s6hlgQ"
+                },
+                {
+                  "id": "axel_mma",
+                  "name": "Axel MMA",
+                  "confidence": 7,
+                  "trust": 8.7,
+                  "role": "favorite",
+                  "odds": "-550",
+                  "stake": "",
+                  "reasoning": "Barboza is on a three-fight losing skid and Ribovics's forward pressure and gunslinging boxing will be too much.",
+                  "video_url": "https://www.youtube.com/watch?v=9SlcNEqV9CE"
+                },
+                {
+                  "id": "kenny_okoye_mma",
+                  "name": "KennyOkoyeMMA",
+                  "confidence": 6,
+                  "trust": 8.4,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Barboza starts well but as the fight elongates it favors Ribovics, who lets his hands go and may win the last two rounds or finish.",
+                  "video_url": "https://www.youtube.com/watch?v=DkINV1b3wvQ"
                 },
                 {
                   "id": "we_want_picks",
@@ -797,21 +1190,32 @@
         {
           "bet_type": "method_of_victory",
           "label": "Method of Victory",
-          "total_weight": 13.99,
-          "pick_count": 4,
+          "total_weight": 36.05,
+          "pick_count": 7,
           "options": [
             {
               "selection": "Esteban Ribovics by KO/TKO",
-              "consensus_pct": 67.8,
-              "weight": 9.49,
-              "pick_count": 3,
-              "avg_confidence": 6.0,
+              "consensus_pct": 87.5,
+              "weight": 31.55,
+              "pick_count": 6,
+              "avg_confidence": 6.3,
               "cappers": [
+                {
+                  "id": "mma_odds_breaker_adam",
+                  "name": "MMA OddsBreaker (Adam)",
+                  "confidence": 8,
+                  "trust": 8.5,
+                  "role": "favorite",
+                  "odds": "-500",
+                  "stake": "",
+                  "reasoning": "Barboza is a longtime favorite of Adam's but his chin is completely gone; Adam calls it an easy pick for a quick, brutal first-round knockout.",
+                  "video_url": "https://www.youtube.com/watch?v=KIn4mpXQwBw"
+                },
                 {
                   "id": "betslam_sam",
                   "name": "BetSlam with Sam",
                   "confidence": 7,
-                  "trust": 5.7,
+                  "trust": 8.9,
                   "role": "favorite",
                   "odds": "",
                   "stake": "",
@@ -819,15 +1223,37 @@
                   "video_url": "https://www.youtube.com/watch?v=mVRby_GHCRo"
                 },
                 {
+                  "id": "mma_husky_hustler",
+                  "name": "MMA Husky Hustler",
+                  "confidence": 6,
+                  "trust": 9.2,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Barboza's striking will shine at times, but Ribovics' pace and constant forward pressure should swing momentum and create the bigger shots.",
+                  "video_url": "https://www.youtube.com/watch?v=AncCSMm5apQ"
+                },
+                {
                   "id": "artem_mma",
                   "name": "Artem MMA",
                   "confidence": 6,
-                  "trust": 5.0,
+                  "trust": 8.8,
                   "role": "unknown",
                   "odds": "",
                   "stake": "",
                   "reasoning": "Ribovics' pressure, volume and power should overwhelm a 40-year-old Barboza who has taken a lot of damage; no specific round given since it could come in any of the three.",
                   "video_url": "https://www.youtube.com/watch?v=r1vAvvZ7-0o"
+                },
+                {
+                  "id": "axel_mma",
+                  "name": "Axel MMA",
+                  "confidence": 6,
+                  "trust": 8.7,
+                  "role": "favorite",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "He expects Ribovics to walk Barboza down, cut off the cage and touch his chin for a relatively easy knockout.",
+                  "video_url": "https://www.youtube.com/watch?v=9SlcNEqV9CE"
                 },
                 {
                   "id": "livid_larry",
@@ -844,7 +1270,7 @@
             },
             {
               "selection": "Esteban Ribovics by decision",
-              "consensus_pct": 32.2,
+              "consensus_pct": 12.5,
               "weight": 4.5,
               "pick_count": 1,
               "avg_confidence": 6.0,
@@ -867,13 +1293,13 @@
         {
           "bet_type": "over_under",
           "label": "Over / Under",
-          "total_weight": 3.42,
+          "total_weight": 5.34,
           "pick_count": 1,
           "options": [
             {
               "selection": "Over 1.5 rounds",
               "consensus_pct": 100.0,
-              "weight": 3.42,
+              "weight": 5.34,
               "pick_count": 1,
               "avg_confidence": 6.0,
               "cappers": [
@@ -881,7 +1307,7 @@
                   "id": "betslam_sam",
                   "name": "BetSlam with Sam",
                   "confidence": 6,
-                  "trust": 5.7,
+                  "trust": 8.9,
                   "role": "unknown",
                   "odds": "",
                   "stake": "",
@@ -895,26 +1321,923 @@
       ]
     },
     {
-      "fight_id": "malik|stoltzfus",
-      "display": "Mansour Abdul-Malik vs Dustin Stoltzfu",
-      "fighter_a": "Mansour Abdul-Malik",
-      "fighter_b": "Dustin Stoltzfus",
-      "pick_count": 8,
-      "capper_count": 5,
+      "fight_id": "johnson|mcconico",
+      "display": "Dante Johnson vs Eric McConico",
+      "fighter_a": "Dante Johnson",
+      "fighter_b": "Eric McConico",
+      "pick_count": 12,
+      "capper_count": 9,
       "markets": [
         {
           "bet_type": "moneyline",
           "label": "Moneyline",
-          "total_weight": 14.05,
-          "pick_count": 4,
+          "total_weight": 19.34,
+          "pick_count": 5,
           "options": [
             {
-              "selection": "Mansour Abdul-Malik",
-              "consensus_pct": 100.0,
-              "weight": 14.05,
+              "selection": "Eric McConico",
+              "consensus_pct": 67.1,
+              "weight": 12.98,
+              "pick_count": 3,
+              "avg_confidence": 6.3,
+              "cappers": [
+                {
+                  "id": "axel_mma",
+                  "name": "Axel MMA",
+                  "confidence": 6,
+                  "trust": 8.7,
+                  "role": "underdog",
+                  "odds": "+186",
+                  "stake": "",
+                  "reasoning": "McConico is more technical with height and reach, better from range, and should stop most of Johnson's takedowns while picking him apart.",
+                  "video_url": "https://www.youtube.com/watch?v=9SlcNEqV9CE"
+                },
+                {
+                  "id": "betslam_sam",
+                  "name": "BetSlam with Sam",
+                  "confidence": 7,
+                  "trust": 6.8,
+                  "role": "underdog",
+                  "odds": "+195",
+                  "stake": "1u",
+                  "reasoning": "Attacking a wide line — not because McConico is great, but Johnson looks poor in extended fights at 185 with his small frame.",
+                  "video_url": "https://www.youtube.com/watch?v=Kzsm8s6hlgQ"
+                },
+                {
+                  "id": "we_want_picks",
+                  "name": "We Want Picks (Jacob)",
+                  "confidence": 6,
+                  "trust": 5.0,
+                  "role": "underdog",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Jacob says McConico is the better, more technical fighter with better takedown and submission defense, while Dante's striking is sloppy and gas tank questionable; he bet him.",
+                  "video_url": "https://www.youtube.com/watch?v=i3kCMoEgBRE"
+                }
+              ]
+            },
+            {
+              "selection": "Dante Johnson",
+              "consensus_pct": 32.9,
+              "weight": 6.36,
+              "pick_count": 2,
+              "avg_confidence": 5.0,
+              "cappers": [
+                {
+                  "id": "kenny_okoye_mma",
+                  "name": "KennyOkoyeMMA",
+                  "confidence": 4,
+                  "trust": 8.4,
+                  "role": "favorite",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Coin-flip fight; went with the safe pick as Johnson is scrappier, even though he thinks Johnson is overrated.",
+                  "video_url": "https://www.youtube.com/watch?v=DkINV1b3wvQ"
+                },
+                {
+                  "id": "we_want_picks",
+                  "name": "We Want Picks (Jacob)",
+                  "confidence": 6,
+                  "trust": 5.0,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Neither man has a clean UFC win, but based on potential, regional wins and power Johnson is the better fighter right now and should have the performance people have been expecting; odds are fine.",
+                  "video_url": "https://www.youtube.com/watch?v=YIYbz6nEsiE"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bet_type": "method_of_victory",
+          "label": "Method of Victory",
+          "total_weight": 23.39,
+          "pick_count": 6,
+          "options": [
+            {
+              "selection": "Dante Johnson by KO/TKO",
+              "consensus_pct": 65.4,
+              "weight": 15.29,
               "pick_count": 4,
+              "avg_confidence": 4.8,
+              "cappers": [
+                {
+                  "id": "mma_husky_hustler",
+                  "name": "MMA Husky Hustler",
+                  "confidence": 6,
+                  "trust": 9.2,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Interested in Johnson's finishing potential; his speed and early aggression should find the opening even if McConico has moments in the clinch.",
+                  "video_url": "https://www.youtube.com/watch?v=AncCSMm5apQ"
+                },
+                {
+                  "id": "mma_odds_breaker_adam",
+                  "name": "MMA OddsBreaker (Adam)",
+                  "confidence": 5,
+                  "trust": 8.5,
+                  "role": "favorite",
+                  "odds": "-210",
+                  "stake": "",
+                  "reasoning": "Adam takes Johnson by knockout but says he isn't convinced and wouldn't be shocked if Johnson dropped an ugly decision after his close fight with Brundage.",
+                  "video_url": "https://www.youtube.com/watch?v=KIn4mpXQwBw"
+                },
+                {
+                  "id": "artem_mma",
+                  "name": "Artem MMA",
+                  "confidence": 4,
+                  "trust": 8.8,
+                  "role": "favorite",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Johnson's boxing is his real skill set and McConico hates being backed up and hit; the worry is Johnson's terrible fight IQ leading him to wrestle again.",
+                  "video_url": "https://www.youtube.com/watch?v=r1vAvvZ7-0o"
+                },
+                {
+                  "id": "livid_larry",
+                  "name": "Livid Larry MMA",
+                  "confidence": 4,
+                  "trust": 5.0,
+                  "role": "favorite",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Johnson's explosiveness, power and speed should matter in the striking exchanges and get an early finish, but McConico is the more technical guy and very live as a dog; low to mid confidence.",
+                  "video_url": "https://www.youtube.com/watch?v=cG8f50JIxWY"
+                }
+              ]
+            },
+            {
+              "selection": "Eric McConico by decision",
+              "consensus_pct": 34.6,
+              "weight": 8.1,
+              "pick_count": 2,
+              "avg_confidence": 5.0,
+              "cappers": [
+                {
+                  "id": "axel_mma",
+                  "name": "Axel MMA",
+                  "confidence": 5,
+                  "trust": 8.7,
+                  "role": "underdog",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "He expects McConico to win, most likely by decision, though a late third-round finish is possible.",
+                  "video_url": "https://www.youtube.com/watch?v=9SlcNEqV9CE"
+                },
+                {
+                  "id": "tony_has_died",
+                  "name": "TonyHasDiedMMA",
+                  "confidence": 5,
+                  "trust": 7.5,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "McConico has good takedown defense and is strong in early rounds, which is Johnson's only window to win; expects a decision, maybe a split.",
+                  "video_url": "https://www.youtube.com/watch?v=mlVG4gepZ9Y"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bet_type": "round",
+          "label": "Round",
+          "total_weight": 5.34,
+          "pick_count": 1,
+          "options": [
+            {
+              "selection": "Dante Johnson in round 1 by KO",
+              "consensus_pct": 100.0,
+              "weight": 5.34,
+              "pick_count": 1,
               "avg_confidence": 6.0,
               "cappers": [
+                {
+                  "id": "betslam_sam",
+                  "name": "BetSlam with Sam",
+                  "confidence": 6,
+                  "trust": 8.9,
+                  "role": "favorite",
+                  "odds": "+350",
+                  "stake": "",
+                  "reasoning": "Happy to play both sides: Johnson's fastest, most dangerous path is an early KO, so +350 for round one is worth it.",
+                  "video_url": "https://www.youtube.com/watch?v=Kzsm8s6hlgQ"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "fight_id": "fernando|tobias",
+      "display": "Lucas Fernando vs Raphael Tobia",
+      "fighter_a": "Lucas Fernando",
+      "fighter_b": "Raphael Tobias",
+      "pick_count": 11,
+      "capper_count": 9,
+      "markets": [
+        {
+          "bet_type": "moneyline",
+          "label": "Moneyline",
+          "total_weight": 10.9,
+          "pick_count": 3,
+          "options": [
+            {
+              "selection": "Lucas Fernando",
+              "consensus_pct": 100.0,
+              "weight": 10.9,
+              "pick_count": 3,
+              "avg_confidence": 4.7,
+              "cappers": [
+                {
+                  "id": "axel_mma",
+                  "name": "Axel MMA",
+                  "confidence": 6,
+                  "trust": 8.7,
+                  "role": "favorite",
+                  "odds": "-280",
+                  "stake": "",
+                  "reasoning": "Fernando has slick Muay Thai with heavy calf kicks and should stop Tobias's pressure and takedowns to pick him apart standing.",
+                  "video_url": "https://www.youtube.com/watch?v=9SlcNEqV9CE"
+                },
+                {
+                  "id": "kenny_okoye_mma",
+                  "name": "KennyOkoyeMMA",
+                  "confidence": 4,
+                  "trust": 8.4,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Fernando has power and grappling, and he doesn't trust Tobias after a poor last performance; admits he didn't research much.",
+                  "video_url": "https://www.youtube.com/watch?v=DkINV1b3wvQ"
+                },
+                {
+                  "id": "we_want_picks",
+                  "name": "We Want Picks (Jacob)",
+                  "confidence": 4,
+                  "trust": 5.8,
+                  "role": "favorite",
+                  "odds": "-300",
+                  "stake": "",
+                  "reasoning": "Both like Fernando's striking, length and athleticism over Tobias's brute-force grappling, but at -300 in a UFC debut they are picking him without betting the moneyline.",
+                  "video_url": "https://www.youtube.com/watch?v=i3kCMoEgBRE"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bet_type": "method_of_victory",
+          "label": "Method of Victory",
+          "total_weight": 28.13,
+          "pick_count": 6,
+          "options": [
+            {
+              "selection": "Lucas Fernando by KO",
+              "consensus_pct": 61.6,
+              "weight": 17.33,
+              "pick_count": 4,
+              "avg_confidence": 5.5,
+              "cappers": [
+                {
+                  "id": "betslam_sam",
+                  "name": "BetSlam with Sam",
+                  "confidence": 7,
+                  "trust": 8.9,
+                  "role": "unknown",
+                  "odds": "+125",
+                  "stake": "1.25u",
+                  "reasoning": "Fernando is big, fast, 6'3 with 81.5in reach, believing in his hands after recent KOs, while Tobias looked lost when he couldn't get the fight down.",
+                  "video_url": "https://www.youtube.com/watch?v=Kzsm8s6hlgQ"
+                },
+                {
+                  "id": "mma_odds_breaker_adam",
+                  "name": "MMA OddsBreaker (Adam)",
+                  "confidence": 6,
+                  "trust": 8.5,
+                  "role": "favorite",
+                  "odds": "-310",
+                  "stake": "",
+                  "reasoning": "Tobias looked awful and not UFC-ready in his debut, so Adam takes Fernando to win by TKO.",
+                  "video_url": "https://www.youtube.com/watch?v=KIn4mpXQwBw"
+                },
+                {
+                  "id": "tony_has_died",
+                  "name": "TonyHasDiedMMA",
+                  "confidence": 6,
+                  "trust": 7.5,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Fernando is a massive LFA double champion with power and better level of competition, and Tobias struggles on the feet and plods around, so he expects a first-round knockout.",
+                  "video_url": "https://www.youtube.com/watch?v=mlVG4gepZ9Y"
+                },
+                {
+                  "id": "livid_larry",
+                  "name": "Livid Larry MMA",
+                  "confidence": 3,
+                  "trust": 5.0,
+                  "role": "favorite",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Thinks the fight should be even odds and Tobias is value, but ultimately Fernando is the more complete, technical and versatile striker; explicitly a low confidence pick.",
+                  "video_url": "https://www.youtube.com/watch?v=cG8f50JIxWY"
+                }
+              ]
+            },
+            {
+              "selection": "Lucas Fernando by decision",
+              "consensus_pct": 19.6,
+              "weight": 5.52,
+              "pick_count": 1,
+              "avg_confidence": 6.0,
+              "cappers": [
+                {
+                  "id": "mma_husky_hustler",
+                  "name": "MMA Husky Hustler",
+                  "confidence": 6,
+                  "trust": 9.2,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Tobias will make it physical, but Fernando's composure and ability to fight at different ranges should let him bank rounds.",
+                  "video_url": "https://www.youtube.com/watch?v=AncCSMm5apQ"
+                }
+              ]
+            },
+            {
+              "selection": "Lucas Fernando by finish in round 1",
+              "consensus_pct": 18.8,
+              "weight": 5.28,
+              "pick_count": 1,
+              "avg_confidence": 6.0,
+              "cappers": [
+                {
+                  "id": "artem_mma",
+                  "name": "Artem MMA",
+                  "confidence": 6,
+                  "trust": 8.8,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Fernando's speed, power and investment in the body and legs will overwhelm Tobias, who he thinks is stiff, unathletic and simply not good.",
+                  "video_url": "https://www.youtube.com/watch?v=r1vAvvZ7-0o"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bet_type": "round",
+          "label": "Round",
+          "total_weight": 8.82,
+          "pick_count": 2,
+          "options": [
+            {
+              "selection": "Lucas Fernando in round 1 by KO",
+              "consensus_pct": 60.5,
+              "weight": 5.34,
+              "pick_count": 1,
+              "avg_confidence": 6.0,
+              "cappers": [
+                {
+                  "id": "betslam_sam",
+                  "name": "BetSlam with Sam",
+                  "confidence": 6,
+                  "trust": 8.9,
+                  "role": "unknown",
+                  "odds": "+350",
+                  "stake": "",
+                  "reasoning": "Thinks Tobias gets overwhelmed by the speed early, so he's writing down the round one KO too.",
+                  "video_url": "https://www.youtube.com/watch?v=Kzsm8s6hlgQ"
+                }
+              ]
+            },
+            {
+              "selection": "Lucas Fernando in round 2",
+              "consensus_pct": 39.5,
+              "weight": 3.48,
+              "pick_count": 1,
+              "avg_confidence": 4.0,
+              "cappers": [
+                {
+                  "id": "axel_mma",
+                  "name": "Axel MMA",
+                  "confidence": 4,
+                  "trust": 8.7,
+                  "role": "favorite",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "He feels Fernando can find a finish, calling it a second-round finish.",
+                  "video_url": "https://www.youtube.com/watch?v=9SlcNEqV9CE"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "fight_id": "alvarez|njokuani",
+      "display": "Joel Alvarez vs Chidi Njokuani",
+      "fighter_a": "Joel Alvarez",
+      "fighter_b": "Chidi Njokuani",
+      "pick_count": 10,
+      "capper_count": 9,
+      "markets": [
+        {
+          "bet_type": "moneyline",
+          "label": "Moneyline",
+          "total_weight": 12.02,
+          "pick_count": 3,
+          "options": [
+            {
+              "selection": "Joel Alvarez",
+              "consensus_pct": 100.0,
+              "weight": 12.02,
+              "pick_count": 3,
+              "avg_confidence": 5.7,
+              "cappers": [
+                {
+                  "id": "kenny_okoye_mma",
+                  "name": "KennyOkoyeMMA",
+                  "confidence": 6,
+                  "trust": 8.4,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Njokuani is aging and hittable; Alvarez can outpoint him in a closer-than-expected striking match.",
+                  "video_url": "https://www.youtube.com/watch?v=DkINV1b3wvQ"
+                },
+                {
+                  "id": "we_want_picks",
+                  "name": "We Want Picks (Jacob)",
+                  "confidence": 7,
+                  "trust": 5.0,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Alvarez's fatal flaw is takedown defense and Njokuani never wrestles, so Alvarez gets the long-range striking match he wants against a hesitant opponent.",
+                  "video_url": "https://www.youtube.com/watch?v=YIYbz6nEsiE"
+                },
+                {
+                  "id": "axel_mma",
+                  "name": "Axel MMA",
+                  "confidence": 4,
+                  "trust": 8.7,
+                  "role": "favorite",
+                  "odds": "-270",
+                  "stake": "",
+                  "reasoning": "Slight lean to Alvarez because his ground game is better; striking is close but the grappling should be the deciding factor.",
+                  "video_url": "https://www.youtube.com/watch?v=9SlcNEqV9CE"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bet_type": "method_of_victory",
+          "label": "Method of Victory",
+          "total_weight": 36.0,
+          "pick_count": 7,
+          "options": [
+            {
+              "selection": "Joel Alvarez by submission or ground-and-pound TKO",
+              "consensus_pct": 40.6,
+              "weight": 14.6,
+              "pick_count": 3,
+              "avg_confidence": 7.0,
+              "cappers": [
+                {
+                  "id": "tony_has_died",
+                  "name": "TonyHasDiedMMA",
+                  "confidence": 8,
+                  "trust": 7.5,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Alvarez has a ~95% finish rate and is dangerous everywhere; Njokuani can't grapple and got hit repeatedly by lesser strikers like Carlos Leal.",
+                  "video_url": "https://www.youtube.com/watch?v=mlVG4gepZ9Y"
+                },
+                {
+                  "id": "mma_odds_breaker_adam",
+                  "name": "MMA OddsBreaker (Adam)",
+                  "confidence": 6,
+                  "trust": 8.5,
+                  "role": "favorite",
+                  "odds": "-240",
+                  "stake": "",
+                  "reasoning": "Adam thinks Njokuani is done, heading for a third straight loss, and that Alvarez knocks him out.",
+                  "video_url": "https://www.youtube.com/watch?v=KIn4mpXQwBw"
+                },
+                {
+                  "id": "livid_larry",
+                  "name": "Livid Larry MMA",
+                  "confidence": 7,
+                  "trust": 5.0,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Njokuani has a poor record against grapplers and Alvarez has a huge grappling advantage; if he uses the wrestling he could finish early in round one or two.",
+                  "video_url": "https://www.youtube.com/watch?v=cG8f50JIxWY"
+                }
+              ]
+            },
+            {
+              "selection": "Joel Alvarez by submission (round 1 or 2)",
+              "consensus_pct": 39.7,
+              "weight": 14.28,
+              "pick_count": 3,
+              "avg_confidence": 5.3,
+              "cappers": [
+                {
+                  "id": "mma_husky_hustler",
+                  "name": "MMA Husky Hustler",
+                  "confidence": 6,
+                  "trust": 9.2,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "If Alvarez can get past Njokuani's striking and force grappling exchanges, his submission game from unusual positions eventually takes over.",
+                  "video_url": "https://www.youtube.com/watch?v=AncCSMm5apQ"
+                },
+                {
+                  "id": "artem_mma",
+                  "name": "Artem MMA",
+                  "confidence": 6,
+                  "trust": 8.8,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Njokuani is a striker who struggles badly once the fight hits the mat and has a poor get-up game, while Alvarez is a prolific early submission finisher.",
+                  "video_url": "https://www.youtube.com/watch?v=r1vAvvZ7-0o"
+                },
+                {
+                  "id": "axel_mma",
+                  "name": "Axel MMA",
+                  "confidence": 4,
+                  "trust": 8.7,
+                  "role": "favorite",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Njokuani has been submitted recently (Jake Matthews) and Alvarez should blitz then find takedowns into a submission.",
+                  "video_url": "https://www.youtube.com/watch?v=9SlcNEqV9CE"
+                }
+              ]
+            },
+            {
+              "selection": "Joel Alvarez inside the distance",
+              "consensus_pct": 19.8,
+              "weight": 7.12,
+              "pick_count": 1,
+              "avg_confidence": 8.0,
+              "cappers": [
+                {
+                  "id": "betslam_sam",
+                  "name": "BetSlam with Sam",
+                  "confidence": 8,
+                  "trust": 8.9,
+                  "role": "favorite",
+                  "odds": "-140",
+                  "stake": "",
+                  "reasoning": "Njokuani can be backed up and outboxed, Alvarez has 22 of 23 wins by finish and big submission upside, so Sam takes ITD at -140 rather than the -250 moneyline.",
+                  "video_url": "https://www.youtube.com/watch?v=Kzsm8s6hlgQ"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "fight_id": "brahimaj|magny",
+      "display": "Ramiz Brahimaj vs Neil Magny",
+      "fighter_a": "Ramiz Brahimaj",
+      "fighter_b": "Neil Magny",
+      "pick_count": 16,
+      "capper_count": 8,
+      "markets": [
+        {
+          "bet_type": "moneyline",
+          "label": "Moneyline",
+          "total_weight": 19.32,
+          "pick_count": 5,
+          "options": [
+            {
+              "selection": "Ramiz Brahimaj",
+              "consensus_pct": 63.8,
+              "weight": 12.32,
+              "pick_count": 3,
+              "avg_confidence": 5.7,
+              "cappers": [
+                {
+                  "id": "betslam_sam",
+                  "name": "BetSlam with Sam",
+                  "confidence": 6,
+                  "trust": 8.9,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Magny has seven submission losses and his long limbs make him susceptible to chokes; Brahimaj is younger and a jiu-jitsu specialist.",
+                  "video_url": "https://www.youtube.com/watch?v=mVRby_GHCRo"
+                },
+                {
+                  "id": "we_want_picks",
+                  "name": "We Want Picks (Jacob)",
+                  "confidence": 7,
+                  "trust": 5.0,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Magny is 40 and has been submitted in back-to-back fights while Brahimaj is a submission-or-bust grappler with a clear path to victory; the market is even and 75% of the public is on Magny.",
+                  "video_url": "https://www.youtube.com/watch?v=YIYbz6nEsiE"
+                },
+                {
+                  "id": "axel_mma",
+                  "name": "Axel MMA",
+                  "confidence": 4,
+                  "trust": 8.7,
+                  "role": "favorite",
+                  "odds": "-122",
+                  "stake": "",
+                  "reasoning": "Leans Brahimaj to use forward pressure, pin Magny on the cage and chain takedowns; younger and stronger, though he admits it could be close since Magny is a boogeyman.",
+                  "video_url": "https://www.youtube.com/watch?v=9SlcNEqV9CE"
+                }
+              ]
+            },
+            {
+              "selection": "Neil Magny",
+              "consensus_pct": 36.2,
+              "weight": 7.0,
+              "pick_count": 2,
+              "avg_confidence": 5.5,
+              "cappers": [
+                {
+                  "id": "tony_has_died",
+                  "name": "TonyHasDiedMMA",
+                  "confidence": 6,
+                  "trust": 7.5,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Thinks Brahimaj is overrated with wins only over cans, while Magny has huge height/reach, experience and a grappling edge and can pick him apart off the back foot for a decision.",
+                  "video_url": "https://www.youtube.com/watch?v=mlVG4gepZ9Y"
+                },
+                {
+                  "id": "we_want_picks",
+                  "name": "We Want Picks (Jacob)",
+                  "confidence": 5,
+                  "trust": 5.0,
+                  "role": "underdog",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Jacob takes the dog Magny as the safer pick, saying it's a tailor-made Magny fight where he weathers the early submission threat and wears Brahimaj down for the decision.",
+                  "video_url": "https://www.youtube.com/watch?v=i3kCMoEgBRE"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bet_type": "method_of_victory",
+          "label": "Method of Victory",
+          "total_weight": 34.38,
+          "pick_count": 8,
+          "options": [
+            {
+              "selection": "Ramiz Brahimaj by submission in round 1",
+              "consensus_pct": 58.2,
+              "weight": 20.01,
+              "pick_count": 5,
+              "avg_confidence": 5.4,
+              "cappers": [
+                {
+                  "id": "betslam_sam",
+                  "name": "BetSlam with Sam",
+                  "confidence": 8,
+                  "trust": 8.9,
+                  "role": "unknown",
+                  "odds": "+175",
+                  "stake": "",
+                  "reasoning": "Magny has been submitted repeatedly, often in round one, and Brahimaj has ten first-round submission wins and constantly attacks chokes.",
+                  "video_url": "https://www.youtube.com/watch?v=Kzsm8s6hlgQ"
+                },
+                {
+                  "id": "artem_mma",
+                  "name": "Artem MMA",
+                  "confidence": 6,
+                  "trust": 8.8,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Brahimaj only wins by submission and usually in round one, and Magny has always struggled with submission defense; the fight is either a Brahimaj finish or a Magny decision.",
+                  "video_url": "https://www.youtube.com/watch?v=r1vAvvZ7-0o"
+                },
+                {
+                  "id": "livid_larry",
+                  "name": "Livid Larry MMA",
+                  "confidence": 6,
+                  "trust": 5.0,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Even-odds fight but he favors Brahimaj's explosiveness and quick finishing ability, and Magny has repeatedly gotten into bad grappling spots and been submitted recently.",
+                  "video_url": "https://www.youtube.com/watch?v=cG8f50JIxWY"
+                },
+                {
+                  "id": "axel_mma",
+                  "name": "Axel MMA",
+                  "confidence": 3,
+                  "trust": 8.7,
+                  "role": "favorite",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Thinks Brahimaj keeps Magny on the ground and sinks in some type of submission.",
+                  "video_url": "https://www.youtube.com/watch?v=9SlcNEqV9CE"
+                },
+                {
+                  "id": "we_want_picks",
+                  "name": "We Want Picks (Jacob)",
+                  "confidence": 4,
+                  "trust": 5.0,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "12 of Brahimaj's 13 wins are by submission and Magny has been submitted repeatedly; capper says he'll watch for the prop when it drops and take a shot at it.",
+                  "video_url": "https://www.youtube.com/watch?v=YIYbz6nEsiE"
+                }
+              ]
+            },
+            {
+              "selection": "Neil Magny by decision",
+              "consensus_pct": 41.8,
+              "weight": 14.37,
+              "pick_count": 3,
+              "avg_confidence": 5.7,
+              "cappers": [
+                {
+                  "id": "mma_husky_hustler",
+                  "name": "MMA Husky Hustler",
+                  "confidence": 6,
+                  "trust": 9.2,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Magny should make Brahimaj chase, disrupt his entries and use his length and experience to control where the fight takes place, though he must be disciplined against the submission game.",
+                  "video_url": "https://www.youtube.com/watch?v=AncCSMm5apQ"
+                },
+                {
+                  "id": "mma_odds_breaker_adam",
+                  "name": "MMA OddsBreaker (Adam)",
+                  "confidence": 6,
+                  "trust": 8.5,
+                  "role": "underdog",
+                  "odds": "+105",
+                  "stake": "",
+                  "reasoning": "Adam thinks Magny can do what he's done for 15 years and win an ugly, nasty decision.",
+                  "video_url": "https://www.youtube.com/watch?v=KIn4mpXQwBw"
+                },
+                {
+                  "id": "tony_has_died",
+                  "name": "TonyHasDiedMMA",
+                  "confidence": 5,
+                  "trust": 7.5,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Expects Magny to keep it standing, use his length and win rounds on the outside rather than finish.",
+                  "video_url": "https://www.youtube.com/watch?v=mlVG4gepZ9Y"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bet_type": "over_under",
+          "label": "Over / Under",
+          "total_weight": 3.56,
+          "pick_count": 1,
+          "options": [
+            {
+              "selection": "Under 2.5 rounds",
+              "consensus_pct": 100.0,
+              "weight": 3.56,
+              "pick_count": 1,
+              "avg_confidence": 4.0,
+              "cappers": [
+                {
+                  "id": "betslam_sam",
+                  "name": "BetSlam with Sam",
+                  "confidence": 4,
+                  "trust": 8.9,
+                  "role": "unknown",
+                  "odds": "-153",
+                  "stake": "",
+                  "reasoning": "Lists it as a decent price prop to target given he expects an early submission.",
+                  "video_url": "https://www.youtube.com/watch?v=Kzsm8s6hlgQ"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bet_type": "round",
+          "label": "Round",
+          "total_weight": 9.23,
+          "pick_count": 2,
+          "options": [
+            {
+              "selection": "Ramiz Brahimaj in round 1",
+              "consensus_pct": 100.0,
+              "weight": 9.23,
+              "pick_count": 2,
+              "avg_confidence": 6.5,
+              "cappers": [
+                {
+                  "id": "betslam_sam",
+                  "name": "BetSlam with Sam",
+                  "confidence": 7,
+                  "trust": 8.9,
+                  "role": "unknown",
+                  "odds": "+350",
+                  "stake": "",
+                  "reasoning": "Expects Brahimaj to rush the guillotine/front choke early against a fighter who gets into precarious positions in the first round.",
+                  "video_url": "https://www.youtube.com/watch?v=Kzsm8s6hlgQ"
+                },
+                {
+                  "id": "we_want_picks",
+                  "name": "We Want Picks (Jacob)",
+                  "confidence": 6,
+                  "trust": 5.0,
+                  "role": "underdog",
+                  "odds": "+350",
+                  "stake": "",
+                  "reasoning": "Jacob says he will definitely have action on Brahimaj early — first or second round submission — since Brahimaj chases the guillotine relentlessly and Magny is lazy with his head position.",
+                  "video_url": "https://www.youtube.com/watch?v=i3kCMoEgBRE"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "fight_id": "malik|stoltzfus",
+      "display": "Mansour Abdul-Malik vs Dustin Stoltzfu",
+      "fighter_a": "Mansour Abdul-Malik",
+      "fighter_b": "Dustin Stoltzfus",
+      "pick_count": 12,
+      "capper_count": 8,
+      "markets": [
+        {
+          "bet_type": "moneyline",
+          "label": "Moneyline",
+          "total_weight": 29.13,
+          "pick_count": 6,
+          "options": [
+            {
+              "selection": "Mansur Abdul-Malik",
+              "consensus_pct": 100.0,
+              "weight": 29.13,
+              "pick_count": 6,
+              "avg_confidence": 6.5,
+              "cappers": [
+                {
+                  "id": "axel_mma",
+                  "name": "Axel MMA",
+                  "confidence": 8,
+                  "trust": 8.7,
+                  "role": "favorite",
+                  "odds": "-650",
+                  "stake": "",
+                  "reasoning": "Abdul-Malik is far better on the feet and Stoltzfus's striking is unimpressive; should be an easy win.",
+                  "video_url": "https://www.youtube.com/watch?v=9SlcNEqV9CE"
+                },
+                {
+                  "id": "betslam_sam",
+                  "name": "BetSlam with Sam",
+                  "confidence": 7,
+                  "trust": 8.9,
+                  "role": "favorite",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Athletic freak with reach and better wrestling against a middle-of-the-road middleweight; expects him to take Stoltzfus down and smash him early despite the high price.",
+                  "video_url": "https://www.youtube.com/watch?v=mVRby_GHCRo"
+                },
+                {
+                  "id": "kenny_okoye_mma",
+                  "name": "KennyOkoyeMMA",
+                  "confidence": 7,
+                  "trust": 8.4,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Stoltzfus is a soft matchup; Abdul-Malik is the cleaner striker, more athletic, and needs the comeback win.",
+                  "video_url": "https://www.youtube.com/watch?v=DkINV1b3wvQ"
+                },
                 {
                   "id": "we_want_picks",
                   "name": "We Want Picks (Jacob)",
@@ -925,17 +2248,6 @@
                   "stake": "",
                   "reasoning": "Both cappers pick Mansur: Angelo cites a giant grappling gap plus powerful hands and desperation after his TKO loss, while Jacob thinks the striking edge is the difference since Stoltzfus is stationary and hittable.",
                   "video_url": "https://www.youtube.com/watch?v=i3kCMoEgBRE"
-                },
-                {
-                  "id": "betslam_sam",
-                  "name": "BetSlam with Sam",
-                  "confidence": 7,
-                  "trust": 5.7,
-                  "role": "favorite",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "Athletic freak with reach and better wrestling against a middle-of-the-road middleweight; expects him to take Stoltzfus down and smash him early despite the high price.",
-                  "video_url": "https://www.youtube.com/watch?v=mVRby_GHCRo"
                 },
                 {
                   "id": "tony_has_died",
@@ -966,16 +2278,38 @@
         {
           "bet_type": "method_of_victory",
           "label": "Method of Victory",
-          "total_weight": 7.0,
-          "pick_count": 2,
+          "total_weight": 14.8,
+          "pick_count": 3,
           "options": [
             {
               "selection": "Mansur Abdul-Malik by KO/TKO in round 1 or 2",
               "consensus_pct": 100.0,
-              "weight": 7.0,
-              "pick_count": 2,
-              "avg_confidence": 7.0,
+              "weight": 14.8,
+              "pick_count": 3,
+              "avg_confidence": 6.7,
               "cappers": [
+                {
+                  "id": "mma_husky_hustler",
+                  "name": "MMA Husky Hustler",
+                  "confidence": 6,
+                  "trust": 9.2,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Abdul-Malik has too many physical advantages; unless Stoltzfus consistently controls the grappling, Abdul-Malik lands the cleaner, more damaging shots.",
+                  "video_url": "https://www.youtube.com/watch?v=AncCSMm5apQ"
+                },
+                {
+                  "id": "artem_mma",
+                  "name": "Artem MMA",
+                  "confidence": 6,
+                  "trust": 8.8,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Abdul-Malik's power and brutal ground and pound against Stoltzfus' bad chin, poor striking defense and poor takedown defense should equal a knockout.",
+                  "video_url": "https://www.youtube.com/watch?v=r1vAvvZ7-0o"
+                },
                 {
                   "id": "livid_larry",
                   "name": "Livid Larry MMA",
@@ -986,17 +2320,6 @@
                   "stake": "",
                   "reasoning": "Abdul-Malik is better technically on the feet, far more powerful and explosive, and his takedown defense removes Stoltzfus's best weapon; very confident.",
                   "video_url": "https://www.youtube.com/watch?v=cG8f50JIxWY"
-                },
-                {
-                  "id": "artem_mma",
-                  "name": "Artem MMA",
-                  "confidence": 6,
-                  "trust": 5.0,
-                  "role": "unknown",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "Abdul-Malik's power and brutal ground and pound against Stoltzfus' bad chin, poor striking defense and poor takedown defense should equal a knockout.",
-                  "video_url": "https://www.youtube.com/watch?v=r1vAvvZ7-0o"
                 }
               ]
             }
@@ -1005,13 +2328,13 @@
         {
           "bet_type": "over_under",
           "label": "Over / Under",
-          "total_weight": 3.42,
+          "total_weight": 5.34,
           "pick_count": 1,
           "options": [
             {
               "selection": "Under 1.5 rounds",
               "consensus_pct": 100.0,
-              "weight": 3.42,
+              "weight": 5.34,
               "pick_count": 1,
               "avg_confidence": 6.0,
               "cappers": [
@@ -1019,7 +2342,7 @@
                   "id": "betslam_sam",
                   "name": "BetSlam with Sam",
                   "confidence": 6,
-                  "trust": 5.7,
+                  "trust": 8.9,
                   "role": "unknown",
                   "odds": "+135",
                   "stake": "",
@@ -1033,26 +2356,37 @@
         {
           "bet_type": "round",
           "label": "Round",
-          "total_weight": 4.56,
-          "pick_count": 1,
+          "total_weight": 11.47,
+          "pick_count": 2,
           "options": [
             {
-              "selection": "Mansur Abdul-Malik by KO in round 1",
+              "selection": "Mansur Abdul-Malik in round 1",
               "consensus_pct": 100.0,
-              "weight": 4.56,
-              "pick_count": 1,
-              "avg_confidence": 8.0,
+              "weight": 11.47,
+              "pick_count": 2,
+              "avg_confidence": 6.5,
               "cappers": [
                 {
                   "id": "betslam_sam",
                   "name": "BetSlam with Sam",
                   "confidence": 8,
-                  "trust": 5.7,
+                  "trust": 8.9,
                   "role": "favorite",
                   "odds": "+275",
                   "stake": "",
                   "reasoning": "Coming off a loss, Sam expects Abdul-Malik to blow the doors off Stoltzfus early and reassert his athleticism, so round-one KO is the play.",
                   "video_url": "https://www.youtube.com/watch?v=Kzsm8s6hlgQ"
+                },
+                {
+                  "id": "axel_mma",
+                  "name": "Axel MMA",
+                  "confidence": 5,
+                  "trust": 8.7,
+                  "role": "favorite",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "He expects Abdul-Malik to dominate and find an early finish, probably first round.",
+                  "video_url": "https://www.youtube.com/watch?v=9SlcNEqV9CE"
                 }
               ]
             }
@@ -1065,22 +2399,33 @@
       "display": "Charles Johnson vs Jose Ochoa",
       "fighter_a": "Charles Johnson",
       "fighter_b": "Jose Ochoa",
-      "pick_count": 8,
-      "capper_count": 5,
+      "pick_count": 12,
+      "capper_count": 8,
       "markets": [
         {
           "bet_type": "moneyline",
           "label": "Moneyline",
-          "total_weight": 12.25,
-          "pick_count": 4,
+          "total_weight": 19.94,
+          "pick_count": 5,
           "options": [
             {
               "selection": "Jose Ochoa",
-              "consensus_pct": 71.4,
-              "weight": 8.75,
+              "consensus_pct": 51.9,
+              "weight": 10.35,
               "pick_count": 3,
               "avg_confidence": 5.3,
               "cappers": [
+                {
+                  "id": "betslam_sam",
+                  "name": "BetSlam with Sam",
+                  "confidence": 5,
+                  "trust": 8.9,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Ochoa is the younger, active, intense striker with decent takedown defense; sees it as a passing of the torch over the 36-year-old Johnson.",
+                  "video_url": "https://www.youtube.com/watch?v=mVRby_GHCRo"
+                },
                 {
                   "id": "livid_larry",
                   "name": "Livid Larry MMA",
@@ -1102,27 +2447,27 @@
                   "stake": "",
                   "reasoning": "Johnson tends to give away the first round which is fatal in a 15-minute fight, and Ochoa's pressure, volume, power and speed should carry it; capper doesn't love the -335 price.",
                   "video_url": "https://www.youtube.com/watch?v=YIYbz6nEsiE"
-                },
-                {
-                  "id": "betslam_sam",
-                  "name": "BetSlam with Sam",
-                  "confidence": 5,
-                  "trust": 5.7,
-                  "role": "unknown",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "Ochoa is the younger, active, intense striker with decent takedown defense; sees it as a passing of the torch over the 36-year-old Johnson.",
-                  "video_url": "https://www.youtube.com/watch?v=mVRby_GHCRo"
                 }
               ]
             },
             {
               "selection": "Charles Johnson",
-              "consensus_pct": 28.6,
-              "weight": 3.5,
-              "pick_count": 1,
+              "consensus_pct": 48.1,
+              "weight": 9.59,
+              "pick_count": 2,
               "avg_confidence": 7.0,
               "cappers": [
+                {
+                  "id": "axel_mma",
+                  "name": "Axel MMA",
+                  "confidence": 7,
+                  "trust": 8.7,
+                  "role": "underdog",
+                  "odds": "+330",
+                  "stake": "",
+                  "reasoning": "Johnson is the more technical, distance-managing striker and Ochoa fights with his chin raised; the odds are far too wide given Johnson's history of beating prospects.",
+                  "video_url": "https://www.youtube.com/watch?v=9SlcNEqV9CE"
+                },
                 {
                   "id": "we_want_picks",
                   "name": "We Want Picks (Jacob)",
@@ -1141,16 +2486,27 @@
         {
           "bet_type": "method_of_victory",
           "label": "Method of Victory",
-          "total_weight": 14.74,
-          "pick_count": 4,
+          "total_weight": 31.68,
+          "pick_count": 7,
           "options": [
             {
               "selection": "Jose Ochoa by KO/TKO in round 2",
-              "consensus_pct": 72.9,
-              "weight": 10.75,
+              "consensus_pct": 41.1,
+              "weight": 13.03,
               "pick_count": 3,
               "avg_confidence": 6.0,
               "cappers": [
+                {
+                  "id": "artem_mma",
+                  "name": "Artem MMA",
+                  "confidence": 6,
+                  "trust": 8.8,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Ochoa's rare power at 125 will get Johnson's respect, Johnson is coming off a bad KO loss and fighting too often, and he won't offensively wrestle Ochoa.",
+                  "video_url": "https://www.youtube.com/watch?v=r1vAvvZ7-0o"
+                },
                 {
                   "id": "tony_has_died",
                   "name": "TonyHasDiedMMA",
@@ -1161,17 +2517,6 @@
                   "stake": "",
                   "reasoning": "Vowed never to pick Johnson again; Johnson is hittable to the left hook and starts slow, while Ochoa has crisp boxing and in his view beat Alibayev.",
                   "video_url": "https://www.youtube.com/watch?v=mlVG4gepZ9Y"
-                },
-                {
-                  "id": "artem_mma",
-                  "name": "Artem MMA",
-                  "confidence": 6,
-                  "trust": 5.0,
-                  "role": "unknown",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "Ochoa's rare power at 125 will get Johnson's respect, Johnson is coming off a bad KO loss and fighting too often, and he won't offensively wrestle Ochoa.",
-                  "video_url": "https://www.youtube.com/watch?v=r1vAvvZ7-0o"
                 },
                 {
                   "id": "livid_larry",
@@ -1188,597 +2533,72 @@
             },
             {
               "selection": "Jose Ochoa by decision",
-              "consensus_pct": 27.1,
-              "weight": 3.99,
-              "pick_count": 1,
-              "avg_confidence": 7.0,
+              "consensus_pct": 27.7,
+              "weight": 8.78,
+              "pick_count": 2,
+              "avg_confidence": 5.0,
               "cappers": [
                 {
                   "id": "betslam_sam",
                   "name": "BetSlam with Sam",
                   "confidence": 7,
-                  "trust": 5.7,
+                  "trust": 8.9,
                   "role": "favorite",
                   "odds": "+125",
                   "stake": "",
                   "reasoning": "Ochoa should look like the -420 favorite and beat Johnson up badly, but Sam thinks Johnson is durable enough to survive to the scorecards, making decision the better price.",
                   "video_url": "https://www.youtube.com/watch?v=Kzsm8s6hlgQ"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "fight_id": "dern|robertson",
-      "display": "Mackenzie Dern vs Jillian Robertson",
-      "fighter_a": "Mackenzie Dern",
-      "fighter_b": "Jillian Robertson",
-      "pick_count": 8,
-      "capper_count": 5,
-      "markets": [
-        {
-          "bet_type": "moneyline",
-          "label": "Moneyline",
-          "total_weight": 12.21,
-          "pick_count": 3,
-          "options": [
-            {
-              "selection": "Mackenzie Dern",
-              "consensus_pct": 100.0,
-              "weight": 12.21,
-              "pick_count": 3,
-              "avg_confidence": 7.3,
-              "cappers": [
-                {
-                  "id": "we_want_picks",
-                  "name": "We Want Picks (Jacob)",
-                  "confidence": 9,
-                  "trust": 5.8,
-                  "role": "favorite",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "Dern is better everywhere - striking, grappling, even wrestling - and is all-time tough; Robertson has no path without takedowns, and capper says he can't see how she wins.",
-                  "video_url": "https://www.youtube.com/watch?v=YIYbz6nEsiE"
                 },
                 {
-                  "id": "betslam_sam",
-                  "name": "BetSlam with Sam",
-                  "confidence": 7,
-                  "trust": 5.7,
+                  "id": "mma_odds_breaker_adam",
+                  "name": "MMA OddsBreaker (Adam)",
+                  "confidence": 3,
+                  "trust": 8.5,
                   "role": "favorite",
-                  "odds": "-200",
+                  "odds": "-385",
                   "stake": "",
-                  "reasoning": "Dern's jiu-jitsu is significantly better; Robertson was swept twice and nearly triangled by Amanda Lemos.",
-                  "video_url": "https://www.youtube.com/watch?v=Kzsm8s6hlgQ"
-                },
-                {
-                  "id": "livid_larry",
-                  "name": "Livid Larry MMA",
-                  "confidence": 6,
-                  "trust": 5.0,
-                  "role": "unknown",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "Picks Dern in the co-main event.",
-                  "video_url": "https://www.youtube.com/watch?v=_W88avBaqqc"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "bet_type": "method_of_victory",
-          "label": "Method of Victory",
-          "total_weight": 15.04,
-          "pick_count": 4,
-          "options": [
-            {
-              "selection": "Mackenzie Dern by decision",
-              "consensus_pct": 43.2,
-              "weight": 6.5,
-              "pick_count": 2,
-              "avg_confidence": 6.5,
-              "cappers": [
-                {
-                  "id": "livid_larry",
-                  "name": "Livid Larry MMA",
-                  "confidence": 7,
-                  "trust": 5.0,
-                  "role": "favorite",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "Bad stylistic matchup for Robertson: Dern is dangerous on the ground and clearly more technical and dangerous on the feet, so if Robertson can't dominate with wrestling she loses; borderline confident-picks-list addition possibly in a two-legger.",
-                  "video_url": "https://www.youtube.com/watch?v=cG8f50JIxWY"
-                },
-                {
-                  "id": "artem_mma",
-                  "name": "Artem MMA",
-                  "confidence": 6,
-                  "trust": 5.0,
-                  "role": "unknown",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "Dern's improved striking wins the exchanges while the grappling cancels out; as an experienced champ ahead on the cards she won't risk chasing a finish.",
-                  "video_url": "https://www.youtube.com/watch?v=r1vAvvZ7-0o"
+                  "reasoning": "Adam likes Johnson but says he's fighting far too often and got dominated recently; still, he calls the near -400 price a pass and only predicts Ochoa by decision.",
+                  "video_url": "https://www.youtube.com/watch?v=KIn4mpXQwBw"
                 }
               ]
             },
             {
-              "selection": "Mackenzie Dern by KO/TKO in round 4",
-              "consensus_pct": 30.3,
-              "weight": 4.55,
-              "pick_count": 1,
-              "avg_confidence": 7.0,
-              "cappers": [
-                {
-                  "id": "tony_has_died",
-                  "name": "TonyHasDiedMMA",
-                  "confidence": 7,
-                  "trust": 6.5,
-                  "role": "favorite",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "Dern is better everywhere: good takedown defense, improved striking and elite jiu-jitsu, while Robertson is one-dimensional with abysmal striking, and Robertson is only a +190 dog.",
-                  "video_url": "https://www.youtube.com/watch?v=mlVG4gepZ9Y"
-                }
-              ]
-            },
-            {
-              "selection": "Mackenzie Dern by submission",
-              "consensus_pct": 26.5,
-              "weight": 3.99,
-              "pick_count": 1,
-              "avg_confidence": 7.0,
-              "cappers": [
-                {
-                  "id": "betslam_sam",
-                  "name": "BetSlam with Sam",
-                  "confidence": 7,
-                  "trust": 5.7,
-                  "role": "favorite",
-                  "odds": "+205",
-                  "stake": "",
-                  "reasoning": "Even off her back Dern threatens Robertson, and Sam calls +205 a decent number for the submission.",
-                  "video_url": "https://www.youtube.com/watch?v=Kzsm8s6hlgQ"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "bet_type": "over_under",
-          "label": "Over / Under",
-          "total_weight": 3.42,
-          "pick_count": 1,
-          "options": [
-            {
-              "selection": "Under 3.5 rounds",
-              "consensus_pct": 100.0,
-              "weight": 3.42,
+              "selection": "Charles Johnson by decision",
+              "consensus_pct": 17.4,
+              "weight": 5.52,
               "pick_count": 1,
               "avg_confidence": 6.0,
               "cappers": [
                 {
-                  "id": "betslam_sam",
-                  "name": "BetSlam with Sam",
+                  "id": "mma_husky_hustler",
+                  "name": "MMA Husky Hustler",
                   "confidence": 6,
-                  "trust": 5.7,
+                  "trust": 9.2,
                   "role": "unknown",
                   "odds": "",
                   "stake": "",
-                  "reasoning": "Sam has taken the under expecting Dern to finish, likely by submission.",
-                  "video_url": "https://www.youtube.com/watch?v=Kzsm8s6hlgQ"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "fight_id": "johnson|mcconico",
-      "display": "Dante Johnson vs Eric McConico",
-      "fighter_a": "Dante Johnson",
-      "fighter_b": "Eric McConico",
-      "pick_count": 7,
-      "capper_count": 5,
-      "markets": [
-        {
-          "bet_type": "moneyline",
-          "label": "Moneyline",
-          "total_weight": 10.76,
-          "pick_count": 3,
-          "options": [
-            {
-              "selection": "Eric McConico",
-              "consensus_pct": 72.1,
-              "weight": 7.76,
-              "pick_count": 2,
-              "avg_confidence": 6.5,
-              "cappers": [
-                {
-                  "id": "betslam_sam",
-                  "name": "BetSlam with Sam",
-                  "confidence": 7,
-                  "trust": 6.8,
-                  "role": "underdog",
-                  "odds": "+195",
-                  "stake": "1u",
-                  "reasoning": "Attacking a wide line — not because McConico is great, but Johnson looks poor in extended fights at 185 with his small frame.",
-                  "video_url": "https://www.youtube.com/watch?v=Kzsm8s6hlgQ"
-                },
-                {
-                  "id": "we_want_picks",
-                  "name": "We Want Picks (Jacob)",
-                  "confidence": 6,
-                  "trust": 5.0,
-                  "role": "underdog",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "Jacob says McConico is the better, more technical fighter with better takedown and submission defense, while Dante's striking is sloppy and gas tank questionable; he bet him.",
-                  "video_url": "https://www.youtube.com/watch?v=i3kCMoEgBRE"
+                  "reasoning": "Johnson's experience and in-fight adjustments, changing ranges and mixing in wrestling, should keep Ochoa from ever getting comfortable.",
+                  "video_url": "https://www.youtube.com/watch?v=AncCSMm5apQ"
                 }
               ]
             },
             {
-              "selection": "Dante Johnson",
-              "consensus_pct": 27.9,
-              "weight": 3.0,
-              "pick_count": 1,
-              "avg_confidence": 6.0,
-              "cappers": [
-                {
-                  "id": "we_want_picks",
-                  "name": "We Want Picks (Jacob)",
-                  "confidence": 6,
-                  "trust": 5.0,
-                  "role": "unknown",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "Neither man has a clean UFC win, but based on potential, regional wins and power Johnson is the better fighter right now and should have the performance people have been expecting; odds are fine.",
-                  "video_url": "https://www.youtube.com/watch?v=YIYbz6nEsiE"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "bet_type": "method_of_victory",
-          "label": "Method of Victory",
-          "total_weight": 7.75,
-          "pick_count": 3,
-          "options": [
-            {
-              "selection": "Dante Johnson by KO/TKO",
-              "consensus_pct": 51.6,
-              "weight": 4.0,
-              "pick_count": 2,
-              "avg_confidence": 4.0,
-              "cappers": [
-                {
-                  "id": "livid_larry",
-                  "name": "Livid Larry MMA",
-                  "confidence": 4,
-                  "trust": 5.0,
-                  "role": "favorite",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "Johnson's explosiveness, power and speed should matter in the striking exchanges and get an early finish, but McConico is the more technical guy and very live as a dog; low to mid confidence.",
-                  "video_url": "https://www.youtube.com/watch?v=cG8f50JIxWY"
-                },
-                {
-                  "id": "artem_mma",
-                  "name": "Artem MMA",
-                  "confidence": 4,
-                  "trust": 5.0,
-                  "role": "favorite",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "Johnson's boxing is his real skill set and McConico hates being backed up and hit; the worry is Johnson's terrible fight IQ leading him to wrestle again.",
-                  "video_url": "https://www.youtube.com/watch?v=r1vAvvZ7-0o"
-                }
-              ]
-            },
-            {
-              "selection": "Eric McConico by decision",
-              "consensus_pct": 48.4,
-              "weight": 3.75,
+              "selection": "Charles Johnson by KO/TKO",
+              "consensus_pct": 13.7,
+              "weight": 4.35,
               "pick_count": 1,
               "avg_confidence": 5.0,
               "cappers": [
                 {
-                  "id": "tony_has_died",
-                  "name": "TonyHasDiedMMA",
+                  "id": "axel_mma",
+                  "name": "Axel MMA",
                   "confidence": 5,
-                  "trust": 7.5,
-                  "role": "unknown",
+                  "trust": 8.7,
+                  "role": "underdog",
                   "odds": "",
                   "stake": "",
-                  "reasoning": "McConico has good takedown defense and is strong in early rounds, which is Johnson's only window to win; expects a decision, maybe a split.",
-                  "video_url": "https://www.youtube.com/watch?v=mlVG4gepZ9Y"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "bet_type": "round",
-          "label": "Round",
-          "total_weight": 3.42,
-          "pick_count": 1,
-          "options": [
-            {
-              "selection": "Dante Johnson in round 1 by KO",
-              "consensus_pct": 100.0,
-              "weight": 3.42,
-              "pick_count": 1,
-              "avg_confidence": 6.0,
-              "cappers": [
-                {
-                  "id": "betslam_sam",
-                  "name": "BetSlam with Sam",
-                  "confidence": 6,
-                  "trust": 5.7,
-                  "role": "favorite",
-                  "odds": "+350",
-                  "stake": "",
-                  "reasoning": "Happy to play both sides: Johnson's fastest, most dangerous path is an early KO, so +350 for round one is worth it.",
-                  "video_url": "https://www.youtube.com/watch?v=Kzsm8s6hlgQ"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "fight_id": "fernando|tobias",
-      "display": "Lucas Fernando vs Raphael Tobia",
-      "fighter_a": "Lucas Fernando",
-      "fighter_b": "Raphael Tobias",
-      "pick_count": 6,
-      "capper_count": 5,
-      "markets": [
-        {
-          "bet_type": "moneyline",
-          "label": "Moneyline",
-          "total_weight": 2.32,
-          "pick_count": 1,
-          "options": [
-            {
-              "selection": "Lucas Fernando",
-              "consensus_pct": 100.0,
-              "weight": 2.32,
-              "pick_count": 1,
-              "avg_confidence": 4.0,
-              "cappers": [
-                {
-                  "id": "we_want_picks",
-                  "name": "We Want Picks (Jacob)",
-                  "confidence": 4,
-                  "trust": 5.8,
-                  "role": "favorite",
-                  "odds": "-300",
-                  "stake": "",
-                  "reasoning": "Both like Fernando's striking, length and athleticism over Tobias's brute-force grappling, but at -300 in a UFC debut they are picking him without betting the moneyline.",
-                  "video_url": "https://www.youtube.com/watch?v=i3kCMoEgBRE"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "bet_type": "method_of_victory",
-          "label": "Method of Victory",
-          "total_weight": 12.99,
-          "pick_count": 4,
-          "options": [
-            {
-              "selection": "Lucas Fernando by KO",
-              "consensus_pct": 76.9,
-              "weight": 9.99,
-              "pick_count": 3,
-              "avg_confidence": 5.3,
-              "cappers": [
-                {
-                  "id": "tony_has_died",
-                  "name": "TonyHasDiedMMA",
-                  "confidence": 6,
-                  "trust": 7.5,
-                  "role": "unknown",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "Fernando is a massive LFA double champion with power and better level of competition, and Tobias struggles on the feet and plods around, so he expects a first-round knockout.",
-                  "video_url": "https://www.youtube.com/watch?v=mlVG4gepZ9Y"
-                },
-                {
-                  "id": "betslam_sam",
-                  "name": "BetSlam with Sam",
-                  "confidence": 7,
-                  "trust": 5.7,
-                  "role": "unknown",
-                  "odds": "+125",
-                  "stake": "1.25u",
-                  "reasoning": "Fernando is big, fast, 6'3 with 81.5in reach, believing in his hands after recent KOs, while Tobias looked lost when he couldn't get the fight down.",
-                  "video_url": "https://www.youtube.com/watch?v=Kzsm8s6hlgQ"
-                },
-                {
-                  "id": "livid_larry",
-                  "name": "Livid Larry MMA",
-                  "confidence": 3,
-                  "trust": 5.0,
-                  "role": "favorite",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "Thinks the fight should be even odds and Tobias is value, but ultimately Fernando is the more complete, technical and versatile striker; explicitly a low confidence pick.",
-                  "video_url": "https://www.youtube.com/watch?v=cG8f50JIxWY"
-                }
-              ]
-            },
-            {
-              "selection": "Lucas Fernando by finish in round 1",
-              "consensus_pct": 23.1,
-              "weight": 3.0,
-              "pick_count": 1,
-              "avg_confidence": 6.0,
-              "cappers": [
-                {
-                  "id": "artem_mma",
-                  "name": "Artem MMA",
-                  "confidence": 6,
-                  "trust": 5.0,
-                  "role": "unknown",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "Fernando's speed, power and investment in the body and legs will overwhelm Tobias, who he thinks is stiff, unathletic and simply not good.",
-                  "video_url": "https://www.youtube.com/watch?v=r1vAvvZ7-0o"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "bet_type": "round",
-          "label": "Round",
-          "total_weight": 3.42,
-          "pick_count": 1,
-          "options": [
-            {
-              "selection": "Lucas Fernando in round 1 by KO",
-              "consensus_pct": 100.0,
-              "weight": 3.42,
-              "pick_count": 1,
-              "avg_confidence": 6.0,
-              "cappers": [
-                {
-                  "id": "betslam_sam",
-                  "name": "BetSlam with Sam",
-                  "confidence": 6,
-                  "trust": 5.7,
-                  "role": "unknown",
-                  "odds": "+350",
-                  "stake": "",
-                  "reasoning": "Thinks Tobias gets overwhelmed by the speed early, so he's writing down the round one KO too.",
-                  "video_url": "https://www.youtube.com/watch?v=Kzsm8s6hlgQ"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "fight_id": "alvarez|njokuani",
-      "display": "Joel Alvarez vs Chidi Njokuani",
-      "fighter_a": "Joel Alvarez",
-      "fighter_b": "Chidi Njokuani",
-      "pick_count": 5,
-      "capper_count": 5,
-      "markets": [
-        {
-          "bet_type": "moneyline",
-          "label": "Moneyline",
-          "total_weight": 3.5,
-          "pick_count": 1,
-          "options": [
-            {
-              "selection": "Joel Alvarez",
-              "consensus_pct": 100.0,
-              "weight": 3.5,
-              "pick_count": 1,
-              "avg_confidence": 7.0,
-              "cappers": [
-                {
-                  "id": "we_want_picks",
-                  "name": "We Want Picks (Jacob)",
-                  "confidence": 7,
-                  "trust": 5.0,
-                  "role": "unknown",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "Alvarez's fatal flaw is takedown defense and Njokuani never wrestles, so Alvarez gets the long-range striking match he wants against a hesitant opponent.",
-                  "video_url": "https://www.youtube.com/watch?v=YIYbz6nEsiE"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "bet_type": "method_of_victory",
-          "label": "Method of Victory",
-          "total_weight": 17.06,
-          "pick_count": 4,
-          "options": [
-            {
-              "selection": "Joel Alvarez by submission or ground-and-pound TKO",
-              "consensus_pct": 55.7,
-              "weight": 9.5,
-              "pick_count": 2,
-              "avg_confidence": 7.5,
-              "cappers": [
-                {
-                  "id": "tony_has_died",
-                  "name": "TonyHasDiedMMA",
-                  "confidence": 8,
-                  "trust": 7.5,
-                  "role": "unknown",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "Alvarez has a ~95% finish rate and is dangerous everywhere; Njokuani can't grapple and got hit repeatedly by lesser strikers like Carlos Leal.",
-                  "video_url": "https://www.youtube.com/watch?v=mlVG4gepZ9Y"
-                },
-                {
-                  "id": "livid_larry",
-                  "name": "Livid Larry MMA",
-                  "confidence": 7,
-                  "trust": 5.0,
-                  "role": "unknown",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "Njokuani has a poor record against grapplers and Alvarez has a huge grappling advantage; if he uses the wrestling he could finish early in round one or two.",
-                  "video_url": "https://www.youtube.com/watch?v=cG8f50JIxWY"
-                }
-              ]
-            },
-            {
-              "selection": "Joel Alvarez inside the distance",
-              "consensus_pct": 26.7,
-              "weight": 4.56,
-              "pick_count": 1,
-              "avg_confidence": 8.0,
-              "cappers": [
-                {
-                  "id": "betslam_sam",
-                  "name": "BetSlam with Sam",
-                  "confidence": 8,
-                  "trust": 5.7,
-                  "role": "favorite",
-                  "odds": "-140",
-                  "stake": "",
-                  "reasoning": "Njokuani can be backed up and outboxed, Alvarez has 22 of 23 wins by finish and big submission upside, so Sam takes ITD at -140 rather than the -250 moneyline.",
-                  "video_url": "https://www.youtube.com/watch?v=Kzsm8s6hlgQ"
-                }
-              ]
-            },
-            {
-              "selection": "Joel Alvarez by submission (round 1 or 2)",
-              "consensus_pct": 17.6,
-              "weight": 3.0,
-              "pick_count": 1,
-              "avg_confidence": 6.0,
-              "cappers": [
-                {
-                  "id": "artem_mma",
-                  "name": "Artem MMA",
-                  "confidence": 6,
-                  "trust": 5.0,
-                  "role": "unknown",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "Njokuani is a striker who struggles badly once the fight hits the mat and has a poor get-up game, while Alvarez is a prolific early submission finisher.",
-                  "video_url": "https://www.youtube.com/watch?v=r1vAvvZ7-0o"
+                  "reasoning": "He thinks Johnson eventually lands a hook on Ochoa's raised chin and gets a finish, though he isn't sure which round.",
+                  "video_url": "https://www.youtube.com/watch?v=9SlcNEqV9CE"
                 }
               ]
             }
@@ -1788,25 +2608,36 @@
     },
     {
       "fight_id": "orolbai|wells",
-      "display": "Myktybek Orolbai vs Jeremiah Well",
-      "fighter_a": "Myktybek Orolbai",
+      "display": "Muktarbek Orolbai vs Jeremiah Well",
+      "fighter_a": "Muktarbek Orolbai",
       "fighter_b": "Jeremiah Wells",
-      "pick_count": 4,
-      "capper_count": 4,
+      "pick_count": 7,
+      "capper_count": 6,
       "markets": [
         {
           "bet_type": "moneyline",
           "label": "Moneyline",
-          "total_weight": 5.22,
-          "pick_count": 1,
+          "total_weight": 11.31,
+          "pick_count": 2,
           "options": [
             {
-              "selection": "Motabek Orolbai",
+              "selection": "Myktybek Orolbai",
               "consensus_pct": 100.0,
-              "weight": 5.22,
-              "pick_count": 1,
-              "avg_confidence": 9.0,
+              "weight": 11.31,
+              "pick_count": 2,
+              "avg_confidence": 8.0,
               "cappers": [
+                {
+                  "id": "axel_mma",
+                  "name": "Axel MMA",
+                  "confidence": 7,
+                  "trust": 8.7,
+                  "role": "favorite",
+                  "odds": "-900",
+                  "stake": "",
+                  "reasoning": "Orolbai should find the takedowns and keep Wells down; Wells is a striker with lacking takedown defense, making it a bad stylistic matchup.",
+                  "video_url": "https://www.youtube.com/watch?v=9SlcNEqV9CE"
+                },
                 {
                   "id": "we_want_picks",
                   "name": "We Want Picks (Jacob)",
@@ -1825,13 +2656,13 @@
         {
           "bet_type": "method_of_victory",
           "label": "Method of Victory",
-          "total_weight": 14.24,
-          "pick_count": 3,
+          "total_weight": 21.58,
+          "pick_count": 4,
           "options": [
             {
               "selection": "Myktybek Orolbai by submission",
-              "consensus_pct": 100.0,
-              "weight": 14.24,
+              "consensus_pct": 76.4,
+              "weight": 16.48,
               "pick_count": 3,
               "avg_confidence": 7.7,
               "cappers": [
@@ -1850,7 +2681,7 @@
                   "id": "betslam_sam",
                   "name": "BetSlam with Sam",
                   "confidence": 7,
-                  "trust": 5.7,
+                  "trust": 8.9,
                   "role": "favorite",
                   "odds": "+285",
                   "stake": "",
@@ -1869,6 +2700,54 @@
                   "video_url": "https://www.youtube.com/watch?v=cG8f50JIxWY"
                 }
               ]
+            },
+            {
+              "selection": "Muktarbek Orolbai by decision",
+              "consensus_pct": 23.6,
+              "weight": 5.1,
+              "pick_count": 1,
+              "avg_confidence": 6.0,
+              "cappers": [
+                {
+                  "id": "mma_odds_breaker_adam",
+                  "name": "MMA OddsBreaker (Adam)",
+                  "confidence": 6,
+                  "trust": 8.5,
+                  "role": "favorite",
+                  "odds": "-800",
+                  "stake": "",
+                  "reasoning": "Adam calls it an easy pick for Orolbai, but Wells is tough at 40, so he expects Orolbai to grind out a decision with a pile of takedowns rather than finish.",
+                  "video_url": "https://www.youtube.com/watch?v=KIn4mpXQwBw"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bet_type": "round",
+          "label": "Round",
+          "total_weight": 4.35,
+          "pick_count": 1,
+          "options": [
+            {
+              "selection": "Myktybek Orolbai by submission in round 1",
+              "consensus_pct": 100.0,
+              "weight": 4.35,
+              "pick_count": 1,
+              "avg_confidence": 5.0,
+              "cappers": [
+                {
+                  "id": "axel_mma",
+                  "name": "Axel MMA",
+                  "confidence": 5,
+                  "trust": 8.7,
+                  "role": "favorite",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "He sees it ending early with Orolbai getting him down and wrapping up a submission, probably in the first round.",
+                  "video_url": "https://www.youtube.com/watch?v=9SlcNEqV9CE"
+                }
+              ]
             }
           ]
         }
@@ -1879,22 +2758,33 @@
       "display": "Tresean Gore vs Vicente Luque",
       "fighter_a": "Tresean Gore",
       "fighter_b": "Vicente Luque",
-      "pick_count": 5,
-      "capper_count": 3,
+      "pick_count": 7,
+      "capper_count": 5,
       "markets": [
         {
           "bet_type": "moneyline",
           "label": "Moneyline",
-          "total_weight": 9.1,
+          "total_weight": 10.7,
           "pick_count": 3,
           "options": [
             {
               "selection": "Tresean Gore",
-              "consensus_pct": 72.5,
-              "weight": 6.6,
+              "consensus_pct": 76.6,
+              "weight": 8.2,
               "pick_count": 2,
               "avg_confidence": 5.0,
               "cappers": [
+                {
+                  "id": "betslam_sam",
+                  "name": "BetSlam with Sam",
+                  "confidence": 5,
+                  "trust": 8.9,
+                  "role": "favorite",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Unpopular side, but Gore's last gutsy performance through adversity impressed him more than anything Luque has done in three years.",
+                  "video_url": "https://www.youtube.com/watch?v=Kzsm8s6hlgQ"
+                },
                 {
                   "id": "tony_has_died",
                   "name": "TonyHasDiedMMA",
@@ -1905,23 +2795,12 @@
                   "stake": "",
                   "reasoning": "Doesn't like Luque's move up to 185 at age 35 after recent poor showings, while Gore is the bigger man and dangerous with front chokes.",
                   "video_url": "https://www.youtube.com/watch?v=mlVG4gepZ9Y"
-                },
-                {
-                  "id": "betslam_sam",
-                  "name": "BetSlam with Sam",
-                  "confidence": 5,
-                  "trust": 5.7,
-                  "role": "favorite",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "Unpopular side, but Gore's last gutsy performance through adversity impressed him more than anything Luque has done in three years.",
-                  "video_url": "https://www.youtube.com/watch?v=Kzsm8s6hlgQ"
                 }
               ]
             },
             {
               "selection": "Vicente Luque",
-              "consensus_pct": 27.5,
+              "consensus_pct": 23.4,
               "weight": 2.5,
               "pick_count": 1,
               "avg_confidence": 5.0,
@@ -1944,12 +2823,52 @@
         {
           "bet_type": "method_of_victory",
           "label": "Method of Victory",
-          "total_weight": 3.75,
-          "pick_count": 1,
+          "total_weight": 14.37,
+          "pick_count": 3,
           "options": [
             {
+              "selection": "Vicente Luque by KO/TKO",
+              "consensus_pct": 38.4,
+              "weight": 5.52,
+              "pick_count": 1,
+              "avg_confidence": 6.0,
+              "cappers": [
+                {
+                  "id": "mma_husky_hustler",
+                  "name": "MMA Husky Hustler",
+                  "confidence": 6,
+                  "trust": 9.2,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Luque's experience in violent exchanges should let him pressure behind his boxing and gradually force Gore into uncomfortable exchanges until he finds the finish.",
+                  "video_url": "https://www.youtube.com/watch?v=AncCSMm5apQ"
+                }
+              ]
+            },
+            {
+              "selection": "Tresean Gore by KO/TKO",
+              "consensus_pct": 35.5,
+              "weight": 5.1,
+              "pick_count": 1,
+              "avg_confidence": 6.0,
+              "cappers": [
+                {
+                  "id": "mma_odds_breaker_adam",
+                  "name": "MMA OddsBreaker (Adam)",
+                  "confidence": 6,
+                  "trust": 8.5,
+                  "role": "favorite",
+                  "odds": "-140",
+                  "stake": "",
+                  "reasoning": "Adam is fading Luque's chin and thinks Gore, who has improved a lot and looked great against Asakura, has the power to knock him out — though he admits the shifted odds scare him.",
+                  "video_url": "https://www.youtube.com/watch?v=KIn4mpXQwBw"
+                }
+              ]
+            },
+            {
               "selection": "Tresean Gore by submission",
-              "consensus_pct": 100.0,
+              "consensus_pct": 26.1,
               "weight": 3.75,
               "pick_count": 1,
               "avg_confidence": 5.0,
@@ -1972,13 +2891,13 @@
         {
           "bet_type": "prop",
           "label": "Prop",
-          "total_weight": 3.42,
+          "total_weight": 5.34,
           "pick_count": 1,
           "options": [
             {
               "selection": "Tresean Gore to win inside the distance",
               "consensus_pct": 100.0,
-              "weight": 3.42,
+              "weight": 5.34,
               "pick_count": 1,
               "avg_confidence": 6.0,
               "cappers": [
@@ -1986,7 +2905,7 @@
                   "id": "betslam_sam",
                   "name": "BetSlam with Sam",
                   "confidence": 6,
-                  "trust": 5.7,
+                  "trust": 8.9,
                   "role": "unknown",
                   "odds": "+150",
                   "stake": "",
@@ -2004,18 +2923,86 @@
       "display": "Themba Gorimbo vs Vicente Luque",
       "fighter_a": "Themba Gorimbo",
       "fighter_b": "Vicente Luque",
-      "pick_count": 2,
-      "capper_count": 2,
+      "pick_count": 5,
+      "capper_count": 4,
       "markets": [
         {
-          "bet_type": "method_of_victory",
-          "label": "Method of Victory",
-          "total_weight": 4.5,
+          "bet_type": "moneyline",
+          "label": "Moneyline",
+          "total_weight": 8.58,
           "pick_count": 2,
           "options": [
             {
+              "selection": "Themba Gorimbo",
+              "consensus_pct": 60.8,
+              "weight": 5.22,
+              "pick_count": 1,
+              "avg_confidence": 6.0,
+              "cappers": [
+                {
+                  "id": "axel_mma",
+                  "name": "Axel MMA",
+                  "confidence": 6,
+                  "trust": 8.7,
+                  "role": "favorite",
+                  "odds": "-119",
+                  "stake": "",
+                  "reasoning": "Luque's prime is behind him and his chin is questionable; Gorimbo has slick hands, power, and enough grappling to stop takedowns and keep it standing.",
+                  "video_url": "https://www.youtube.com/watch?v=9SlcNEqV9CE"
+                }
+              ]
+            },
+            {
+              "selection": "Vicente Luque",
+              "consensus_pct": 39.2,
+              "weight": 3.36,
+              "pick_count": 1,
+              "avg_confidence": 4.0,
+              "cappers": [
+                {
+                  "id": "kenny_okoye_mma",
+                  "name": "KennyOkoyeMMA",
+                  "confidence": 4,
+                  "trust": 8.4,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Very torn — thought Gorimbo was the smarter pick, but Luque's power, craftiness and neck-grabbing finishing ability made him go Luque.",
+                  "video_url": "https://www.youtube.com/watch?v=DkINV1b3wvQ"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bet_type": "method_of_victory",
+          "label": "Method of Victory",
+          "total_weight": 6.02,
+          "pick_count": 2,
+          "options": [
+            {
+              "selection": "Themba Gorimbo by KO/TKO",
+              "consensus_pct": 58.5,
+              "weight": 3.52,
+              "pick_count": 1,
+              "avg_confidence": 4.0,
+              "cappers": [
+                {
+                  "id": "artem_mma",
+                  "name": "Artem MMA",
+                  "confidence": 4,
+                  "trust": 8.8,
+                  "role": "favorite",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Luque has taken huge damage and had a brain injury, and no longer absorbs punches like he used to; Gorimbo's striking should finish him, though the capper dislikes taking Gorimbo as a favorite.",
+                  "video_url": "https://www.youtube.com/watch?v=r1vAvvZ7-0o"
+                }
+              ]
+            },
+            {
               "selection": "Vicente Luque by submission",
-              "consensus_pct": 55.6,
+              "consensus_pct": 41.5,
               "weight": 2.5,
               "pick_count": 1,
               "avg_confidence": 5.0,
@@ -2032,24 +3019,32 @@
                   "video_url": "https://www.youtube.com/watch?v=cG8f50JIxWY"
                 }
               ]
-            },
+            }
+          ]
+        },
+        {
+          "bet_type": "round",
+          "label": "Round",
+          "total_weight": 3.48,
+          "pick_count": 1,
+          "options": [
             {
-              "selection": "Themba Gorimbo by KO/TKO",
-              "consensus_pct": 44.4,
-              "weight": 2.0,
+              "selection": "Themba Gorimbo by KO in round 1",
+              "consensus_pct": 100.0,
+              "weight": 3.48,
               "pick_count": 1,
               "avg_confidence": 4.0,
               "cappers": [
                 {
-                  "id": "artem_mma",
-                  "name": "Artem MMA",
+                  "id": "axel_mma",
+                  "name": "Axel MMA",
                   "confidence": 4,
-                  "trust": 5.0,
+                  "trust": 8.7,
                   "role": "favorite",
                   "odds": "",
                   "stake": "",
-                  "reasoning": "Luque has taken huge damage and had a brain injury, and no longer absorbs punches like he used to; Gorimbo's striking should finish him, though the capper dislikes taking Gorimbo as a favorite.",
-                  "video_url": "https://www.youtube.com/watch?v=r1vAvvZ7-0o"
+                  "reasoning": "He thinks Gorimbo has too much power for Luque's questionable chin and touches it early, calling a first-round KO.",
+                  "video_url": "https://www.youtube.com/watch?v=9SlcNEqV9CE"
                 }
               ]
             }
@@ -2062,19 +3057,19 @@
       "display": "Matt Adams vs Anthony Wint",
       "fighter_a": "Matt Adams",
       "fighter_b": "Anthony Wint",
-      "pick_count": 3,
-      "capper_count": 1,
+      "pick_count": 4,
+      "capper_count": 2,
       "markets": [
         {
           "bet_type": "moneyline",
           "label": "Moneyline",
-          "total_weight": 3.99,
+          "total_weight": 6.23,
           "pick_count": 1,
           "options": [
             {
               "selection": "Anthony Wint",
               "consensus_pct": 100.0,
-              "weight": 3.99,
+              "weight": 6.23,
               "pick_count": 1,
               "avg_confidence": 7.0,
               "cappers": [
@@ -2082,7 +3077,7 @@
                   "id": "betslam_sam",
                   "name": "BetSlam with Sam",
                   "confidence": 7,
-                  "trust": 5.7,
+                  "trust": 8.9,
                   "role": "favorite",
                   "odds": "",
                   "stake": "",
@@ -2094,15 +3089,43 @@
           ]
         },
         {
+          "bet_type": "method_of_victory",
+          "label": "Method of Victory",
+          "total_weight": 5.95,
+          "pick_count": 1,
+          "options": [
+            {
+              "selection": "Anthony Wint by KO/TKO",
+              "consensus_pct": 100.0,
+              "weight": 5.95,
+              "pick_count": 1,
+              "avg_confidence": 7.0,
+              "cappers": [
+                {
+                  "id": "mma_odds_breaker_adam",
+                  "name": "MMA OddsBreaker (Adam)",
+                  "confidence": 7,
+                  "trust": 8.5,
+                  "role": "favorite",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Wint is a former NFL athlete with all knockouts while Adams has been knocked out multiple times; Adam calls it an easy pick and expects a contract.",
+                  "video_url": "https://www.youtube.com/watch?v=KIn4mpXQwBw"
+                }
+              ]
+            }
+          ]
+        },
+        {
           "bet_type": "over_under",
           "label": "Over / Under",
-          "total_weight": 5.13,
+          "total_weight": 8.01,
           "pick_count": 1,
           "options": [
             {
               "selection": "Under 1.5 rounds",
               "consensus_pct": 100.0,
-              "weight": 5.13,
+              "weight": 8.01,
               "pick_count": 1,
               "avg_confidence": 9.0,
               "cappers": [
@@ -2110,7 +3133,7 @@
                   "id": "betslam_sam",
                   "name": "BetSlam with Sam",
                   "confidence": 9,
-                  "trust": 5.7,
+                  "trust": 8.9,
                   "role": "unknown",
                   "odds": "-375",
                   "stake": "",
@@ -2124,13 +3147,13 @@
         {
           "bet_type": "round",
           "label": "Round",
-          "total_weight": 4.56,
+          "total_weight": 7.12,
           "pick_count": 1,
           "options": [
             {
               "selection": "Anthony Wint in round 1 by KO",
               "consensus_pct": 100.0,
-              "weight": 4.56,
+              "weight": 7.12,
               "pick_count": 1,
               "avg_confidence": 8.0,
               "cappers": [
@@ -2138,7 +3161,7 @@
                   "id": "betslam_sam",
                   "name": "BetSlam with Sam",
                   "confidence": 8,
-                  "trust": 5.7,
+                  "trust": 8.9,
                   "role": "favorite",
                   "odds": "",
                   "stake": "",
@@ -2190,13 +3213,13 @@
         {
           "bet_type": "over_under",
           "label": "Over / Under",
-          "total_weight": 1.71,
+          "total_weight": 2.67,
           "pick_count": 1,
           "options": [
             {
               "selection": "Over (pick'em total)",
               "consensus_pct": 100.0,
-              "weight": 1.71,
+              "weight": 2.67,
               "pick_count": 1,
               "avg_confidence": 3.0,
               "cappers": [
@@ -2204,7 +3227,7 @@
                   "id": "betslam_sam",
                   "name": "BetSlam with Sam",
                   "confidence": 3,
-                  "trust": 5.7,
+                  "trust": 8.9,
                   "role": "unknown",
                   "odds": "",
                   "stake": "",
@@ -2228,13 +3251,13 @@
         {
           "bet_type": "moneyline",
           "label": "Moneyline",
-          "total_weight": 2.85,
+          "total_weight": 4.45,
           "pick_count": 1,
           "options": [
             {
               "selection": "Bilal Hassan",
               "consensus_pct": 100.0,
-              "weight": 2.85,
+              "weight": 4.45,
               "pick_count": 1,
               "avg_confidence": 5.0,
               "cappers": [
@@ -2242,7 +3265,7 @@
                   "id": "betslam_sam",
                   "name": "BetSlam with Sam",
                   "confidence": 5,
-                  "trust": 5.7,
+                  "trust": 8.9,
                   "role": "favorite",
                   "odds": "-2000",
                   "stake": "",
@@ -2256,13 +3279,13 @@
         {
           "bet_type": "round",
           "label": "Round",
-          "total_weight": 2.28,
+          "total_weight": 3.56,
           "pick_count": 1,
           "options": [
             {
               "selection": "Bilal Hassan in round 1 by KO",
               "consensus_pct": 100.0,
-              "weight": 2.28,
+              "weight": 3.56,
               "pick_count": 1,
               "avg_confidence": 4.0,
               "cappers": [
@@ -2270,7 +3293,7 @@
                   "id": "betslam_sam",
                   "name": "BetSlam with Sam",
                   "confidence": 4,
-                  "trust": 5.7,
+                  "trust": 8.9,
                   "role": "favorite",
                   "odds": "",
                   "stake": "",
@@ -2294,13 +3317,13 @@
         {
           "bet_type": "method_of_victory",
           "label": "Method of Victory",
-          "total_weight": 3.42,
+          "total_weight": 5.34,
           "pick_count": 1,
           "options": [
             {
               "selection": "Ananias Malumba by KO",
               "consensus_pct": 100.0,
-              "weight": 3.42,
+              "weight": 5.34,
               "pick_count": 1,
               "avg_confidence": 6.0,
               "cappers": [
@@ -2308,7 +3331,7 @@
                   "id": "betslam_sam",
                   "name": "BetSlam with Sam",
                   "confidence": 6,
-                  "trust": 5.7,
+                  "trust": 8.9,
                   "role": "favorite",
                   "odds": "-155",
                   "stake": "",
@@ -2322,13 +3345,13 @@
         {
           "bet_type": "over_under",
           "label": "Over / Under",
-          "total_weight": 2.85,
+          "total_weight": 4.45,
           "pick_count": 1,
           "options": [
             {
               "selection": "Under 1.5 rounds",
               "consensus_pct": 100.0,
-              "weight": 2.85,
+              "weight": 4.45,
               "pick_count": 1,
               "avg_confidence": 5.0,
               "cappers": [
@@ -2336,7 +3359,7 @@
                   "id": "betslam_sam",
                   "name": "BetSlam with Sam",
                   "confidence": 5,
-                  "trust": 5.7,
+                  "trust": 8.9,
                   "role": "unknown",
                   "odds": "-225",
                   "stake": "",
@@ -2360,13 +3383,13 @@
         {
           "bet_type": "moneyline",
           "label": "Moneyline",
-          "total_weight": 3.42,
+          "total_weight": 5.34,
           "pick_count": 1,
           "options": [
             {
               "selection": "John Cunnaman",
               "consensus_pct": 100.0,
-              "weight": 3.42,
+              "weight": 5.34,
               "pick_count": 1,
               "avg_confidence": 6.0,
               "cappers": [
@@ -2374,7 +3397,7 @@
                   "id": "betslam_sam",
                   "name": "BetSlam with Sam",
                   "confidence": 6,
-                  "trust": 5.7,
+                  "trust": 8.9,
                   "role": "favorite",
                   "odds": "",
                   "stake": "",
@@ -2388,13 +3411,13 @@
         {
           "bet_type": "method_of_victory",
           "label": "Method of Victory",
-          "total_weight": 2.85,
+          "total_weight": 4.45,
           "pick_count": 1,
           "options": [
             {
               "selection": "John Cunnaman by submission (club and sub)",
               "consensus_pct": 100.0,
-              "weight": 2.85,
+              "weight": 4.45,
               "pick_count": 1,
               "avg_confidence": 5.0,
               "cappers": [
@@ -2402,7 +3425,7 @@
                   "id": "betslam_sam",
                   "name": "BetSlam with Sam",
                   "confidence": 5,
-                  "trust": 5.7,
+                  "trust": 8.9,
                   "role": "favorite",
                   "odds": "",
                   "stake": "",
@@ -2426,13 +3449,13 @@
         {
           "bet_type": "moneyline",
           "label": "Moneyline",
-          "total_weight": 4.56,
+          "total_weight": 7.12,
           "pick_count": 1,
           "options": [
             {
               "selection": "Mamed Khalidov",
               "consensus_pct": 100.0,
-              "weight": 4.56,
+              "weight": 7.12,
               "pick_count": 1,
               "avg_confidence": 8.0,
               "cappers": [
@@ -2440,7 +3463,7 @@
                   "id": "betslam_sam",
                   "name": "BetSlam with Sam",
                   "confidence": 8,
-                  "trust": 5.7,
+                  "trust": 8.9,
                   "role": "unknown",
                   "odds": "",
                   "stake": "",
@@ -2454,13 +3477,13 @@
         {
           "bet_type": "method_of_victory",
           "label": "Method of Victory",
-          "total_weight": 3.42,
+          "total_weight": 5.34,
           "pick_count": 1,
           "options": [
             {
               "selection": "Mamed Khalidov by submission (rounds 2-3)",
               "consensus_pct": 100.0,
-              "weight": 3.42,
+              "weight": 5.34,
               "pick_count": 1,
               "avg_confidence": 6.0,
               "cappers": [
@@ -2468,7 +3491,7 @@
                   "id": "betslam_sam",
                   "name": "BetSlam with Sam",
                   "confidence": 6,
-                  "trust": 5.7,
+                  "trust": 8.9,
                   "role": "unknown",
                   "odds": "",
                   "stake": "",
@@ -2558,13 +3581,13 @@
         {
           "bet_type": "method_of_victory",
           "label": "Method of Victory",
-          "total_weight": 3.0,
+          "total_weight": 5.28,
           "pick_count": 1,
           "options": [
             {
               "selection": "Medbek Urbay by submission (around round 2)",
               "consensus_pct": 100.0,
-              "weight": 3.0,
+              "weight": 5.28,
               "pick_count": 1,
               "avg_confidence": 6.0,
               "cappers": [
@@ -2572,7 +3595,7 @@
                   "id": "artem_mma",
                   "name": "Artem MMA",
                   "confidence": 6,
-                  "trust": 5.0,
+                  "trust": 8.8,
                   "role": "unknown",
                   "odds": "",
                   "stake": "",
@@ -2596,13 +3619,13 @@
         {
           "bet_type": "moneyline",
           "label": "Moneyline",
-          "total_weight": 2.85,
+          "total_weight": 4.45,
           "pick_count": 1,
           "options": [
             {
               "selection": "Eric Nolan",
               "consensus_pct": 100.0,
-              "weight": 2.85,
+              "weight": 4.45,
               "pick_count": 1,
               "avg_confidence": 5.0,
               "cappers": [
@@ -2610,7 +3633,7 @@
                   "id": "betslam_sam",
                   "name": "BetSlam with Sam",
                   "confidence": 5,
-                  "trust": 5.7,
+                  "trust": 8.9,
                   "role": "unknown",
                   "odds": "",
                   "stake": "",
@@ -2654,6 +3677,348 @@
                   "stake": "",
                   "reasoning": "Angelo says Luque is better everywhere and the line movement making him a dog makes no sense, but he is only picking him, not betting him.",
                   "video_url": "https://www.youtube.com/watch?v=i3kCMoEgBRE"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "fight_id": "orazbai|wells",
+      "display": "Mukhitbek Orazbai vs Jeremiah Well",
+      "fighter_a": "Mukhitbek Orazbai",
+      "fighter_b": "Jeremiah Wells",
+      "pick_count": 1,
+      "capper_count": 1,
+      "markets": [
+        {
+          "bet_type": "method_of_victory",
+          "label": "Method of Victory",
+          "total_weight": 5.52,
+          "pick_count": 1,
+          "options": [
+            {
+              "selection": "Mukhitbek Orazbai by decision",
+              "consensus_pct": 100.0,
+              "weight": 5.52,
+              "pick_count": 1,
+              "avg_confidence": 6.0,
+              "cappers": [
+                {
+                  "id": "mma_husky_hustler",
+                  "name": "MMA Husky Hustler",
+                  "confidence": 6,
+                  "trust": 9.2,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Power vs pressure matchup where he trusts Orazbai to stay disciplined, use clinch work and relentless takedowns to drain Wells and take over as the rounds go on.",
+                  "video_url": "https://www.youtube.com/watch?v=AncCSMm5apQ"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "fight_id": "malik|stolz",
+      "display": "Mansour Abdul-Malik vs Stolz",
+      "fighter_a": "Mansour Abdul-Malik",
+      "fighter_b": "Stolz",
+      "pick_count": 1,
+      "capper_count": 1,
+      "markets": [
+        {
+          "bet_type": "method_of_victory",
+          "label": "Method of Victory",
+          "total_weight": 5.1,
+          "pick_count": 1,
+          "options": [
+            {
+              "selection": "Mansour Abdul-Malik by KO/TKO",
+              "consensus_pct": 100.0,
+              "weight": 5.1,
+              "pick_count": 1,
+              "avg_confidence": 6.0,
+              "cappers": [
+                {
+                  "id": "mma_odds_breaker_adam",
+                  "name": "MMA OddsBreaker (Adam)",
+                  "confidence": 6,
+                  "trust": 8.5,
+                  "role": "favorite",
+                  "odds": "-550",
+                  "stake": "",
+                  "reasoning": "Adam thinks Abdul-Malik is somewhat overrated but Stolz is super chinny, so he fades Stolz and takes Abdul-Malik by knockout.",
+                  "video_url": "https://www.youtube.com/watch?v=KIn4mpXQwBw"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "fight_id": "aliger|escoga",
+      "display": "Aliger vs Fabricio Escoga",
+      "fighter_a": "Aliger",
+      "fighter_b": "Fabricio Escoga",
+      "pick_count": 1,
+      "capper_count": 1,
+      "markets": [
+        {
+          "bet_type": "method_of_victory",
+          "label": "Method of Victory",
+          "total_weight": 4.25,
+          "pick_count": 1,
+          "options": [
+            {
+              "selection": "Aliger by decision",
+              "consensus_pct": 100.0,
+              "weight": 4.25,
+              "pick_count": 1,
+              "avg_confidence": 5.0,
+              "cappers": [
+                {
+                  "id": "mma_odds_breaker_adam",
+                  "name": "MMA OddsBreaker (Adam)",
+                  "confidence": 5,
+                  "trust": 8.5,
+                  "role": "underdog",
+                  "odds": "-110",
+                  "stake": "",
+                  "reasoning": "The line has moved from -600 to a pick'em, and Adam likes the former underdog to win, probably by decision.",
+                  "video_url": "https://www.youtube.com/watch?v=KIn4mpXQwBw"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "fight_id": "hassan|sika",
+      "display": "Bal Hassan vs Raju Sika",
+      "fighter_a": "Bal Hassan",
+      "fighter_b": "Raju Sika",
+      "pick_count": 1,
+      "capper_count": 1,
+      "markets": [
+        {
+          "bet_type": "method_of_victory",
+          "label": "Method of Victory",
+          "total_weight": 5.1,
+          "pick_count": 1,
+          "options": [
+            {
+              "selection": "Bal Hassan by KO/TKO in round 1",
+              "consensus_pct": 100.0,
+              "weight": 5.1,
+              "pick_count": 1,
+              "avg_confidence": 6.0,
+              "cappers": [
+                {
+                  "id": "mma_odds_breaker_adam",
+                  "name": "MMA OddsBreaker (Adam)",
+                  "confidence": 6,
+                  "trust": 8.5,
+                  "role": "favorite",
+                  "odds": "-2000",
+                  "stake": "",
+                  "reasoning": "Adam sees no point to the matchmaking and expects Hassan to knock out the Road to UFC knockout victim in the first round and get a contract.",
+                  "video_url": "https://www.youtube.com/watch?v=KIn4mpXQwBw"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "fight_id": "malumba|pagliarulo",
+      "display": "Balumba vs Tom Pagliarulo",
+      "fighter_a": "Balumba",
+      "fighter_b": "Tom Pagliarulo",
+      "pick_count": 1,
+      "capper_count": 1,
+      "markets": [
+        {
+          "bet_type": "method_of_victory",
+          "label": "Method of Victory",
+          "total_weight": 4.25,
+          "pick_count": 1,
+          "options": [
+            {
+              "selection": "Tom Pagliarulo by KO/TKO",
+              "consensus_pct": 100.0,
+              "weight": 4.25,
+              "pick_count": 1,
+              "avg_confidence": 5.0,
+              "cappers": [
+                {
+                  "id": "mma_odds_breaker_adam",
+                  "name": "MMA OddsBreaker (Adam)",
+                  "confidence": 5,
+                  "trust": 8.5,
+                  "role": "underdog",
+                  "odds": "+",
+                  "stake": "",
+                  "reasoning": "Adam takes the dog, saying Balumba is too wild and Pagliarulo, who comes from PFL and Cage Titans, can knock him out.",
+                  "video_url": "https://www.youtube.com/watch?v=KIn4mpXQwBw"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "fight_id": "cropshot|kudman",
+      "display": "Joseph Cropshot vs Jonathan Kudman",
+      "fighter_a": "Joseph Cropshot",
+      "fighter_b": "Jonathan Kudman",
+      "pick_count": 1,
+      "capper_count": 1,
+      "markets": [
+        {
+          "bet_type": "method_of_victory",
+          "label": "Method of Victory",
+          "total_weight": 5.1,
+          "pick_count": 1,
+          "options": [
+            {
+              "selection": "Jonathan Kudman by submission",
+              "consensus_pct": 100.0,
+              "weight": 5.1,
+              "pick_count": 1,
+              "avg_confidence": 6.0,
+              "cappers": [
+                {
+                  "id": "mma_odds_breaker_adam",
+                  "name": "MMA OddsBreaker (Adam)",
+                  "confidence": 6,
+                  "trust": 8.5,
+                  "role": "favorite",
+                  "odds": "-400",
+                  "stake": "",
+                  "reasoning": "Adam thinks Kudman should win this fight, probably by submission.",
+                  "video_url": "https://www.youtube.com/watch?v=KIn4mpXQwBw"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "fight_id": "gaethje|makhachev",
+      "display": "Justin Gaethje vs Islam Makhache",
+      "fighter_a": "Justin Gaethje",
+      "fighter_b": "Islam Makhachev",
+      "pick_count": 1,
+      "capper_count": 1,
+      "markets": [
+        {
+          "bet_type": "moneyline",
+          "label": "Moneyline",
+          "total_weight": 4.2,
+          "pick_count": 1,
+          "options": [
+            {
+              "selection": "Islam Makhachev",
+              "consensus_pct": 100.0,
+              "weight": 4.2,
+              "pick_count": 1,
+              "avg_confidence": 5.0,
+              "cappers": [
+                {
+                  "id": "kenny_okoye_mma",
+                  "name": "KennyOkoyeMMA",
+                  "confidence": 5,
+                  "trust": 8.4,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "He entertains picking Gaethje but lands on Islam because Islam is strong and talented.",
+                  "video_url": "https://www.youtube.com/watch?v=T5Pj7sRwt0c"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "fight_id": "gorimbo|wells",
+      "display": "Themba Gorimbo vs Jeremiah Well",
+      "fighter_a": "Themba Gorimbo",
+      "fighter_b": "Jeremiah Wells",
+      "pick_count": 1,
+      "capper_count": 1,
+      "markets": [
+        {
+          "bet_type": "moneyline",
+          "label": "Moneyline",
+          "total_weight": 5.04,
+          "pick_count": 1,
+          "options": [
+            {
+              "selection": "Themba Gorimbo",
+              "consensus_pct": 100.0,
+              "weight": 5.04,
+              "pick_count": 1,
+              "avg_confidence": 6.0,
+              "cappers": [
+                {
+                  "id": "kenny_okoye_mma",
+                  "name": "KennyOkoyeMMA",
+                  "confidence": 6,
+                  "trust": 8.4,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Gorimbo is really good, his grappling is improving, and this is a favorable matchup for him against Wells.",
+                  "video_url": "https://www.youtube.com/watch?v=DkINV1b3wvQ"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "fight_id": "fakhretdinov|magny",
+      "display": "Rinat Fakhretdinov vs Neil Magny",
+      "fighter_a": "Rinat Fakhretdinov",
+      "fighter_b": "Neil Magny",
+      "pick_count": 1,
+      "capper_count": 1,
+      "markets": [
+        {
+          "bet_type": "moneyline",
+          "label": "Moneyline",
+          "total_weight": 5.04,
+          "pick_count": 1,
+          "options": [
+            {
+              "selection": "Neil Magny",
+              "consensus_pct": 100.0,
+              "weight": 5.04,
+              "pick_count": 1,
+              "avg_confidence": 6.0,
+              "cappers": [
+                {
+                  "id": "kenny_okoye_mma",
+                  "name": "KennyOkoyeMMA",
+                  "confidence": 6,
+                  "trust": 8.4,
+                  "role": "underdog",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Fakhretdinov struggles most against bigger primary grapplers; Magny should use his size and grappling to drown him late, and Magny is a slight underdog.",
+                  "video_url": "https://www.youtube.com/watch?v=DkINV1b3wvQ"
                 }
               ]
             }
@@ -2828,6 +4193,158 @@
           "video_id": "YIYbz6nEsiE",
           "title": "UFC 330: Makhachev vs. Garry FULL CARD Predictions and Bets",
           "published": "2026-08-09T14:00:33+00:00"
+        }
+      ]
+    },
+    {
+      "capper_id": "mma_husky_hustler",
+      "capper": "MMA Husky Hustler",
+      "status": "ok",
+      "channel_id": "UUFjXgUzCT23D11yF4bcEl2g",
+      "feed_videos": 15,
+      "selected": [
+        {
+          "video_id": "AncCSMm5apQ",
+          "title": "UFC 330: Makhachev vs. Machado Garry. Full card predictions",
+          "published": "2026-08-09T03:18:07+00:00"
+        }
+      ]
+    },
+    {
+      "capper_id": "mma_lock_of_the_night",
+      "capper": "MMA Lock of the Night",
+      "status": "ok",
+      "channel_id": "UUlwn3zgkfyne2Ecj36Dl7ZQ",
+      "feed_videos": 15,
+      "selected": [
+        {
+          "video_id": "Yl9Tlj7jeZE",
+          "title": "UFC 330 | Was Garry the right choice? | Salkilld's stock skyrockets | Live Steam #028",
+          "published": "2026-08-11T13:54:48+00:00"
+        }
+      ]
+    },
+    {
+      "capper_id": "pick_em_mma",
+      "capper": "Pick 'em MMA",
+      "status": "ok",
+      "channel_id": "UUUbGPoZ-WS-ieH74mb44jIQ",
+      "feed_videos": 15,
+      "selected": [],
+      "recent_titles": [
+        "2026-08-04  UFC Fight Night: Gamrot vs. Salkilld Full Card Predictions",
+        "2026-07-29  PFL New York: Nurmagomedov vs. Colgan Full Card Predictions",
+        "2026-07-26  UFC Fight Night Belgrade: Medic vs. Rodriguez Full Card Predictions",
+        "2026-07-20  UFC Fight Night: Ankalaev vs. Guskov Full Card Predictions",
+        "2026-07-13  UFC Fight Night: Du Plessis vs. Usman Full Card Predictions"
+      ]
+    },
+    {
+      "capper_id": "left_lane_mma",
+      "capper": "Left Lane MMA",
+      "status": "ok",
+      "channel_id": "UUnuU5RSN-AAmU4_VCajYVCw",
+      "feed_videos": 15,
+      "selected": [],
+      "recent_titles": [
+        "2026-07-24  UFC Abu Dhabi Last Minute Quick Picks (Ankalaev vs Guskov)",
+        "2026-07-19  Dricus Du Plessis DOMINATES Kamaru Usman - UFC OKC Reaction",
+        "2026-07-17  Dricus Du Plessis is going to COLONIZE Kamaru Usman at UFC OKC - Full Card Predictions",
+        "2026-07-12  WORST OUTCOME - McGregor Loses by INJURY... (UFC 329 Instant Reaction)",
+        "2026-07-07  The MAC is BACK! - UFC 329: Conor McGregor vs Max Holloway Full Card Picks"
+      ]
+    },
+    {
+      "capper_id": "mma_bg",
+      "capper": "MMA BG",
+      "status": "ok",
+      "channel_id": "UUYJY8wof1p4WcgTiwEfe0nQ",
+      "feed_videos": 6,
+      "selected": [],
+      "recent_titles": [
+        "2026-07-24  Nurullo Aliev vs. Mike Davis Fight Breakdown",
+        "2026-07-10  UFC 329 McGregor vs. Holloway 2 Full Card Breakdown (feat. LetsBetMMA)",
+        "2026-06-12  UFC Freedom 250 Topuria vs. Gaethje Full Card Predictions",
+        "2026-04-30  Josiah Harrell discusses brain disease, faith, and more! | Exclusive Interview",
+        "2026-04-09  Jamey-Lyn Horth discusses JJ Aldrich fight, successful 2025, and more! | Exclusive Interview"
+      ]
+    },
+    {
+      "capper_id": "locked_door_mma",
+      "capper": "Locked Door MMA",
+      "status": "ok",
+      "channel_id": "UU4HFh-HteQUcPzwsvpog94A",
+      "feed_videos": 15,
+      "selected": [],
+      "recent_titles": [
+        "2026-08-07  The streak shall continue! #ufc #ufcfightnight #ufcvegas120 #fyp #trending #viral #ufcpredictions",
+        "2026-08-06  UFC fight night Gamrot vs Salkilld main card picks! #ufc #fyp #trending #ufcpicks #mma",
+        "2026-08-04  UFC Vegas 120 Gamrot vs Salkilld | Full Card Predictions & Breakdown | Best Bets To Make",
+        "2026-08-02  The most first round finishes is crazy! #ufc #ufcfightnight #fyp #trending #viral #ufcpredictions",
+        "2026-07-31  Belgrade card might be a sleeper!! #ufc #ufcfightnight #fyp #trending #viral #ufcprediction #mma"
+      ]
+    },
+    {
+      "capper_id": "mma_parlay_king_23",
+      "capper": "MMAParlayKing23",
+      "status": "failed",
+      "error": "ValueError: Could not parse a channel ID or @handle from 'https://www.youtube.com/c/MMAParlayKing'. Use a /channel/UC... or @handle URL."
+    },
+    {
+      "capper_id": "mma_odds_breaker_adam",
+      "capper": "MMA OddsBreaker (Adam)",
+      "status": "ok",
+      "channel_id": "UUxVb-x5w0Dh4DxYaizCTbZg",
+      "feed_videos": 15,
+      "selected": [
+        {
+          "video_id": "6WCOyPKb3Rs",
+          "title": "UFC 330 preview with MMA Rax💸 The Gamblers Perspective #168",
+          "published": "2026-08-12T00:56:56+00:00"
+        },
+        {
+          "video_id": "KIn4mpXQwBw",
+          "title": "UFC 330: Makhachev vs. Machado Garry Preview MMAOB Daily Podcast For August 9th",
+          "published": "2026-08-10T12:58:33+00:00"
+        }
+      ]
+    },
+    {
+      "capper_id": "the_weasle",
+      "capper": "TheWeasle",
+      "status": "ok",
+      "channel_id": "UUZD2qRU8J82XGdGdUWYneNQ",
+      "feed_videos": 15,
+      "selected": [],
+      "recent_titles": [
+        "2026-08-09  SHOCKING!!! Salkilld is a PROBLEM (Mateusz Gamrot vs Quillan Salkilld and Full Card Reaction)",
+        "2026-08-07  The Salkilld Hype Ends? UFC Mateusz Gamrot vs Quillan Salkilld Predictions and Breakdown",
+        "2026-08-06  No Oliveira?! Arman vs Ruffy is a MISMATCH for UFC 331 (Van vs Pantoja 2)",
+        "2026-08-02  KNOCKOUT!!! Jan Blachowicz Needs to RETIRE...(UFC Medic vs Rodriguez Reaction)",
+        "2026-07-31  UFC Fighter Bobby Green Walks in and HUMILIATES Adrien Broner's Boxing Gym"
+      ]
+    },
+    {
+      "capper_id": "kenny_okoye_mma",
+      "capper": "KennyOkoyeMMA",
+      "status": "ok",
+      "channel_id": "UUtX1d2j5qrWr_i-Y7CKvj4g",
+      "feed_videos": 15,
+      "selected": [
+        {
+          "video_id": "MOQalFHmWn8",
+          "title": "This Striking Flaw Has Me RETHINKING Islam vs Garry...",
+          "published": "2026-08-11T19:59:37+00:00"
+        },
+        {
+          "video_id": "T5Pj7sRwt0c",
+          "title": "Little bit handsome... #ufc330 #islammakhachev  #iangarry  #edit",
+          "published": "2026-08-11T01:37:05+00:00"
+        },
+        {
+          "video_id": "DkINV1b3wvQ",
+          "title": "UFC 330 Makhachev vs Garry FULL Card Predictions & Breakdown",
+          "published": "2026-08-10T19:50:16+00:00"
         }
       ]
     }
