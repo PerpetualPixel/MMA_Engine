@@ -402,12 +402,30 @@ and a run with no cookies configured behaves exactly as before.
 > read.
 
 A dedicated throwaway Google account works fine — any 18+ account will do.
-Cookies expire, so a scheduled run will eventually need them refreshed
-(re-export the `cookies.txt`); `yt-dlp` signals staleness with a "Sign in to
-confirm your age" error, at which point the affected videos fall back to the
-same clean `transcript_failed` they'd have without cookies rather than aborting
-the run. `yt-dlp` also resolves the `PoTokenRequired` case, so this same path
-fixes those too.
+`yt-dlp` also resolves the `PoTokenRequired` case, so this same path fixes
+those too.
+
+### When it stops working
+
+**Cookies expire.** Google rotates and revokes sessions server-side well before
+a cookie's nominal expiry date, so a scheduled run will eventually need a fresh
+export. This is the expected end-of-life of a `cookies.txt`, not a regression —
+every failure below degrades to the same clean `transcript_failed` the video
+would have had without cookies, and never aborts the run.
+
+Each cause logs a distinct line, so troubleshooting is a lookup rather than a
+diagnosis:
+
+| Log line says | Cause | Fix |
+|---|---|---|
+| `YouTube rejected the configured cookies — they have most likely expired` | Session revoked or rotated | Re-export `cookies.txt` from a signed-in browser |
+| `Cookie file '…' not found (looked from …)` | File never landed, was moved, or a relative path resolved against a different working directory | Re-export next to `weekly.bat`, or set an absolute path |
+| `yt-dlp can't decrypt this browser's cookies (Chrome/Edge App-Bound Encryption)` | Using `from_browser` on Windows | Switch to the `file` option (see the Windows note above) |
+| `yt-dlp is not installed in this environment` | Dependency missing from the venv | `pip install -r requirements.txt` |
+
+Checked in that order, so a decrypt failure that cascades into a "sign in to
+confirm" line is reported as the DPAPI problem it is rather than sending you to
+re-export a file that was never at fault.
 
 ---
 
