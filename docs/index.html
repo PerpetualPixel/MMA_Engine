@@ -20,6 +20,7 @@
     --split: #d29922;
     --split-dim: #33290f;
     --dog: #f0883e;
+    --gold: #e3b341;
   }
   * { box-sizing: border-box; }
   html { scrollbar-gutter: stable; }
@@ -65,6 +66,11 @@
     background: var(--panel-2); color: var(--text); border: 1px solid var(--border);
     border-radius: 6px; padding: 4px 8px; font: inherit;
   }
+  .controls input[type=search] {
+    background: var(--panel-2); color: var(--text); border: 1px solid var(--border);
+    border-radius: 6px; padding: 4px 10px; font: inherit; width: 170px;
+  }
+  .controls input[type=search]:focus { outline: none; border-color: var(--accent); }
   .controls .hint { color: var(--weak); font-size: 12px; }
   .count-note { color: var(--muted); font-size: 12px; margin: -8px 0 12px 2px; }
 
@@ -82,10 +88,30 @@
     font-size: 10px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
     padding: 2px 8px; border-radius: 999px; border: 1px solid var(--border); color: var(--muted);
   }
-  .badge.lock { color: var(--strong); border-color: var(--strong); }
+  .badge.lock { color: var(--gold); border-color: var(--gold); }
   .badge.pickem { color: var(--split); border-color: var(--split); }
   .badge.dog { color: var(--dog); border-color: var(--dog); }
   .badge.cancelled { color: var(--danger, #f85149); border-color: #f85149; }
+
+  /* -- locks: gold outline around the whole card -- */
+  .duel.lock-card {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 1px rgba(212, 167, 44, .45), 0 0 16px rgba(212, 167, 44, .14);
+  }
+
+  /* -- main / co-main banners -- */
+  .role-banner {
+    font-size: 11px; font-weight: 800; letter-spacing: .09em; text-transform: uppercase;
+    padding: 4px 16px; border-bottom: 1px solid var(--border);
+  }
+  .role-banner.main {
+    color: var(--gold);
+    background: linear-gradient(90deg, rgba(212, 167, 44, .16), rgba(212, 167, 44, .03));
+  }
+  .role-banner.comain {
+    color: #c9a0ff;
+    background: linear-gradient(90deg, rgba(163, 113, 247, .14), rgba(163, 113, 247, .03));
+  }
 
   /* -- cancelled fights: banner, kept in place -- */
   .duel.cancelled-fight { opacity: .75; }
@@ -259,12 +285,33 @@ const state = {
   data: null,
   model: null,
   tab: "ml",
-  ml:  { sort: "card", hidePickems: false, locksOnly: false },
+  search: "",
+  ml:  { sort: "card", hidePickems: false, locksOnly: false, hideNoPicks: false },
   mov: { sort: "card", hidePickems: false, locksOnly: false },
   dc:  { sort: "card", hidePickems: false, locksOnly: false },
   dog: { sort: "card" },
   parlay: { types: { ml: true, mov: true, dc: false, props: false }, legs: 3, useConf: false, minConf: 6 },
 };
+
+/* Remember the reader's tab, sorts, and filters between visits — the weekly
+ * ritual shouldn't start with re-setting the same controls every time. */
+const UI_STORE_KEY = "mma-consensus-ui-v1";
+function persistUi() {
+  try {
+    const { tab, search, ml, mov, dc, dog, parlay } = state;
+    localStorage.setItem(UI_STORE_KEY, JSON.stringify({ tab, search, ml, mov, dc, dog, parlay }));
+  } catch { /* private mode etc. — purely a convenience */ }
+}
+(function restoreUi() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(UI_STORE_KEY) || "null");
+    if (!saved) return;
+    for (const key of ["tab", "search"]) if (typeof saved[key] === "string") state[key] = saved[key];
+    for (const key of ["ml", "mov", "dc", "dog", "parlay"]) {
+      if (saved[key] && typeof saved[key] === "object") Object.assign(state[key], saved[key]);
+    }
+  } catch { /* corrupt store — defaults are fine */ }
+})();
 
 /* ---------- model building ---------- */
 const lastToken = (name) =>
@@ -331,6 +378,22 @@ function buildModel(data) {
 
     return { ...f, cardIndex: index, ml, mov, props, dogSide };
   });
+
+  // Main / co-main from the official card's bout order: the highest order is
+  // the last fight of the night — the main event — and the one below it the
+  // co-main. Cancelled bouts keep their slot (a cancelled main event is
+  // still the main event, just a cancelled one); off-card fights never get
+  // a role. No card annotation this run -> no roles anywhere.
+  const orders = fights
+    .filter((f) => !isOffCard(f))
+    .map((f) => f.card_order)
+    .filter(Number.isFinite);
+  const maxOrder = orders.length ? Math.max(...orders) : null;
+  for (const f of fights) {
+    f.cardRole = maxOrder != null && !isOffCard(f) && Number.isFinite(f.card_order)
+      ? (f.card_order === maxOrder ? "main" : f.card_order === maxOrder - 1 ? "comain" : null)
+      : null;
+  }
   return { fights };
 }
 
@@ -419,17 +482,21 @@ document.addEventListener("click", (e) => {
 });
 
 /* ---------- shared controls ---------- */
-function controlsHtml(key, { sorts = true, filters = true } = {}) {
+function controlsHtml(key, { sorts = true, filters = true, noPicksToggle = false } = {}) {
   const s = state[key];
   return `<div class="controls" data-ctl="${key}">
     ${sorts ? `<label>Sort
       <select data-ctl-sort>
-        <option value="card"${s.sort === "card" ? " selected" : ""}>Chronological (early → late)</option>
+        <option value="card"${s.sort === "card" ? " selected" : ""}>Earliest → latest (main event last)</option>
+        <option value="card-desc"${s.sort === "card-desc" ? " selected" : ""}>Latest → earliest (main event first)</option>
         <option value="conf"${s.sort === "conf" ? " selected" : ""}>Confidence (high → low)</option>
       </select></label>` : ""}
+    <label>Find <input type="search" data-ctl-search placeholder="fighter name…" value="${esc(state.search)}"></label>
     ${filters ? `
     <label><input type="checkbox" data-ctl-pickems${s.hidePickems ? " checked" : ""}> Hide pick&rsquo;ems <span class="hint">(&lt;${PICKEM_MAX_SHARE}% lead)</span></label>
     <label><input type="checkbox" data-ctl-locks${s.locksOnly ? " checked" : ""}> Locks only <span class="hint">(&ge;${LOCK.minShare}% share, conf &ge;${LOCK.minConf}, &ge;${LOCK.minPicks} cappers)</span></label>` : ""}
+    ${noPicksToggle ? `
+    <label><input type="checkbox" data-ctl-nopicks${s.hideNoPicks ? " checked" : ""}> Hide fights without picks</label>` : ""}
   </div>`;
 }
 document.addEventListener("change", (e) => {
@@ -439,19 +506,42 @@ document.addEventListener("change", (e) => {
   if (e.target.matches("[data-ctl-sort]")) s.sort = e.target.value;
   if (e.target.matches("[data-ctl-pickems]")) s.hidePickems = e.target.checked;
   if (e.target.matches("[data-ctl-locks]")) s.locksOnly = e.target.checked;
+  if (e.target.matches("[data-ctl-nopicks]")) s.hideNoPicks = e.target.checked;
   render();
 });
+// The search box re-renders per keystroke, which replaces the input element —
+// so focus and caret are put back afterwards or typing would stop at one char.
+document.addEventListener("input", (e) => {
+  if (!e.target.matches("[data-ctl-search]")) return;
+  state.search = e.target.value;
+  render();
+  const input = document.querySelector("[data-ctl-search]");
+  if (input) {
+    input.focus();
+    input.setSelectionRange(input.value.length, input.value.length);
+  }
+});
+
+/** Fighter-name filter: any token of either name starts with the query. */
+function matchesSearch(fight) {
+  const query = state.search.trim().toLowerCase();
+  if (!query) return true;
+  return String(fight.display ?? "").toLowerCase().includes(query);
+}
 
 function sortFights(fights, mode, confOf) {
   const list = [...fights];
   if (mode === "conf") {
     list.sort((x, y) => confOf(y) - confOf(x));
   } else {
-    // Chronological: the official card's bout order (0 = first fight of the
-    // night, from ESPN — see event_card.py). Fights the card doesn't know
-    // (no annotation this run) keep their data order, after the card.
+    // The official card's bout order (0 = first fight of the night, from
+    // ESPN — see event_card.py). "card" reads earliest → latest so the main
+    // event lands at the bottom; "card-desc" is the same walk from the main
+    // event down. Fights the card doesn't know (no annotation this run)
+    // keep their data order, after the card.
     const orderOf = (f) => (Number.isFinite(f.card_order) ? f.card_order : 1e6 + f.cardIndex);
     list.sort((x, y) => orderOf(x) - orderOf(y));
+    if (mode === "card-desc") list.reverse();
   }
   return list;
 }
@@ -461,7 +551,25 @@ const isOffCard = (f) => f.card_status === "off_card";
 const isCancelled = (f) => f.card_status === "cancelled";
 const cancelBannerHtml = (f) =>
   isCancelled(f) ? `<div class="cancel-banner">Fight cancelled — no longer on the card</div>` : "";
-const duelClass = (f) => `duel${isCancelled(f) ? " cancelled-fight" : ""}`;
+
+/** Whether the fight's leading moneyline qualifies as a Lock — the same rule
+ * the badge uses, shared so the gold outline can never disagree with it. */
+const isLockFight = (f) => {
+  const lead = mlLead(f);
+  return Boolean(lead && isLock(lead.share, lead.opt));
+};
+
+const duelClass = (f) => [
+  "duel",
+  isCancelled(f) ? "cancelled-fight" : "",
+  isLockFight(f) ? "lock-card" : "",
+].filter(Boolean).join(" ");
+
+/** The main / co-main strip (from the official card's bout order). */
+const roleBannerHtml = (f) =>
+  f.cardRole === "main" ? `<div class="role-banner main">★ Main Event</div>`
+  : f.cardRole === "comain" ? `<div class="role-banner comain">Co-Main Event</div>`
+  : "";
 
 /** Off-card picks (a Contender Series bout in the same video) render below a
  * divider instead of impersonating fights on this event's card. */
@@ -514,19 +622,21 @@ function renderML() {
   // Every bout on the official card shows here, picked or not — plus any
   // picked fight the card annotation doesn't cover (no card fetched).
   let fights = state.model.fights.filter((f) => f.ml.a || f.ml.b || (f.card_status && !isOffCard(f)));
+  fights = fights.filter(matchesSearch);
+  if (s.hideNoPicks) fights = fights.filter((f) => f.ml.a || f.ml.b);
   if (s.hidePickems) fights = fights.filter((f) => !isPickem(f));
-  if (s.locksOnly) fights = fights.filter((f) => { const l = mlLead(f); return l && isLock(l.share, l.opt); });
+  if (s.locksOnly) fights = fights.filter(isLockFight);
   fights = sortFights(fights, s.sort, (f) => mlLead(f)?.opt.avg_confidence ?? 0);
 
   const cardHtml = (f) => `<article class="${duelClass(f)}">
     <h2><span>${esc(f.display)}</span>${badgesHtml(f)}</h2>
-    ${cancelBannerHtml(f)}
+    ${roleBannerHtml(f)}${cancelBannerHtml(f)}
     <div class="sides">${mlSideHtml(f, "a")}${mlSideHtml(f, "b")}</div>
   </article>`;
   const onCard = fights.filter((f) => !isOffCard(f));
   const offCard = fights.filter(isOffCard);
 
-  return controlsHtml("ml")
+  return controlsHtml("ml", { noPicksToggle: true })
     + `<div class="count-note">${onCard.length} fight${onCard.length === 1 ? "" : "s"}</div>`
     + (onCard.map(cardHtml).join("") || `<p class="notice">Nothing matches the current filters.</p>`)
     + offCardSection(offCard, cardHtml);
@@ -560,6 +670,7 @@ function movRows(fight, side, title) {
 function renderMOV() {
   const s = state.mov;
   let fights = state.model.fights.filter((f) => f.mov.a.length || f.mov.b.length);
+  fights = fights.filter(matchesSearch);
   if (s.hidePickems) fights = fights.filter((f) => !isPickem(f));
   if (s.locksOnly) fights = fights.filter((f) => {
     const best = [...f.mov.a, ...f.mov.b].sort((x, y) => y.consensus_pct - x.consensus_pct)[0];
@@ -569,7 +680,7 @@ function renderMOV() {
 
   const cardHtml = (f) => `<article class="${duelClass(f)}">
     <h2><span>${esc(f.display)}</span>${badgesHtml(f)}</h2>
-    ${cancelBannerHtml(f)}
+    ${roleBannerHtml(f)}${cancelBannerHtml(f)}
     <div class="sides">${movRows(f, "a")}${movRows(f, "b")}</div>
   </article>`;
   const onCard = fights.filter((f) => !isOffCard(f));
@@ -614,6 +725,7 @@ function dcSideHtml(fight, side) {
 function renderDC() {
   const s = state.dc;
   let fights = state.model.fights.filter((f) => f.mov.a.length || f.mov.b.length);
+  fights = fights.filter(matchesSearch);
   if (s.hidePickems) fights = fights.filter((f) => !isPickem(f));
   if (s.locksOnly) fights = fights.filter((f) => {
     const best = [doubleChance(f, "a"), doubleChance(f, "b")].filter(Boolean).sort((x, y) => y.share - x.share)[0];
@@ -624,7 +736,7 @@ function renderDC() {
 
   const cardHtml = (f) => `<article class="${duelClass(f)}">
     <h2><span>${esc(f.display)}</span>${badgesHtml(f)}</h2>
-    ${cancelBannerHtml(f)}
+    ${roleBannerHtml(f)}${cancelBannerHtml(f)}
     <div class="sides">${dcSideHtml(f, "a")}${dcSideHtml(f, "b")}</div>
   </article>`;
   const onCard = fights.filter((f) => !isOffCard(f));
@@ -638,7 +750,7 @@ function renderDC() {
 /* ---------- tab: underdogs ---------- */
 function renderDogs() {
   const s = state.dog;
-  let fights = state.model.fights.filter((f) => f.dogSide);
+  let fights = state.model.fights.filter((f) => f.dogSide).filter(matchesSearch);
   fights = sortFights(fights, s.sort, (f) => f.ml[f.dogSide]?.avg_confidence ?? movLeadConf(f));
 
   const cardHtml = (f) => {
@@ -674,7 +786,7 @@ function renderDogs() {
     }
     return `<article class="${duelClass(f)}">
       <h2><span>${esc(name)} <span class="badge dog">underdog</span> <span class="meta">— ${esc(f.display)}</span></span>${badgesHtml(f)}</h2>
-      ${cancelBannerHtml(f)}
+      ${roleBannerHtml(f)}${cancelBannerHtml(f)}
       <div class="sides" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">${sections.join("")}</div>
     </article>`;
   };
@@ -909,9 +1021,14 @@ document.getElementById("about-btn").addEventListener("click", () => openOverlay
     <dt>picks</dt>
     <dd>How many cappers back this option. One capper counts once per option
     &mdash; if they said it in two videos, only their strongest statement counts.</dd>
-    <dt>Lock badge</dt>
+    <dt>Lock badge + gold outline</dt>
     <dd>&ge;${LOCK.minShare}% consensus share, avg conf &ge;${LOCK.minConf}, and at least
-    ${LOCK.minPicks} cappers.</dd>
+    ${LOCK.minPicks} cappers. Lock fights carry a gold outline around the whole
+    card so they read at a glance.</dd>
+    <dt>Main Event / Co-Main banners</dt>
+    <dd>The last and second-to-last bouts of the official card (per ESPN's
+    bout order). A cancelled main event keeps its banner — it's still the
+    main event, just a cancelled one.</dd>
     <dt>Pick&rsquo;em badge</dt>
     <dd>The leading side has under ${PICKEM_MAX_SHARE}% of the weight &mdash; the cappers
     are genuinely split.</dd>
@@ -938,6 +1055,7 @@ function render() {
     `<button data-tab="${t.id}" class="${state.tab === t.id ? "active" : ""}">${t.label}</button>`).join("");
   const tab = TABS.find((t) => t.id === state.tab) || TABS[0];
   $("#main").innerHTML = tab.render();
+  persistUi();
 }
 document.addEventListener("click", (e) => {
   const btn = e.target.closest("[data-tab]");
@@ -961,7 +1079,18 @@ fetch(`data.json?t=${Date.now()}`)
     $("#event-name").textContent = event.name || "Unnamed event";
     const card = event.card || null;
     const onCardCount = (data.fights || []).filter((f) => f.card_status && f.card_status !== "off_card").length;
+    // "Sat, Aug 15 · in 3 days" from the official card's start time — the
+    // countdown flips to "today" on fight day and disappears once past.
+    let whenHtml = "";
+    const startMs = card?.date ? Date.parse(card.date) : NaN;
+    if (Number.isFinite(startMs)) {
+      const dayText = new Date(startMs).toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" });
+      const daysOut = Math.ceil((startMs - Date.now()) / 86400000);
+      const countdown = daysOut > 1 ? ` (in ${daysOut} days)` : daysOut === 1 ? " (tomorrow)" : daysOut === 0 ? " (today!)" : "";
+      whenHtml = `${esc(dayText)}${esc(countdown)} &middot; `;
+    }
     $("#event-meta").innerHTML =
+      whenHtml +
       (card ? `official card: ${esc(onCardCount)} bouts &middot; ` : `${esc(totals.fights ?? 0)} fights &middot; `) +
       `${esc(totals.picks ?? 0)} picks &middot; ` +
       `${esc(totals.cappers ?? 0)} cappers &middot; generated ${esc(generated)}`;
