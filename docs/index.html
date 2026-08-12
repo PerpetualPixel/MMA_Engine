@@ -166,6 +166,21 @@
   .mov-row:first-of-type { border-top: 0; margin-top: 0; }
   .mov-row .mv-label { font-weight: 600; font-size: 13px; }
 
+  /* -- straights tab -- */
+  .straight-best { padding: 12px 16px 14px; border-top: 1px solid var(--border); background: var(--strong-dim); }
+  .straight-best .mv-label { font-weight: 700; font-size: 15px; }
+  .straight-odds {
+    font-variant-numeric: tabular-nums; font-weight: 800; color: var(--gold);
+    font-size: 15px; margin-left: 6px;
+  }
+  .mov-row .straight-odds { font-size: 13px; }
+  .tag.straight-value-tag { color: var(--strong); border-color: var(--strong); margin-left: 6px; }
+  .straight-more { padding: 4px 16px 12px; border-top: 1px dashed var(--border); }
+  .straight-more-title {
+    color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .06em;
+    font-weight: 700; margin: 8px 0 2px;
+  }
+
   /* -- cappers tab -- */
   .capper-row {
     display: grid; grid-template-columns: auto 1fr auto auto; gap: 12px; align-items: center;
@@ -290,6 +305,7 @@ const state = {
   mov: { sort: "card", hidePickems: false, locksOnly: false },
   dc:  { sort: "card", hidePickems: false, locksOnly: false },
   dog: { sort: "card" },
+  straights: { sort: "value", floor: "-200" },
   parlay: { types: { ml: true, mov: true, dc: false, props: false }, legs: 3, useConf: false, minConf: 6 },
 };
 
@@ -298,8 +314,8 @@ const state = {
 const UI_STORE_KEY = "mma-consensus-ui-v1";
 function persistUi() {
   try {
-    const { tab, search, ml, mov, dc, dog, parlay } = state;
-    localStorage.setItem(UI_STORE_KEY, JSON.stringify({ tab, search, ml, mov, dc, dog, parlay }));
+    const { tab, search, ml, mov, dc, dog, straights, parlay } = state;
+    localStorage.setItem(UI_STORE_KEY, JSON.stringify({ tab, search, ml, mov, dc, dog, straights, parlay }));
   } catch { /* private mode etc. — purely a convenience */ }
 }
 (function restoreUi() {
@@ -307,7 +323,7 @@ function persistUi() {
     const saved = JSON.parse(localStorage.getItem(UI_STORE_KEY) || "null");
     if (!saved) return;
     for (const key of ["tab", "search"]) if (typeof saved[key] === "string") state[key] = saved[key];
-    for (const key of ["ml", "mov", "dc", "dog", "parlay"]) {
+    for (const key of ["ml", "mov", "dc", "dog", "straights", "parlay"]) {
       if (saved[key] && typeof saved[key] === "object") Object.assign(state[key], saved[key]);
     }
   } catch { /* corrupt store — defaults are fine */ }
@@ -507,6 +523,7 @@ document.addEventListener("change", (e) => {
   if (e.target.matches("[data-ctl-pickems]")) s.hidePickems = e.target.checked;
   if (e.target.matches("[data-ctl-locks]")) s.locksOnly = e.target.checked;
   if (e.target.matches("[data-ctl-nopicks]")) s.hideNoPicks = e.target.checked;
+  if (e.target.matches("[data-ctl-floor]")) s.floor = e.target.value;
   render();
 });
 // The search box re-renders per keystroke, which replaces the input element —
@@ -854,6 +871,144 @@ document.addEventListener("click", (e) => {
     <div class="sub">${capper.picks.length} picks &middot; total weight ${fmt1(capper.weight)}</div>${body}`);
 });
 
+/* ---------- tab: straights (value singles) ---------- */
+/* A straight is one bet run on its own, so the price IS the point: a pick
+ * the cappers love at -250 pays too little to carry alone, while the same
+ * conviction at -150 or plus money is the play. Prices come from the odds
+ * the cappers themselves quoted in their videos — picks nobody priced can't
+ * be judged for value and are left out rather than guessed at. */
+
+function parseAmerican(text) {
+  const match = String(text ?? "").match(/([+-])\s?(\d{2,4})(?!\d)/);
+  if (!match) return null;
+  const value = Number(match[2]) * (match[1] === "-" ? -1 : 1);
+  return Math.abs(value) < 100 ? null : value;
+}
+const americanToDecimal = (a) => (a > 0 ? 1 + a / 100 : 1 + 100 / Math.abs(a));
+const decimalToAmerican = (d) =>
+  d >= 2 ? Math.round((d - 1) * 100) : -Math.round(100 / (d - 1 === 0 ? 1 : d - 1));
+
+/** The consensus price of one option: the median of its backers' quoted
+ * odds (they watch different books, so quotes differ a little). Null when
+ * nobody stated a price. */
+function optionQuotedOdds(option) {
+  const decimals = (option.cappers || [])
+    .map((c) => parseAmerican(c.odds))
+    .filter((a) => a != null)
+    .map(americanToDecimal)
+    .sort((x, y) => x - y);
+  if (!decimals.length) return null;
+  const mid = Math.floor(decimals.length / 2);
+  const median = decimals.length % 2 ? decimals[mid] : (decimals[mid - 1] + decimals[mid]) / 2;
+  return { decimal: median, american: decimalToAmerican(median), quoted: decimals.length };
+}
+
+/** picks.json's own strength formula, inlined so the tab ranks with the
+ * same 0-10 number the feed publishes: consensus share x how much absolute
+ * trust-weight is behind it. */
+function optionStrength(option) {
+  const conviction = (option.consensus_pct ?? 0) / 100;
+  const backing = Math.min(1, (option.weight ?? 0) / 20);
+  return Math.round(10 * conviction * (0.5 + 0.5 * backing) * 10) / 10;
+}
+
+/** Every priced option of a fight at or longer than the floor, across ALL
+ * markets — moneyline, method, rounds, props — ranked by value. */
+function straightCandidates(fight, floorDecimal) {
+  const out = [];
+  for (const market of fight.markets || []) {
+    for (const option of market.options || []) {
+      const odds = optionQuotedOdds(option);
+      if (!odds || odds.decimal < floorDecimal) continue;
+      const strength = optionStrength(option);
+      out.push({
+        fight, marketLabel: market.label, selection: option.selection,
+        odds, strength, conf: option.avg_confidence, picks: option.pick_count,
+        weight: option.weight, cappers: option.cappers,
+        // Potential profit per $1 staked, scaled by how strongly the
+        // weighted consensus backs the pick — the number the Value sort
+        // runs on. +150 at strength 6 (3.0) beats -110 at strength 3 (0.3).
+        value: Math.round((odds.decimal - 1) * strength * 10) / 10,
+      });
+    }
+  }
+  return out.sort((x, y) => y.value - x.value);
+}
+
+const FLOOR_CHOICES = [
+  { key: "-300", label: "-300 or longer" },
+  { key: "-250", label: "-250 or longer" },
+  { key: "-200", label: "-200 or longer" },
+  { key: "-150", label: "-150 or longer" },
+  { key: "+100", label: "Plus money only" },
+];
+const floorDecimalOf = (key) => americanToDecimal(parseAmerican(key === "+100" ? "+100" : key) ?? -200);
+
+function fmtAmerican(a) { return a > 0 ? `+${a}` : String(a); }
+
+function straightRowHtml(c, big) {
+  const why = big ? bullets(c.cappers, 2) : [];
+  return `<div class="${big ? "straight-best" : "mov-row"}">
+    <div class="mv-label">${esc(c.selection)}
+      <span class="straight-odds">${esc(fmtAmerican(c.odds.american))}</span>
+      <span class="tag straight-value-tag">value ${esc(c.value)}</span></div>
+    <div class="statline">${esc(c.marketLabel)} &middot; strength <b>${esc(c.strength)}</b>/10 &middot; avg conf <b>${esc(c.conf)}</b>/10 &middot; <b>${esc(c.picks)}</b> pick${c.picks === 1 ? "" : "s"} &middot; priced by <b>${esc(c.odds.quoted)}</b></div>
+    ${why.length ? `<ul class="why">${why.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>` : ""}
+    ${capperBtn(`${c.selection} (${fmtAmerican(c.odds.american)})`, c.fight.display, c.cappers)}
+  </div>`;
+}
+
+function renderStraights() {
+  const s = state.straights;
+  const floorDecimal = floorDecimalOf(s.floor);
+
+  const entries = state.model.fights
+    .filter((f) => !isOffCard(f) && !isCancelled(f))
+    .filter(matchesSearch)
+    .map((f) => ({ fight: f, plays: straightCandidates(f, floorDecimal) }))
+    .filter((e) => e.plays.length);
+
+  if (s.sort === "value") entries.sort((x, y) => y.plays[0].value - x.plays[0].value);
+  else if (s.sort === "conf") entries.sort((x, y) => y.plays[0].conf - x.plays[0].conf);
+  else {
+    const orderOf = (e) => (Number.isFinite(e.fight.card_order) ? e.fight.card_order : 1e6 + e.fight.cardIndex);
+    entries.sort((x, y) => orderOf(x) - orderOf(y));
+    if (s.sort === "card-desc") entries.reverse();
+  }
+
+  const controls = `<div class="controls" data-ctl="straights">
+    <label>Sort
+      <select data-ctl-sort>
+        <option value="value"${s.sort === "value" ? " selected" : ""}>Best value first</option>
+        <option value="conf"${s.sort === "conf" ? " selected" : ""}>Confidence (high → low)</option>
+        <option value="card"${s.sort === "card" ? " selected" : ""}>Earliest → latest (main event last)</option>
+        <option value="card-desc"${s.sort === "card-desc" ? " selected" : ""}>Latest → earliest (main event first)</option>
+      </select></label>
+    <label>Odds floor
+      <select data-ctl-floor>${FLOOR_CHOICES.map((f) =>
+        `<option value="${f.key}"${s.floor === f.key ? " selected" : ""}>${f.label}</option>`).join("")}
+      </select> <span class="hint">no ceiling — dogs always qualify</span></label>
+    <label>Find <input type="search" data-ctl-search placeholder="fighter name…" value="${esc(state.search)}"></label>
+  </div>`;
+
+  const cards = entries.map(({ fight, plays }) => {
+    const [best, ...rest] = plays;
+    return `<article class="${duelClass(fight)}">
+      <h2><span>${esc(fight.display)}</span>${badgesHtml(fight)}</h2>
+      ${roleBannerHtml(fight)}
+      ${straightRowHtml(best, true)}
+      ${rest.length ? `<div class="straight-more"><div class="straight-more-title">More value on this fight</div>
+        ${rest.slice(0, 4).map((c) => straightRowHtml(c, false)).join("")}</div>` : ""}
+    </article>`;
+  }).join("");
+
+  return controls
+    + `<div class="count-note">${entries.length} fight${entries.length === 1 ? "" : "s"} with a priced play at ${esc(FLOOR_CHOICES.find((f) => f.key === s.floor)?.label.toLowerCase() ?? s.floor)}.
+       Only picks whose cappers quoted a price can be judged for value — unpriced picks aren't guessed at.
+       Value = potential profit per $1 (from the backers' median quoted odds) &times; the pick's strength/10.</div>`
+    + (cards || `<p class="notice">No priced picks clear the current floor — lower it, or wait for a run with more quoted odds.</p>`);
+}
+
 /* ---------- tab: parlay builder ---------- */
 function parlayCandidates() {
   const p = state.parlay;
@@ -1036,7 +1191,16 @@ document.getElementById("about-btn").addEventListener("click", () => openOverlay
     <dd>The side most of its backers described as the betting underdog.</dd>
     <dt>Cancelled banner</dt>
     <dd>The bout was on the official card (per ESPN) and no longer is. Kept
-    visible so its picks don't silently vanish, but excluded from parlays.</dd>
+    visible so its picks don't silently vanish, but excluded from parlays
+    and straights.</dd>
+    <dt>Straights tab</dt>
+    <dd>Value singles across every market. A pick only qualifies when its
+    backers actually quoted a price (the median of their quotes is the price
+    shown) and that price clears the odds floor — heavy chalk pays too
+    little to run alone, so -250 favorites are filtered out by default while
+    underdogs always qualify. <b>value</b> = potential profit per $1
+    &times; the pick's strength/10, so a +150 the cappers genuinely back
+    outranks both a longshot nobody's behind and a -110 with thin support.</dd>
   </dl>`));
 
 /* ---------- shell ---------- */
@@ -1045,6 +1209,7 @@ const TABS = [
   { id: "mov", label: "Method of Victory", render: renderMOV },
   { id: "dc", label: "Double Chance", render: renderDC },
   { id: "dog", label: "Underdogs", render: renderDogs },
+  { id: "straights", label: "Straights", render: renderStraights },
   { id: "cappers", label: "Cappers", render: renderCappersTab },
   { id: "parlay", label: "Parlay Builder", render: renderParlay },
 ];
