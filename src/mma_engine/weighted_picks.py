@@ -115,11 +115,11 @@ def build_picks(consensus: dict[str, Any]) -> dict[str, Any]:
 
     for fight in consensus.get("fights", []):
         # Where this fight stands on the event's official card (see
-        # event_card.py): "on_card" / "cancelled" / "off_card", or None when
-        # the run couldn't fetch a card. Passed through on every pick so the
-        # website can banner a cancelled fight's picks and treat off-card
-        # ones (a Contender Series bout from the same video) as belonging to
-        # a different event. Additive — schema_version stays 1.
+        # event_card.py): "on_card" / "cancelled", or None when the run
+        # couldn't fetch a card. Passed through on every pick so the website
+        # can banner a cancelled fight's picks. Fights for other events never
+        # reach the feed — the card annotation drops them upstream.
+        # Additive — schema_version stays 1.
         card_status = fight.get("card_status")
         for market in fight.get("markets", []):
             options = market.get("options", [])

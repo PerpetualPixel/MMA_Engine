@@ -230,9 +230,10 @@ def annotate_odds(
     stamp = fetched_at or datetime.now(timezone.utc).isoformat(timespec="seconds")
     matched = 0
     for fight in payload.get("fights") or []:
-        # An off-card pick belongs to a different event; a cancelled bout has
-        # no market left to price. Both are excluded from parlays anyway.
-        if fight.get("card_status") in ("off_card", "cancelled"):
+        # A cancelled bout has no market left to price, and is excluded from
+        # parlays anyway. (Fights for other events never reach here — the
+        # card annotation drops them before this runs.)
+        if fight.get("card_status") == "cancelled":
             continue
         # Two fighters reducing to the same surname is normalize.py's known
         # collision. Elsewhere it merely over-groups; here it would map one

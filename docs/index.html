@@ -121,12 +121,6 @@
     padding: 5px 16px;
   }
 
-  /* -- off-card section (picks from other events found in the same videos) -- */
-  .offcard-note {
-    color: var(--muted); font-size: 12.5px; border-top: 1px dashed var(--border);
-    margin-top: 26px; padding-top: 14px;
-  }
-
   /* -- about button -- */
   button.about-btn {
     background: var(--panel-2); border: 1px solid var(--border); color: var(--muted);
@@ -480,15 +474,12 @@ function buildModel(data) {
   // Main / co-main from the official card's bout order: the highest order is
   // the last fight of the night — the main event — and the one below it the
   // co-main. Cancelled bouts keep their slot (a cancelled main event is
-  // still the main event, just a cancelled one); off-card fights never get
-  // a role. No card annotation this run -> no roles anywhere.
-  const orders = fights
-    .filter((f) => !isOffCard(f))
-    .map((f) => f.card_order)
-    .filter(Number.isFinite);
+  // still the main event, just a cancelled one). No card annotation this
+  // run -> no roles anywhere.
+  const orders = fights.map((f) => f.card_order).filter(Number.isFinite);
   const maxOrder = orders.length ? Math.max(...orders) : null;
   for (const f of fights) {
-    f.cardRole = maxOrder != null && !isOffCard(f) && Number.isFinite(f.card_order)
+    f.cardRole = maxOrder != null && Number.isFinite(f.card_order)
       ? (f.card_order === maxOrder ? "main" : f.card_order === maxOrder - 1 ? "comain" : null)
       : null;
   }
@@ -646,7 +637,6 @@ function sortFights(fights, mode, confOf) {
 }
 
 /* ---------- card status (see event_card.py) ---------- */
-const isOffCard = (f) => f.card_status === "off_card";
 const isCancelled = (f) => f.card_status === "cancelled";
 const cancelBannerHtml = (f) =>
   isCancelled(f) ? `<div class="cancel-banner">Fight cancelled — no longer on the card</div>` : "";
@@ -669,16 +659,6 @@ const roleBannerHtml = (f) =>
   f.cardRole === "main" ? `<div class="role-banner main">★ Main Event</div>`
   : f.cardRole === "comain" ? `<div class="role-banner comain">Co-Main Event</div>`
   : "";
-
-/** Off-card picks (a Contender Series bout in the same video) render below a
- * divider instead of impersonating fights on this event's card. */
-function offCardSection(fights, cardHtml) {
-  if (!fights.length) return "";
-  return `<div class="offcard-note"><b>Not on this card</b> — picks for other
-    events (Contender Series, other promotions) that cappers made in the same
-    videos. Kept visible, but they are not part of this event.</div>`
-    + fights.map(cardHtml).join("");
-}
 
 /* ---------- side rendering ---------- */
 function sideClass(share, otherShare, hasPicks) {
@@ -730,7 +710,7 @@ function renderML() {
   const s = state.ml;
   // Every bout on the official card shows here, picked or not — plus any
   // picked fight the card annotation doesn't cover (no card fetched).
-  let fights = state.model.fights.filter((f) => f.ml.a || f.ml.b || (f.card_status && !isOffCard(f)));
+  let fights = state.model.fights.filter((f) => f.ml.a || f.ml.b || f.card_status);
   fights = fights.filter(matchesSearch);
   if (s.hideNoPicks) fights = fights.filter((f) => f.ml.a || f.ml.b);
   if (s.hidePickems) fights = fights.filter((f) => !isPickem(f));
@@ -742,13 +722,9 @@ function renderML() {
     ${roleBannerHtml(f)}${cancelBannerHtml(f)}
     <div class="sides">${mlSideHtml(f, "a")}${mlSideHtml(f, "b")}</div>
   </article>`;
-  const onCard = fights.filter((f) => !isOffCard(f));
-  const offCard = fights.filter(isOffCard);
-
   return controlsHtml("ml", { noPicksToggle: true })
-    + `<div class="count-note">${onCard.length} fight${onCard.length === 1 ? "" : "s"}</div>`
-    + (onCard.map(cardHtml).join("") || `<p class="notice">Nothing matches the current filters.</p>`)
-    + offCardSection(offCard, cardHtml);
+    + `<div class="count-note">${fights.length} fight${fights.length === 1 ? "" : "s"}</div>`
+    + (fights.map(cardHtml).join("") || `<p class="notice">Nothing matches the current filters.</p>`);
 }
 
 /* ---------- tab: method of victory ---------- */
@@ -792,12 +768,9 @@ function renderMOV() {
     ${roleBannerHtml(f)}${cancelBannerHtml(f)}
     <div class="sides">${movRows(f, "a")}${movRows(f, "b")}</div>
   </article>`;
-  const onCard = fights.filter((f) => !isOffCard(f));
-
   return controlsHtml("mov")
-    + `<div class="count-note">${onCard.length} fight${onCard.length === 1 ? "" : "s"} with method-of-victory picks</div>`
-    + (onCard.map(cardHtml).join("") || `<p class="notice">Nothing matches the current filters.</p>`)
-    + offCardSection(fights.filter(isOffCard), cardHtml);
+    + `<div class="count-note">${fights.length} fight${fights.length === 1 ? "" : "s"} with method-of-victory picks</div>`
+    + (fights.map(cardHtml).join("") || `<p class="notice">Nothing matches the current filters.</p>`);
 }
 
 /* ---------- tab: double chance (top-2 methods pooled) ---------- */
@@ -848,12 +821,9 @@ function renderDC() {
     ${roleBannerHtml(f)}${cancelBannerHtml(f)}
     <div class="sides">${dcSideHtml(f, "a")}${dcSideHtml(f, "b")}</div>
   </article>`;
-  const onCard = fights.filter((f) => !isOffCard(f));
-
   return controlsHtml("dc")
     + `<div class="count-note">Each fighter&rsquo;s two most-backed methods pooled together</div>`
-    + (onCard.map(cardHtml).join("") || `<p class="notice">Nothing matches the current filters.</p>`)
-    + offCardSection(fights.filter(isOffCard), cardHtml);
+    + (fights.map(cardHtml).join("") || `<p class="notice">Nothing matches the current filters.</p>`);
 }
 
 /* ---------- tab: underdogs ---------- */
@@ -899,12 +869,9 @@ function renderDogs() {
       <div class="sides" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">${sections.join("")}</div>
     </article>`;
   };
-  const onCard = fights.filter((f) => !isOffCard(f));
-
   return controlsHtml("dog", { filters: false })
     + `<div class="count-note">Fights where cappers backed the underdog (by their own framing)</div>`
-    + (onCard.map(cardHtml).join("") || `<p class="notice">No underdog picks in this event&rsquo;s data.</p>`)
-    + offCardSection(fights.filter(isOffCard), cardHtml);
+    + (fights.map(cardHtml).join("") || `<p class="notice">No underdog picks in this event&rsquo;s data.</p>`);
 }
 
 /* ---------- tab: cappers ---------- */
@@ -1117,7 +1084,7 @@ function renderStraights() {
   const floorDecimal = floorDecimalOf(s.floor);
 
   const entries = state.model.fights
-    .filter((f) => !isOffCard(f) && !isCancelled(f))
+    .filter((f) => !isCancelled(f))
     .filter(matchesSearch)
     .map((f) => ({ fight: f, plays: straightCandidates(f, floorDecimal) }))
     .filter((e) => e.plays.length);
@@ -1199,14 +1166,12 @@ function parlayCandidates() {
   const p = state.parlay;
   const out = [];
   for (const f of state.model.fights) {
-    // A cancelled bout can't be a parlay leg, and an off-card pick belongs
-    // to a different event than the parlay being built.
-    if (isCancelled(f) || isOffCard(f)) continue;
+    // A cancelled bout can't be a parlay leg.
+    if (isCancelled(f)) continue;
     const add = (type, label, share, conf, weight, picks, cappers, price) => out.push({
       fightKey: f.cardIndex, fight: f.display,
       // The official card's bout order (0 = first fight of the night), the
-      // same field the other tabs sort on. Off-card fights are already gone
-      // by here, so every candidate has a real one.
+      // same field the other tabs sort on.
       cardOrder: Number.isFinite(f.card_order) ? f.card_order : Infinity,
       type, label, share, conf, weight, picks, cappers,
       // May be null: not every pick has a price. Legs without one are shown
@@ -1678,7 +1643,6 @@ fetch(`data.json?t=${Date.now()}`)
     const totals = data.totals || {};
     $("#event-name").textContent = event.name || "Unnamed event";
     const card = event.card || null;
-    const onCardCount = (data.fights || []).filter((f) => f.card_status && f.card_status !== "off_card").length;
     // "Sat, Aug 15 · in 3 days" from the official card's start time — the
     // countdown flips to "today" on fight day and disappears once past.
     let whenHtml = "";
@@ -1698,7 +1662,7 @@ fetch(`data.json?t=${Date.now()}`)
       : "";
     $("#event-meta").innerHTML =
       whenHtml +
-      (card ? `official card: ${esc(onCardCount)} bouts &middot; ` : `${esc(totals.fights ?? 0)} fights &middot; `) +
+      (card ? `official card: ${esc(card.bouts ?? 0)} bouts &middot; ` : `${esc(totals.fights ?? 0)} fights &middot; `) +
       `${esc(totals.picks ?? 0)} picks &middot; ` +
       `${esc(totals.cappers ?? 0)} cappers &middot; generated ${esc(generated)}` +
       oddsHtml;

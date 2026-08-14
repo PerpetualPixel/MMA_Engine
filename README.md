@@ -282,6 +282,41 @@ side's price on the other.
 
 ---
 
+## The official card is the boundary
+
+Capper videos are not neatly scoped to one event. A single upload will cover
+this weekend's UFC card, next week's Fight Night and a Contender Series bout
+in the same breath, and auto-captions invent pairings that were never fights
+at all — one bout can surface as a dozen phantom matchups once every capper
+mangles the names differently.
+
+So the event's official card decides what is in the payload. Every run reads
+the card from **ESPN's MMA scoreboard** (`site.web.api.espn.com`, no key
+needed) for the event named in `config.json` → `event.name`, matches each
+consensus fight against it on surnames, and:
+
+| Outcome | What happens |
+| --- | --- |
+| Matches a bout on the card | Kept, tagged `card_status: "on_card"`, given the bout's `card_order`, and renamed to ESPN's clean spellings |
+| ESPN marks the bout canceled, or it was on the card last run and is gone now | Kept, tagged `card_status: "cancelled"` — a cancellation is something to show, not to hide |
+| On the card but nobody picked it | Appended as a pickless fight, so the dashboard lists the whole card |
+| Anything else | **Dropped.** Not in `data.json`, not in `picks.json`, not selectable as a parlay leg |
+
+The headline totals (`totals.fights` / `picks` / `cappers` / `videos`) are
+recounted after the drop, so the numbers describe the card you're looking at
+rather than everything the transcripts mentioned.
+`event.card.off_card_dropped` records how many were removed.
+
+Fail-open, like everything else here: if ESPN is unreachable or the event
+name matches nothing, **nothing is dropped**. A run with no card has no basis
+on which to call a fight off-card, so it keeps everything and leaves
+`card_status` unset rather than guessing. Check the run log for
+`No ESPN card found matching ...` if the dashboard suddenly shows more fights
+than the card has — the usual cause is `event.name` in `config.json` not
+matching ESPN's title for the event.
+
+---
+
 ## Channel discovery
 
 Rather than pasting eight video URLs every week, discovery lists each capper

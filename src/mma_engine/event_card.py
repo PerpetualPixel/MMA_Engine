@@ -2,16 +2,21 @@
 
 The consensus is built from whatever the cappers talked about, which is not
 the same thing as the event: prediction videos routinely cover side content
-(a Contender Series card, next week's Fight Night) in the same upload, and
-those picks would otherwise render as phantom fights on the dashboard. ESPN's
+(a Contender Series card, next week's Fight Night) in the same upload, and a
+transcript garble invents pairings that were never fights at all. ESPN's
 scoreboard carries the real card — every bout, in order, with per-fight
-status — so each consensus fight is annotated with where it actually stands:
+status — so it decides which fights survive into the payload:
 
     card_status: "on_card"   — matched to a bout on this event's card
                  "cancelled" — was on the card and is no longer scheduled
                                (ESPN marks it canceled, or it vanished from
                                the card between runs)
-                 "off_card"  — real picks, but not this event (the DWCS case)
+
+Anything else is dropped outright. The card is the event, so a fight that is
+not on it does not belong in the event's payload — not in the dashboard, not
+in picks.json, not in a parlay. The alternative (keeping them under an
+"other events" heading) put dozens of caption-mangled non-fights next to the
+real card and made the reader do the filtering.
 
 On-card fights also gain `card_order` (0 = earliest bout of the night — ESPN
 lists the main event first, so chronological order is the reverse of listing
@@ -23,8 +28,10 @@ Bouts nobody picked are appended as pickless fights, so the dashboard shows
 the whole card rather than only the fights that happened to get coverage.
 
 Fail-open by design: if ESPN is unreachable or the event can't be found, the
-payload is returned un-annotated (no card_status anywhere) and the pipeline
-logs and moves on — a missing scoreboard must never cost the weekly run.
+payload is returned un-annotated (no card_status anywhere) and NOTHING is
+dropped — the pipeline logs and moves on. A missing scoreboard must never
+cost the weekly run, and a run with no card has no basis on which to call a
+fight off-card, so it keeps everything rather than guessing.
 
 The same host (site.web.api.espn.com) is what PerpetualCode's worker already
 uses for UFC event matching and MMA settlement, so the two ends of the
@@ -165,17 +172,41 @@ def _match_card_fight(fight: dict[str, Any], card_fights: list[dict[str, Any]]) 
     return None
 
 
+def _refresh_totals(payload: dict[str, Any]) -> None:
+    """Recount the headline totals over the fights that survived the card
+    filter, so "21 cappers across 61 fights" describes the payload the reader
+    is actually looking at rather than everything the transcripts mentioned."""
+    fights = payload.get("fights") or []
+    cappers: set[str] = set()
+    videos: set[str] = set()
+    picks = 0
+    for fight in fights:
+        for market in fight.get("markets") or []:
+            for option in market.get("options") or []:
+                for capper in option.get("cappers") or []:
+                    picks += 1
+                    if capper.get("id"):
+                        cappers.add(capper["id"])
+                    if capper.get("video_url"):
+                        videos.add(capper["video_url"])
+    payload.setdefault("totals", {}).update(
+        fights=len(fights), picks=picks, cappers=len(cappers), videos=len(videos)
+    )
+
+
 def annotate_consensus(
     payload: dict[str, Any],
     card: dict[str, Any] | None,
     previous_fights: list[dict[str, Any]] | None = None,
 ) -> None:
-    """Stamp card_status / card_order onto the consensus payload, in place.
+    """Reduce the consensus to this event's card, in place.
 
-    `previous_fights` is the prior run's payload["fights"], used to catch the
-    quiet cancellation: a bout ESPN simply removes from the card (rather than
-    marking canceled) was on_card last run and unmatched now — that is a
-    cancellation the user should see, not a fight to silently drop.
+    Fights matching a bout on the card are stamped with card_status /
+    card_order and kept; everything else is dropped. `previous_fights` is the
+    prior run's payload["fights"], used to catch the quiet cancellation: a
+    bout ESPN simply removes from the card (rather than marking canceled) was
+    on_card last run and unmatched now — that is a cancellation the user
+    should see, so it is kept and flagged rather than dropped with the rest.
     """
     if not card:
         return
@@ -186,12 +217,18 @@ def annotate_consensus(
             previously_on_card.add(_card_key(fight))
 
     matched_orders: set[int] = set()
+    kept: list[dict[str, Any]] = []
+    dropped = 0
     for fight in payload.get("fights") or []:
         bout = _match_card_fight(fight, card["fights"])
         if bout is None:
-            was_on_card = _card_key(fight) in previously_on_card
-            fight["card_status"] = "cancelled" if was_on_card else "off_card"
+            if _card_key(fight) in previously_on_card:
+                fight["card_status"] = "cancelled"
+                kept.append(fight)
+            else:
+                dropped += 1
             continue
+        kept.append(fight)
         matched_orders.add(bout["order"])
         fight["card_status"] = "cancelled" if bout["cancelled"] else "on_card"
         fight["card_order"] = bout["order"]
@@ -206,12 +243,14 @@ def annotate_consensus(
         fight["fighter_a"], fight["fighter_b"] = clean_a, clean_b
         fight["display"] = f"{clean_a} vs {clean_b}"
 
+    payload["fights"] = kept
+
     # The rest of the card, so the dashboard shows every bout — a fight
     # nobody picked is still a fight the reader wants to see listed.
     for bout in card["fights"]:
         if bout["order"] in matched_orders:
             continue
-        payload.setdefault("fights", []).append(
+        kept.append(
             {
                 "fight_id": "|".join(_card_key(bout)),
                 "display": f"{bout['fighter_a']} vs {bout['fighter_b']}",
@@ -226,9 +265,17 @@ def annotate_consensus(
             }
         )
 
+    if dropped:
+        log.info(
+            "Dropped %d fight(s) not on %s — picks for other events and "
+            "transcript garbles", dropped, card["name"],
+        )
+    _refresh_totals(payload)
+
     payload.setdefault("event", {})["card"] = {
         "source": "espn",
         "name": card["name"],
         "date": card.get("date"),
         "bouts": len(card["fights"]),
+        "off_card_dropped": dropped,
     }
