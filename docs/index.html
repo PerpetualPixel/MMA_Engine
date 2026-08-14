@@ -368,7 +368,15 @@ const esc = (value) =>
 const fmt1 = (n) => (Math.round(n * 10) / 10).toFixed(1);
 
 /* ---------- thresholds (shown to the user in the controls) ---------- */
-const LOCK = { minShare: 75, minConf: 7.5, minPicks: 2 };
+// Calibrated against the confidence scale as it actually lands, not as the
+// 1-10 rubric reads. Cappers rate a confident pick 6-8 and a best bet 9-10,
+// but a fight's number here is the MEAN across everyone who picked it, and a
+// mean of eight people only reaches 7.5 if nearly all of them called it their
+// best bet — one lean drags it under. Lead confidence medians ~6.0 card after
+// card and tops out near 7.4, so the old 7.5 gate sat above the distribution
+// and produced 0-1 locks per card, usually zero. 6.5 with a third capper
+// required lands 2-3 per card: rare enough to mean something, never empty.
+const LOCK = { minShare: 75, minConf: 6.5, minPicks: 3 };
 const PICKEM_MAX_SHARE = 62;
 
 /* ---------- state ---------- */
