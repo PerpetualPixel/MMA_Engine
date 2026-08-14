@@ -37,6 +37,10 @@
         "garry"
       ]
     },
+    "live_odds": {
+      "enabled": true,
+      "regions": "us"
+    },
     "proxy": {
       "enabled": false,
       "provider": "webshare"

@@ -22,6 +22,7 @@ from .aggregate import SourcedPick, build_consensus
 from .config import Config, ConfigError, VideoRef, extract_video_id, load_config
 from .discover import ChannelDiscovery
 from .event_card import annotate_consensus, fetch_event_card
+from .odds import annotate_odds, fetch_live_odds
 from .extract import PickExtractor
 from .proxy import ProxyConfigError, build_proxy_config, build_requests_proxies
 from .roster import RosterExtractor, build_capper_entry, merge_into_config
@@ -201,6 +202,22 @@ def run_pipeline(
             pass
     card = fetch_event_card(event.get("name") or "")
     annotate_consensus(payload, card, previous_fights)
+
+    # Current moneyline prices, so the dashboard can price a parlay rather
+    # than only rank it. Runs after the card annotation because it skips
+    # off-card and cancelled bouts, and fails open the same way: no key, no
+    # network, or a spent quota simply means no prices this run.
+    odds_settings = settings["live_odds"]
+    if odds_settings["enabled"]:
+        priced = annotate_odds(
+            payload,
+            fetch_live_odds(
+                os.environ.get("ODDS_API_KEY", "").strip(),
+                regions=str(odds_settings["regions"]),
+            ),
+        )
+        if priced:
+            log.info("Live moneylines attached to %d bouts", priced)
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(

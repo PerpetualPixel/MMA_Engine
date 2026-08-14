@@ -143,6 +143,13 @@
   .side.split-side { background: var(--split-dim); }
   .side h3 { margin: 0 0 2px; font-size: 15px; display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
   .side .pct { font-variant-numeric: tabular-nums; font-weight: 800; font-size: 17px; }
+  /* The current moneyline, green so it reads as live rather than as one of
+     the consensus figures around it. */
+  .side .live-line {
+    font-variant-numeric: tabular-nums; font-weight: 700; font-size: 13px;
+    color: var(--strong); border: 1px solid var(--strong); border-radius: 999px;
+    padding: 1px 8px;
+  }
   .side.lead .pct { color: var(--strong); }
   .side.split-side .pct { color: var(--split); }
   .statline { color: var(--muted); font-size: 12px; margin-bottom: 6px; }
@@ -197,7 +204,7 @@
   .leg {
     background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
     padding: 10px 16px; margin-bottom: 8px; display: grid;
-    grid-template-columns: auto 1fr auto auto; gap: 4px 14px; align-items: center;
+    grid-template-columns: auto 1fr auto auto auto; gap: 4px 14px; align-items: center;
   }
   .leg .lnum {
     background: var(--panel-2); border-radius: 50%; width: 26px; height: 26px;
@@ -208,6 +215,36 @@
   .leg .lsub { color: var(--muted); font-size: 12px; }
   .leg .lstats { text-align: right; font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
   .leg .lstats b { color: var(--text); }
+
+  /* -- leg price: the number, and where it came from -- */
+  .leg .lprice { text-align: right; white-space: nowrap; }
+  .leg .lprice b { display: block; font-size: 16px; font-weight: 800; font-variant-numeric: tabular-nums; }
+  .leg .lprice i {
+    display: block; font-style: normal; font-size: 10px; font-weight: 700;
+    letter-spacing: .06em; text-transform: uppercase; color: var(--weak);
+  }
+  /* Live prices read as current, quoted ones as what a capper said — the
+     colour carries that difference without a second line of explanation. */
+  .leg .lprice.src-live b { color: var(--strong); }
+  .leg .lprice.src-live i { color: var(--strong); }
+  .leg .lprice.src-quoted b { color: var(--gold); }
+  .leg .lprice.none-price b { color: var(--weak); font-weight: 600; }
+
+  /* -- what the whole ticket pays -- */
+  .ticket-price {
+    background: var(--panel); border: 1px solid var(--gold); border-radius: 10px;
+    padding: 12px 16px; margin-bottom: 10px;
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px;
+  }
+  .ticket-price.no-price { border-color: var(--border); }
+  .ticket-price .tp-label {
+    color: var(--muted); font-size: 11px; font-weight: 700;
+    letter-spacing: .07em; text-transform: uppercase;
+  }
+  .ticket-price b { color: var(--gold); font-size: 24px; font-variant-numeric: tabular-nums; }
+  .ticket-price .tp-return { color: var(--text); font-size: 13px; font-variant-numeric: tabular-nums; }
+  .ticket-price .tp-sub { color: var(--muted); font-size: 12px; margin-left: auto; text-align: right; }
+  .ticket-price .tp-warn { color: var(--split); font-size: 12px; }
 
   /* A locked leg survives the next Generate — gold, matching the Lock badge. */
   .leg.leg-locked { border-color: var(--gold); box-shadow: 0 0 0 1px rgba(212, 167, 44, .35); }
@@ -301,9 +338,13 @@
     .leg { grid-template-columns: auto 1fr; gap: 8px 12px; }
     .leg .lnum { grid-row: 1; }
     .leg .lmain { grid-column: 2; }
+    .leg .lprice { grid-column: 2; text-align: left; }
+    .leg .lprice b, .leg .lprice i { display: inline; }
+    .leg .lprice i { margin-left: 6px; }
     .leg .lstats { grid-column: 2; text-align: left; white-space: normal; }
     .leg .lock-btn { grid-column: 2; justify-self: start; }
     .leg-count { margin-left: 0; text-align: left; }
+    .ticket-price .tp-sub { margin-left: 0; text-align: left; flex-basis: 100%; }
   }
 </style>
 </head>
@@ -653,12 +694,22 @@ function mlSideHtml(fight, side) {
   const other = mlShare(fight, side === "a" ? "b" : "a");
   const share = mlShare(fight, side);
   const dog = fight.dogSide === side ? ` <span class="badge dog">underdog</span>` : "";
+  // The live moneyline, where the pipeline got one. This is the only market
+  // The Odds API carries for MMA, so it is the only tab that can show a
+  // current price rather than what a capper quoted days ago.
+  const live = liveOddsFor(fight, side);
+  const priceTag = live
+    ? ` <span class="live-line" title="Median across ${esc(live.detail)}">${esc(fmtAmerican(live.american))}</span>`
+    : "";
   if (!opt) {
-    return `<div class="side"><h3>${esc(name)}${dog}</h3><div class="none">No cappers on this side</div></div>`;
+    // No cappers here, but the market still has a price — and "nobody backed
+    // this guy and he's +180" is exactly the read worth surfacing.
+    return `<div class="side"><h3>${esc(name)}${dog}${priceTag}</h3>
+      <div class="none">No cappers on this side</div></div>`;
   }
   const why = bullets(opt.cappers);
   return `<div class="side${sideClass(share, other, true)}">
-    <h3>${esc(name)} <span class="pct">${esc(share)}%</span>${dog}</h3>
+    <h3>${esc(name)} <span class="pct">${esc(share)}%</span>${dog}${priceTag}</h3>
     <div class="bar"><i style="width:${Math.max(0, Math.min(100, share))}%"></i></div>
     <div class="statline">weight <b>${esc(opt.weight)}</b> &middot; avg conf <b>${esc(opt.avg_confidence)}/10</b> &middot; <b>${esc(opt.pick_count)}</b> pick${opt.pick_count === 1 ? "" : "s"}</div>
     ${why.length ? `<ul class="why">${why.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>` : ""}
@@ -944,6 +995,52 @@ function optionQuotedOdds(option) {
   return { decimal: median, american: decimalToAmerican(median), quoted: decimals.length };
 }
 
+/* ---------- prices ---------- */
+/* A leg's price can come from two places, and the two are never silently
+ * mixed — each price carries its source and the UI labels it:
+ *
+ *   live    the current moneyline from The Odds API, stamped onto the fight
+ *           by the pipeline (odds.py). That feed carries h2h only, so this
+ *           is available for moneyline legs and nothing else.
+ *   quoted  the median of the prices the backing cappers said out loud in
+ *           their videos — the same number the Straights tab runs on, and
+ *           all there is for method, round and prop legs. It is a snapshot
+ *           from whenever the video went up, not a live number.
+ *
+ * A leg that has neither is shown as unpriced. Nothing is estimated: see
+ * doubleChancePrice for a derivation that looked reasonable and wasn't.
+ */
+function liveOddsFor(fight, side) {
+  const entry = fight.live_odds && fight.live_odds[side];
+  if (!entry || !Number.isFinite(entry.decimal)) return null;
+  return {
+    decimal: entry.decimal, american: entry.american,
+    source: "live", detail: `${entry.books} book${entry.books === 1 ? "" : "s"}`,
+  };
+}
+function quotedPriceOf(option) {
+  const odds = optionQuotedOdds(option);
+  if (!odds) return null;
+  return {
+    decimal: odds.decimal, american: odds.american,
+    source: "quoted", detail: `${odds.quoted} quote${odds.quoted === 1 ? "" : "s"}`,
+  };
+}
+
+/** Double chance legs are deliberately UNPRICED. Deriving one is tempting —
+ * two mutually exclusive outcomes combine as 1/(1/d1 + 1/d2) — but the
+ * inputs won't carry it. Each quoted method price already includes its
+ * book's margin, so adding the two implied probabilities adds the vig twice,
+ * and the quotes come from different cappers at different books on top of
+ * that. Measured against this card: all 8 derivable double chances came out
+ * SHORTER than the same fighter's own moneyline, which is impossible for a
+ * subset of "wins" — three of them implied a probability above 1.0.
+ *
+ * No book offers this as a single line either, so there is nothing to fall
+ * back on. An unpriced leg costs the reader a number; a confidently wrong
+ * one costs them money. */
+function doubleChancePrice() { return null; }
+
 /** picks.json's own strength formula, inlined so the tab ranks with the
  * same 0-10 number the feed publishes: consensus share x how much absolute
  * trust-weight is behind it. */
@@ -1105,36 +1202,42 @@ function parlayCandidates() {
     // A cancelled bout can't be a parlay leg, and an off-card pick belongs
     // to a different event than the parlay being built.
     if (isCancelled(f) || isOffCard(f)) continue;
-    const add = (type, label, share, conf, weight, picks, cappers) => out.push({
+    const add = (type, label, share, conf, weight, picks, cappers, price) => out.push({
       fightKey: f.cardIndex, fight: f.display,
       // The official card's bout order (0 = first fight of the night), the
       // same field the other tabs sort on. Off-card fights are already gone
       // by here, so every candidate has a real one.
       cardOrder: Number.isFinite(f.card_order) ? f.card_order : Infinity,
       type, label, share, conf, weight, picks, cappers,
+      // May be null: not every pick has a price. Legs without one are shown
+      // as unpriced rather than guessed at, and sit out of the ticket total.
+      price: price || null,
     });
     if (p.types.ml) {
       // Only the consensus side — the builder never offers both ends of the
       // same moneyline as two candidates.
       const lead = mlLead(f);
+      // The one market the live feed covers: prefer the current line, fall
+      // back to what the cappers quoted when the feed doesn't carry the bout.
       if (lead && lead.opt) add("Moneyline", lead.opt.selection, lead.share,
-        lead.opt.avg_confidence, lead.opt.weight, lead.opt.pick_count, lead.opt.cappers);
+        lead.opt.avg_confidence, lead.opt.weight, lead.opt.pick_count, lead.opt.cappers,
+        liveOddsFor(f, lead.side) || quotedPriceOf(lead.opt));
     }
     if (p.types.mov) {
       for (const o of [...f.mov.a, ...f.mov.b, ...f.mov.other])
         add("Method of victory", o.selection, o.consensus_pct, o.avg_confidence,
-          o.weight, o.pick_count, o.cappers);
+          o.weight, o.pick_count, o.cappers, quotedPriceOf(o));
     }
     if (p.types.dc) {
       for (const d of [doubleChance(f, "a"), doubleChance(f, "b")]) {
         if (d && d.picks > 1) add("Double chance", `${d.name}: ${d.label.replace(/<[^>]*>/g, "")}`,
-          d.share, d.conf, d.weight, d.picks, d.cappers);
+          d.share, d.conf, d.weight, d.picks, d.cappers, doubleChancePrice(d));
       }
     }
     if (p.types.props) {
       for (const o of f.props)
         add(o.bet_label, o.selection, o.consensus_pct, o.avg_confidence,
-          o.weight, o.pick_count, o.cappers);
+          o.weight, o.pick_count, o.cappers, quotedPriceOf(o));
     }
   }
   const usable = (p.useConf ? out.filter((l) => l.conf >= p.minConf) : out)
@@ -1243,6 +1346,32 @@ function sortedTicketLegs() {
   }
 }
 
+/** What the ticket pays: the product of its legs' decimal prices.
+ *
+ * A leg with no price can't be multiplied in, so the total is explicitly the
+ * price of the PRICED legs only and reports how many were left out. Quietly
+ * skipping them would understate the real ticket; refusing to show anything
+ * would be useless on a card where one method pick happens to be unquoted. */
+function ticketPrice(legs) {
+  const priced = legs.filter((l) => l.price);
+  if (!priced.length) return null;
+  const decimal = priced.reduce((product, l) => product * l.price.decimal, 1);
+  return {
+    decimal, american: decimalToAmerican(decimal),
+    priced: priced.length, unpriced: legs.length - priced.length,
+    live: priced.filter((l) => l.price.source === "live").length,
+  };
+}
+
+const PRICE_SOURCE_LABEL = { live: "live", quoted: "quoted" };
+function priceCellHtml(price) {
+  if (!price) return `<span class="lprice none-price"><b>&mdash;</b><i>no price</i></span>`;
+  return `<span class="lprice src-${esc(price.source)}">
+    <b>${esc(fmtAmerican(price.american))}</b>
+    <i title="${esc(price.detail)}">${esc(PRICE_SOURCE_LABEL[price.source] || price.source)}</i>
+  </span>`;
+}
+
 const MARKET_LABELS = { ml: "Moneyline", mov: "Method of victory", dc: "Double chance", props: "Other props" };
 /** Which market toggle produced a candidate — used for the per-market tally
  * under the controls, so the breakdown always sums to the pool. */
@@ -1310,6 +1439,7 @@ function renderParlay() {
         <div class="lsel">${esc(l.label)}</div>
         <div class="lsub">${esc(l.type)} &middot; ${esc(l.fight)}</div>
       </span>
+      ${priceCellHtml(l.price)}
       <span class="lstats"><b>${esc(l.share)}%</b> consensus<br>conf <b>${esc(fmt1(l.conf))}</b>/10 &middot; weight <b>${esc(l.weight)}</b><br>${capperBtn(l.label, l.fight, l.cappers)}</span>
       <button class="lock-btn${locked ? " on" : ""}" data-pl-lock="${esc(l.key)}" aria-pressed="${locked}"
         title="${locked ? "Unlock — this leg can be re-rolled" : "Lock — keep this leg when you generate again"}"
@@ -1317,8 +1447,34 @@ function renderParlay() {
     </div>`;
   }).join("");
 
+  const total = hasTicket ? ticketPrice(legs) : null;
+  let payoutHtml = "";
+  if (total) {
+    const provenance = [
+      `${total.priced} of ${legs.length} leg${legs.length === 1 ? "" : "s"} priced`,
+      total.live ? `${total.live} live` : "",
+    ].filter(Boolean).map(esc).join(" &middot; ");
+    // The unpriced count is the one number here that changes what the total
+    // MEANS, so it is called out rather than folded into the same grey run.
+    const missing = total.unpriced
+      ? ` &middot; <b class="tp-warn">${esc(total.unpriced)} unpriced, not in this total</b>`
+      : "";
+    payoutHtml = `<div class="ticket-price">
+      <span class="tp-label">Parlay price</span>
+      <b>${esc(fmtAmerican(total.american))}</b>
+      <span class="tp-return">$100 returns $${esc(Math.round(total.decimal * 100).toLocaleString())}</span>
+      <span class="tp-sub">${provenance}${missing}</span>
+    </div>`;
+  } else if (hasTicket) {
+    payoutHtml = `<div class="ticket-price no-price">
+      <span class="tp-label">Parlay price</span>
+      <span class="tp-sub">No leg on this ticket carries a price — no live line for these
+        bouts, and none of their backers quoted one.</span>
+    </div>`;
+  }
+
   const body = hasTicket
-    ? legsHtml + (legs.length < p.legs
+    ? payoutHtml + legsHtml + (legs.length < p.legs
       ? `<p class="notice">Only ${legs.length} leg${legs.length === 1 ? "" : "s"} could be drawn —
          the card offers ${maxTicket} independent fight${maxTicket === 1 ? "" : "s"} under these filters.
          Loosen the confidence bar or enable more bet types.</p>`
@@ -1452,6 +1608,26 @@ document.getElementById("about-btn").addEventListener("click", () => openOverlay
     it when you generate again; legs already offered are skipped on the next
     roll, and the pool recycles once it runs dry. Sorting only reorders the
     ticket you already have &mdash; it never re-rolls it.</dd>
+    <dt>Prices: live vs quoted</dt>
+    <dd>A price is tagged with where it came from, because the two are not
+    the same claim. <b class="src-live" style="color:var(--strong)">live</b>
+    is the current moneyline, the median across sportsbooks, fetched when the
+    run was generated (the header says when). It is only available for
+    moneylines &mdash; the odds feed carries no method, round or prop markets
+    for MMA. <b style="color:var(--gold)">quoted</b> is the median of the
+    prices the backing cappers said out loud in their videos: a snapshot from
+    whenever that video went up, not a live number, and all there is for
+    method and prop legs. A leg with neither shows &ldquo;&mdash;&rdquo;
+    rather than a guess. Double chance legs are always unpriced: nothing
+    quotes one as a single line, and combining its two method prices counts
+    each book&rsquo;s margin twice &mdash; on this card that made every such
+    price shorter than the fighter&rsquo;s own moneyline, which cannot
+    happen for a subset of &ldquo;wins&rdquo;.</dd>
+    <dt>Parlay price</dt>
+    <dd>The product of the legs' decimal prices, shown in American odds with
+    what $100 returns. Legs without a price cannot be multiplied in, so the
+    total covers the priced legs only and says how many it left out &mdash;
+    a real ticket including those legs would pay more.</dd>
     <dt>Straights tab</dt>
     <dd>Value singles across every market. A pick only qualifies when its
     backers actually quoted a price (the median of their quotes is the price
@@ -1513,11 +1689,19 @@ fetch(`data.json?t=${Date.now()}`)
       const countdown = daysOut > 1 ? ` (in ${daysOut} days)` : daysOut === 1 ? " (tomorrow)" : daysOut === 0 ? " (today!)" : "";
       whenHtml = `${esc(dayText)}${esc(countdown)} &middot; `;
     }
+    // Where the prices came from, when there are any — a live line is only
+    // worth reading if you know how old it is.
+    const odds = event.odds || null;
+    const oddsHtml = odds && odds.fights_priced
+      ? ` &middot; live odds on ${esc(odds.fights_priced)} bout${odds.fights_priced === 1 ? "" : "s"}` +
+        (odds.fetched_at ? ` (${esc(new Date(odds.fetched_at).toLocaleString())})` : "")
+      : "";
     $("#event-meta").innerHTML =
       whenHtml +
       (card ? `official card: ${esc(onCardCount)} bouts &middot; ` : `${esc(totals.fights ?? 0)} fights &middot; `) +
       `${esc(totals.picks ?? 0)} picks &middot; ` +
-      `${esc(totals.cappers ?? 0)} cappers &middot; generated ${esc(generated)}`;
+      `${esc(totals.cappers ?? 0)} cappers &middot; generated ${esc(generated)}` +
+      oddsHtml;
     $("#footer").innerHTML = renderSources(data.sources || []) + renderDiscovery(data.discovery || []);
     render();
   })

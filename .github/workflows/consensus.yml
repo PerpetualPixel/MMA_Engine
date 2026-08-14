@@ -78,6 +78,9 @@ jobs:
           WEBSHARE_PROXY_USERNAME: ${{ secrets.WEBSHARE_PROXY_USERNAME }}
           WEBSHARE_PROXY_PASSWORD: ${{ secrets.WEBSHARE_PROXY_PASSWORD }}
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          # Optional: live moneylines on the dashboard. Unset simply means no
+          # live prices — the run is unaffected otherwise.
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
         run: |
           python -m mma_engine \
             --config config.json \

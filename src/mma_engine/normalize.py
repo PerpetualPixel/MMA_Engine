@@ -52,6 +52,42 @@ def surname(name: str) -> str:
     return tokens[-1]
 
 
+def within_one_edit(a: str, b: str) -> bool:
+    """True when two strings differ by at most one edit (swap/insert/delete).
+
+    The tolerance every caption-typo comparison in the pipeline runs on:
+    aggregate.py's surname canonicalizer, event_card.py's card matching, and
+    odds.py's book matching all need the same "makhache" ~ "makhachev" slack.
+    """
+    if a == b:
+        return True
+    if abs(len(a) - len(b)) > 1:
+        return False
+    if len(a) == len(b):
+        return sum(x != y for x, y in zip(a, b)) <= 1
+    shorter, longer = (a, b) if len(a) < len(b) else (b, a)
+    i = j = edits = 0
+    while i < len(shorter) and j < len(longer):
+        if shorter[i] == longer[j]:
+            i += 1
+        else:
+            edits += 1
+            if edits > 1:
+                return False
+        j += 1
+    return True
+
+
+def surnames_match(a: str, b: str) -> bool:
+    """Caption-typo-tolerant surname equality: exact for short names, one edit
+    of slack for long ones ("makhache" ~ "makhachev")."""
+    if not a or not b:
+        return False
+    if a == b:
+        return True
+    return min(len(a), len(b)) >= 5 and within_one_edit(a, b)
+
+
 def fight_key(fighter_a: str, fighter_b: str, canon=None) -> str:
     """Order-independent key identifying a matchup.
 
