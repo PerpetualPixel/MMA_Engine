@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-14T05:42:11+00:00",
+  "generated_at": "2026-08-14T06:10:16+00:00",
   "event": {
     "name": "UFC 330",
     "date": "",
@@ -15,7 +15,7 @@
     "odds": {
       "source": "the-odds-api",
       "market": "h2h",
-      "fetched_at": "2026-08-14T05:42:11+00:00",
+      "fetched_at": "2026-08-14T06:10:17+00:00",
       "fights_priced": 12
     }
   },

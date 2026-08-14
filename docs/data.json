@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-14T05:42:11+00:00",
+  "generated_at": "2026-08-14T06:10:16+00:00",
   "event": {
     "name": "UFC 330",
     "date": "",
@@ -15,7 +15,7 @@
     "odds": {
       "source": "the-odds-api",
       "market": "h2h",
-      "fetched_at": "2026-08-14T05:42:11+00:00",
+      "fetched_at": "2026-08-14T06:10:17+00:00",
       "fights_priced": 12
     }
   },
@@ -1037,7 +1037,7 @@
       "card_date": "2026-08-16T01:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-14T05:42:11+00:00",
+        "fetched_at": "2026-08-14T06:10:17+00:00",
         "commence_time": "2026-08-16T03:30:00Z",
         "a": {
           "american": 275,
@@ -1519,7 +1519,7 @@
       "card_date": "2026-08-16T01:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-14T05:42:11+00:00",
+        "fetched_at": "2026-08-14T06:10:17+00:00",
         "commence_time": "2026-08-16T02:15:00Z",
         "a": {
           "american": 125,
@@ -1973,7 +1973,7 @@
       "card_date": "2026-08-16T01:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-14T05:42:11+00:00",
+        "fetched_at": "2026-08-14T06:10:17+00:00",
         "commence_time": "2026-08-16T02:45:00Z",
         "a": {
           "american": -215,
@@ -2394,7 +2394,7 @@
       "card_date": "2026-08-15T21:30Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-14T05:42:11+00:00",
+        "fetched_at": "2026-08-14T06:10:17+00:00",
         "commence_time": "2026-08-15T21:30:00Z",
         "a": {
           "american": -298,
@@ -2849,7 +2849,7 @@
       "card_date": "2026-08-16T01:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-14T05:42:11+00:00",
+        "fetched_at": "2026-08-14T06:10:17+00:00",
         "commence_time": "2026-08-16T01:15:00Z",
         "a": {
           "american": 470,
@@ -3285,7 +3285,7 @@
       "card_date": "2026-08-15T23:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-14T05:42:11+00:00",
+        "fetched_at": "2026-08-14T06:10:17+00:00",
         "commence_time": "2026-08-15T23:00:00Z",
         "a": {
           "american": -320,
@@ -3694,7 +3694,7 @@
       "card_date": "2026-08-15T23:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-14T05:42:11+00:00",
+        "fetched_at": "2026-08-14T06:10:17+00:00",
         "commence_time": "2026-08-15T23:00:00Z",
         "a": {
           "american": -280,
@@ -4156,7 +4156,7 @@
       "card_date": "2026-08-15T21:30Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-14T05:42:11+00:00",
+        "fetched_at": "2026-08-14T06:10:17+00:00",
         "commence_time": "2026-08-15T21:30:00Z",
         "a": {
           "american": -142,
@@ -4584,7 +4584,7 @@
       "card_date": "2026-08-16T01:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-14T05:42:11+00:00",
+        "fetched_at": "2026-08-14T06:10:17+00:00",
         "commence_time": "2026-08-16T01:45:00Z",
         "a": {
           "american": -687,
@@ -4963,7 +4963,7 @@
       "card_date": "2026-08-15T23:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-14T05:42:11+00:00",
+        "fetched_at": "2026-08-14T06:10:17+00:00",
         "commence_time": "2026-08-15T23:00:00Z",
         "a": {
           "american": -115,
@@ -5612,7 +5612,7 @@
       "card_date": "2026-08-15T21:30Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-14T05:42:11+00:00",
+        "fetched_at": "2026-08-14T06:10:17+00:00",
         "commence_time": "2026-08-15T21:30:00Z",
         "a": {
           "american": -1100,
@@ -5641,7 +5641,7 @@
       "card_date": "2026-08-15T23:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-14T05:42:11+00:00",
+        "fetched_at": "2026-08-14T06:10:17+00:00",
         "commence_time": "2026-08-15T23:40:00Z",
         "a": {
           "american": -128,
