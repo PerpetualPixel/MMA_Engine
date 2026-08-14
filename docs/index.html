@@ -197,7 +197,7 @@
   .leg {
     background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
     padding: 10px 16px; margin-bottom: 8px; display: grid;
-    grid-template-columns: auto 1fr auto; gap: 4px 14px; align-items: center;
+    grid-template-columns: auto 1fr auto auto; gap: 4px 14px; align-items: center;
   }
   .leg .lnum {
     background: var(--panel-2); border-radius: 50%; width: 26px; height: 26px;
@@ -208,6 +208,39 @@
   .leg .lsub { color: var(--muted); font-size: 12px; }
   .leg .lstats { text-align: right; font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
   .leg .lstats b { color: var(--text); }
+
+  /* A locked leg survives the next Generate — gold, matching the Lock badge. */
+  .leg.leg-locked { border-color: var(--gold); box-shadow: 0 0 0 1px rgba(212, 167, 44, .35); }
+  .leg.leg-locked .lnum { color: var(--gold); }
+  button.lock-btn {
+    background: var(--panel-2); border: 1px solid var(--border); color: var(--muted);
+    font: inherit; font-size: 12px; border-radius: 999px; padding: 4px 12px; cursor: pointer;
+    white-space: nowrap;
+  }
+  button.lock-btn:hover { border-color: var(--gold); color: var(--gold); }
+  button.lock-btn.on { border-color: var(--gold); color: var(--gold); background: rgba(212, 167, 44, .12); }
+
+  button.gen-btn {
+    background: var(--accent); border: 1px solid var(--accent); color: #10151c;
+    font: inherit; font-weight: 700; font-size: 13px; border-radius: 8px;
+    padding: 6px 18px; cursor: pointer;
+  }
+  button.gen-btn:hover { filter: brightness(1.1); }
+  button.ghost-btn {
+    background: none; border: 1px solid var(--border); color: var(--muted);
+    font: inherit; font-size: 13px; border-radius: 8px; padding: 6px 14px; cursor: pointer;
+  }
+  button.ghost-btn:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+  button.ghost-btn:disabled, .controls select:disabled { opacity: .4; cursor: default; }
+
+  /* The live counter sits beside the filters, not down in the caption. */
+  .leg-count {
+    margin-left: auto; text-align: right; font-size: 12px; color: var(--muted);
+    font-variant-numeric: tabular-nums; line-height: 1.35;
+  }
+  .leg-count b { color: var(--text); font-size: 14px; }
+  .leg-count .over { color: var(--split); }
+  .leg-count .over b { color: var(--split); }
 
   /* -- overlay -- */
   .overlay {
@@ -263,6 +296,14 @@
     .side + .side { border-left: 0; }
     .capper-row { grid-template-columns: auto 1fr auto; }
     .capper-row .cstat.picks { display: none; }
+    /* Selection, stats and the lock button stack under the leg number
+       instead of fighting over ~350px of width. */
+    .leg { grid-template-columns: auto 1fr; gap: 8px 12px; }
+    .leg .lnum { grid-row: 1; }
+    .leg .lmain { grid-column: 2; }
+    .leg .lstats { grid-column: 2; text-align: left; white-space: normal; }
+    .leg .lock-btn { grid-column: 2; justify-self: start; }
+    .leg-count { margin-left: 0; text-align: left; }
   }
 </style>
 </head>
@@ -306,7 +347,7 @@ const state = {
   dc:  { sort: "card", hidePickems: false, locksOnly: false },
   dog: { sort: "card" },
   straights: { sort: "value", floor: "-200" },
-  parlay: { types: { ml: true, mov: true, dc: false, props: false }, legs: 3, useConf: false, minConf: 6 },
+  parlay: { types: { ml: true, mov: true, dc: false, props: false }, legs: 3, useConf: false, minConf: 6, sort: "rank" },
 };
 
 /* Remember the reader's tab, sorts, and filters between visits — the weekly
@@ -1026,99 +1067,281 @@ function renderStraights() {
 }
 
 /* ---------- tab: parlay builder ---------- */
+
+/* The builder's one ranking signal, named once so nothing can quietly
+ * disagree with it: weight (the summed trust x confidence behind an option)
+ * times the backers' own average confidence, 0-10.
+ *
+ * "Confidence" in this tab is ALWAYS avg_confidence — the "conf x/10" on the
+ * leg card, the same number the Min-confidence slider filters on and the
+ * Confidence sort orders by. The consensus % beside it is a different thing
+ * (this option's share of the weight cast in its own market) and is context
+ * only: a 100% consensus from one capper on a lone prop is not a stronger
+ * leg than a 70% consensus from nine, and ranking on share would say it is. */
+const legScore = (leg) => leg.weight * leg.conf;
+
+/** Stable identity for a leg, so locks and the already-offered set survive
+ * re-renders, re-rolls and filter changes. */
+const legKey = (leg) => `${leg.fightKey}|${leg.type}|${leg.label}`;
+
+const LEG_CHOICES = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+
+/* The generated ticket. Deliberately NOT part of `state` and never
+ * persisted: a fresh load shows an empty board until Generate is pressed. */
+const ticket = {
+  legs: [],            // generation order — display order is a sorted copy
+  locked: new Set(),   // keys the reader pinned; kept across a re-roll
+  offered: new Set(),  // keys already handed out, so "Generate" rolls fresh
+};
+
+/** Every leg the enabled markets can offer, ranked. Unlike the ticket this
+ * is NOT capped at one per fight — the cap is applied when legs are drawn,
+ * which is exactly why the candidate count and the maximum ticket length
+ * are two different numbers. */
 function parlayCandidates() {
   const p = state.parlay;
-  const legs = [];
+  const out = [];
   for (const f of state.model.fights) {
     // A cancelled bout can't be a parlay leg, and an off-card pick belongs
     // to a different event than the parlay being built.
     if (isCancelled(f) || isOffCard(f)) continue;
-    const perFight = [];
+    const add = (type, label, share, conf, weight, picks, cappers) => out.push({
+      fightKey: f.cardIndex, fight: f.display,
+      // The official card's bout order (0 = first fight of the night), the
+      // same field the other tabs sort on. Off-card fights are already gone
+      // by here, so every candidate has a real one.
+      cardOrder: Number.isFinite(f.card_order) ? f.card_order : Infinity,
+      type, label, share, conf, weight, picks, cappers,
+    });
     if (p.types.ml) {
+      // Only the consensus side — the builder never offers both ends of the
+      // same moneyline as two candidates.
       const lead = mlLead(f);
-      if (lead && lead.opt) perFight.push({
-        fight: f.display, type: "Moneyline", label: lead.opt.selection,
-        share: lead.share, conf: lead.opt.avg_confidence, weight: lead.opt.weight,
-        picks: lead.opt.pick_count, cappers: lead.opt.cappers,
-      });
+      if (lead && lead.opt) add("Moneyline", lead.opt.selection, lead.share,
+        lead.opt.avg_confidence, lead.opt.weight, lead.opt.pick_count, lead.opt.cappers);
     }
     if (p.types.mov) {
-      const best = [...f.mov.a, ...f.mov.b, ...f.mov.other].sort((x, y) => y.weight - x.weight)[0];
-      if (best) perFight.push({
-        fight: f.display, type: "Method of victory", label: best.selection,
-        share: best.consensus_pct, conf: best.avg_confidence, weight: best.weight,
-        picks: best.pick_count, cappers: best.cappers,
-      });
+      for (const o of [...f.mov.a, ...f.mov.b, ...f.mov.other])
+        add("Method of victory", o.selection, o.consensus_pct, o.avg_confidence,
+          o.weight, o.pick_count, o.cappers);
     }
     if (p.types.dc) {
-      const best = [doubleChance(f, "a"), doubleChance(f, "b")].filter((d) => d && d.picks > 1)
-        .sort((x, y) => y.weight - x.weight)[0];
-      if (best) perFight.push({
-        fight: f.display, type: "Double chance", label: `${best.name}: ${best.label.replace(/<[^>]*>/g, "")}`,
-        share: best.share, conf: best.conf, weight: best.weight, picks: best.picks, cappers: best.cappers,
-      });
+      for (const d of [doubleChance(f, "a"), doubleChance(f, "b")]) {
+        if (d && d.picks > 1) add("Double chance", `${d.name}: ${d.label.replace(/<[^>]*>/g, "")}`,
+          d.share, d.conf, d.weight, d.picks, d.cappers);
+      }
     }
     if (p.types.props) {
-      for (const o of f.props) perFight.push({
-        fight: f.display, type: o.bet_label, label: o.selection,
-        share: o.consensus_pct, conf: o.avg_confidence, weight: o.weight,
-        picks: o.pick_count, cappers: o.cappers,
-      });
+      for (const o of f.props)
+        add(o.bet_label, o.selection, o.consensus_pct, o.avg_confidence,
+          o.weight, o.pick_count, o.cappers);
     }
-    let usable = perFight;
-    if (p.useConf) usable = usable.filter((l) => l.conf >= p.minConf);
-    if (!usable.length) continue;
-    // one leg per fight — parlay legs should be independent fights
-    usable.sort((x, y) => y.weight * y.conf - x.weight * x.conf);
-    legs.push(usable[0]);
   }
-  legs.sort((x, y) => y.weight * y.conf - x.weight * x.conf);
+  const usable = (p.useConf ? out.filter((l) => l.conf >= p.minConf) : out)
+    .sort((x, y) => legScore(y) - legScore(x));
+  const seen = new Set(), legs = [];
+  for (const l of usable) {
+    l.key = legKey(l);
+    if (seen.has(l.key)) continue;   // two markets phrasing the same bet
+    seen.add(l.key);
+    legs.push(l);
+  }
   return legs;
 }
+
+/** The ceiling on ticket length. One leg per fight is the rule, so the
+ * binding number is how many distinct FIGHTS the candidates span — not how
+ * many candidates there are. Showing only the candidate count would
+ * overpromise exactly when the reader most needs the warning. */
+const distinctFights = (legs) => new Set(legs.map((l) => l.fightKey)).size;
+
+/** Draw a ticket: keep the locked legs, re-roll everything else. */
+function generateTicket() {
+  const p = state.parlay;
+  const pool = parlayCandidates();
+  const poolKeys = new Set(pool.map((l) => l.key));
+
+  // Locks survive, as long as they still clear the current filters.
+  const kept = ticket.legs.filter((l) => ticket.locked.has(l.key) && poolKeys.has(l.key));
+  // A locked leg pins its whole FIGHT, not just itself — otherwise a re-roll
+  // could hand back a different market on a bout the reader already
+  // committed to, and the ticket would carry two legs from one fight.
+  const lockedFights = new Set(kept.map((l) => l.fightKey));
+  const need = Math.max(0, p.legs - kept.length);
+
+  const draw = (skipOffered) => {
+    const picked = [], usedFights = new Set(lockedFights);
+    for (const c of pool) {
+      if (picked.length >= need) break;
+      if (usedFights.has(c.fightKey)) continue;                  // one leg per fight
+      if (skipOffered && ticket.offered.has(c.key)) continue;    // already shown
+      usedFights.add(c.fightKey);
+      picked.push(c);
+    }
+    return picked;
+  };
+
+  // Selection is deterministic (weight x confidence), so without the
+  // already-offered set a second press would return an identical ticket and
+  // "Generate more" would visibly do nothing.
+  let fresh = draw(true);
+  if (fresh.length < need) {
+    // Pool exhausted — recycle so a thin card loops back to the top rather
+    // than dead-ending on a short ticket.
+    ticket.offered.clear();
+    fresh = draw(false);
+  }
+  for (const l of fresh) ticket.offered.add(l.key);
+  ticket.legs = [...kept, ...fresh];
+  ticket.locked = new Set(kept.map((l) => l.key));
+}
+
+function clearTicket() {
+  ticket.legs = [];
+  ticket.locked.clear();
+  ticket.offered.clear();
+}
+
+/** Filters moved under an existing ticket: drop legs that no longer qualify
+ * and trim to a lowered leg count (locks keep their seats first). Never adds
+ * a leg — only Generate does that. */
+function syncTicketToFilters() {
+  const p = state.parlay;
+  if (!ticket.legs.length) return;
+  const poolKeys = new Set(parlayCandidates().map((l) => l.key));
+  ticket.legs = ticket.legs.filter((l) => poolKeys.has(l.key));
+  const live = new Set(ticket.legs.map((l) => l.key));
+  ticket.locked = new Set([...ticket.locked].filter((k) => live.has(k)));
+  if (ticket.legs.length > p.legs) {
+    const keep = new Set([...ticket.legs]
+      .sort((x, y) => (ticket.locked.has(y.key) ? 1 : 0) - (ticket.locked.has(x.key) ? 1 : 0))
+      .slice(0, p.legs).map((l) => l.key));
+    ticket.legs = ticket.legs.filter((l) => keep.has(l.key));
+  }
+}
+
+const PARLAY_SORTS = [
+  { key: "rank", label: "Builder rank (weight × confidence)" },
+  { key: "conf", label: "Confidence (high → low)" },
+  { key: "card", label: "Bout order (prelims → main event)" },
+  { key: "locked", label: "Locked legs first" },
+];
+
+/** A pure display re-sort of the ticket that has already been drawn. This
+ * reorders a copy and never touches ticket.legs, so changing the sort can
+ * never re-roll the ticket. */
+function sortedTicketLegs() {
+  const legs = [...ticket.legs];
+  switch (state.parlay.sort) {
+    // avg_confidence — see legScore for why this, and not consensus %.
+    case "conf": return legs.sort((x, y) => y.conf - x.conf);
+    // Official bout order: prelims first, main event last.
+    case "card": return legs.sort((x, y) => x.cardOrder - y.cardOrder);
+    case "locked": return legs.sort((x, y) =>
+      (ticket.locked.has(y.key) ? 1 : 0) - (ticket.locked.has(x.key) ? 1 : 0));
+    default: return legs.sort((x, y) => legScore(y) - legScore(x));
+  }
+}
+
+const MARKET_LABELS = { ml: "Moneyline", mov: "Method of victory", dc: "Double chance", props: "Other props" };
+/** Which market toggle produced a candidate — used for the per-market tally
+ * under the controls, so the breakdown always sums to the pool. */
+function marketKeyOf(leg) {
+  if (leg.type === "Moneyline") return "ml";
+  if (leg.type === "Method of victory") return "mov";
+  if (leg.type === "Double chance") return "dc";
+  return "props";
+}
+
 function renderParlay() {
   const p = state.parlay;
-  const candidates = parlayCandidates();
-  const chosen = candidates.slice(0, p.legs);
+  // A leg count restored from an older visit could sit outside the choices.
+  p.legs = Math.min(Math.max(Number(p.legs) || 3, LEG_CHOICES[0]), LEG_CHOICES[LEG_CHOICES.length - 1]);
+  syncTicketToFilters();
+
+  const pool = parlayCandidates();
+  const maxTicket = distinctFights(pool);
+  const legs = sortedTicketLegs();
+  const hasTicket = legs.length > 0;
+
   const typeToggle = (key, label) =>
     `<label><input type="checkbox" data-pl-type="${key}"${p.types[key] ? " checked" : ""}> ${label}</label>`;
-  const controls = `<div class="controls" id="parlay-controls">
+
+  const over = p.legs > maxTicket;
+  const counter = `<span class="leg-count">
+    <b>${pool.length}</b> candidate leg${pool.length === 1 ? "" : "s"}<br>
+    <span class="${over ? "over" : ""}">max ticket <b>${maxTicket}</b> leg${maxTicket === 1 ? "" : "s"}
+      ${over ? `— ${p.legs} not possible` : ""}</span>
+  </span>`;
+
+  const controls = `<div class="controls" data-pl-scope>
     ${typeToggle("ml", "Moneyline")}
     ${typeToggle("mov", "Method of victory")}
     ${typeToggle("dc", "Double chance")}
     ${typeToggle("props", "Other props")}
     <label>Legs
-      <select data-pl-legs>${[2,3,4,5,6,7,8].map((n) => `<option${n === p.legs ? " selected" : ""}>${n}</option>`).join("")}</select>
+      <select data-pl-legs>${LEG_CHOICES.map((n) => `<option${n === p.legs ? " selected" : ""}>${n}</option>`).join("")}</select>
     </label>
     <label><input type="checkbox" data-pl-useconf${p.useConf ? " checked" : ""}> Min confidence</label>
     <label style="${p.useConf ? "" : "opacity:.4;pointer-events:none"}">
       <input type="range" min="1" max="10" step="0.5" value="${p.minConf}" data-pl-minconf>
       <b id="pl-conf-val">${p.minConf}</b>/10</label>
+    ${counter}
+  </div>
+  <div class="controls" data-pl-scope>
+    <button class="gen-btn" data-pl-generate>${hasTicket ? "Generate more" : "Generate"}</button>
+    <button class="ghost-btn" data-pl-clear${hasTicket ? "" : " disabled"}>Clear</button>
+    <label>Sort
+      <select data-pl-sort${hasTicket ? "" : " disabled"}>${PARLAY_SORTS.map((s) =>
+        `<option value="${s.key}"${p.sort === s.key ? " selected" : ""}>${s.label}</option>`).join("")}</select>
+    </label>
+    <span class="hint">Locked legs are kept when you generate again.</span>
   </div>`;
 
-  const legsHtml = chosen.map((l, i) => `<div class="leg">
-    <span class="lnum">${i + 1}</span>
-    <span class="lmain">
-      <div class="lsel">${esc(l.label)}</div>
-      <div class="lsub">${esc(l.type)} &middot; ${esc(l.fight)}</div>
-    </span>
-    <span class="lstats"><b>${esc(l.share)}%</b> consensus<br>conf <b>${esc(fmt1(l.conf))}</b>/10 &middot; weight <b>${esc(l.weight)}</b><br>${capperBtn(l.label, l.fight, l.cappers)}</span>
-  </div>`).join("");
+  const tally = Object.keys(MARKET_LABELS).filter((k) => p.types[k])
+    .map((k) => `${MARKET_LABELS[k]} <b>${pool.filter((l) => marketKeyOf(l) === k).length}</b>`)
+    .join(" &middot; ") || "no markets enabled";
 
-  const note = chosen.length < p.legs
-    ? `<p class="notice">Only ${chosen.length} leg${chosen.length === 1 ? "" : "s"} match the current filters — loosen the confidence bar or enable more bet types.</p>`
-    : "";
+  const legsHtml = legs.map((l, i) => {
+    const locked = ticket.locked.has(l.key);
+    return `<div class="leg${locked ? " leg-locked" : ""}">
+      <span class="lnum">${i + 1}</span>
+      <span class="lmain">
+        <div class="lsel">${esc(l.label)}</div>
+        <div class="lsub">${esc(l.type)} &middot; ${esc(l.fight)}</div>
+      </span>
+      <span class="lstats"><b>${esc(l.share)}%</b> consensus<br>conf <b>${esc(fmt1(l.conf))}</b>/10 &middot; weight <b>${esc(l.weight)}</b><br>${capperBtn(l.label, l.fight, l.cappers)}</span>
+      <button class="lock-btn${locked ? " on" : ""}" data-pl-lock="${esc(l.key)}" aria-pressed="${locked}"
+        title="${locked ? "Unlock — this leg can be re-rolled" : "Lock — keep this leg when you generate again"}"
+        >${locked ? "&#128274; Locked" : "&#128275; Lock"}</button>
+    </div>`;
+  }).join("");
+
+  const body = hasTicket
+    ? legsHtml + (legs.length < p.legs
+      ? `<p class="notice">Only ${legs.length} leg${legs.length === 1 ? "" : "s"} could be drawn —
+         the card offers ${maxTicket} independent fight${maxTicket === 1 ? "" : "s"} under these filters.
+         Loosen the confidence bar or enable more bet types.</p>`
+      : "")
+    : `<p class="notice">No ticket yet. Set your markets and confidence bar, then press
+       <b>Generate</b>. The counter beside the filters shows how many candidate legs
+       match and the longest ticket those legs can actually make.</p>`;
+
   return controls
-    + `<div class="count-note">Best ${p.legs} legs by weight &times; confidence, max one leg per fight (${candidates.length} candidate${candidates.length === 1 ? "" : "s"} matched)</div>`
-    + legsHtml + note;
+    + `<div class="count-note">Legs are drawn by weight &times; confidence, max one leg per fight.
+       Candidates: ${tally}.</div>`
+    + body;
 }
+
 document.addEventListener("change", (e) => {
-  if (!e.target.closest("#parlay-controls")) return;
+  if (!e.target.closest("[data-pl-scope]")) return;
   const p = state.parlay;
   const type = e.target.closest("[data-pl-type]");
   if (type) p.types[type.dataset.plType] = e.target.checked;
   if (e.target.matches("[data-pl-legs]")) p.legs = Number(e.target.value);
   if (e.target.matches("[data-pl-useconf]")) p.useConf = e.target.checked;
   if (e.target.matches("[data-pl-minconf]")) p.minConf = Number(e.target.value);
+  if (e.target.matches("[data-pl-sort]")) p.sort = e.target.value;   // display only
   render();
 });
 document.addEventListener("input", (e) => {
@@ -1126,6 +1349,15 @@ document.addEventListener("input", (e) => {
     const label = document.getElementById("pl-conf-val");
     if (label) label.textContent = e.target.value;
   }
+});
+document.addEventListener("click", (e) => {
+  if (e.target.closest("[data-pl-generate]")) { generateTicket(); render(); return; }
+  if (e.target.closest("[data-pl-clear]")) { clearTicket(); render(); return; }
+  const lock = e.target.closest("[data-pl-lock]");
+  if (!lock) return;
+  const key = lock.dataset.plLock;
+  if (ticket.locked.has(key)) ticket.locked.delete(key); else ticket.locked.add(key);
+  render();
 });
 
 /* ---------- footer ---------- */
@@ -1209,6 +1441,17 @@ document.getElementById("about-btn").addEventListener("click", () => openOverlay
     <dd>The bout was on the official card (per ESPN) and no longer is. Kept
     visible so its picks don't silently vanish, but excluded from parlays
     and straights.</dd>
+    <dt>Parlay Builder</dt>
+    <dd>Nothing is drawn until you press <b>Generate</b>. Legs are ranked by
+    <b>weight &times; avg conf</b> &mdash; the <i>conf x/10</i> on the leg card, which
+    is also what the Min-confidence bar filters on and what the Confidence
+    sort orders by. The consensus % on the card is a share-of-market figure
+    and is context, not the ranking. Only one leg per fight is ever drawn, so
+    the counter shows both how many candidate legs match and the longest
+    ticket they can make (the number of distinct fights). Lock a leg to keep
+    it when you generate again; legs already offered are skipped on the next
+    roll, and the pool recycles once it runs dry. Sorting only reorders the
+    ticket you already have &mdash; it never re-rolls it.</dd>
     <dt>Straights tab</dt>
     <dd>Value singles across every market. A pick only qualifies when its
     backers actually quoted a price (the median of their quotes is the price
