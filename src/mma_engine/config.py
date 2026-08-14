@@ -48,6 +48,16 @@ DEFAULT_SETTINGS: dict[str, Any] = {
         # Useful when a channel posts non-betting content in the same window.
         "title_contains": "",
     },
+    "live_odds": {
+        # Current moneyline prices from The Odds API, stamped onto each bout so
+        # the dashboard can price a parlay instead of just ranking it. Costs
+        # one API request per run (free tier allows 500/month). Enabled here
+        # only means "use it if a key is present" — with no ODDS_API_KEY the
+        # fetch is skipped and the run is exactly as it was before.
+        "enabled": True,
+        # Bookmaker regions to average over: us, us2, uk, eu, au (comma-joined).
+        "regions": "us",
+    },
     "proxy": {
         # Route YouTube requests through a proxy — required for the pipeline to
         # run unattended on GitHub Actions' shared runners, since YouTube blocks
@@ -178,6 +188,10 @@ def load_config(path: str | Path = "config.json") -> Config:
         **DEFAULT_SETTINGS["transcript_cookies"],
         **(raw_settings.get("transcript_cookies") or {}),
     }
+    settings["live_odds"] = {
+        **DEFAULT_SETTINGS["live_odds"],
+        **(raw_settings.get("live_odds") or {}),
+    }
     # Environment wins over the file so CI can override without a commit.
     if os.environ.get("MMA_MODEL"):
         settings["model"] = os.environ["MMA_MODEL"]
@@ -202,6 +216,13 @@ def load_config(path: str | Path = "config.json") -> Config:
     if os.environ.get("MMA_TRANSCRIPT_COOKIES_ENABLED"):
         settings["transcript_cookies"]["enabled"] = os.environ[
             "MMA_TRANSCRIPT_COOKIES_ENABLED"
+        ].strip().lower() in ("1", "true", "yes")
+    # Lets a run opt out of the odds request without editing config.json —
+    # useful when the free-tier allowance is nearly spent and the consensus
+    # matters more than the prices.
+    if os.environ.get("MMA_LIVE_ODDS_ENABLED"):
+        settings["live_odds"]["enabled"] = os.environ[
+            "MMA_LIVE_ODDS_ENABLED"
         ].strip().lower() in ("1", "true", "yes")
 
     if settings["min_delay_seconds"] > settings["max_delay_seconds"]:

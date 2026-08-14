@@ -39,7 +39,7 @@ from typing import Any
 
 import requests
 
-from .normalize import surname
+from .normalize import surname, surnames_match as _surnames_match
 
 log = logging.getLogger(__name__)
 
@@ -60,38 +60,6 @@ CANCELLED_STATUSES = {"STATUS_CANCELED", "STATUS_CANCELLED", "STATUS_POSTPONED"}
 
 def _normalize_event_name(name: str) -> str:
     return " ".join("".join(c.lower() if c.isalnum() else " " for c in (name or "")).split())
-
-
-def _within_one_edit(a: str, b: str) -> bool:
-    """True when two strings differ by at most one edit — the same tolerance
-    aggregate.py's surname canonicalizer uses for caption typos."""
-    if a == b:
-        return True
-    if abs(len(a) - len(b)) > 1:
-        return False
-    if len(a) == len(b):
-        return sum(x != y for x, y in zip(a, b)) <= 1
-    shorter, longer = (a, b) if len(a) < len(b) else (b, a)
-    i = j = edits = 0
-    while i < len(shorter) and j < len(longer):
-        if shorter[i] == longer[j]:
-            i += 1
-        else:
-            edits += 1
-            if edits > 1:
-                return False
-        j += 1
-    return True
-
-
-def _surnames_match(a: str, b: str) -> bool:
-    """Caption-typo-tolerant surname equality: exact for short names, one
-    edit of slack for long ones ("makhache" ~ "makhachev")."""
-    if not a or not b:
-        return False
-    if a == b:
-        return True
-    return min(len(a), len(b)) >= 5 and _within_one_edit(a, b)
 
 
 def _dates_param(now: datetime | None = None) -> str:

@@ -26,7 +26,13 @@ from typing import Any, Callable, Iterable
 
 from .config import Capper
 from .extract import Pick
-from .normalize import display_name, fight_key, selection_key, surname
+from .normalize import (
+    display_name,
+    fight_key,
+    selection_key,
+    surname,
+    within_one_edit as _within_one_edit,
+)
 
 log = logging.getLogger(__name__)
 
@@ -88,27 +94,6 @@ class _Option:
 
 def _round(value: float, places: int = 2) -> float:
     return round(value + 0.0, places)
-
-
-def _within_one_edit(a: str, b: str) -> bool:
-    """True when two strings differ by at most one edit (swap/insert/delete)."""
-    if a == b:
-        return True
-    if abs(len(a) - len(b)) > 1:
-        return False
-    if len(a) == len(b):
-        return sum(x != y for x, y in zip(a, b)) <= 1
-    shorter, longer = (a, b) if len(a) < len(b) else (b, a)
-    i = j = edits = 0
-    while i < len(shorter) and j < len(longer):
-        if shorter[i] == longer[j]:
-            i += 1
-        else:
-            edits += 1
-            if edits > 1:
-                return False
-        j += 1
-    return True
 
 
 def surname_canonicalizer(picks: list["SourcedPick"]) -> Callable[[str], str]:

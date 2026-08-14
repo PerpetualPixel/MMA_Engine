@@ -33,6 +33,14 @@ Two free-to-obtain keys go in `.env`:
    a weekly run uses ~16 of the 10,000 free daily quota units. (YouTube shut
    down the keyless RSS feeds this used to use — see **Channel discovery**.)
 
+Optionally, a third:
+
+3. **`ODDS_API_KEY`** — [the-odds-api.com](https://the-odds-api.com), free tier.
+   Adds current moneyline prices to the dashboard and lets the Parlay Builder
+   price a ticket. One request per run against a 500/month allowance. Leave it
+   out and everything still works — legs just fall back to the odds cappers
+   quoted in their videos.
+
 **Windows one-button run:** once `.env` exists, just double-click
 **`weekly.bat`** — it pulls the latest code, discovers this week's videos,
 builds the consensus, and pushes the updated dashboard. Everything below is
@@ -87,6 +95,8 @@ Exit codes: `0` success, `1` every video failed, `2` bad or empty config.
 | --- | --- | --- |
 | `ANTHROPIC_API_KEY` | yes | Claude API key ([console](https://platform.claude.com/settings/keys)). |
 | `YOUTUBE_API_KEY` | yes, for channel discovery | Free YouTube Data API v3 key (see **Quick start**). Without it, discovery falls back to YouTube's RSS feeds, which are discontinued and 404. |
+| `ODDS_API_KEY` | no | [The Odds API](https://the-odds-api.com) key for live moneylines (see **Live odds** below). Absent = no live prices, quoted odds still shown. |
+| `MMA_LIVE_ODDS_ENABLED` | no | Overrides `settings.live_odds.enabled` (`true`/`false`). Set `0` to skip the odds request for a run. |
 | `MMA_MODEL` | no | Overrides `settings.model` (default `claude-opus-5`). |
 | `MMA_EFFORT` | no | Overrides `settings.effort` (`low`/`medium`/`high`/`xhigh`/`max`). |
 | `MMA_PROXY_ENABLED` | no | Overrides `settings.proxy.enabled` (`true`/`false`). Only relevant if you set up the optional unattended GitHub Actions path; local runs don't need it. |
@@ -210,6 +220,65 @@ their overall score rather than getting an invented specialty rating.
 Extracted records are stored under each capper's `tracked` key in
 `config.json`, including which videos have been applied — that's what makes
 re-runs idempotent and the scores auditable.
+
+---
+
+## Live odds
+
+With an `ODDS_API_KEY` set, each run fetches the current **moneyline** market
+for the card from [The Odds API](https://the-odds-api.com) and stamps a price
+onto every bout it can match:
+
+```json
+"live_odds": {
+  "source": "the-odds-api",
+  "fetched_at": "2026-08-14T04:30:00+00:00",
+  "a": { "american": -456, "decimal": 1.2193, "books": 7, "best_american": -444 },
+  "b": { "american": 344,  "decimal": 4.44,   "books": 7, "best_american": 361 }
+}
+```
+
+`a` and `b` follow that fight's own `fighter_a` / `fighter_b`, so a consumer
+never has to re-match names. The headline `american` is the **median** across
+books — one book hanging a stale number shouldn't move the shown price —
+while `best_american` keeps the longest price on offer for anyone shopping
+the line.
+
+The dashboard shows these as green pills on the Moneylines tab and uses them
+to price parlay legs, multiplying the legs' decimal prices into a ticket
+price.
+
+### What this does and doesn't cover
+
+The feed carries **h2h (moneyline) only** for MMA. Method of victory, rounds
+and props are not in it at any tier, so those legs keep falling back to the
+prices the cappers themselves quoted in their videos. Every price on the
+dashboard is therefore tagged with its source:
+
+| Tag | Meaning |
+| --- | --- |
+| `live` | Current market median, fetched at the timestamp in the page header. Moneylines only. |
+| `quoted` | Median of the prices the backing cappers said out loud in their videos. A snapshot from whenever the video went up — **not** a live number. |
+| `—` | Nobody priced this leg. It is shown as unpriced and sits out of the parlay total, rather than being estimated. |
+
+Double chance legs are always unpriced. Nothing quotes "wins by KO or
+decision" as one line, and combining the two method prices doesn't work:
+each already includes its book's margin, so adding the implied probabilities
+counts the vig twice. Measured on the UFC 330 card, all 8 derivable double
+chances came out *shorter* than the same fighter's own moneyline — impossible
+for a subset of "wins" — and three implied a probability above 1.0. A missing
+number is recoverable; a confidently wrong one isn't.
+
+### Cost and failure behaviour
+
+One request per run against the free tier's 500/month. Set
+`MMA_LIVE_ODDS_ENABLED=0` to skip it for a run.
+
+Fail-open, exactly like the ESPN card fetch: no key, an unreachable host, a
+spent quota, or an event the feed doesn't carry all mean "no live prices this
+run" — never a failed run. Two fighters whose surnames collide (a
+Nurmagomedov–Nurmagomedov bout) are skipped rather than risk hanging one
+side's price on the other.
 
 ---
 
@@ -726,6 +795,8 @@ accounts at 5.0 and adjust once you have a sample of their results.
 | `discovery.lookback_days` | `14` | Only consider uploads this recent. |
 | `discovery.max_videos_per_channel` | `3` | Cap per channel, newest first. |
 | `discovery.title_contains` | `[]` | Title must contain any of these (case-insensitive). |
+| `live_odds.enabled` | `true` | Fetch live moneylines when `ODDS_API_KEY` is set. With no key this is a no-op, so leaving it on is safe. |
+| `live_odds.regions` | `us` | Bookmaker regions to median over: `us`, `us2`, `uk`, `eu`, `au` (comma-joined). |
 | `proxy.enabled` | `false` | Route YouTube requests through a proxy. Only used for the optional unattended path — see **Optional: fully unattended runs on GitHub Actions**. |
 | `proxy.provider` | `webshare` | `webshare` (built-in support) or `generic` (any provider via `MMA_PROXY_URL`). |
 
@@ -755,6 +826,7 @@ src/mma_engine/
   transcripts.py             # YouTube fetching, caching, jittered delays
   extract.py                 # Claude structured-output extraction, chunking
   normalize.py               # fighter-name and selection matching
+  odds.py                    # live moneylines from The Odds API
   aggregate.py               # trust-weighted consensus math
   weighted_picks.py          # distills data.json into the picks.json feed
   consensus_client.py        # Python client for external integrations
@@ -769,6 +841,7 @@ tests/test_discover.py       # feed parsing, filtering, merge behavior
 tests/test_roster.py         # trust arithmetic, pooling, config merge
 tests/test_proxy.py          # proxy config from env vars
 tests/test_config.py         # settings defaults, merging, env overrides
+tests/test_odds.py           # odds parsing, matching, fail-open contract
 .github/workflows/consensus.yml
 ```
 
