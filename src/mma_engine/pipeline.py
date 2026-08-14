@@ -186,9 +186,9 @@ def run_pipeline(
     if discovery_report:
         payload["discovery"] = discovery_report
 
-    # Pin the consensus to the event's official card (ESPN): off-card picks
-    # stop rendering as phantom fights, cancelled bouts get flagged rather
-    # than silently vanishing, and garbled fighter spellings are corrected.
+    # Pin the consensus to the event's official card (ESPN): anything not on
+    # the card is dropped, cancelled bouts get flagged rather than silently
+    # vanishing, and garbled fighter spellings are corrected.
     # The previous run's payload is what detects a quiet cancellation — a
     # bout ESPN removes from the card outright was on_card last run and
     # unmatched now. Fail-open: no card, no annotation, pipeline continues.
@@ -204,8 +204,8 @@ def run_pipeline(
     annotate_consensus(payload, card, previous_fights)
 
     # Current moneyline prices, so the dashboard can price a parlay rather
-    # than only rank it. Runs after the card annotation because it skips
-    # off-card and cancelled bouts, and fails open the same way: no key, no
+    # than only rank it. Runs after the card annotation so it only ever
+    # prices this event's bouts, and fails open the same way: no key, no
     # network, or a spent quota simply means no prices this run.
     odds_settings = settings["live_odds"]
     if odds_settings["enabled"]:

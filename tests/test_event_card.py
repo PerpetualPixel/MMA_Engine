@@ -93,12 +93,48 @@ def test_annotate_marks_espn_cancelled_bout():
     assert payload["fights"][0]["card_status"] == "cancelled"
 
 
-def test_annotate_flags_off_card_picks_instead_of_letting_them_impersonate():
+def test_annotate_drops_picks_that_are_not_on_this_card():
     # The DWCS case: a real pick from the same video, for a different event.
+    # It is not part of this event, so it does not survive into the payload.
     payload = {"event": {}, "fights": [consensus_fight("Matt Adams", "Anthony Wint")]}
     annotate_consensus(payload, parse_card(espn_event()))
-    assert payload["fights"][0]["card_status"] == "off_card"
-    assert "card_order" not in payload["fights"][0]
+    assert all(f["fighter_a"] != "Matt Adams" for f in payload["fights"])
+    assert payload["event"]["card"]["off_card_dropped"] == 1
+
+
+def test_annotate_drops_the_transcript_garbles_that_invent_fights():
+    # Auto-captions turn one bout into a dozen phantom pairings ("Orbai vs
+    # Jeremiah Well", "Tyback Oral vs Jeremiah Well"). None are real fights,
+    # and none reach the card.
+    garbles = [consensus_fight(a, b) for a, b in [
+        ("Orbai", "Jeremiah Well"), ("Tyback Oral", "Jeremiah Well"),
+        ("Mamedbek Oralbay", "Jeremiah Well"), ("Jose Ochoa", "Unknown"),
+    ]]
+    payload = {"event": {}, "fights": garbles}
+    annotate_consensus(payload, parse_card(espn_event()))
+    assert payload["event"]["card"]["off_card_dropped"] == 4
+    # What is left is the card itself, nothing else.
+    assert len(payload["fights"]) == 3
+    assert all(f["card_status"] in ("on_card", "cancelled") for f in payload["fights"])
+
+
+def test_dropping_off_card_fights_refreshes_the_headline_totals():
+    # "459 picks across 61 fights" must describe the card, not everything the
+    # transcripts mentioned, or the dashboard's own header contradicts it.
+    picked = consensus_fight("Islam Makhachev", "Ian Machado Garry")
+    picked["markets"] = [{"bet_type": "moneyline", "options": [
+        {"selection": "Islam Makhachev", "cappers": [
+            {"id": "a", "video_url": "v1"}, {"id": "b", "video_url": "v2"},
+        ]},
+    ]}]
+    elsewhere = consensus_fight("Matt Adams", "Anthony Wint")
+    elsewhere["markets"] = [{"bet_type": "moneyline", "options": [
+        {"selection": "Matt Adams", "cappers": [{"id": "c", "video_url": "v3"}]},
+    ]}]
+    payload = {"event": {}, "totals": {"fights": 2, "picks": 3, "cappers": 3, "videos": 3},
+               "fights": [picked, elsewhere]}
+    annotate_consensus(payload, parse_card(espn_event()))
+    assert payload["totals"] == {"fights": 3, "picks": 2, "cappers": 2, "videos": 2}
 
 
 def test_annotate_appends_pickless_card_bouts():
@@ -129,6 +165,17 @@ def test_annotate_without_a_card_changes_nothing():
     annotate_consensus(payload, None)
     assert payload["fights"][0] == fight
     assert "card" not in payload["event"]
+
+
+def test_a_failed_card_fetch_drops_nothing_rather_than_guessing():
+    # Fail-open: with no card there is no basis to call a fight off-card, so
+    # an ESPN outage must not empty the dashboard.
+    payload = {"event": {}, "fights": [
+        consensus_fight("Islam Makhachev", "Ian Machado Garry"),
+        consensus_fight("Matt Adams", "Anthony Wint"),
+    ]}
+    annotate_consensus(payload, None)
+    assert len(payload["fights"]) == 2
 
 
 def test_event_payload_carries_card_provenance():

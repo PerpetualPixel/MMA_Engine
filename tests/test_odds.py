@@ -196,14 +196,11 @@ def test_annotate_maps_prices_onto_the_fights_own_a_and_b():
     assert live["source"] == "the-odds-api"
 
 
-def test_annotate_skips_off_card_and_cancelled_bouts():
+def test_annotate_skips_cancelled_bouts():
     events = parse_odds_events([
         odds_event("Alex Pereira", "Israel Adesanya", {"Alex Pereira": [-150], "Israel Adesanya": [130]})
     ])
-    payload = {"fights": [
-        consensus_fight("Alex Pereira", "Israel Adesanya", card_status="off_card"),
-        consensus_fight("Alex Pereira", "Israel Adesanya", card_status="cancelled"),
-    ]}
+    payload = {"fights": [consensus_fight("Alex Pereira", "Israel Adesanya", card_status="cancelled")]}
     assert annotate_odds(payload, events) == 0
     assert all("live_odds" not in f for f in payload["fights"])
 
