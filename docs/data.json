@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-14T00:42:06+00:00",
+  "generated_at": "2026-08-14T01:20:26+00:00",
   "event": {
     "name": "UFC 330",
     "date": "",
@@ -13,10 +13,10 @@
     }
   },
   "totals": {
-    "fights": 64,
-    "picks": 470,
+    "fights": 63,
+    "picks": 469,
     "cappers": 21,
-    "videos": 37
+    "videos": 36
   },
   "sources": [
     {
@@ -137,7 +137,7 @@
       "title": "The Panel - UFC 330 with 138MMA & Couch Warrior Pod",
       "status": "transcript_failed",
       "pick_count": 0,
-      "error": "VideoUnplayable: \nCould not retrieve a transcript for the video https://www.youtube.com/watch?v=9m1KR-DkhGc! This is most likely caused by:\n\nThe video is unplayable for the following reason: This live event will begin in 27 minutes.\n\nIf you are sure that the described cause is not responsible for this error and that a transcript should be retrievable, please create an issue at https://github.com/jdepoix/youtube-transcript-api/issues. Please add which version of youtube_transcript_api you are using and provide the information needed to replicate the error. Also make sure that there are no open issues which already describe your problem!"
+      "error": "No usable transcript: TranscriptsDisabled"
     },
     {
       "video_id": "NcuMaBvFdss",
@@ -300,6 +300,16 @@
       "transcript_chars": 93874
     },
     {
+      "video_id": "AD6u-3Ohb-8",
+      "url": "https://www.youtube.com/watch?v=AD6u-3Ohb-8",
+      "capper_id": "kenny_okoye_mma",
+      "capper": "KennyOkoyeMMA",
+      "title": "Ian Garry Just EXPOSED His Biggest Weakness... (Press Conference)",
+      "status": "ok",
+      "pick_count": 0,
+      "transcript_chars": 26935
+    },
+    {
       "video_id": "TtbRvGWDeCc",
       "url": "https://www.youtube.com/watch?v=TtbRvGWDeCc",
       "capper_id": "kenny_okoye_mma",
@@ -318,16 +328,6 @@
       "status": "ok",
       "pick_count": 2,
       "transcript_chars": 41682
-    },
-    {
-      "video_id": "T5Pj7sRwt0c",
-      "url": "https://www.youtube.com/watch?v=T5Pj7sRwt0c",
-      "capper_id": "kenny_okoye_mma",
-      "capper": "KennyOkoyeMMA",
-      "title": "Little bit handsome... #ufc330 #islammakhachev  #iangarry  #edit",
-      "status": "ok",
-      "pick_count": 1,
-      "transcript_chars": 323
     },
     {
       "video_id": "Nd3n1Y7ud8M",
@@ -8195,45 +8195,6 @@
       "card_status": "off_card"
     },
     {
-      "fight_id": "gaethje|makhachev",
-      "display": "Justin Gaethje vs Islam Makhache",
-      "fighter_a": "Justin Gaethje",
-      "fighter_b": "Islam Makhachev",
-      "pick_count": 1,
-      "capper_count": 1,
-      "markets": [
-        {
-          "bet_type": "moneyline",
-          "label": "Moneyline",
-          "total_weight": 3.15,
-          "pick_count": 1,
-          "options": [
-            {
-              "selection": "Islam Makhachev",
-              "consensus_pct": 100.0,
-              "weight": 3.15,
-              "pick_count": 1,
-              "avg_confidence": 5.0,
-              "cappers": [
-                {
-                  "id": "kenny_okoye_mma",
-                  "name": "KennyOkoyeMMA",
-                  "confidence": 5,
-                  "trust": 6.3,
-                  "role": "unknown",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "He entertains picking Gaethje but lands on Islam because Islam is strong and talented.",
-                  "video_url": "https://www.youtube.com/watch?v=T5Pj7sRwt0c"
-                }
-              ]
-            }
-          ]
-        }
-      ],
-      "card_status": "off_card"
-    },
-    {
       "fight_id": "lazzez|wells",
       "display": "Mounir Lazzez vs Jeremiah Well",
       "fighter_a": "Mounir Lazzez",
@@ -8821,6 +8782,11 @@
       "feed_videos": 15,
       "selected": [
         {
+          "video_id": "AD6u-3Ohb-8",
+          "title": "Ian Garry Just EXPOSED His Biggest Weakness... (Press Conference)",
+          "published": "2026-08-14T00:27:12+00:00"
+        },
+        {
           "video_id": "TtbRvGWDeCc",
           "title": "Something Was DIFFERENT About Islam & Garry at Media Day... (REACTION)",
           "published": "2026-08-12T21:26:41+00:00"
@@ -8829,11 +8795,6 @@
           "video_id": "MOQalFHmWn8",
           "title": "This Striking Flaw Has Me RETHINKING Islam vs Garry...",
           "published": "2026-08-11T19:59:37+00:00"
-        },
-        {
-          "video_id": "T5Pj7sRwt0c",
-          "title": "Little bit handsome... #ufc330 #islammakhachev  #iangarry  #edit",
-          "published": "2026-08-11T01:37:05+00:00"
         }
       ]
     },

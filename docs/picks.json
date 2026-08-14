@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-14T00:42:06+00:00",
+  "generated_at": "2026-08-14T01:20:26+00:00",
   "event": {
     "name": "UFC 330",
     "date": "",
@@ -14,9 +14,9 @@
   },
   "source": "MMA_Engine trust-weighted capper consensus",
   "totals": {
-    "picks": 127,
+    "picks": 126,
     "strong": 9,
-    "lean": 93,
+    "lean": 92,
     "pass": 25
   },
   "picks": [
@@ -2401,28 +2401,6 @@
         {
           "capper": "MMA OddsBreaker (Adam)",
           "comment": "Adam takes the dog, saying Balumba is too wild and Pagliarulo, who comes from PFL and Cage Titans, can knock him out.",
-          "confidence": 5
-        }
-      ]
-    },
-    {
-      "fight_id": "gaethje|makhachev",
-      "fight": "Justin Gaethje vs Islam Makhache",
-      "card_status": "off_card",
-      "market": "moneyline",
-      "market_label": "Moneyline",
-      "selection": "Islam Makhachev",
-      "consensus_pct": 100.0,
-      "weight": 3.15,
-      "pick_count": 1,
-      "avg_confidence": 5.0,
-      "strength": 5.8,
-      "tier": "lean",
-      "suggested_units": 1.0,
-      "comments": [
-        {
-          "capper": "KennyOkoyeMMA",
-          "comment": "He entertains picking Gaethje but lands on Islam because Islam is strong and talented.",
           "confidence": 5
         }
       ]
