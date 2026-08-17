@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-16T04:51:33+00:00",
+  "generated_at": "2026-08-17T05:52:44+00:00",
   "event": {
     "name": "Contender Series: Season 10, Week 2",
     "date": "",
@@ -10,23 +10,177 @@
       "name": "Dana White's Contender Series: Season 10, Week 2",
       "date": "2026-08-18T23:00Z",
       "bouts": 5,
-      "off_card_dropped": 29
+      "off_card_dropped": 20
     },
     "odds": {
       "source": "the-odds-api",
       "market": "h2h",
-      "fetched_at": "2026-08-16T04:51:33+00:00",
+      "fetched_at": "2026-08-17T05:52:44+00:00",
       "fights_priced": 5
     }
   },
   "source": "MMA_Engine trust-weighted capper consensus",
   "totals": {
-    "picks": 9,
+    "picks": 10,
     "strong": 0,
-    "lean": 9,
+    "lean": 10,
     "pass": 0
   },
   "picks": [
+    {
+      "fight_id": "paxton|perez",
+      "fight": "Logan Paxton vs Cristian Pérez",
+      "card_status": "on_card",
+      "market": "moneyline",
+      "market_label": "Moneyline",
+      "selection": "Christian Perez",
+      "consensus_pct": 100.0,
+      "weight": 8.52,
+      "pick_count": 2,
+      "avg_confidence": 7.5,
+      "strength": 7.1,
+      "tier": "lean",
+      "suggested_units": 1.0,
+      "quoted_odds": {
+        "american": -241,
+        "decimal": 1.415,
+        "count": 2
+      },
+      "value": 2.9,
+      "comments": [
+        {
+          "capper": "Artem MMA",
+          "comment": "Perez is notably faster on the feet and his grappling is strong, though Paxton's size and Perez's cardio issues are concerns.",
+          "confidence": 6
+        },
+        {
+          "capper": "Axel MMA",
+          "comment": "Most confident pick and lock parlay leg: Perez has faced better competition and has solid striking plus a strong ground game, while Paxton built his record on cans.",
+          "confidence": 9
+        }
+      ]
+    },
+    {
+      "fight_id": "brito|fazil",
+      "fight": "Kaik Brito vs Namo Fazil",
+      "card_status": "on_card",
+      "market": "moneyline",
+      "market_label": "Moneyline",
+      "selection": "Namo Fazil",
+      "consensus_pct": 100.0,
+      "weight": 7.61,
+      "pick_count": 2,
+      "avg_confidence": 7.0,
+      "strength": 6.9,
+      "tier": "lean",
+      "suggested_units": 1.0,
+      "quoted_odds": {
+        "american": -150,
+        "decimal": 1.667,
+        "count": 1
+      },
+      "value": 4.6,
+      "comments": [
+        {
+          "capper": "Livid Larry MMA",
+          "comment": "Fazil has the better submission game, a nice boxing base and high volume for three rounds; he should win if he keeps pressure and avoids fighting at Brito's distance.",
+          "confidence": 5
+        },
+        {
+          "capper": "Axel MMA",
+          "comment": "Most confident pick and lock parlay leg: Fazil's forward pressure and combinations should overwhelm Brito, who he expects to slow down and crumble, possibly by TKO or club-and-sub.",
+          "confidence": 9
+        }
+      ]
+    },
+    {
+      "fight_id": "puga|tremblay",
+      "fight": "Roman Puga vs Taner Trembley",
+      "card_status": "on_card",
+      "market": "moneyline",
+      "market_label": "Moneyline",
+      "selection": "Roman Puga",
+      "consensus_pct": 100.0,
+      "weight": 6.9,
+      "pick_count": 2,
+      "avg_confidence": 6.0,
+      "strength": 6.7,
+      "tier": "lean",
+      "suggested_units": 1.0,
+      "quoted_odds": {
+        "american": -144,
+        "decimal": 1.694,
+        "count": 2
+      },
+      "value": 4.6,
+      "comments": [
+        {
+          "capper": "Artem MMA",
+          "comment": "Puga is the much better boxer with body work and professional boxing experience, and although his initial takedown defense is suspect he scrambles very well back to his feet.",
+          "confidence": 6
+        },
+        {
+          "capper": "Axel MMA",
+          "comment": "Puga is the crafty, slicker striker with solid takedown defense and good jiu-jitsu, so Trembly's wrestling shouldn't dominate and Puga should win the standup exchanges.",
+          "confidence": 6
+        }
+      ]
+    },
+    {
+      "fight_id": "miller|rodriguez",
+      "fight": "Trent Miller vs Douglas Rodrigues",
+      "card_status": "on_card",
+      "market": "round",
+      "market_label": "Round",
+      "selection": "Douglas Rodriguez by KO in round 1",
+      "consensus_pct": 100.0,
+      "weight": 6.88,
+      "pick_count": 2,
+      "avg_confidence": 6.0,
+      "strength": 6.7,
+      "tier": "lean",
+      "suggested_units": 1.0,
+      "comments": [
+        {
+          "capper": "Artem MMA",
+          "comment": "Rodriguez has size, power, speed and striking advantages similar to Ryan Gandra who battered Miller, but he warns not to max bet since Rodriguez is helpless off his back.",
+          "confidence": 5
+        },
+        {
+          "capper": "Axel MMA",
+          "comment": "He expects Rodriguez to land big shots early and finish Miller in the first round.",
+          "confidence": 7
+        }
+      ]
+    },
+    {
+      "fight_id": "miller|rodriguez",
+      "fight": "Trent Miller vs Douglas Rodrigues",
+      "card_status": "on_card",
+      "market": "moneyline",
+      "market_label": "Moneyline",
+      "selection": "Douglas Rodriguez",
+      "consensus_pct": 100.0,
+      "weight": 4.86,
+      "pick_count": 1,
+      "avg_confidence": 9.0,
+      "strength": 6.2,
+      "tier": "lean",
+      "suggested_units": 1.0,
+      "quoted_odds": {
+        "american": -330,
+        "decimal": 1.303,
+        "count": 1
+      },
+      "value": 1.9,
+      "comments": [
+        {
+          "capper": "Axel MMA",
+          "comment": "Called it a squash match and his top most confident pick — Rodriguez's explosive power striking is far too much for the outclassed grappler Miller.",
+          "confidence": 9
+        }
+      ]
+    },
     {
       "fight_id": "miller|rodriguez",
       "fight": "Trent Miller vs Douglas Rodrigues",
@@ -46,34 +200,6 @@
           "capper": "Livid Larry MMA",
           "comment": "Miller is stiff, awkward and easily hit despite durability; Rodriguez is a decent, physically imposing striker who can walk him down and finish, likely in round one or two.",
           "confidence": 7
-        }
-      ]
-    },
-    {
-      "fight_id": "puga|tremblay",
-      "fight": "Roman Puga vs Taner Trembley",
-      "card_status": "on_card",
-      "market": "moneyline",
-      "market_label": "Moneyline",
-      "selection": "Roman Puga",
-      "consensus_pct": 100.0,
-      "weight": 3.66,
-      "pick_count": 1,
-      "avg_confidence": 6.0,
-      "strength": 5.9,
-      "tier": "lean",
-      "suggested_units": 1.0,
-      "quoted_odds": {
-        "american": -125,
-        "decimal": 1.8,
-        "count": 1
-      },
-      "value": 4.7,
-      "comments": [
-        {
-          "capper": "Artem MMA",
-          "comment": "Puga is the much better boxer with body work and professional boxing experience, and although his initial takedown defense is suspect he scrambles very well back to his feet.",
-          "confidence": 6
         }
       ]
     },
@@ -103,34 +229,6 @@
       "fight_id": "paxton|perez",
       "fight": "Logan Paxton vs Cristian Pérez",
       "card_status": "on_card",
-      "market": "moneyline",
-      "market_label": "Moneyline",
-      "selection": "Christian Perez",
-      "consensus_pct": 100.0,
-      "weight": 3.66,
-      "pick_count": 1,
-      "avg_confidence": 6.0,
-      "strength": 5.9,
-      "tier": "lean",
-      "suggested_units": 1.0,
-      "quoted_odds": {
-        "american": -260,
-        "decimal": 1.385,
-        "count": 1
-      },
-      "value": 2.3,
-      "comments": [
-        {
-          "capper": "Artem MMA",
-          "comment": "Perez is notably faster on the feet and his grappling is strong, though Paxton's size and Perez's cardio issues are concerns.",
-          "confidence": 6
-        }
-      ]
-    },
-    {
-      "fight_id": "paxton|perez",
-      "fight": "Logan Paxton vs Cristian Pérez",
-      "card_status": "on_card",
       "market": "method_of_victory",
       "market_label": "Method of Victory",
       "selection": "Christian Perez by submission in the first two rounds",
@@ -146,50 +244,6 @@
           "capper": "Artem MMA",
           "comment": "He likes Perez's grappling after what he did to Manel Sousa early, but Perez gassed late so the finish should come in rounds one or two.",
           "confidence": 6
-        }
-      ]
-    },
-    {
-      "fight_id": "miller|rodriguez",
-      "fight": "Trent Miller vs Douglas Rodrigues",
-      "card_status": "on_card",
-      "market": "round",
-      "market_label": "Round",
-      "selection": "Douglas Rodriguez by KO in round 1",
-      "consensus_pct": 100.0,
-      "weight": 3.1,
-      "pick_count": 1,
-      "avg_confidence": 5.0,
-      "strength": 5.8,
-      "tier": "lean",
-      "suggested_units": 1.0,
-      "comments": [
-        {
-          "capper": "Artem MMA",
-          "comment": "Rodriguez has size, power, speed and striking advantages similar to Ryan Gandra who battered Miller, but he warns not to max bet since Rodriguez is helpless off his back.",
-          "confidence": 5
-        }
-      ]
-    },
-    {
-      "fight_id": "brito|fazil",
-      "fight": "Kaik Brito vs Namo Fazil",
-      "card_status": "on_card",
-      "market": "moneyline",
-      "market_label": "Moneyline",
-      "selection": "Namo Fazil",
-      "consensus_pct": 100.0,
-      "weight": 2.75,
-      "pick_count": 1,
-      "avg_confidence": 5.0,
-      "strength": 5.7,
-      "tier": "lean",
-      "suggested_units": 1.0,
-      "comments": [
-        {
-          "capper": "Livid Larry MMA",
-          "comment": "Fazil has the better submission game, a nice boxing base and high volume for three rounds; he should win if he keeps pressure and avoids fighting at Brito's distance.",
-          "confidence": 5
         }
       ]
     },

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-16T04:51:33+00:00",
+  "generated_at": "2026-08-17T05:52:44+00:00",
   "event": {
     "name": "Contender Series: Season 10, Week 2",
     "date": "",
@@ -10,20 +10,20 @@
       "name": "Dana White's Contender Series: Season 10, Week 2",
       "date": "2026-08-18T23:00Z",
       "bouts": 5,
-      "off_card_dropped": 29
+      "off_card_dropped": 20
     },
     "odds": {
       "source": "the-odds-api",
       "market": "h2h",
-      "fetched_at": "2026-08-16T04:51:33+00:00",
+      "fetched_at": "2026-08-17T05:52:44+00:00",
       "fights_priced": 5
     }
   },
   "totals": {
     "fights": 6,
-    "picks": 9,
-    "cappers": 2,
-    "videos": 3
+    "picks": 14,
+    "cappers": 3,
+    "videos": 4
   },
   "sources": [
     {
@@ -37,14 +37,14 @@
       "transcript_chars": 26875
     },
     {
-      "video_id": "jf6eDdunyfQ",
-      "url": "https://www.youtube.com/watch?v=jf6eDdunyfQ",
+      "video_id": "WuFrjBwesFA",
+      "url": "https://www.youtube.com/watch?v=WuFrjBwesFA",
       "capper_id": "axel_mma",
       "capper": "Axel MMA",
-      "title": "Contender Series 2026 Week 1 Predictions & Betting Breakdown + Most Confident Picks",
+      "title": "Contender Series 2026 Week 2 Predictions | LOCK PARLAY + BEST PICKS",
       "status": "ok",
-      "pick_count": 8,
-      "transcript_chars": 12144
+      "pick_count": 6,
+      "transcript_chars": 12954
     },
     {
       "video_id": "qKNEf6qqVaQ",
@@ -127,26 +127,6 @@
       "transcript_chars": 34043
     },
     {
-      "video_id": "nnULXdVd-gk",
-      "url": "https://www.youtube.com/watch?v=nnULXdVd-gk",
-      "capper_id": "the_wager_zone",
-      "capper": "The Wager Zone",
-      "title": "🥊Dana White’s Contender Series Week 1 | BEST BETS & Predictions 🔥💰",
-      "status": "ok",
-      "pick_count": 10,
-      "transcript_chars": 6442
-    },
-    {
-      "video_id": "RhfHU6Y8Jo4",
-      "url": "https://www.youtube.com/watch?v=RhfHU6Y8Jo4",
-      "capper_id": "mma_prediction_guru",
-      "capper": "MMA Prediction Guru",
-      "title": "Dana White’s CONTENDER SERIES 2026 WEEK ONE FULL CARD PREDICTIONS & BETTING BREAKDOWN",
-      "status": "ok",
-      "pick_count": 10,
-      "transcript_chars": 35254
-    },
-    {
       "video_id": "rYse5UsqWKE",
       "url": "https://www.youtube.com/watch?v=rYse5UsqWKE",
       "capper_id": "ufc_genie",
@@ -163,9 +143,37 @@
       "display": "Trent Miller vs Douglas Rodrigues",
       "fighter_a": "Trent Miller",
       "fighter_b": "Douglas Rodrigues",
-      "pick_count": 2,
-      "capper_count": 2,
+      "pick_count": 4,
+      "capper_count": 3,
       "markets": [
+        {
+          "bet_type": "moneyline",
+          "label": "Moneyline",
+          "total_weight": 4.86,
+          "pick_count": 1,
+          "options": [
+            {
+              "selection": "Douglas Rodriguez",
+              "consensus_pct": 100.0,
+              "weight": 4.86,
+              "pick_count": 1,
+              "avg_confidence": 9.0,
+              "cappers": [
+                {
+                  "id": "axel_mma",
+                  "name": "Axel MMA",
+                  "confidence": 9,
+                  "trust": 5.4,
+                  "role": "favorite",
+                  "odds": "-330",
+                  "stake": "",
+                  "reasoning": "Called it a squash match and his top most confident pick — Rodriguez's explosive power striking is far too much for the outclassed grappler Miller.",
+                  "video_url": "https://www.youtube.com/watch?v=WuFrjBwesFA"
+                }
+              ]
+            }
+          ]
+        },
         {
           "bet_type": "method_of_victory",
           "label": "Method of Victory",
@@ -197,16 +205,27 @@
         {
           "bet_type": "round",
           "label": "Round",
-          "total_weight": 3.1,
-          "pick_count": 1,
+          "total_weight": 6.88,
+          "pick_count": 2,
           "options": [
             {
               "selection": "Douglas Rodriguez by KO in round 1",
               "consensus_pct": 100.0,
-              "weight": 3.1,
-              "pick_count": 1,
-              "avg_confidence": 5.0,
+              "weight": 6.88,
+              "pick_count": 2,
+              "avg_confidence": 6.0,
               "cappers": [
+                {
+                  "id": "axel_mma",
+                  "name": "Axel MMA",
+                  "confidence": 7,
+                  "trust": 5.4,
+                  "role": "favorite",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "He expects Rodriguez to land big shots early and finish Miller in the first round.",
+                  "video_url": "https://www.youtube.com/watch?v=WuFrjBwesFA"
+                },
                 {
                   "id": "artem_mma",
                   "name": "Artem MMA",
@@ -228,19 +247,19 @@
       "card_date": "2026-08-18T23:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-16T04:51:33+00:00",
+        "fetched_at": "2026-08-17T05:52:44+00:00",
         "commence_time": "2026-08-18T23:00:00Z",
         "a": {
-          "american": 258,
-          "decimal": 3.585,
+          "american": 256,
+          "decimal": 3.56,
           "books": 2,
           "best_american": 267
         },
         "b": {
-          "american": -335,
-          "decimal": 1.2986,
+          "american": -325,
+          "decimal": 1.3078,
           "books": 2,
-          "best_american": -330
+          "best_american": -320
         }
       }
     },
@@ -249,20 +268,20 @@
       "display": "Roman Puga vs Taner Trembley",
       "fighter_a": "Roman Puga",
       "fighter_b": "Taner Trembley",
-      "pick_count": 2,
-      "capper_count": 1,
+      "pick_count": 3,
+      "capper_count": 2,
       "markets": [
         {
           "bet_type": "moneyline",
           "label": "Moneyline",
-          "total_weight": 3.66,
-          "pick_count": 1,
+          "total_weight": 6.9,
+          "pick_count": 2,
           "options": [
             {
               "selection": "Roman Puga",
               "consensus_pct": 100.0,
-              "weight": 3.66,
-              "pick_count": 1,
+              "weight": 6.9,
+              "pick_count": 2,
               "avg_confidence": 6.0,
               "cappers": [
                 {
@@ -275,6 +294,17 @@
                   "stake": "",
                   "reasoning": "Puga is the much better boxer with body work and professional boxing experience, and although his initial takedown defense is suspect he scrambles very well back to his feet.",
                   "video_url": "https://www.youtube.com/watch?v=R4psfz1mOEE"
+                },
+                {
+                  "id": "axel_mma",
+                  "name": "Axel MMA",
+                  "confidence": 6,
+                  "trust": 5.4,
+                  "role": "favorite",
+                  "odds": "-170",
+                  "stake": "",
+                  "reasoning": "Puga is the crafty, slicker striker with solid takedown defense and good jiu-jitsu, so Trembly's wrestling shouldn't dominate and Puga should win the standup exchanges.",
+                  "video_url": "https://www.youtube.com/watch?v=WuFrjBwesFA"
                 }
               ]
             }
@@ -314,19 +344,19 @@
       "card_date": "2026-08-18T23:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-16T04:51:33+00:00",
+        "fetched_at": "2026-08-17T05:52:44+00:00",
         "commence_time": "2026-08-18T23:00:00Z",
         "a": {
-          "american": -145,
-          "decimal": 1.6873,
+          "american": -167,
+          "decimal": 1.599,
           "books": 2,
-          "best_american": -145
+          "best_american": -164
         },
         "b": {
-          "american": 119,
-          "decimal": 2.195,
+          "american": 142,
+          "decimal": 2.415,
           "books": 2,
-          "best_american": 125
+          "best_american": 149
         }
       }
     },
@@ -335,22 +365,33 @@
       "display": "Logan Paxton vs Cristian Pérez",
       "fighter_a": "Logan Paxton",
       "fighter_b": "Cristian Pérez",
-      "pick_count": 2,
-      "capper_count": 1,
+      "pick_count": 3,
+      "capper_count": 2,
       "markets": [
         {
           "bet_type": "moneyline",
           "label": "Moneyline",
-          "total_weight": 3.66,
-          "pick_count": 1,
+          "total_weight": 8.52,
+          "pick_count": 2,
           "options": [
             {
               "selection": "Christian Perez",
               "consensus_pct": 100.0,
-              "weight": 3.66,
-              "pick_count": 1,
-              "avg_confidence": 6.0,
+              "weight": 8.52,
+              "pick_count": 2,
+              "avg_confidence": 7.5,
               "cappers": [
+                {
+                  "id": "axel_mma",
+                  "name": "Axel MMA",
+                  "confidence": 9,
+                  "trust": 5.4,
+                  "role": "favorite",
+                  "odds": "-225",
+                  "stake": "",
+                  "reasoning": "Most confident pick and lock parlay leg: Perez has faced better competition and has solid striking plus a strong ground game, while Paxton built his record on cans.",
+                  "video_url": "https://www.youtube.com/watch?v=WuFrjBwesFA"
+                },
                 {
                   "id": "artem_mma",
                   "name": "Artem MMA",
@@ -400,18 +441,18 @@
       "card_date": "2026-08-18T23:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-16T04:51:33+00:00",
+        "fetched_at": "2026-08-17T05:52:44+00:00",
         "commence_time": "2026-08-19T00:00:00Z",
         "a": {
-          "american": 189,
-          "decimal": 2.89,
-          "books": 1,
-          "best_american": 189
+          "american": 192,
+          "decimal": 2.915,
+          "books": 2,
+          "best_american": 194
         },
         "b": {
-          "american": -225,
-          "decimal": 1.4444,
-          "books": 1,
+          "american": -235,
+          "decimal": 1.4263,
+          "books": 2,
           "best_american": -225
         }
       }
@@ -421,22 +462,33 @@
       "display": "Kaik Brito vs Namo Fazil",
       "fighter_a": "Kaik Brito",
       "fighter_b": "Namo Fazil",
-      "pick_count": 2,
-      "capper_count": 1,
+      "pick_count": 3,
+      "capper_count": 2,
       "markets": [
         {
           "bet_type": "moneyline",
           "label": "Moneyline",
-          "total_weight": 2.75,
-          "pick_count": 1,
+          "total_weight": 7.61,
+          "pick_count": 2,
           "options": [
             {
               "selection": "Namo Fazil",
               "consensus_pct": 100.0,
-              "weight": 2.75,
-              "pick_count": 1,
-              "avg_confidence": 5.0,
+              "weight": 7.61,
+              "pick_count": 2,
+              "avg_confidence": 7.0,
               "cappers": [
+                {
+                  "id": "axel_mma",
+                  "name": "Axel MMA",
+                  "confidence": 9,
+                  "trust": 5.4,
+                  "role": "favorite",
+                  "odds": "-150",
+                  "stake": "",
+                  "reasoning": "Most confident pick and lock parlay leg: Fazil's forward pressure and combinations should overwhelm Brito, who he expects to slow down and crumble, possibly by TKO or club-and-sub.",
+                  "video_url": "https://www.youtube.com/watch?v=WuFrjBwesFA"
+                },
                 {
                   "id": "livid_larry",
                   "name": "Livid Larry MMA",
@@ -486,19 +538,19 @@
       "card_date": "2026-08-18T23:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-16T04:51:33+00:00",
+        "fetched_at": "2026-08-17T05:52:44+00:00",
         "commence_time": "2026-08-18T23:00:00Z",
         "a": {
-          "american": 147,
-          "decimal": 2.47,
+          "american": 130,
+          "decimal": 2.295,
           "books": 2,
-          "best_american": 156
+          "best_american": 132
         },
         "b": {
-          "american": -178,
-          "decimal": 1.5618,
+          "american": -154,
+          "decimal": 1.6488,
           "books": 2,
-          "best_american": -178
+          "best_american": -147
         }
       }
     },
@@ -554,19 +606,19 @@
       "card_date": "2026-08-18T23:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-16T04:51:33+00:00",
+        "fetched_at": "2026-08-17T05:52:44+00:00",
         "commence_time": "2026-08-18T23:00:00Z",
         "a": {
-          "american": 293,
-          "decimal": 3.93,
+          "american": 225,
+          "decimal": 3.25,
           "books": 2,
-          "best_american": 306
+          "best_american": 245
         },
         "b": {
-          "american": -387,
-          "decimal": 1.2581,
+          "american": -279,
+          "decimal": 1.359,
           "books": 2,
-          "best_american": -385
+          "best_american": -260
         }
       }
     }
@@ -594,9 +646,9 @@
       "feed_videos": 15,
       "selected": [
         {
-          "video_id": "jf6eDdunyfQ",
-          "title": "Contender Series 2026 Week 1 Predictions & Betting Breakdown + Most Confident Picks",
-          "published": "2026-08-10T01:35:08+00:00"
+          "video_id": "WuFrjBwesFA",
+          "title": "Contender Series 2026 Week 2 Predictions | LOCK PARLAY + BEST PICKS",
+          "published": "2026-08-17T02:11:30+00:00"
         }
       ]
     },
@@ -608,11 +660,11 @@
       "feed_videos": 15,
       "selected": [],
       "recent_titles": [
+        "2026-08-17  UFC Sacramaneto - Anthony Hernandez vs Gregory Rodrigues Full Card Breakdown Predictions and More",
         "2026-08-16  Live Fight Companion - UFC 330 Islam Makhachev vs Ian Garry Predictions Bets and Entertainment",
         "2026-08-15  Live Weigh In Recap - UFC 330 Islam Makhachev vs Ian Garry",
         "2026-08-13  Kombat Kiwi Prop Hunting Live - UFC 330 Islam Makhachev vs Ian Garry",
-        "2026-08-12  Slam Of The Week - UFC 330 Islam Makhachev vs Ian Garry",
-        "2026-08-10  UFC 330 Islam Makhachev vs Ian Garry | Full Card Breakdown Predictions & More"
+        "2026-08-12  Slam Of The Week - UFC 330 Islam Makhachev vs Ian Garry"
       ]
     },
     {
@@ -817,12 +869,13 @@
       "status": "ok",
       "channel_id": "UUifVih_HPGoctNCg0gO-VqQ",
       "feed_videos": 15,
-      "selected": [
-        {
-          "video_id": "nnULXdVd-gk",
-          "title": "🥊Dana White’s Contender Series Week 1 | BEST BETS & Predictions 🔥💰",
-          "published": "2026-08-11T03:05:35+00:00"
-        }
+      "selected": [],
+      "recent_titles": [
+        "2026-08-16  🔒🥊💰 #ufc #ufc330 #fightnight",
+        "2026-08-15  🥊LIVE: UFC 330 Makhachev vs. Machado Garry | FULL CARD BREAKDOWN, Odds & Predictions",
+        "2026-08-15  🥊WHO YOU GOT? #ufc #ufc330 #ufcpicks #mackenziedern",
+        "2026-08-15  🥊WHO YOU GOT? #ufc #mma #ufc330 #islammakhachev",
+        "2026-08-14  🥊UFC 330: Makhachev vs. Machado Garry | BEST BETS & Final Predictions 🔥💰"
       ]
     },
     {
@@ -846,12 +899,13 @@
       "status": "ok",
       "channel_id": "UU_Y5a5fuf58q7EJpqnvtV2w",
       "feed_videos": 15,
-      "selected": [
-        {
-          "video_id": "RhfHU6Y8Jo4",
-          "title": "Dana White’s CONTENDER SERIES 2026 WEEK ONE FULL CARD PREDICTIONS & BETTING BREAKDOWN",
-          "published": "2026-08-09T21:57:30+00:00"
-        }
+      "selected": [],
+      "recent_titles": [
+        "2026-08-14  CONFIDENT UFC 330 Islam Makhachev vs Ian Garry FULL Card Predictions",
+        "2026-08-09  Dana White’s CONTENDER SERIES 2026 WEEK ONE FULL CARD PREDICTIONS & BETTING BREAKDOWN",
+        "2026-08-08  Gigi Canuto vs Carol Foro UFC Vegas 120 Prediction",
+        "2026-08-08  Miles Johns vs Gianni Vasquez UFC Vegas 120 prediction",
+        "2026-08-07  PFL CHARLOTTE PREDICTIONS  BRYAN BATTLE VS DALTON ROSTA FULL CARD PREDICTIONS"
       ]
     },
     {
@@ -862,11 +916,11 @@
       "feed_videos": 15,
       "selected": [],
       "recent_titles": [
+        "2026-08-16  Weird night but ya boys stay on the winning streak! #ufc #ufc330 #fyp #trending #viral",
         "2026-08-14  Greatness on the line this weekend! #ufc #ufc330 #fyp #trending #viral #ufcprediction #ufcfightnight",
         "2026-08-13  If you know ball you know how to make money on these locks! #ufc #ufc330 #fyp #trending #viral",
         "2026-08-13  UFC 330 main card picks! #ufc #trending #mma #fyp #ufcpicks #ufc330",
-        "2026-08-13  UFC 330 Makhachev vs Garry | Full Card Predictions & Breakdown | Best Bets To Make",
-        "2026-08-07  The streak shall continue! #ufc #ufcfightnight #ufcvegas120 #fyp #trending #viral #ufcpredictions"
+        "2026-08-13  UFC 330 Makhachev vs Garry | Full Card Predictions & Breakdown | Best Bets To Make"
       ]
     },
     {
@@ -883,11 +937,11 @@
       "feed_videos": 15,
       "selected": [],
       "recent_titles": [
+        "2026-08-17  UFC Sacramento: Hernandez vs. Rodrigues Preview MMAOB Daily Podcast For August 16th",
+        "2026-08-16  UFC 330: Makhachev vs. Machado Garry Recap MMAOB Daily Podcast For August 16th",
         "2026-08-12  UFC 330 preview with MMA Rax💸 The Gamblers Perspective #168",
         "2026-08-10  UFC 330: Makhachev vs. Machado Garry Preview MMAOB Daily Podcast For August 9th",
-        "2026-08-10  UFC Vegas 120: Gamrot vs. Salkilld Recap MMAOB Daily Podcast For August 9th",
-        "2026-08-05  UFC Vegas 120 preview with Art C & MMA Rax💸 The Gamblers Perspective #167",
-        "2026-08-02  UFC Vegas 120: Gamrot vs. Salkilld Preview MMAOB Daily Podcast For August 2nd"
+        "2026-08-10  UFC Vegas 120: Gamrot vs. Salkilld Recap MMAOB Daily Podcast For August 9th"
       ]
     },
     {
@@ -898,11 +952,11 @@
       "feed_videos": 15,
       "selected": [],
       "recent_titles": [
+        "2026-08-16  UFC 330: Full Card Reaction and Results",
+        "2026-08-16  GENIUS!!! How Islam Makhachev BEAT Ian Garry (UFC 330 Breakdown)",
         "2026-08-14  ISLAM VS GARRY! UFC 330 FULL Picks, Predictions and Breakdown",
         "2026-08-12  Islam Makhachev is BIGGER! Ian Garry is in Danger, Gaethje's Moving Up? | Let's Talk MMA",
-        "2026-08-09  SHOCKING!!! Salkilld is a PROBLEM (Mateusz Gamrot vs Quillan Salkilld and Full Card Reaction)",
-        "2026-08-07  The Salkilld Hype Ends? UFC Mateusz Gamrot vs Quillan Salkilld Predictions and Breakdown",
-        "2026-08-06  No Oliveira?! Arman vs Ruffy is a MISMATCH for UFC 331 (Van vs Pantoja 2)"
+        "2026-08-09  SHOCKING!!! Salkilld is a PROBLEM (Mateusz Gamrot vs Quillan Salkilld and Full Card Reaction)"
       ]
     },
     {
@@ -913,11 +967,11 @@
       "feed_videos": 15,
       "selected": [],
       "recent_titles": [
-        "2026-08-15  UFC 330 Makhachev vs Garry Fight Companion| LIVESTREAM",
+        "2026-08-16  UNDISPUTED GOAT #islammakhachev  #ufc330  #edit  #iangarry  #makhachev",
+        "2026-08-16  Islam Just SOLIDIFIED Himself As The GOAT (UFC 330 Recap)",
+        "2026-08-16  UFC 330 Makhachev vs Garry Fight Companion| LIVESTREAM",
         "2026-08-15  Ian Garry’s Mind Games Have Me WORRIED for Islam... (Faceoff BREAKDOWN)",
-        "2026-08-14  Ian Garry Just EXPOSED His Biggest Weakness... (Press Conference)",
-        "2026-08-12  Something Was DIFFERENT About Islam & Garry at Media Day... (REACTION)",
-        "2026-08-11  This Striking Flaw Has Me RETHINKING Islam vs Garry..."
+        "2026-08-14  Ian Garry Just EXPOSED His Biggest Weakness... (Press Conference)"
       ]
     },
     {
@@ -928,11 +982,11 @@
       "feed_videos": 15,
       "selected": [],
       "recent_titles": [
+        "2026-08-16  The Best Fights To Make After UFC 330 (Makhachev vs Garry)",
+        "2026-08-16  UFC 330 Immediate Reaction/Recap (Makhachev vs Garry)",
         "2026-08-13  UFC Retirements I'm Not Ready For (Tier List)",
         "2026-08-11  UFC 330 Full Card Predictions (BEDTIME BICKS)",
-        "2026-08-09  I'm Not Worried For Islam Makhachev vs Ian Garry (UFC 330 Prediction)",
-        "2026-08-09  UFC Gamrot vs Salkilld Immediate Reaction/Recap (We Did It)",
-        "2026-08-07  BEDTIME FC 45 (UFC 6 Stream)"
+        "2026-08-09  I'm Not Worried For Islam Makhachev vs Ian Garry (UFC 330 Prediction)"
       ]
     },
     {
@@ -972,11 +1026,11 @@
       "feed_videos": 15,
       "selected": [],
       "recent_titles": [
-        "2026-08-14  UFC 330 LIVE MAKHACHEV VS MACHADO GARRY LIVESTREAM & FULL FIGHT COMPANION",
-        "2026-08-14  UFC 330 Press Conference Reaction? Makhachev HATES Ian Garry? Everyone BOO's Ian? So UNLIKEABLE",
-        "2026-08-11  UFC 330 Predictions Makhachev vs Machado Garry Full Card Betting Breakdown",
-        "2026-08-09  UFC Vegas 120 Event Recap Gamrot vs Salkilld Full Card Reaction & Breakdown",
-        "2026-08-09  UFC VEGAS 120 LIVE GAMROT VS SALKILLD LIVESTREAM & FULL FIGHT NIGHT COMPANION"
+        "2026-08-17  UFC 333 OFFICIAL! Volkanovski vs Evloev? Yan vs Dvalishvili 3? My Early Predictions & Reaction",
+        "2026-08-16  UFC 330 Event Recap Makhachev vs Machado Garry Full Card Reaction & Breakdown",
+        "2026-08-16  Islam Makhachev DEFEATS Ian Machado Garry? WORST RESULT EVER? Full Fight Reaction & Breakdown?",
+        "2026-08-16  UFC 330 LIVE MAKHACHEV VS MACHADO GARRY LIVESTREAM & FULL FIGHT COMPANION",
+        "2026-08-16  UFC 330 LIVE MAKHACHEV VS MACHADO GARRY LIVESTREAM & FULL FIGHT COMPANION"
       ]
     },
     {
@@ -1002,11 +1056,11 @@
       "feed_videos": 15,
       "selected": [],
       "recent_titles": [
+        "2026-08-16  UFC 330 RECAP",
         "2026-08-12  UFC 330 Full Card Breakdown, Predictions, and Bets",
         "2026-08-10  UFC Gamrot/Salkilld Recap",
         "2026-08-06  Gigi Canuto vs. Carol Foro Prediction, UFC VEGAS 120 Bets, UFC 330 Early Bets",
-        "2026-08-01  UFC Fight Night 284 Gamrot vs. Salkilld Full Card Breakdown and Predictions",
-        "2026-07-29  UFC Fight Night 283 Medic vs. Rodriguez Full Card Breakdown, Predictions,  and Bets"
+        "2026-08-01  UFC Fight Night 284 Gamrot vs. Salkilld Full Card Breakdown and Predictions"
       ]
     }
   ]
