@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-17T05:52:44+00:00",
+  "generated_at": "2026-08-18T21:54:52+00:00",
   "event": {
     "name": "Contender Series: Season 10, Week 2",
     "date": "",
@@ -10,22 +10,32 @@
       "name": "Dana White's Contender Series: Season 10, Week 2",
       "date": "2026-08-18T23:00Z",
       "bouts": 5,
-      "off_card_dropped": 20
+      "off_card_dropped": 24
     },
     "odds": {
       "source": "the-odds-api",
       "market": "h2h",
-      "fetched_at": "2026-08-17T05:52:44+00:00",
-      "fights_priced": 5
+      "fetched_at": "2026-08-18T21:54:53+00:00",
+      "fights_priced": 6
     }
   },
   "totals": {
     "fights": 6,
-    "picks": 14,
-    "cappers": 3,
-    "videos": 4
+    "picks": 47,
+    "cappers": 9,
+    "videos": 9
   },
   "sources": [
+    {
+      "video_id": "8ThZXvqw-V4",
+      "url": "https://www.youtube.com/watch?v=8ThZXvqw-V4",
+      "capper_id": "artem_mma",
+      "capper": "Artem MMA",
+      "title": "LIVE! Contender Series 2026: Week 2 FIGHT COMPANION - Contender Series Livestream",
+      "status": "transcript_failed",
+      "pick_count": 0,
+      "error": "VideoUnplayable: \nCould not retrieve a transcript for the video https://www.youtube.com/watch?v=8ThZXvqw-V4! This is most likely caused by:\n\nThe video is unplayable for the following reason: This live event will begin in 73 minutes.\n\nIf you are sure that the described cause is not responsible for this error and that a transcript should be retrievable, please create an issue at https://github.com/jdepoix/youtube-transcript-api/issues. Please add which version of youtube_transcript_api you are using and provide the information needed to replicate the error. Also make sure that there are no open issues which already describe your problem!"
+    },
     {
       "video_id": "R4psfz1mOEE",
       "url": "https://www.youtube.com/watch?v=R4psfz1mOEE",
@@ -41,10 +51,30 @@
       "url": "https://www.youtube.com/watch?v=WuFrjBwesFA",
       "capper_id": "axel_mma",
       "capper": "Axel MMA",
-      "title": "Contender Series 2026 Week 2 Predictions | LOCK PARLAY + BEST PICKS",
+      "title": "DWCS 2026 Week 2 Full Card Predictions | LOCK PARLAY & CONFIDENT PICKS",
       "status": "ok",
       "pick_count": 6,
       "transcript_chars": 12954
+    },
+    {
+      "video_id": "gtBQ9hJBIA4",
+      "url": "https://www.youtube.com/watch?v=gtBQ9hJBIA4",
+      "capper_id": "betslam_sam",
+      "capper": "BetSlam with Sam",
+      "title": "Live DWCS Predictions + UFC Sacramento Prop Hunting Anthony Hernandez vs Gregory Rodrigues",
+      "status": "ok",
+      "pick_count": 30,
+      "transcript_chars": 88169
+    },
+    {
+      "video_id": "-_ELBhLxo58",
+      "url": "https://www.youtube.com/watch?v=-_ELBhLxo58",
+      "capper_id": "livid_larry",
+      "capper": "Livid Larry MMA",
+      "title": "Dana White’s Contender Series 2026: Week 2 | Full Card Fight Companion",
+      "status": "transcript_failed",
+      "pick_count": 0,
+      "error": "VideoUnplayable: \nCould not retrieve a transcript for the video https://www.youtube.com/watch?v=-_ELBhLxo58! This is most likely caused by:\n\nThe video is unplayable for the following reason: This live event will begin in 24 minutes.\n\nIf you are sure that the described cause is not responsible for this error and that a transcript should be retrievable, please create an issue at https://github.com/jdepoix/youtube-transcript-api/issues. Please add which version of youtube_transcript_api you are using and provide the information needed to replicate the error. Also make sure that there are no open issues which already describe your problem!"
     },
     {
       "video_id": "qKNEf6qqVaQ",
@@ -67,14 +97,14 @@
       "transcript_chars": 26362
     },
     {
-      "video_id": "B6qSYGm_KOg",
-      "url": "https://www.youtube.com/watch?v=B6qSYGm_KOg",
-      "capper_id": "livid_larry",
-      "capper": "Livid Larry MMA",
-      "title": "Dana White’s Contender Series 2026: Week 1 | Full Card Fight Companion",
+      "video_id": "XC06GJwsTXE",
+      "url": "https://www.youtube.com/watch?v=XC06GJwsTXE",
+      "capper_id": "couch_warrior",
+      "capper": "Couch Warrior Podcast",
+      "title": "Dana White's Contender Series Week 2  - Full Card Betting Breakdowns, Predictions & Picks",
       "status": "ok",
-      "pick_count": 14,
-      "transcript_chars": 86627
+      "pick_count": 5,
+      "transcript_chars": 34087
     },
     {
       "video_id": "ePxc3X0cPo4",
@@ -87,6 +117,26 @@
       "transcript_chars": 15952
     },
     {
+      "video_id": "aOcgEGa5jVE",
+      "url": "https://www.youtube.com/watch?v=aOcgEGa5jVE",
+      "capper_id": "we_want_picks",
+      "capper": "We Want Picks (Jacob)",
+      "title": "🔴 Week 2 Contender Series LIVESTREAM! COMMENTARY & REACTIONS!",
+      "status": "transcript_failed",
+      "pick_count": 0,
+      "error": "VideoUnplayable: \nCould not retrieve a transcript for the video https://www.youtube.com/watch?v=aOcgEGa5jVE! This is most likely caused by:\n\nThe video is unplayable for the following reason: This live event will begin in 38 minutes.\n\nIf you are sure that the described cause is not responsible for this error and that a transcript should be retrievable, please create an issue at https://github.com/jdepoix/youtube-transcript-api/issues. Please add which version of youtube_transcript_api you are using and provide the information needed to replicate the error. Also make sure that there are no open issues which already describe your problem!"
+    },
+    {
+      "video_id": "Fh7LeOLLJkM",
+      "url": "https://www.youtube.com/watch?v=Fh7LeOLLJkM",
+      "capper_id": "we_want_picks",
+      "capper": "We Want Picks (Jacob)",
+      "title": "DWCS 2026: Week 2: FULL CARD Predictions",
+      "status": "ok",
+      "pick_count": 6,
+      "transcript_chars": 29202
+    },
+    {
       "video_id": "p_nHNA2E00g",
       "url": "https://www.youtube.com/watch?v=p_nHNA2E00g",
       "capper_id": "we_want_picks",
@@ -97,14 +147,24 @@
       "error": "AgeRestricted: yt-dlp cookie fallback did not return captions"
     },
     {
-      "video_id": "IjkAyidIPzA",
-      "url": "https://www.youtube.com/watch?v=IjkAyidIPzA",
-      "capper_id": "we_want_picks",
-      "capper": "We Want Picks (Jacob)",
-      "title": "DWCS 2026: Week 1: FULL CARD Predictions",
+      "video_id": "9JKfJa0k2pM",
+      "url": "https://www.youtube.com/watch?v=9JKfJa0k2pM",
+      "capper_id": "mma_lock_of_the_night",
+      "capper": "MMA Lock of the Night",
+      "title": "Contender Series 2026 Week 2 Watch Party Buddies",
+      "status": "transcript_failed",
+      "pick_count": 0,
+      "error": "VideoUnplayable: \nCould not retrieve a transcript for the video https://www.youtube.com/watch?v=9JKfJa0k2pM! This is most likely caused by:\n\nThe video is unplayable for the following reason: This live event will begin in 67 minutes.\n\nIf you are sure that the described cause is not responsible for this error and that a transcript should be retrievable, please create an issue at https://github.com/jdepoix/youtube-transcript-api/issues. Please add which version of youtube_transcript_api you are using and provide the information needed to replicate the error. Also make sure that there are no open issues which already describe your problem!"
+    },
+    {
+      "video_id": "CskBvz8xWw8",
+      "url": "https://www.youtube.com/watch?v=CskBvz8xWw8",
+      "capper_id": "mma_lock_of_the_night",
+      "capper": "MMA Lock of the Night",
+      "title": "Dana White's Contender Series 2026 Week 2 Predictions",
       "status": "ok",
-      "pick_count": 10,
-      "transcript_chars": 35909
+      "pick_count": 7,
+      "transcript_chars": 33544
     },
     {
       "video_id": "sQCtIWoWEtM",
@@ -117,24 +177,44 @@
       "transcript_chars": 81892
     },
     {
-      "video_id": "VfAU5cbkJsg",
-      "url": "https://www.youtube.com/watch?v=VfAU5cbkJsg",
-      "capper_id": "mma_lock_of_the_night",
-      "capper": "MMA Lock of the Night",
-      "title": "Dana White's Contender Series 2026 Week 1 Predictions",
+      "video_id": "kBwzHVcV1EY",
+      "url": "https://www.youtube.com/watch?v=kBwzHVcV1EY",
+      "capper_id": "the_wager_zone",
+      "capper": "The Wager Zone",
+      "title": "🚨 DWCS WEEK 2 BEST BETS! | Dana White’s Contender Series Predictions & Betting Picks 🔥",
       "status": "ok",
-      "pick_count": 4,
-      "transcript_chars": 34043
+      "pick_count": 10,
+      "transcript_chars": 7523
     },
     {
-      "video_id": "rYse5UsqWKE",
-      "url": "https://www.youtube.com/watch?v=rYse5UsqWKE",
+      "video_id": "FgiM4KCSzSM",
+      "url": "https://www.youtube.com/watch?v=FgiM4KCSzSM",
+      "capper_id": "the_wager_zone",
+      "capper": "The Wager Zone",
+      "title": "🥊Dana White’s Contender Series Week 2 | BEST BETS & Predictions 🔥 UFC Betting Picks💰",
+      "status": "ok",
+      "pick_count": 10,
+      "transcript_chars": 7617
+    },
+    {
+      "video_id": "2Fno300Z2ws",
+      "url": "https://www.youtube.com/watch?v=2Fno300Z2ws",
+      "capper_id": "mma_prediction_guru",
+      "capper": "MMA Prediction Guru",
+      "title": "DANA WHITE CONTENDER SERIES 2026 WEEK 2 FULL CARD BREAKDOWN & PREDICTIONS",
+      "status": "ok",
+      "pick_count": 7,
+      "transcript_chars": 33064
+    },
+    {
+      "video_id": "DGVawn0Aldc",
+      "url": "https://www.youtube.com/watch?v=DGVawn0Aldc",
       "capper_id": "ufc_genie",
       "capper": "UFC Genie",
-      "title": "GENIE PICKS DWCS WEEK 1 #UFC #MMA #DWCS #WEEK1 #UFCFIGHTNIGHT #SHORTS",
-      "status": "ok",
+      "title": "GENIE PICKS DWCS WEEK 2 #ufc #mma #fyp #dwcs #week2 #shorts",
+      "status": "transcript_failed",
       "pick_count": 0,
-      "transcript_chars": 333
+      "error": "No usable transcript: TranscriptsDisabled"
     }
   ],
   "fights": [
@@ -143,22 +223,33 @@
       "display": "Trent Miller vs Douglas Rodrigues",
       "fighter_a": "Trent Miller",
       "fighter_b": "Douglas Rodrigues",
-      "pick_count": 4,
-      "capper_count": 3,
+      "pick_count": 12,
+      "capper_count": 9,
       "markets": [
         {
           "bet_type": "moneyline",
           "label": "Moneyline",
-          "total_weight": 4.86,
-          "pick_count": 1,
+          "total_weight": 20.81,
+          "pick_count": 5,
           "options": [
             {
               "selection": "Douglas Rodriguez",
               "consensus_pct": 100.0,
-              "weight": 4.86,
-              "pick_count": 1,
-              "avg_confidence": 9.0,
+              "weight": 20.81,
+              "pick_count": 5,
+              "avg_confidence": 6.8,
               "cappers": [
+                {
+                  "id": "mma_lock_of_the_night",
+                  "name": "MMA Lock of the Night",
+                  "confidence": 8,
+                  "trust": 6.8,
+                  "role": "favorite",
+                  "odds": "-330",
+                  "stake": "",
+                  "reasoning": "Feels quite confident and doesn't mind parlaying Rodriguez: big speed and striking advantage over a very hittable Miller with sketchy durability.",
+                  "video_url": "https://www.youtube.com/watch?v=CskBvz8xWw8"
+                },
                 {
                   "id": "axel_mma",
                   "name": "Axel MMA",
@@ -169,6 +260,39 @@
                   "stake": "",
                   "reasoning": "Called it a squash match and his top most confident pick — Rodriguez's explosive power striking is far too much for the outclassed grappler Miller.",
                   "video_url": "https://www.youtube.com/watch?v=WuFrjBwesFA"
+                },
+                {
+                  "id": "the_wager_zone",
+                  "name": "The Wager Zone",
+                  "confidence": 7,
+                  "trust": 6.3,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Rodriguez is better everywhere; Miller only has a power advantage and doesn't show much skill.",
+                  "video_url": "https://www.youtube.com/watch?v=kBwzHVcV1EY"
+                },
+                {
+                  "id": "betslam_sam",
+                  "name": "BetSlam with Sam",
+                  "confidence": 5,
+                  "trust": 6.8,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Taking the untested Brazilian at face value — big, jacked, 27 and in his prime with a size advantage, while Miller looked cheeks on his last Contender Series appearance.",
+                  "video_url": "https://www.youtube.com/watch?v=gtBQ9hJBIA4"
+                },
+                {
+                  "id": "couch_warrior",
+                  "name": "Couch Warrior Podcast",
+                  "confidence": 5,
+                  "trust": 5.4,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Doesn't think either guy is UFC level, but expects the athletic, powerful Rodriguez to knock out the sloppy, non-durable Miller in round one and create a future fade opportunity.",
+                  "video_url": "https://www.youtube.com/watch?v=XC06GJwsTXE"
                 }
               ]
             }
@@ -177,16 +301,27 @@
         {
           "bet_type": "method_of_victory",
           "label": "Method of Victory",
-          "total_weight": 3.85,
-          "pick_count": 1,
+          "total_weight": 16.87,
+          "pick_count": 4,
           "options": [
             {
               "selection": "Douglas Rodriguez by KO/TKO",
               "consensus_pct": 100.0,
-              "weight": 3.85,
-              "pick_count": 1,
-              "avg_confidence": 7.0,
+              "weight": 16.87,
+              "pick_count": 4,
+              "avg_confidence": 6.8,
               "cappers": [
+                {
+                  "id": "we_want_picks",
+                  "name": "We Want Picks (Jacob)",
+                  "confidence": 9,
+                  "trust": 6.1,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Called his highest confidence pick of the card: Rodriguez has huge power in hands and kicks, Miller is shorter, hittable, with chin and cardio concerns after being battered by Goundry.",
+                  "video_url": "https://www.youtube.com/watch?v=Fh7LeOLLJkM"
+                },
                 {
                   "id": "livid_larry",
                   "name": "Livid Larry MMA",
@@ -197,6 +332,28 @@
                   "stake": "",
                   "reasoning": "Miller is stiff, awkward and easily hit despite durability; Rodriguez is a decent, physically imposing striker who can walk him down and finish, likely in round one or two.",
                   "video_url": "https://www.youtube.com/watch?v=hjYnAXvzc4M"
+                },
+                {
+                  "id": "the_wager_zone",
+                  "name": "The Wager Zone",
+                  "confidence": 6,
+                  "trust": 6.3,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Crisp boxing combinations plus leg and body kicks should make Miller stationary and lead to a knockout.",
+                  "video_url": "https://www.youtube.com/watch?v=kBwzHVcV1EY"
+                },
+                {
+                  "id": "mma_prediction_guru",
+                  "name": "MMA Prediction Guru",
+                  "confidence": 5,
+                  "trust": 7.5,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Leaning Rodriguez as the better athlete and more dangerous striker; Miller is too hittable and his wrestling isn't good enough to justify the upset, so a head kick or hook along the fence finish is likely.",
+                  "video_url": "https://www.youtube.com/watch?v=2Fno300Z2ws"
                 }
               ]
             }
@@ -205,16 +362,27 @@
         {
           "bet_type": "round",
           "label": "Round",
-          "total_weight": 6.88,
-          "pick_count": 2,
+          "total_weight": 10.96,
+          "pick_count": 3,
           "options": [
             {
               "selection": "Douglas Rodriguez by KO in round 1",
               "consensus_pct": 100.0,
-              "weight": 6.88,
-              "pick_count": 2,
+              "weight": 10.96,
+              "pick_count": 3,
               "avg_confidence": 6.0,
               "cappers": [
+                {
+                  "id": "mma_lock_of_the_night",
+                  "name": "MMA Lock of the Night",
+                  "confidence": 6,
+                  "trust": 6.8,
+                  "role": "favorite",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Believes Rodriguez finds Miller's chin early given the speed and power edge and Miller's questionable durability.",
+                  "video_url": "https://www.youtube.com/watch?v=CskBvz8xWw8"
+                },
                 {
                   "id": "axel_mma",
                   "name": "Axel MMA",
@@ -247,43 +415,65 @@
       "card_date": "2026-08-18T23:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-17T05:52:44+00:00",
-        "commence_time": "2026-08-18T23:00:00Z",
+        "fetched_at": "2026-08-18T21:54:53+00:00",
+        "commence_time": "2026-08-19T00:45:00Z",
         "a": {
-          "american": 256,
-          "decimal": 3.56,
-          "books": 2,
-          "best_american": 267
+          "american": 360,
+          "decimal": 4.6,
+          "books": 3,
+          "best_american": 400
         },
         "b": {
-          "american": -325,
-          "decimal": 1.3078,
-          "books": 2,
-          "best_american": -320
+          "american": -500,
+          "decimal": 1.2,
+          "books": 3,
+          "best_american": -400
         }
       }
     },
     {
-      "fight_id": "puga|tremblay",
+      "fight_id": "puga|trembley",
       "display": "Roman Puga vs Taner Trembley",
       "fighter_a": "Roman Puga",
       "fighter_b": "Taner Trembley",
-      "pick_count": 3,
-      "capper_count": 2,
+      "pick_count": 13,
+      "capper_count": 8,
       "markets": [
         {
           "bet_type": "moneyline",
           "label": "Moneyline",
-          "total_weight": 6.9,
-          "pick_count": 2,
+          "total_weight": 21.63,
+          "pick_count": 6,
           "options": [
             {
               "selection": "Roman Puga",
-              "consensus_pct": 100.0,
-              "weight": 6.9,
-              "pick_count": 2,
-              "avg_confidence": 6.0,
+              "consensus_pct": 86.1,
+              "weight": 18.63,
+              "pick_count": 5,
+              "avg_confidence": 6.2,
               "cappers": [
+                {
+                  "id": "the_wager_zone",
+                  "name": "The Wager Zone",
+                  "confidence": 7,
+                  "trust": 6.3,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Puga has great overall boxing and a purple belt in jiu-jitsu, with takedown defense and scrambling ability to handle Trembley's grappling.",
+                  "video_url": "https://www.youtube.com/watch?v=kBwzHVcV1EY"
+                },
+                {
+                  "id": "betslam_sam",
+                  "name": "BetSlam with Sam",
+                  "confidence": 6,
+                  "trust": 6.8,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Trembley started MMA late, has faced nobody of note and mostly submits opponents, while Puga is a young Mexican knockout artist who has never been submitted.",
+                  "video_url": "https://www.youtube.com/watch?v=gtBQ9hJBIA4"
+                },
                 {
                   "id": "artem_mma",
                   "name": "Artem MMA",
@@ -294,6 +484,17 @@
                   "stake": "",
                   "reasoning": "Puga is the much better boxer with body work and professional boxing experience, and although his initial takedown defense is suspect he scrambles very well back to his feet.",
                   "video_url": "https://www.youtube.com/watch?v=R4psfz1mOEE"
+                },
+                {
+                  "id": "couch_warrior",
+                  "name": "Couch Warrior Podcast",
+                  "confidence": 6,
+                  "trust": 5.4,
+                  "role": "favorite",
+                  "odds": "-160",
+                  "stake": "",
+                  "reasoning": "Loves Puga's boxing, jab, hand speed and body work, and thinks his slick brown-belt jiu-jitsu will let him stay active off his back and get back to his feet against Trembley's clinch/wrestling pressure.",
+                  "video_url": "https://www.youtube.com/watch?v=XC06GJwsTXE"
                 },
                 {
                   "id": "axel_mma",
@@ -307,21 +508,122 @@
                   "video_url": "https://www.youtube.com/watch?v=WuFrjBwesFA"
                 }
               ]
+            },
+            {
+              "selection": "Tanner Trembley",
+              "consensus_pct": 13.9,
+              "weight": 3.0,
+              "pick_count": 1,
+              "avg_confidence": 5.0,
+              "cappers": [
+                {
+                  "id": "mma_prediction_guru",
+                  "name": "MMA Prediction Guru",
+                  "confidence": 5,
+                  "trust": 6.0,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Mentioned possibly just playing the Trembley moneyline (or a submission prop) since he is the more well-rounded fighter with a harder build-up.",
+                  "video_url": "https://www.youtube.com/watch?v=2Fno300Z2ws"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bet_type": "method_of_victory",
+          "label": "Method of Victory",
+          "total_weight": 21.18,
+          "pick_count": 5,
+          "options": [
+            {
+              "selection": "Roman Puga by KO/TKO",
+              "consensus_pct": 78.8,
+              "weight": 16.68,
+              "pick_count": 4,
+              "avg_confidence": 6.0,
+              "cappers": [
+                {
+                  "id": "mma_lock_of_the_night",
+                  "name": "MMA Lock of the Night",
+                  "confidence": 6,
+                  "trust": 8.3,
+                  "role": "favorite",
+                  "odds": "-170",
+                  "stake": "",
+                  "reasoning": "Puga's boxing superiority against a hittable, aggressive Trembley who crashes the pocket; capper trusts Puga's grappling defense to stay out of trouble if taken down.",
+                  "video_url": "https://www.youtube.com/watch?v=CskBvz8xWw8"
+                },
+                {
+                  "id": "betslam_sam",
+                  "name": "BetSlam with Sam",
+                  "confidence": 6,
+                  "trust": 7.1,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Puga is a legitimate boxing threat with striking finishes; Sam said he'll take the KO if it's plus money.",
+                  "video_url": "https://www.youtube.com/watch?v=gtBQ9hJBIA4"
+                },
+                {
+                  "id": "the_wager_zone",
+                  "name": "The Wager Zone",
+                  "confidence": 6,
+                  "trust": 6.3,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Trembley is very hittable and Puga's boxing should eventually put his lights out.",
+                  "video_url": "https://www.youtube.com/watch?v=kBwzHVcV1EY"
+                },
+                {
+                  "id": "we_want_picks",
+                  "name": "We Want Picks (Jacob)",
+                  "confidence": 6,
+                  "trust": 6.1,
+                  "role": "favorite",
+                  "odds": "-135",
+                  "stake": "",
+                  "reasoning": "Puga is a pressure boxer who works the body and uses his size and reach well, and Tremblay's defense can be exposed; Puga can also scramble back up if taken down.",
+                  "video_url": "https://www.youtube.com/watch?v=Fh7LeOLLJkM"
+                }
+              ]
+            },
+            {
+              "selection": "Tanner Trembley by submission (2nd round rear-naked choke)",
+              "consensus_pct": 21.2,
+              "weight": 4.5,
+              "pick_count": 1,
+              "avg_confidence": 6.0,
+              "cappers": [
+                {
+                  "id": "mma_prediction_guru",
+                  "name": "MMA Prediction Guru",
+                  "confidence": 6,
+                  "trust": 7.5,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Trembley is more well-rounded, has better competition on his resume, great conditioning and a strong finishing/submission game; he should force exchanges, mix in takedowns and get Puga out of there.",
+                  "video_url": "https://www.youtube.com/watch?v=2Fno300Z2ws"
+                }
+              ]
             }
           ]
         },
         {
           "bet_type": "round",
           "label": "Round",
-          "total_weight": 3.66,
-          "pick_count": 1,
+          "total_weight": 7.06,
+          "pick_count": 2,
           "options": [
             {
               "selection": "Roman Puga by KO in round 2",
               "consensus_pct": 100.0,
-              "weight": 3.66,
-              "pick_count": 1,
-              "avg_confidence": 6.0,
+              "weight": 7.06,
+              "pick_count": 2,
+              "avg_confidence": 5.5,
               "cappers": [
                 {
                   "id": "artem_mma",
@@ -333,6 +635,17 @@
                   "stake": "",
                   "reasoning": "He thinks Puga's boxing and body shots will accumulate on Tremblay and break him down in the second round.",
                   "video_url": "https://www.youtube.com/watch?v=R4psfz1mOEE"
+                },
+                {
+                  "id": "we_want_picks",
+                  "name": "We Want Picks (Jacob)",
+                  "confidence": 5,
+                  "trust": 6.8,
+                  "role": "favorite",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "He expects Puga to set the finish up with body shots and get the stoppage in the second round.",
+                  "video_url": "https://www.youtube.com/watch?v=Fh7LeOLLJkM"
                 }
               ]
             }
@@ -344,19 +657,19 @@
       "card_date": "2026-08-18T23:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-17T05:52:44+00:00",
-        "commence_time": "2026-08-18T23:00:00Z",
+        "fetched_at": "2026-08-18T21:54:53+00:00",
+        "commence_time": "2026-08-18T23:15:00Z",
         "a": {
-          "american": -167,
-          "decimal": 1.599,
-          "books": 2,
-          "best_american": -164
+          "american": -158,
+          "decimal": 1.6329,
+          "books": 3,
+          "best_american": -144
         },
         "b": {
-          "american": 142,
-          "decimal": 2.415,
-          "books": 2,
-          "best_american": 149
+          "american": 135,
+          "decimal": 2.35,
+          "books": 3,
+          "best_american": 138
         }
       }
     },
@@ -365,22 +678,33 @@
       "display": "Logan Paxton vs Cristian Pérez",
       "fighter_a": "Logan Paxton",
       "fighter_b": "Cristian Pérez",
-      "pick_count": 3,
-      "capper_count": 2,
+      "pick_count": 13,
+      "capper_count": 8,
       "markets": [
         {
           "bet_type": "moneyline",
           "label": "Moneyline",
-          "total_weight": 8.52,
-          "pick_count": 2,
+          "total_weight": 28.22,
+          "pick_count": 7,
           "options": [
             {
               "selection": "Christian Perez",
-              "consensus_pct": 100.0,
-              "weight": 8.52,
-              "pick_count": 2,
-              "avg_confidence": 7.5,
+              "consensus_pct": 66.6,
+              "weight": 18.8,
+              "pick_count": 5,
+              "avg_confidence": 6.4,
               "cappers": [
+                {
+                  "id": "betslam_sam",
+                  "name": "BetSlam with Sam",
+                  "confidence": 8,
+                  "trust": 6.1,
+                  "role": "favorite",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Called Perez the lock of the card — far more skilled, showed the real deal against Manuel Sosa, while Paxton is a meat-and-potatoes wrestler who's beaten only tin cans.",
+                  "video_url": "https://www.youtube.com/watch?v=gtBQ9hJBIA4"
+                },
                 {
                   "id": "axel_mma",
                   "name": "Axel MMA",
@@ -393,6 +717,17 @@
                   "video_url": "https://www.youtube.com/watch?v=WuFrjBwesFA"
                 },
                 {
+                  "id": "the_wager_zone",
+                  "name": "The Wager Zone",
+                  "confidence": 6,
+                  "trust": 6.3,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Most competitive fight of the night, but Perez's own wrestling, jiu-jitsu and superior boxing should keep it standing where he wins.",
+                  "video_url": "https://www.youtube.com/watch?v=kBwzHVcV1EY"
+                },
+                {
                   "id": "artem_mma",
                   "name": "Artem MMA",
                   "confidence": 6,
@@ -402,6 +737,48 @@
                   "stake": "",
                   "reasoning": "Perez is notably faster on the feet and his grappling is strong, though Paxton's size and Perez's cardio issues are concerns.",
                   "video_url": "https://www.youtube.com/watch?v=R4psfz1mOEE"
+                },
+                {
+                  "id": "couch_warrior",
+                  "name": "Couch Warrior Podcast",
+                  "confidence": 3,
+                  "trust": 5.4,
+                  "role": "favorite",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Picks Perez by decision as the cleaner striker and grappler, but calls it a 'dog or pass' for betting purposes since Paxton's grinding wrestling could make it close and ugly.",
+                  "video_url": "https://www.youtube.com/watch?v=XC06GJwsTXE"
+                }
+              ]
+            },
+            {
+              "selection": "Logan Paxton",
+              "consensus_pct": 33.4,
+              "weight": 9.42,
+              "pick_count": 2,
+              "avg_confidence": 7.5,
+              "cappers": [
+                {
+                  "id": "mma_lock_of_the_night",
+                  "name": "MMA Lock of the Night",
+                  "confidence": 6,
+                  "trust": 8.2,
+                  "role": "underdog",
+                  "odds": "+190",
+                  "stake": "",
+                  "reasoning": "Surprised the line is this wide; Paxton's forward pressure, clinch work and cardio should wear Perez down, and Paxton's chin should hold up early against Perez's better striking.",
+                  "video_url": "https://www.youtube.com/watch?v=CskBvz8xWw8"
+                },
+                {
+                  "id": "mma_prediction_guru",
+                  "name": "MMA Prediction Guru",
+                  "confidence": 9,
+                  "trust": 5.0,
+                  "role": "underdog",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Named as his most confident play of the week; Paxton is a nice little underdog, a grinder with pressure, power and wrestling who can break Perez, who gasses and lacks striking confidence.",
+                  "video_url": "https://www.youtube.com/watch?v=2Fno300Z2ws"
                 }
               ]
             }
@@ -410,16 +787,27 @@
         {
           "bet_type": "method_of_victory",
           "label": "Method of Victory",
-          "total_weight": 3.36,
-          "pick_count": 1,
+          "total_weight": 19.03,
+          "pick_count": 5,
           "options": [
             {
               "selection": "Christian Perez by submission in the first two rounds",
-              "consensus_pct": 100.0,
-              "weight": 3.36,
-              "pick_count": 1,
+              "consensus_pct": 59.8,
+              "weight": 11.38,
+              "pick_count": 3,
               "avg_confidence": 6.0,
               "cappers": [
+                {
+                  "id": "betslam_sam",
+                  "name": "BetSlam with Sam",
+                  "confidence": 7,
+                  "trust": 7.1,
+                  "role": "favorite",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Perez is far more skilled and should cook Paxton, whose only path is takedowns and ground and pound.",
+                  "video_url": "https://www.youtube.com/watch?v=gtBQ9hJBIA4"
+                },
                 {
                   "id": "artem_mma",
                   "name": "Artem MMA",
@@ -430,6 +818,85 @@
                   "stake": "",
                   "reasoning": "He likes Perez's grappling after what he did to Manel Sousa early, but Perez gassed late so the finish should come in rounds one or two.",
                   "video_url": "https://www.youtube.com/watch?v=R4psfz1mOEE"
+                },
+                {
+                  "id": "we_want_picks",
+                  "name": "We Want Picks (Jacob)",
+                  "confidence": 5,
+                  "trust": 6.1,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Perez showed elite offensive grappling against Manuel Sousa and comes in off a short layoff, though Jacob is less confident due to Paxton's size, wrestling and likely good cardio.",
+                  "video_url": "https://www.youtube.com/watch?v=Fh7LeOLLJkM"
+                }
+              ]
+            },
+            {
+              "selection": "Logan Paxton by decision",
+              "consensus_pct": 23.6,
+              "weight": 4.5,
+              "pick_count": 1,
+              "avg_confidence": 6.0,
+              "cappers": [
+                {
+                  "id": "mma_prediction_guru",
+                  "name": "MMA Prediction Guru",
+                  "confidence": 6,
+                  "trust": 7.5,
+                  "role": "underdog",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Predicts Paxton wins a 29-28 decision by breaking Perez and winning the later rounds; also floated a late KO/decision prop.",
+                  "video_url": "https://www.youtube.com/watch?v=2Fno300Z2ws"
+                }
+              ]
+            },
+            {
+              "selection": "Christian Perez by KO/TKO in round 2",
+              "consensus_pct": 16.6,
+              "weight": 3.15,
+              "pick_count": 1,
+              "avg_confidence": 5.0,
+              "cappers": [
+                {
+                  "id": "the_wager_zone",
+                  "name": "The Wager Zone",
+                  "confidence": 5,
+                  "trust": 6.3,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Paxton swings wild and sloppy; Perez lands the better combinations to the body and head and finishes in the second round.",
+                  "video_url": "https://www.youtube.com/watch?v=kBwzHVcV1EY"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bet_type": "round",
+          "label": "Round",
+          "total_weight": 4.1,
+          "pick_count": 1,
+          "options": [
+            {
+              "selection": "Logan Paxton by TKO in round 3",
+              "consensus_pct": 100.0,
+              "weight": 4.1,
+              "pick_count": 1,
+              "avg_confidence": 5.0,
+              "cappers": [
+                {
+                  "id": "mma_lock_of_the_night",
+                  "name": "MMA Lock of the Night",
+                  "confidence": 5,
+                  "trust": 8.2,
+                  "role": "underdog",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Expects Paxton to wear Perez down (Perez gassed in round three of his prior DWCS fight) and get a late finish.",
+                  "video_url": "https://www.youtube.com/watch?v=CskBvz8xWw8"
                 }
               ]
             }
@@ -441,19 +908,19 @@
       "card_date": "2026-08-18T23:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-17T05:52:44+00:00",
+        "fetched_at": "2026-08-18T21:54:53+00:00",
         "commence_time": "2026-08-19T00:00:00Z",
         "a": {
-          "american": 192,
-          "decimal": 2.915,
+          "american": 247,
+          "decimal": 3.475,
           "books": 2,
-          "best_american": 194
+          "best_american": 280
         },
         "b": {
-          "american": -235,
-          "decimal": 1.4263,
+          "american": -298,
+          "decimal": 1.3352,
           "books": 2,
-          "best_american": -225
+          "best_american": -260
         }
       }
     },
@@ -462,21 +929,21 @@
       "display": "Kaik Brito vs Namo Fazil",
       "fighter_a": "Kaik Brito",
       "fighter_b": "Namo Fazil",
-      "pick_count": 3,
-      "capper_count": 2,
+      "pick_count": 7,
+      "capper_count": 5,
       "markets": [
         {
           "bet_type": "moneyline",
           "label": "Moneyline",
-          "total_weight": 7.61,
-          "pick_count": 2,
+          "total_weight": 19.13,
+          "pick_count": 5,
           "options": [
             {
               "selection": "Namo Fazil",
-              "consensus_pct": 100.0,
-              "weight": 7.61,
-              "pick_count": 2,
-              "avg_confidence": 7.0,
+              "consensus_pct": 59.5,
+              "weight": 11.39,
+              "pick_count": 3,
+              "avg_confidence": 6.7,
               "cappers": [
                 {
                   "id": "axel_mma",
@@ -490,6 +957,17 @@
                   "video_url": "https://www.youtube.com/watch?v=WuFrjBwesFA"
                 },
                 {
+                  "id": "the_wager_zone",
+                  "name": "The Wager Zone",
+                  "confidence": 6,
+                  "trust": 6.3,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Fazil has the better overall skills and should have been in the UFC already, mixing takedowns with striking; Brito is a live dog though.",
+                  "video_url": "https://www.youtube.com/watch?v=kBwzHVcV1EY"
+                },
+                {
                   "id": "livid_larry",
                   "name": "Livid Larry MMA",
                   "confidence": 5,
@@ -501,18 +979,69 @@
                   "video_url": "https://www.youtube.com/watch?v=hjYnAXvzc4M"
                 }
               ]
+            },
+            {
+              "selection": "Kaik Brito",
+              "consensus_pct": 40.5,
+              "weight": 7.74,
+              "pick_count": 2,
+              "avg_confidence": 6.0,
+              "cappers": [
+                {
+                  "id": "betslam_sam",
+                  "name": "BetSlam with Sam",
+                  "confidence": 6,
+                  "trust": 6.8,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Brito is battle tested against real European competition while Fazil has been can crushing on a much weaker circuit; the fake tough guy act at the faceoff flipped Sam onto Brito.",
+                  "video_url": "https://www.youtube.com/watch?v=gtBQ9hJBIA4"
+                },
+                {
+                  "id": "we_want_picks",
+                  "name": "We Want Picks (Jacob)",
+                  "confidence": 6,
+                  "trust": 6.1,
+                  "role": "underdog",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Fazil is a slow starter and defensively unsound while Brito is the more technical, one-punch-at-a-time striker who should land something big early.",
+                  "video_url": "https://www.youtube.com/watch?v=Fh7LeOLLJkM"
+                }
+              ]
             }
           ]
         },
         {
           "bet_type": "method_of_victory",
           "label": "Method of Victory",
-          "total_weight": 2.2,
-          "pick_count": 1,
+          "total_weight": 5.35,
+          "pick_count": 2,
           "options": [
             {
+              "selection": "Namo Fazil by KO/TKO",
+              "consensus_pct": 58.9,
+              "weight": 3.15,
+              "pick_count": 1,
+              "avg_confidence": 5.0,
+              "cappers": [
+                {
+                  "id": "the_wager_zone",
+                  "name": "The Wager Zone",
+                  "confidence": 5,
+                  "trust": 6.3,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Expects Fazil to mix combinations and takedowns well and finish by knockout in a competitive fight.",
+                  "video_url": "https://www.youtube.com/watch?v=kBwzHVcV1EY"
+                }
+              ]
+            },
+            {
               "selection": "Namo Fazil by submission",
-              "consensus_pct": 100.0,
+              "consensus_pct": 41.1,
               "weight": 2.2,
               "pick_count": 1,
               "avg_confidence": 4.0,
@@ -538,60 +1067,90 @@
       "card_date": "2026-08-18T23:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-17T05:52:44+00:00",
-        "commence_time": "2026-08-18T23:00:00Z",
+        "fetched_at": "2026-08-18T21:54:53+00:00",
+        "commence_time": "2026-08-19T01:15:00Z",
         "a": {
-          "american": 130,
-          "decimal": 2.295,
-          "books": 2,
-          "best_american": 132
+          "american": 149,
+          "decimal": 2.49,
+          "books": 3,
+          "best_american": 155
         },
         "b": {
-          "american": -154,
-          "decimal": 1.6488,
-          "books": 2,
-          "best_american": -147
+          "american": -170,
+          "decimal": 1.5882,
+          "books": 3,
+          "best_american": -138
         }
       }
     },
     {
-      "fight_id": "barboza|ribovics",
-      "display": "Edson Barboza vs Esteban Ribovic",
-      "fighter_a": "Edson Barboza",
-      "fighter_b": "Esteban Ribovics",
-      "pick_count": 1,
-      "capper_count": 1,
+      "fight_id": "brito|fasil",
+      "display": "Kaik Brito vs Namo Fazil",
+      "fighter_a": "Kaik Brito",
+      "fighter_b": "Namo Fazil",
+      "pick_count": 2,
+      "capper_count": 2,
       "markets": [
         {
-          "bet_type": "moneyline",
-          "label": "Moneyline",
-          "total_weight": 2.75,
-          "pick_count": 1,
+          "bet_type": "method_of_victory",
+          "label": "Method of Victory",
+          "total_weight": 10.31,
+          "pick_count": 2,
           "options": [
             {
-              "selection": "Esteban Ribovics",
+              "selection": "Namo Fasil by KO/TKO",
               "consensus_pct": 100.0,
-              "weight": 2.75,
-              "pick_count": 1,
-              "avg_confidence": 5.0,
+              "weight": 10.31,
+              "pick_count": 2,
+              "avg_confidence": 6.5,
               "cappers": [
                 {
-                  "id": "livid_larry",
-                  "name": "Livid Larry MMA",
-                  "confidence": 5,
-                  "trust": 5.5,
+                  "id": "mma_lock_of_the_night",
+                  "name": "MMA Lock of the Night",
+                  "confidence": 7,
+                  "trust": 8.3,
                   "role": "favorite",
+                  "odds": "-150",
+                  "stake": "",
+                  "reasoning": "Fasil's pressure and pocket-crashing should make Brito uncomfortable against the cage until one of the big shots flatlines him.",
+                  "video_url": "https://www.youtube.com/watch?v=CskBvz8xWw8"
+                },
+                {
+                  "id": "mma_prediction_guru",
+                  "name": "MMA Prediction Guru",
+                  "confidence": 6,
+                  "trust": 7.5,
+                  "role": "unknown",
                   "odds": "",
                   "stake": "",
-                  "reasoning": "Thinks Barboza is done at this point and that Ribovics is very likely to win, probably by knockout.",
-                  "video_url": "https://www.youtube.com/watch?v=B6qSYGm_KOg"
+                  "reasoning": "Favors Fasil in a striking battle because of better fundamentals when both tire; Brito starts well but gasses, and isn't a good enough wrestler to win that way.",
+                  "video_url": "https://www.youtube.com/watch?v=2Fno300Z2ws"
                 }
               ]
             }
           ]
         }
       ],
-      "card_status": "cancelled"
+      "card_status": "on_card",
+      "card_order": 4,
+      "card_date": "2026-08-18T23:00Z",
+      "live_odds": {
+        "source": "the-odds-api",
+        "fetched_at": "2026-08-18T21:54:53+00:00",
+        "commence_time": "2026-08-19T01:15:00Z",
+        "a": {
+          "american": 149,
+          "decimal": 2.49,
+          "books": 3,
+          "best_american": 155
+        },
+        "b": {
+          "american": -170,
+          "decimal": 1.5882,
+          "books": 3,
+          "best_american": -138
+        }
+      }
     },
     {
       "fight_id": "aly|lorenz",
@@ -606,19 +1165,19 @@
       "card_date": "2026-08-18T23:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-17T05:52:44+00:00",
-        "commence_time": "2026-08-18T23:00:00Z",
+        "fetched_at": "2026-08-18T21:54:53+00:00",
+        "commence_time": "2026-08-18T23:45:00Z",
         "a": {
-          "american": 225,
-          "decimal": 3.25,
-          "books": 2,
-          "best_american": 245
+          "american": 263,
+          "decimal": 3.63,
+          "books": 3,
+          "best_american": 275
         },
         "b": {
-          "american": -279,
-          "decimal": 1.359,
-          "books": 2,
-          "best_american": -260
+          "american": -325,
+          "decimal": 1.3077,
+          "books": 3,
+          "best_american": -320
         }
       }
     }
@@ -631,6 +1190,11 @@
       "channel_id": "UUpSQhfFzpZ9COp_WiKSUEkQ",
       "feed_videos": 15,
       "selected": [
+        {
+          "video_id": "8ThZXvqw-V4",
+          "title": "LIVE! Contender Series 2026: Week 2 FIGHT COMPANION - Contender Series Livestream",
+          "published": "2026-08-18T04:53:13+00:00"
+        },
         {
           "video_id": "R4psfz1mOEE",
           "title": "Contender Series 2026: Week 2 Preview and Predictions",
@@ -647,7 +1211,7 @@
       "selected": [
         {
           "video_id": "WuFrjBwesFA",
-          "title": "Contender Series 2026 Week 2 Predictions | LOCK PARLAY + BEST PICKS",
+          "title": "DWCS 2026 Week 2 Full Card Predictions | LOCK PARLAY & CONFIDENT PICKS",
           "published": "2026-08-17T02:11:30+00:00"
         }
       ]
@@ -658,13 +1222,12 @@
       "status": "ok",
       "channel_id": "UU7LH9bWIKZd82LpdouIBOLw",
       "feed_videos": 15,
-      "selected": [],
-      "recent_titles": [
-        "2026-08-17  UFC Sacramaneto - Anthony Hernandez vs Gregory Rodrigues Full Card Breakdown Predictions and More",
-        "2026-08-16  Live Fight Companion - UFC 330 Islam Makhachev vs Ian Garry Predictions Bets and Entertainment",
-        "2026-08-15  Live Weigh In Recap - UFC 330 Islam Makhachev vs Ian Garry",
-        "2026-08-13  Kombat Kiwi Prop Hunting Live - UFC 330 Islam Makhachev vs Ian Garry",
-        "2026-08-12  Slam Of The Week - UFC 330 Islam Makhachev vs Ian Garry"
+      "selected": [
+        {
+          "video_id": "gtBQ9hJBIA4",
+          "title": "Live DWCS Predictions + UFC Sacramento Prop Hunting Anthony Hernandez vs Gregory Rodrigues",
+          "published": "2026-08-18T05:32:17+00:00"
+        }
       ]
     },
     {
@@ -690,6 +1253,11 @@
       "feed_videos": 15,
       "selected": [
         {
+          "video_id": "-_ELBhLxo58",
+          "title": "Dana White’s Contender Series 2026: Week 2 | Full Card Fight Companion",
+          "published": "2026-08-18T12:14:14+00:00"
+        },
+        {
           "video_id": "qKNEf6qqVaQ",
           "title": "Dana White’s Contender Series 2026: Week 1 | Full Card Fight Companion",
           "published": "2026-08-15T12:23:14+00:00"
@@ -698,11 +1266,6 @@
           "video_id": "hjYnAXvzc4M",
           "title": "Dana White’s Contender Series 2026: Week 2 | Full Card Predictions & Breakdown",
           "published": "2026-08-13T13:46:09+00:00"
-        },
-        {
-          "video_id": "B6qSYGm_KOg",
-          "title": "Dana White’s Contender Series 2026: Week 1 | Full Card Fight Companion",
-          "published": "2026-08-12T01:28:11+00:00"
         }
       ]
     },
@@ -727,13 +1290,12 @@
       "status": "ok",
       "channel_id": "UUZtPH7fOOC8Nmz89jw36h6w",
       "feed_videos": 15,
-      "selected": [],
-      "recent_titles": [
-        "2026-08-14  Edson Barboza vs Esteban Ribovics - UFC 330",
-        "2026-08-14  Mansur Abdul-Malik vs Dustin Stolzfus - UFC 330",
-        "2026-08-14  Jalin Turner vs Kaue Fernandes - UFC 330",
-        "2026-08-14  Mackenzie Dern vs Gillian Robertson - UFC 330",
-        "2026-08-14  Ian Garry vs Islam Makhachev - UFC 330"
+      "selected": [
+        {
+          "video_id": "XC06GJwsTXE",
+          "title": "Dana White's Contender Series Week 2  - Full Card Betting Breakdowns, Predictions & Picks",
+          "published": "2026-08-18T11:37:37+00:00"
+        }
       ]
     },
     {
@@ -773,14 +1335,19 @@
       "feed_videos": 15,
       "selected": [
         {
+          "video_id": "aOcgEGa5jVE",
+          "title": "🔴 Week 2 Contender Series LIVESTREAM! COMMENTARY & REACTIONS!",
+          "published": "2026-08-18T16:47:22+00:00"
+        },
+        {
+          "video_id": "Fh7LeOLLJkM",
+          "title": "DWCS 2026: Week 2: FULL CARD Predictions",
+          "published": "2026-08-17T18:00:09+00:00"
+        },
+        {
           "video_id": "p_nHNA2E00g",
           "title": "🔴 Contender Series LIVESTREAM! COMMENTARY & REACTIONS!",
           "published": "2026-08-12T01:30:18+00:00"
-        },
-        {
-          "video_id": "IjkAyidIPzA",
-          "title": "DWCS 2026: Week 1: FULL CARD Predictions",
-          "published": "2026-08-10T15:53:19+00:00"
         }
       ]
     },
@@ -792,11 +1359,11 @@
       "feed_videos": 15,
       "selected": [],
       "recent_titles": [
+        "2026-08-18  UFC Fight Night: Hernandez vs. Rodrigues. Full card predictions",
         "2026-08-09  The Lisan Al-Paw",
         "2026-08-09  UFC 330: Makhachev vs. Machado Garry. Full card predictions",
         "2026-08-06  UFC Fight Night: Gamrot vs. Salkilld. Full card predictions",
-        "2026-08-01  Revenge of the Cabbage – A Brady & Uncle Weezy Story 🥬",
-        "2026-07-30  UFC Fight Night: Medic vs. Rodriguez. Full Card Predictions"
+        "2026-08-01  Revenge of the Cabbage – A Brady & Uncle Weezy Story 🥬"
       ]
     },
     {
@@ -807,14 +1374,19 @@
       "feed_videos": 15,
       "selected": [
         {
+          "video_id": "9JKfJa0k2pM",
+          "title": "Contender Series 2026 Week 2 Watch Party Buddies",
+          "published": "2026-08-18T14:29:46+00:00"
+        },
+        {
+          "video_id": "CskBvz8xWw8",
+          "title": "Dana White's Contender Series 2026 Week 2 Predictions",
+          "published": "2026-08-17T19:09:06+00:00"
+        },
+        {
           "video_id": "sQCtIWoWEtM",
           "title": "Contender Series 2026 Week 1 Watch Party Buddies",
           "published": "2026-08-12T14:13:30+00:00"
-        },
-        {
-          "video_id": "VfAU5cbkJsg",
-          "title": "Dana White's Contender Series 2026 Week 1 Predictions",
-          "published": "2026-08-10T20:51:31+00:00"
         }
       ]
     },
@@ -869,13 +1441,17 @@
       "status": "ok",
       "channel_id": "UUifVih_HPGoctNCg0gO-VqQ",
       "feed_videos": 15,
-      "selected": [],
-      "recent_titles": [
-        "2026-08-16  🔒🥊💰 #ufc #ufc330 #fightnight",
-        "2026-08-15  🥊LIVE: UFC 330 Makhachev vs. Machado Garry | FULL CARD BREAKDOWN, Odds & Predictions",
-        "2026-08-15  🥊WHO YOU GOT? #ufc #ufc330 #ufcpicks #mackenziedern",
-        "2026-08-15  🥊WHO YOU GOT? #ufc #mma #ufc330 #islammakhachev",
-        "2026-08-14  🥊UFC 330: Makhachev vs. Machado Garry | BEST BETS & Final Predictions 🔥💰"
+      "selected": [
+        {
+          "video_id": "kBwzHVcV1EY",
+          "title": "🚨 DWCS WEEK 2 BEST BETS! | Dana White’s Contender Series Predictions & Betting Picks 🔥",
+          "published": "2026-08-18T19:45:06+00:00"
+        },
+        {
+          "video_id": "FgiM4KCSzSM",
+          "title": "🥊Dana White’s Contender Series Week 2 | BEST BETS & Predictions 🔥 UFC Betting Picks💰",
+          "published": "2026-08-18T00:50:45+00:00"
+        }
       ]
     },
     {
@@ -899,13 +1475,12 @@
       "status": "ok",
       "channel_id": "UU_Y5a5fuf58q7EJpqnvtV2w",
       "feed_videos": 15,
-      "selected": [],
-      "recent_titles": [
-        "2026-08-14  CONFIDENT UFC 330 Islam Makhachev vs Ian Garry FULL Card Predictions",
-        "2026-08-09  Dana White’s CONTENDER SERIES 2026 WEEK ONE FULL CARD PREDICTIONS & BETTING BREAKDOWN",
-        "2026-08-08  Gigi Canuto vs Carol Foro UFC Vegas 120 Prediction",
-        "2026-08-08  Miles Johns vs Gianni Vasquez UFC Vegas 120 prediction",
-        "2026-08-07  PFL CHARLOTTE PREDICTIONS  BRYAN BATTLE VS DALTON ROSTA FULL CARD PREDICTIONS"
+      "selected": [
+        {
+          "video_id": "2Fno300Z2ws",
+          "title": "DANA WHITE CONTENDER SERIES 2026 WEEK 2 FULL CARD BREAKDOWN & PREDICTIONS",
+          "published": "2026-08-18T02:45:05+00:00"
+        }
       ]
     },
     {
@@ -937,11 +1512,11 @@
       "feed_videos": 15,
       "selected": [],
       "recent_titles": [
+        "2026-08-18  UFC Sacramento preview 💸 The Gamblers Perspective #169",
         "2026-08-17  UFC Sacramento: Hernandez vs. Rodrigues Preview MMAOB Daily Podcast For August 16th",
-        "2026-08-16  UFC 330: Makhachev vs. Machado Garry Recap MMAOB Daily Podcast For August 16th",
+        "2026-08-17  UFC 330: Makhachev vs. Machado Garry Recap MMAOB Daily Podcast For August 16th",
         "2026-08-12  UFC 330 preview with MMA Rax💸 The Gamblers Perspective #168",
-        "2026-08-10  UFC 330: Makhachev vs. Machado Garry Preview MMAOB Daily Podcast For August 9th",
-        "2026-08-10  UFC Vegas 120: Gamrot vs. Salkilld Recap MMAOB Daily Podcast For August 9th"
+        "2026-08-10  UFC 330: Makhachev vs. Machado Garry Preview MMAOB Daily Podcast For August 9th"
       ]
     },
     {
@@ -967,11 +1542,11 @@
       "feed_videos": 15,
       "selected": [],
       "recent_titles": [
+        "2026-08-18  Islam Makhachev Has A MAJOR SIZE Problem...",
+        "2026-08-17  The ULTIMATE UFC GOAT Debate: Jones vs Islam (ft Wade Concept)",
         "2026-08-16  UNDISPUTED GOAT #islammakhachev  #ufc330  #edit  #iangarry  #makhachev",
         "2026-08-16  Islam Just SOLIDIFIED Himself As The GOAT (UFC 330 Recap)",
-        "2026-08-16  UFC 330 Makhachev vs Garry Fight Companion| LIVESTREAM",
-        "2026-08-15  Ian Garry’s Mind Games Have Me WORRIED for Islam... (Faceoff BREAKDOWN)",
-        "2026-08-14  Ian Garry Just EXPOSED His Biggest Weakness... (Press Conference)"
+        "2026-08-16  UFC 330 Makhachev vs Garry Fight Companion| LIVESTREAM"
       ]
     },
     {
@@ -982,11 +1557,11 @@
       "feed_videos": 15,
       "selected": [],
       "recent_titles": [
+        "2026-08-18  The Best UFC Hatewatches I've Experienced (Top 10)",
+        "2026-08-17  My Reaction To UFC 333 Announcement (Volk vs Evloev, Merab vs Yan)",
         "2026-08-16  The Best Fights To Make After UFC 330 (Makhachev vs Garry)",
         "2026-08-16  UFC 330 Immediate Reaction/Recap (Makhachev vs Garry)",
-        "2026-08-13  UFC Retirements I'm Not Ready For (Tier List)",
-        "2026-08-11  UFC 330 Full Card Predictions (BEDTIME BICKS)",
-        "2026-08-09  I'm Not Worried For Islam Makhachev vs Ian Garry (UFC 330 Prediction)"
+        "2026-08-13  UFC Retirements I'm Not Ready For (Tier List)"
       ]
     },
     {
@@ -997,9 +1572,9 @@
       "feed_videos": 15,
       "selected": [
         {
-          "video_id": "rYse5UsqWKE",
-          "title": "GENIE PICKS DWCS WEEK 1 #UFC #MMA #DWCS #WEEK1 #UFCFIGHTNIGHT #SHORTS",
-          "published": "2026-08-11T11:37:38+00:00"
+          "video_id": "DGVawn0Aldc",
+          "title": "GENIE PICKS DWCS WEEK 2 #ufc #mma #fyp #dwcs #week2 #shorts",
+          "published": "2026-08-18T20:56:08+00:00"
         }
       ]
     },
@@ -1030,7 +1605,7 @@
         "2026-08-16  UFC 330 Event Recap Makhachev vs Machado Garry Full Card Reaction & Breakdown",
         "2026-08-16  Islam Makhachev DEFEATS Ian Machado Garry? WORST RESULT EVER? Full Fight Reaction & Breakdown?",
         "2026-08-16  UFC 330 LIVE MAKHACHEV VS MACHADO GARRY LIVESTREAM & FULL FIGHT COMPANION",
-        "2026-08-16  UFC 330 LIVE MAKHACHEV VS MACHADO GARRY LIVESTREAM & FULL FIGHT COMPANION"
+        "2026-08-14  UFC 330 Press Conference Reaction? Makhachev HATES Ian Garry? Everyone BOO's Ian? So UNLIKEABLE"
       ]
     },
     {
