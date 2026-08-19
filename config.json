@@ -1,8 +1,8 @@
 {
   "event": {
-    "name": "Contender Series: Season 10, Week 2",
+    "name": "Hernandez vs. Rodrigues",
     "date": "",
-    "notes": "\"name\" is matched as a substring against ESPN's own event name (punctuation and case are ignored), and the FIRST match in the scoreboard window wins. For a one-off card \"UFC 330\" is unique and enough. For a weekly series it is not: ESPN lists every Contender Series week inside the 45-day lookahead, so the name must carry the season and week or the run will silently price the wrong card. Discovery pulls recent uploads from each capper channel and keeps the ones whose title matches settings.discovery.title_contains. Add entries to \"videos\" only to pin a specific video by hand."
+    "notes": "\"name\" is matched as a substring against ESPN's own event name (punctuation and case are ignored, but spelling is NOT — no typo tolerance here, unlike fighter-name matching elsewhere in the pipeline), and the FIRST match in the scoreboard window wins. ESPN spells the main-event surname \"Rodrigues\" (Gregory Rodrigues, Brazilian) rather than the more common \"Rodriguez\" — confirm against ESPN before a run if this ever looks wrong. A one-off Fight Night is unique inside the 45-day lookahead so a short name like this is enough; for a weekly series (e.g. Contender Series) the name needs season+week instead, see git history. Discovery pulls recent uploads from each capper channel and keeps the ones whose title matches settings.discovery.title_contains. Add entries to \"videos\" only to pin a specific video by hand."
   },
   "tracker": {
     "channel_url": "https://www.youtube.com/@UFCPredictionsTracker",
@@ -29,11 +29,12 @@
     "use_cache": true,
     "discovery": {
       "enabled": true,
-      "lookback_days": 7,
+      "lookback_days": 14,
       "max_videos_per_channel": 3,
       "title_contains": [
-        "contender series",
-        "dwcs"
+        "hernandez",
+        "rodrigues",
+        "rodriguez"
       ]
     },
     "live_odds": {
