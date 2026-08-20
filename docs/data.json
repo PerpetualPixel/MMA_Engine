@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-20T01:28:31+00:00",
+  "generated_at": "2026-08-20T10:06:16+00:00",
   "event": {
     "name": "Hernandez vs. Rodrigues",
     "date": "",
@@ -15,7 +15,7 @@
     "odds": {
       "source": "the-odds-api",
       "market": "h2h",
-      "fetched_at": "2026-08-20T01:28:31+00:00",
+      "fetched_at": "2026-08-20T10:06:16+00:00",
       "fights_priced": 13
     }
   },
@@ -64,7 +64,7 @@
       "title": "Kombat Kiwi Prop Hunting Live - UFC Sacramento Anthony Hernandez vs Gregory Rodrigues",
       "status": "transcript_failed",
       "pick_count": 0,
-      "error": "VideoUnplayable: \nCould not retrieve a transcript for the video https://www.youtube.com/watch?v=7O0uGhSUCiw! This is most likely caused by:\n\nThe video is unplayable for the following reason: This live event will begin in 97 minutes.\n\nIf you are sure that the described cause is not responsible for this error and that a transcript should be retrievable, please create an issue at https://github.com/jdepoix/youtube-transcript-api/issues. Please add which version of youtube_transcript_api you are using and provide the information needed to replicate the error. Also make sure that there are no open issues which already describe your problem!"
+      "error": "No usable transcript: TranscriptsDisabled"
     },
     {
       "video_id": "jpsngFpF2rc",
@@ -122,9 +122,10 @@
       "capper_id": "couch_warrior",
       "capper": "Couch Warrior Podcast",
       "title": "UFC Sacramento: Hernandez vs Rodrigues | Full Card Betting Breakdowns, Predictions & Picks",
-      "status": "transcript_failed",
+      "status": "extraction_failed",
       "pick_count": 0,
-      "error": "No usable transcript: TranscriptsDisabled"
+      "transcript_chars": 59483,
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeDp8WTR3rmmzz3oUVBHt'}"
     },
     {
       "video_id": "NUfcsi9Bai8",
@@ -135,7 +136,18 @@
       "status": "extraction_failed",
       "pick_count": 0,
       "transcript_chars": 38227,
-      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeD8X7UXq1C6xDXNehPPq'}"
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeDp8XMypBRfs6rBAjJq6'}"
+    },
+    {
+      "video_id": "Ff2ez7G1k2o",
+      "url": "https://www.youtube.com/watch?v=Ff2ez7G1k2o",
+      "capper_id": "we_want_picks",
+      "capper": "We Want Picks (Jacob)",
+      "title": "UFC Sacramento: Hernandez vs. Rodrigues  FULL CARD Predictions, Bets and DraftKings",
+      "status": "extraction_failed",
+      "pick_count": 0,
+      "transcript_chars": 204390,
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeDp8zg3UeB3YPQ5JCJ1J'}"
     },
     {
       "video_id": "0vDik7YV1Ls",
@@ -146,17 +158,7 @@
       "status": "extraction_failed",
       "pick_count": 0,
       "transcript_chars": 22715,
-      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeD8atotfpqgv7LQ5To6b'}"
-    },
-    {
-      "video_id": "Ff2ez7G1k2o",
-      "url": "https://www.youtube.com/watch?v=Ff2ez7G1k2o",
-      "capper_id": "we_want_picks",
-      "capper": "We Want Picks (Jacob)",
-      "title": "UFC Sacramento: Hernandez vs. Rodrigues  FULL CARD Predictions, Bets and DraftKings",
-      "status": "transcript_failed",
-      "pick_count": 0,
-      "error": "No usable transcript: TranscriptsDisabled"
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeDp91MUNxscAZkYNinUA'}"
     },
     {
       "video_id": "A_ym0sOW3R4",
@@ -167,7 +169,7 @@
       "status": "extraction_failed",
       "pick_count": 0,
       "transcript_chars": 43140,
-      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeD8cMKcWgv8Sh22UZwV5'}"
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeDp923QGWB8EBfDgTZxX'}"
     },
     {
       "video_id": "aURrrdkrFu4",
@@ -178,7 +180,7 @@
       "status": "extraction_failed",
       "pick_count": 0,
       "transcript_chars": 17401,
-      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeD8cmXtqNHzrvnF2ZjEq'}"
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeDp92moXL3hiUrwKJrxC'}"
     },
     {
       "video_id": "33eJ5_oNjog",
@@ -189,7 +191,7 @@
       "status": "extraction_failed",
       "pick_count": 0,
       "transcript_chars": 6242,
-      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeD8dbLzvD9qLPqkzQiNj'}"
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeDp93avB3DvwNTv1UmtW'}"
     },
     {
       "video_id": "tKxgORqkhbQ",
@@ -200,7 +202,7 @@
       "status": "extraction_failed",
       "pick_count": 0,
       "transcript_chars": 76472,
-      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeD8e6H3K4rXPY5xnexkH'}"
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeDp94M4RYeqSp8Banmim'}"
     },
     {
       "video_id": "FCgMgJpXOa8",
@@ -211,7 +213,7 @@
       "status": "extraction_failed",
       "pick_count": 0,
       "transcript_chars": 61783,
-      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeD8ecqZivHC6vRpZMUsB'}"
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeDp951z81XUhM9JZHb4d'}"
     },
     {
       "video_id": "Ek6h_5yKPP0",
@@ -222,7 +224,7 @@
       "status": "extraction_failed",
       "pick_count": 0,
       "transcript_chars": 35683,
-      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeD8f9vMBz1MJMvB78xe7'}"
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeDp95jtxTTdZugSgZEkM'}"
     }
   ],
   "fights": [
@@ -377,17 +379,17 @@
       "card_date": "2026-08-22T21:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-20T01:28:31+00:00",
+        "fetched_at": "2026-08-20T10:06:16+00:00",
         "commence_time": "2026-08-22T21:00:00Z",
         "a": {
-          "american": -142,
-          "decimal": 1.7042,
+          "american": -143,
+          "decimal": 1.6994,
           "books": 8,
           "best_american": -135
         },
         "b": {
-          "american": 118,
-          "decimal": 2.18,
+          "american": 116,
+          "decimal": 2.155,
           "books": 8,
           "best_american": 125
         }
@@ -598,17 +600,17 @@
       "card_date": "2026-08-23T00:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-20T01:28:31+00:00",
+        "fetched_at": "2026-08-20T10:06:16+00:00",
         "commence_time": "2026-08-23T01:00:00Z",
         "a": {
           "american": -180,
           "decimal": 1.5556,
           "books": 8,
-          "best_american": -172
+          "best_american": -177
         },
         "b": {
-          "american": 148,
-          "decimal": 2.485,
+          "american": 152,
+          "decimal": 2.515,
           "books": 8,
           "best_american": 160
         }
@@ -754,7 +756,7 @@
       "card_date": "2026-08-22T21:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-20T01:28:31+00:00",
+        "fetched_at": "2026-08-20T10:06:16+00:00",
         "commence_time": "2026-08-22T21:00:00Z",
         "a": {
           "american": -177,
@@ -918,19 +920,19 @@
       "card_date": "2026-08-22T21:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-20T01:28:31+00:00",
+        "fetched_at": "2026-08-20T10:06:16+00:00",
         "commence_time": "2026-08-22T21:00:00Z",
         "a": {
-          "american": -400,
-          "decimal": 1.25,
+          "american": -392,
+          "decimal": 1.2548,
           "books": 8,
-          "best_american": -370
+          "best_american": -375
         },
         "b": {
-          "american": 300,
-          "decimal": 4.0,
+          "american": 301,
+          "decimal": 4.015,
           "books": 8,
-          "best_american": 320
+          "best_american": 310
         }
       }
     },
@@ -1057,7 +1059,7 @@
       "card_date": "2026-08-23T00:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-20T01:28:31+00:00",
+        "fetched_at": "2026-08-20T10:06:16+00:00",
         "commence_time": "2026-08-23T00:00:00Z",
         "a": {
           "american": -145,
@@ -1193,11 +1195,11 @@
       "card_date": "2026-08-22T21:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-20T01:28:31+00:00",
+        "fetched_at": "2026-08-20T10:06:16+00:00",
         "commence_time": "2026-08-22T21:15:00Z",
         "a": {
-          "american": -800,
-          "decimal": 1.125,
+          "american": -842,
+          "decimal": 1.1187,
           "books": 8,
           "best_american": -750
         },
@@ -1329,7 +1331,7 @@
       "card_date": "2026-08-23T00:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-20T01:28:31+00:00",
+        "fetched_at": "2026-08-20T10:06:16+00:00",
         "commence_time": "2026-08-23T00:00:00Z",
         "a": {
           "american": 678,
@@ -1448,13 +1450,13 @@
       "card_date": "2026-08-22T21:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-20T01:28:31+00:00",
+        "fetched_at": "2026-08-20T10:06:16+00:00",
         "commence_time": "2026-08-22T21:00:00Z",
         "a": {
-          "american": -121,
-          "decimal": 1.8231,
+          "american": -120,
+          "decimal": 1.8299,
           "books": 8,
-          "best_american": -120
+          "best_american": -115
         },
         "b": {
           "american": 100,
@@ -1573,13 +1575,13 @@
       "card_date": "2026-08-23T00:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-20T01:28:31+00:00",
+        "fetched_at": "2026-08-20T10:06:16+00:00",
         "commence_time": "2026-08-23T00:00:00Z",
         "a": {
           "american": 412,
           "decimal": 5.125,
           "books": 8,
-          "best_american": 425
+          "best_american": 430
         },
         "b": {
           "american": -575,
@@ -1670,19 +1672,19 @@
       "card_date": "2026-08-23T00:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-20T01:28:31+00:00",
+        "fetched_at": "2026-08-20T10:06:16+00:00",
         "commence_time": "2026-08-23T00:00:00Z",
         "a": {
-          "american": -297,
-          "decimal": 1.3362,
+          "american": -285,
+          "decimal": 1.3503,
           "books": 8,
           "best_american": -275
         },
         "b": {
-          "american": 240,
-          "decimal": 3.4,
+          "american": 230,
+          "decimal": 3.3,
           "books": 8,
-          "best_american": 258
+          "best_american": 240
         }
       }
     },
@@ -1862,17 +1864,17 @@
       "card_date": "2026-08-22T21:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-20T01:28:31+00:00",
+        "fetched_at": "2026-08-20T10:06:16+00:00",
         "commence_time": "2026-08-22T21:00:00Z",
         "a": {
           "american": 130,
           "decimal": 2.3,
           "books": 7,
-          "best_american": 135
+          "best_american": 138
         },
         "b": {
-          "american": -159,
-          "decimal": 1.6289,
+          "american": -160,
+          "decimal": 1.625,
           "books": 7,
           "best_american": -143
         }
@@ -1959,7 +1961,7 @@
       "card_date": "2026-08-23T00:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-20T01:28:31+00:00",
+        "fetched_at": "2026-08-20T10:06:16+00:00",
         "commence_time": "2026-08-23T00:00:00Z",
         "a": {
           "american": -400,
@@ -1968,8 +1970,8 @@
           "best_american": -380
         },
         "b": {
-          "american": 306,
-          "decimal": 4.065,
+          "american": 310,
+          "decimal": 4.095,
           "books": 8,
           "best_american": 320
         }
@@ -1988,7 +1990,7 @@
       "card_date": "2026-08-22T21:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-20T01:28:31+00:00",
+        "fetched_at": "2026-08-20T10:06:16+00:00",
         "commence_time": "2026-08-22T22:45:00Z",
         "a": {
           "american": -900,
@@ -2049,7 +2051,7 @@
         {
           "video_id": "7O0uGhSUCiw",
           "title": "Kombat Kiwi Prop Hunting Live - UFC Sacramento Anthony Hernandez vs Gregory Rodrigues",
-          "published": "2026-08-19T19:29:20+00:00"
+          "published": "2026-08-20T05:09:16+00:00"
         },
         {
           "video_id": "jpsngFpF2rc",
@@ -2162,14 +2164,14 @@
       "feed_videos": 15,
       "selected": [
         {
+          "video_id": "Ff2ez7G1k2o",
+          "title": "UFC Sacramento: Hernandez vs. Rodrigues  FULL CARD Predictions, Bets and DraftKings",
+          "published": "2026-08-20T01:39:35+00:00"
+        },
+        {
           "video_id": "0vDik7YV1Ls",
           "title": "BEST BETS: UFC Sacramento: Hernandez vs. Rodrigues Betting Guide",
           "published": "2026-08-19T19:33:49+00:00"
-        },
-        {
-          "video_id": "Ff2ez7G1k2o",
-          "title": "UFC Sacramento: Hernandez vs. Rodrigues  FULL CARD Predictions, Bets and DraftKings",
-          "published": "2026-08-19T15:14:02+00:00"
         },
         {
           "video_id": "A_ym0sOW3R4",
@@ -2264,11 +2266,11 @@
       "feed_videos": 15,
       "selected": [],
       "recent_titles": [
-        "2026-08-19  🥊PUGA ML💰🔥 #ufc #dwcs #fightnight #mma",
         "2026-08-19  ⚾🔥 MLB BEST BETS & PICKS | Full Slate Breakdown, Predictions & Player Props! 💰",
         "2026-08-19  ⚽️ SOCCER BEST BETS TODAY ⚽🔥 MLS + CHAMPIONS LEAGUE PICKS & PREDICTIONS | FREE PLAY💰",
         "2026-08-19  🎾 Cincinnati Open Day 7 BEST BETS 🔥 ATP & WTA Tennis Predictions & Picks",
-        "2026-08-18  ⚾🔥 MLB BEST BETS & PICKS | Full Slate Breakdown, Predictions & Player Props! 💰"
+        "2026-08-18  ⚾🔥 MLB BEST BETS & PICKS | Full Slate Breakdown, Predictions & Player Props! 💰",
+        "2026-08-18  🚨 DWCS WEEK 2 BEST BETS! | Dana White’s Contender Series Predictions & Betting Picks 🔥"
       ]
     },
     {
@@ -2346,7 +2348,7 @@
         "2026-08-16  UFC 330: Full Card Reaction and Results",
         "2026-08-16  GENIUS!!! How Islam Makhachev BEAT Ian Garry (UFC 330 Breakdown)",
         "2026-08-14  ISLAM VS GARRY! UFC 330 FULL Picks, Predictions and Breakdown",
-        "2026-08-12  Islam Makhachev is BIGGER! Ian Garry is in Danger, Gaethje's Moving Up? | Let's Talk MMA",
+        "2026-08-12  Islam vs Garry, Gaethje's Moving Up? Strickland's Future | Let's Talk MMA",
         "2026-08-09  SHOCKING!!! Salkilld is a PROBLEM (Mateusz Gamrot vs Quillan Salkilld and Full Card Reaction)"
       ]
     },

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-20T01:28:31+00:00",
+  "generated_at": "2026-08-20T10:06:16+00:00",
   "event": {
     "name": "Hernandez vs. Rodrigues",
     "date": "",
@@ -15,7 +15,7 @@
     "odds": {
       "source": "the-odds-api",
       "market": "h2h",
-      "fetched_at": "2026-08-20T01:28:31+00:00",
+      "fetched_at": "2026-08-20T10:06:16+00:00",
       "fights_priced": 13
     }
   },
