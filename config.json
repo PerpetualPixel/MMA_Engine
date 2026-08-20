@@ -1,8 +1,8 @@
 {
   "event": {
-    "name": "Contender Series: Season 10, Week 2",
+    "name": "Hernandez vs. Rodrigues",
     "date": "",
-    "notes": "\"name\" is matched as a substring against ESPN's own event name (punctuation and case are ignored), and the FIRST match in the scoreboard window wins. For a one-off card \"UFC 330\" is unique and enough. For a weekly series it is not: ESPN lists every Contender Series week inside the 45-day lookahead, so the name must carry the season and week or the run will silently price the wrong card. Discovery pulls recent uploads from each capper channel and keeps the ones whose title matches settings.discovery.title_contains. Add entries to \"videos\" only to pin a specific video by hand."
+    "notes": "\"name\" is matched as a substring against ESPN's own event name (punctuation and case are ignored, but spelling is NOT — no typo tolerance here, unlike fighter-name matching elsewhere in the pipeline), and the FIRST match in the scoreboard window wins. ESPN spells the main-event surname \"Rodrigues\" (Gregory Rodrigues, Brazilian) rather than the more common \"Rodriguez\" — confirm against ESPN before a run if this ever looks wrong. A one-off Fight Night is unique inside the 45-day lookahead so a short name like this is enough; for a weekly series (e.g. Contender Series) the name needs season+week instead, see git history. Discovery pulls recent uploads from each capper channel and keeps the ones whose title matches settings.discovery.title_contains. Add entries to \"videos\" only to pin a specific video by hand."
   },
   "tracker": {
     "channel_url": "https://www.youtube.com/@UFCPredictionsTracker",
@@ -11,7 +11,8 @@
       "https://www.youtube.com/watch?v=rLxl9yy3Tbc"
     ],
     "event_reviews": [
-      "https://www.youtube.com/watch?v=22nH0495ch4"
+      "https://www.youtube.com/watch?v=22nH0495ch4",
+      "https://www.youtube.com/watch?v=3UNdHPP-nf8"
     ]
   },
   "settings": {
@@ -28,11 +29,12 @@
     "use_cache": true,
     "discovery": {
       "enabled": true,
-      "lookback_days": 7,
+      "lookback_days": 14,
       "max_videos_per_channel": 3,
       "title_contains": [
-        "contender series",
-        "dwcs"
+        "hernandez",
+        "rodrigues",
+        "rodriguez"
       ]
     },
     "live_odds": {
@@ -228,7 +230,7 @@
         "overall": 7.1,
         "underdog": 6.5,
         "favorite": 6.4,
-        "method": 6.7
+        "method": 7.3
       },
       "aliases": [
         "Funky Bunch MMA",
@@ -236,11 +238,12 @@
         "Funkybunch"
       ],
       "tracked": {
-        "notes": "#3 in the tracker's 2026 P4P overall accuracy at 72.0% (232/322).",
+        "notes": "Tied for most accurate and most profitable method-of-victory picks on UFC 330.",
         "videos": [
           "rLxl9yy3Tbc",
           "p4p-2026-aug-recap",
-          "p4p-2026-aug-category-slides"
+          "p4p-2026-aug-category-slides",
+          "3UNdHPP-nf8"
         ],
         "record": {
           "overall": {
@@ -270,13 +273,13 @@
             }
           },
           "method": {
-            "correct": {
-              "picks": 258,
-              "value": 40.3
-            },
             "roi": {
-              "picks": 258,
-              "value": 8.3
+              "picks": 270,
+              "value": 11.11
+            },
+            "correct": {
+              "picks": 270,
+              "value": 41.1
             }
           }
         }
@@ -866,16 +869,29 @@
       "channel_url": "",
       "discover": false,
       "trust": {
-        "overall": 5.0,
-        "underdog": 5.0,
-        "favorite": 5.0
+        "overall": 1.1,
+        "underdog": 1.1,
+        "favorite": 1.1,
+        "method": 1.1
       },
       "tracked": {
-        "notes": "Fourth in favorite accuracy over the last 50 events (either 74.9% or 74.7%, not specified).",
+        "notes": "Least accurate and least profitable winner-pick channel on UFC 330 (2/12 correct).",
         "videos": [
-          "rLxl9yy3Tbc"
+          "rLxl9yy3Tbc",
+          "3UNdHPP-nf8"
         ],
-        "record": {}
+        "record": {
+          "overall": {
+            "roi": {
+              "picks": 12,
+              "value": -80.0
+            },
+            "correct": {
+              "picks": 12,
+              "value": 16.7
+            }
+          }
+        }
       }
     },
     {
@@ -1866,6 +1882,153 @@
             "roi": {
               "picks": 375,
               "value": -4.1
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "r_parks",
+      "name": "R Parks",
+      "channel_url": "",
+      "discover": false,
+      "trust": {
+        "overall": 10.0,
+        "underdog": 10.0,
+        "favorite": 10.0,
+        "method": 8.5
+      },
+      "tracked": {
+        "notes": "Most accurate and most profitable winner-pick channel on UFC 330 (10/12), only channel besides Just Win Baby to back Jeremiah Wells.",
+        "videos": [
+          "3UNdHPP-nf8"
+        ],
+        "record": {
+          "overall": {
+            "roi": {
+              "picks": 12,
+              "value": 105.2
+            },
+            "correct": {
+              "picks": 12,
+              "value": 83.3
+            }
+          },
+          "method": {
+            "roi": {
+              "picks": 12,
+              "value": 71.5
+            },
+            "correct": {
+              "picks": 12,
+              "value": 58.3
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "just_win_baby",
+      "name": "Just Win Baby",
+      "channel_url": "",
+      "discover": false,
+      "trust": {
+        "overall": 10.0,
+        "underdog": 10.0,
+        "favorite": 10.0,
+        "method": 10.0
+      },
+      "tracked": {
+        "notes": "Second-most profitable winner-pick channel on UFC 330; one of only two channels to back underdog Jeremiah Wells.",
+        "videos": [
+          "3UNdHPP-nf8"
+        ],
+        "record": {
+          "overall": {
+            "roi": {
+              "picks": 25,
+              "value": 97.6
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "fight_feen_forecast",
+      "name": "Fight Feen Forecast",
+      "channel_url": "",
+      "discover": false,
+      "trust": {
+        "overall": 5.0,
+        "underdog": 5.0,
+        "favorite": 5.0,
+        "method": 4.4
+      },
+      "tracked": {
+        "notes": "Zero of six method-of-victory predictions correct on UFC 330.",
+        "videos": [
+          "3UNdHPP-nf8"
+        ],
+        "record": {
+          "method": {
+            "correct": {
+              "picks": 6,
+              "value": 0.0
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "brandon_k",
+      "name": "Brandon K",
+      "channel_url": "",
+      "discover": false,
+      "trust": {
+        "overall": 5.0,
+        "underdog": 5.0,
+        "favorite": 5.0,
+        "method": 1.0
+      },
+      "tracked": {
+        "notes": "Ranked 10th of 12 least-profitable method-of-victory channels on UFC 330.",
+        "videos": [
+          "3UNdHPP-nf8"
+        ],
+        "record": {
+          "method": {
+            "roi": {
+              "picks": 25,
+              "value": -62.9
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "ski_the_peter",
+      "name": "Ski The Peter",
+      "channel_url": "",
+      "discover": false,
+      "aliases": [
+        "Skeeter Peter"
+      ],
+      "trust": {
+        "overall": 5.0,
+        "underdog": 5.0,
+        "favorite": 6.3,
+        "method": 5.0
+      },
+      "tracked": {
+        "notes": "New #1 in favorite-pick accuracy over the tracker's last 50 events, overtaking Couch Warrior Podcast.",
+        "videos": [
+          "3UNdHPP-nf8"
+        ],
+        "record": {
+          "favorite": {
+            "correct": {
+              "picks": 237,
+              "value": 77.6
             }
           }
         }
