@@ -18,6 +18,11 @@ test_env/
 # Pipeline artifacts
 cache/
 *.log
+# --roster-from's default review output. Regenerated locally by every run
+# (see pipeline.py's --roster-output default) — never meant to be tracked.
+# One got committed by mistake in #36; that instance is history now, this
+# stops the next one from colliding with a `git pull` the way it just did.
+roster_proposal.json
 
 # OS / editor
 .DS_Store
