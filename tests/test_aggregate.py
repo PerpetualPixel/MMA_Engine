@@ -348,3 +348,12 @@ def test_same_capper_two_videos_counts_once_per_option():
     assert option["pick_count"] == 1
     assert option["cappers"][0]["confidence"] == 8
     assert option["weight"] == pytest.approx(8.0 * 0.8)
+
+
+def test_display_keeps_a_trailing_s_or_v():
+    """`"A vs B".strip(" vs")` used to eat the last letter of "Jon Jones"."""
+    pick = make_pick(a="Jon Jones", b="Shamil Gaziev")
+    payload = build_consensus([source(pick, make_capper("a"))])
+    # Sides are ordered by surname, hence Gaziev first; the point is that
+    # neither name lost its last letter.
+    assert payload["fights"][0]["display"] == "Shamil Gaziev vs Jon Jones"

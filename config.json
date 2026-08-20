@@ -7,6 +7,10 @@
   "tracker": {
     "channel_url": "https://www.youtube.com/@UFCPredictionsTracker",
     "notes": "Source for capper trust scores. Feed a period recap with --roster-from ... --roster-mode replace to reset the baseline, then each post-event review with the default accumulate mode.",
+    "picks_notes": "\"picks_videos\" is the tracker's PRE-event roundup — the video that goes fight by fight naming which channels picked which fighter. Every run reads the ones listed here and adds those picks to the consensus (see src/mma_engine/tracker_picks.py). Replace the URL each week with the new event's roundup; a stale one costs nothing but a wasted transcript fetch, since anything not on the ESPN card is dropped anyway. Roundup picks enter at neutral confidence and a channel's own video always supersedes their roundup line.",
+    "picks_videos": [
+      "https://youtu.be/B1IFeq8bgbY"
+    ],
     "period_recaps": [
       "https://www.youtube.com/watch?v=rLxl9yy3Tbc"
     ],

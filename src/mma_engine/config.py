@@ -48,6 +48,20 @@ DEFAULT_SETTINGS: dict[str, Any] = {
         # Useful when a channel posts non-betting content in the same window.
         "title_contains": "",
     },
+    "tracker_picks": {
+        # Ingest the predictions tracker's pre-event roundup — one video that
+        # reports which of 150+ channels picked which fighter (see
+        # mma_engine.tracker_picks). The URLs live under `tracker.picks_videos`
+        # in config.json; this block only says how they are read. Enabled here
+        # means "use them if any are listed".
+        "enabled": True,
+        # Confidence every roundup pick enters at. A tally states no
+        # conviction, so it sits mid-scale rather than pretending to one.
+        "confidence": 5,
+        # Roundup transcripts are name-dense and the response is one line per
+        # name, so they are chunked smaller than a normal picks video.
+        "max_chunk_chars": 12000,
+    },
     "live_odds": {
         # Current moneyline prices from The Odds API, stamped onto each bout so
         # the dashboard can price a parlay instead of just ranking it. Costs
@@ -114,6 +128,11 @@ class Capper:
     # Whether channel discovery pulls this capper's uploads.
     discover: bool = True
     trust: dict[str, float] = field(default_factory=dict)
+    # Other spellings this channel is known by — chiefly the garbles tracker
+    # transcripts produce ("Bet Sam" for BetSlam with Sam). Roster merging and
+    # roundup attribution both match against these, so a mangled name reaches
+    # the real capper instead of minting a duplicate.
+    aliases: tuple[str, ...] = ()
 
     def trust_for(self, role: str) -> float:
         """Trust score for how this capper framed the bet.
@@ -144,6 +163,14 @@ class Config:
     cappers: dict[str, Capper]
     videos: list[VideoRef]
     path: Path
+    # The `tracker` block: the results channel the trust scores come from, plus
+    # any pre-event roundup videos to ingest picks from.
+    tracker: dict[str, Any] = field(default_factory=dict)
+
+    @property
+    def tracker_picks_videos(self) -> list[str]:
+        """Roundup video URLs to ingest every run, from `tracker.picks_videos`."""
+        return [url for url in (self.tracker.get("picks_videos") or []) if url]
 
     def capper(self, capper_id: str) -> Capper:
         try:
@@ -191,6 +218,10 @@ def load_config(path: str | Path = "config.json") -> Config:
     settings["live_odds"] = {
         **DEFAULT_SETTINGS["live_odds"],
         **(raw_settings.get("live_odds") or {}),
+    }
+    settings["tracker_picks"] = {
+        **DEFAULT_SETTINGS["tracker_picks"],
+        **(raw_settings.get("tracker_picks") or {}),
     }
     # Environment wins over the file so CI can override without a commit.
     if os.environ.get("MMA_MODEL"):
@@ -241,6 +272,7 @@ def load_config(path: str | Path = "config.json") -> Config:
             channel_id=entry.get("channel_id", ""),
             discover=bool(entry.get("discover", True)),
             trust=dict(entry.get("trust") or {}),
+            aliases=tuple(entry.get("aliases") or ()),
         )
     if not cappers:
         raise ConfigError("config.json defines no cappers")
@@ -273,4 +305,5 @@ def load_config(path: str | Path = "config.json") -> Config:
         cappers=cappers,
         videos=videos,
         path=config_path,
+        tracker=dict(raw.get("tracker") or {}),
     )

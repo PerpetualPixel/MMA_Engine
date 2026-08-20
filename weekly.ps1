@@ -3,7 +3,9 @@
 # Double-click weekly.bat (or run this script directly) to:
 #   1. pull the latest code and config
 #   2. discover this week's capper videos (YouTube Data API)
-#   3. fetch transcripts and extract picks (Claude API)
+#   3. fetch transcripts and extract picks (Claude API), including every
+#      channel's pick from the tracker roundups listed in config.json
+#      ("tracker.picks_videos" — paste this week's roundup URL there)
 #   4. build docs/data.json (the dashboard) and docs/picks.json (the
 #      weighted picks feed PerpetualPicks.com reads)
 #   5. push both, updating the live site in about a minute

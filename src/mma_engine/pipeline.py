@@ -22,10 +22,17 @@ from .aggregate import SourcedPick, build_consensus
 from .config import Config, ConfigError, VideoRef, extract_video_id, load_config
 from .discover import ChannelDiscovery
 from .event_card import annotate_consensus, fetch_event_card
+from .normalize import fight_key
 from .odds import annotate_odds, fetch_live_odds
 from .extract import PickExtractor
 from .proxy import ProxyConfigError, build_proxy_config, build_requests_proxies
 from .roster import RosterExtractor, build_capper_entry, merge_into_config
+from .tracker_picks import (
+    CapperDirectory,
+    RoundupExtractor,
+    merge_new_cappers,
+    to_sourced_picks,
+)
 from .transcripts import TranscriptFetcher, build_cookie_config
 
 log = logging.getLogger("mma_engine")
@@ -88,12 +95,125 @@ def resolve_videos(config: Config) -> tuple[list[VideoRef], list[dict]]:
     return videos, report
 
 
+def ingest_tracker_roundups(
+    config: Config,
+    urls: list[str],
+    fetcher: TranscriptFetcher,
+    sourced_picks: list[SourcedPick],
+    sources: list[dict[str, Any]],
+    apply_cappers: bool = False,
+    skip_extraction: bool = False,
+) -> str:
+    """Add every channel's pick from the tracker's roundup video(s), in place.
+
+    Returns the event name the roundup states, if any. Fails open: a roundup
+    that can't be read costs the run nothing but its own picks.
+    """
+    settings = config.settings["tracker_picks"]
+    if not urls or not settings["enabled"]:
+        return ""
+
+    directory = CapperDirectory(config.cappers.values())
+    # One channel is one vote per fight, cast by the richer source: a capper
+    # whose own video this run already covers a fight doesn't also get counted
+    # off the roundup slide.
+    covered = frozenset(
+        (s.capper.id, fight_key(s.pick.fighter_a, s.pick.fighter_b))
+        for s in sourced_picks
+    )
+    extractor = (
+        None
+        if skip_extraction
+        else RoundupExtractor(
+            model=config.settings["model"],
+            effort=config.settings["effort"],
+            max_tokens=int(config.settings["max_tokens"]),
+            max_chunk_chars=int(settings["max_chunk_chars"]),
+            use_cache=bool(config.settings["use_cache"]),
+        )
+    )
+
+    event_name = ""
+    for url in urls:
+        try:
+            video_id = extract_video_id(url)
+        except ConfigError as exc:
+            log.warning("Skipping tracker roundup: %s", exc)
+            continue
+
+        log.info("Tracker roundup — %s", video_id)
+        record: dict[str, Any] = {
+            "video_id": video_id,
+            "url": url,
+            "capper_id": "",
+            "capper": "Predictions tracker roundup",
+            "title": "",
+            "kind": "tracker_roundup",
+            "status": "ok",
+            "pick_count": 0,
+        }
+
+        transcript = fetcher.fetch(video_id)
+        if not transcript.ok:
+            record.update(status="transcript_failed", error=transcript.error)
+            log.warning("  transcript failed: %s", transcript.error)
+            sources.append(record)
+            continue
+        record["transcript_chars"] = transcript.char_count
+
+        if extractor is None:
+            record["status"] = "extraction_skipped"
+            sources.append(record)
+            continue
+
+        result = extractor.extract(video_id, transcript.text, url)
+        if not result.ok:
+            record.update(status="extraction_failed", error=result.error)
+            log.warning("  extraction failed: %s", result.error)
+            sources.append(record)
+            continue
+        if result.error:
+            # A partial roundup: some chunks came back, then the API stopped.
+            record["error"] = result.error
+
+        picks, stats = to_sourced_picks(
+            result.fights,
+            directory,
+            video_id=video_id,
+            video_url=url,
+            confidence=int(settings["confidence"]),
+            already_covered=covered,
+        )
+        sourced_picks.extend(picks)
+        event_name = event_name or result.event_name
+        record.update(
+            pick_count=stats.picks,
+            capper_count=stats.cappers,
+            new_cappers=stats.minted,
+            superseded=stats.superseded,
+            fights=len(result.fights),
+        )
+        sources.append(record)
+        log.info(
+            "  %d picks from %d channels (%d already in config, %d new); "
+            "%d deferred to the capper's own video",
+            stats.picks, stats.cappers, stats.matched, stats.minted, stats.superseded,
+        )
+
+    if apply_cappers and directory.minted:
+        added = merge_new_cappers(config.path, directory.minted)
+        log.info("Added %d roundup channel(s) to %s", len(added), config.path)
+    return event_name
+
+
 def run_pipeline(
     config: Config,
     output_path: Path,
     skip_extraction: bool = False,
     videos: list[VideoRef] | None = None,
     discovery_report: list[dict] | None = None,
+    roundup_urls: list[str] | None = None,
+    apply_tracker_cappers: bool = False,
 ) -> dict[str, Any]:
     """Fetch transcripts, extract picks, aggregate, and write the payload."""
     settings = config.settings
@@ -175,6 +295,21 @@ def run_pipeline(
                     video_url=video.url,
                 )
             )
+
+    # The tracker's pre-event roundup: one video carrying every channel's pick,
+    # including the many channels this pipeline can't read a video for. Runs
+    # last so a capper's own picks are already in hand and their roundup entry
+    # for the same fight can defer to them.
+    roundup_event = ingest_tracker_roundups(
+        config,
+        config.tracker_picks_videos if roundup_urls is None else roundup_urls,
+        fetcher=fetcher,
+        sourced_picks=sourced_picks,
+        sources=sources,
+        apply_cappers=apply_tracker_cappers,
+        skip_extraction=skip_extraction,
+    )
+    event_name = event_name or roundup_event
 
     event = {**config.event, "name": event_name}
     payload = build_consensus(
@@ -349,6 +484,17 @@ def _summarize(payload: dict[str, Any]) -> str:
         f"Cappers: {totals['cappers']}",
         f"Picks:   {totals['picks']} across {totals['fights']} fights",
     ]
+    roundups = [
+        s
+        for s in payload["sources"]
+        if s.get("kind") == "tracker_roundup" and s["status"] == "ok"
+    ]
+    if roundups:
+        lines.append(
+            f"Roundup: {sum(r.get('capper_count', 0) for r in roundups)} channels "
+            f"read off {len(roundups)} tracker video(s), "
+            f"{sum(r.get('new_cappers', 0) for r in roundups)} of them new"
+        )
     failures = [s for s in payload["sources"] if s["status"] != "ok"]
     if failures:
         lines.append(f"Skipped: {len(failures)} video(s)")
@@ -410,6 +556,31 @@ def main(argv: list[str] | None = None) -> int:
         help=(
             "List the videos discovery would process, then exit. No transcripts "
             "are fetched and no Claude API calls are made."
+        ),
+    )
+    roundup_group = parser.add_argument_group("tracker roundups (everyone's picks)")
+    roundup_group.add_argument(
+        "--picks-from-tracker",
+        metavar="VIDEO_URL",
+        action="append",
+        default=None,
+        help=(
+            "Ingest a predictions-tracker roundup — one video reporting which "
+            "channels picked which fighter. Repeatable; overrides "
+            "tracker.picks_videos in config.json for this run."
+        ),
+    )
+    roundup_group.add_argument(
+        "--no-tracker-picks",
+        action="store_true",
+        help="Skip the roundup videos listed in config.json for this run.",
+    )
+    roundup_group.add_argument(
+        "--apply-tracker-cappers",
+        action="store_true",
+        help=(
+            "Write channels first seen in a roundup into config.json at neutral "
+            "trust, so their ids stay stable across runs."
         ),
     )
     roster_group = parser.add_argument_group("capper roster (tracker videos)")
@@ -483,11 +654,24 @@ def main(argv: list[str] | None = None) -> int:
         print(_summarize_discovery(config, videos, discovery_report))
         return 0 if videos else 1
 
-    if not videos:
+    # None here means "whatever config.json lists"; the flags either replace
+    # that list or empty it.
+    roundup_urls = [] if args.no_tracker_picks else args.picks_from_tracker
+    effective_roundups = (
+        config.tracker_picks_videos if roundup_urls is None else roundup_urls
+    )
+    if not config.settings["tracker_picks"]["enabled"]:
+        effective_roundups = []
+
+    # A roundup on its own is a perfectly good run: it carries every channel's
+    # pick without needing a single per-capper video.
+    if not videos and not effective_roundups:
         log.error(
             "No videos to process. Either add entries to the \"videos\" array in %s "
             "(e.g. {\"capper_id\": \"artem_mma\", \"url\": \"https://youtu.be/...\"}), "
-            "or enable settings.discovery to pull them from the capper channels.",
+            "or enable settings.discovery to pull them from the capper channels. "
+            "A predictions-tracker roundup also works on its own: "
+            "--picks-from-tracker https://youtu.be/...",
             config.path,
         )
         return 2
@@ -499,6 +683,8 @@ def main(argv: list[str] | None = None) -> int:
             skip_extraction=args.skip_extraction,
             videos=videos,
             discovery_report=discovery_report,
+            roundup_urls=effective_roundups,
+            apply_tracker_cappers=args.apply_tracker_cappers,
         )
     except ProxyConfigError as exc:
         log.error("%s", exc)

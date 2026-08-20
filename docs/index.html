@@ -376,8 +376,38 @@ const fmt1 = (n) => (Math.round(n * 10) / 10).toFixed(1);
 // card and tops out near 7.4, so the old 7.5 gate sat above the distribution
 // and produced 0-1 locks per card, usually zero. 6.5 with a third capper
 // required lands 2-3 per card: rare enough to mean something, never empty.
-const LOCK = { minShare: 75, minConf: 6.5, minPicks: 3 };
+// minVoices is the roundup escape hatch: an option nobody voiced a confidence
+// for — every backer read off the tracker's roundup slide — can still lock on
+// headcount alone, because 20+ channels landing this lopsided is its own kind
+// of conviction.
+const LOCK = { minShare: 75, minConf: 6.5, minPicks: 3, minVoices: 20 };
 const PICKEM_MAX_SHARE = 62;
+
+/* ---------- confidence: stated beats counted ----------
+ * Picks read off a predictions-tracker roundup carry a placeholder confidence
+ * (the slide says who, never how sure), so a card with a 150-channel roundup
+ * would drag every avg_confidence toward that placeholder and take the Lock
+ * badge, the confidence sorts, and the parlay leg scores down with it. Where
+ * an option has any pick from a capper's own video, its confidence is the
+ * average over those; roundup-only options keep the placeholder average and
+ * are judged on share and headcount instead. Run once, at load, so every
+ * reader of avg_confidence downstream sees the same number. */
+function normalizeConfidence(data) {
+  for (const fight of data.fights || []) {
+    for (const market of fight.markets || []) {
+      for (const option of market.options || []) {
+        if (option.stated_pick_count > 0) {
+          option.avg_confidence = option.stated_avg_confidence;
+        }
+      }
+    }
+  }
+}
+// True when nobody backing this option stated a confidence — everyone came
+// off a roundup — so its avg_confidence is a placeholder, not an opinion.
+// Strict === 0 on purpose: a payload written before roundups existed has no
+// such field at all, and every pick in it was stated.
+const isCounted = (opt) => !!opt && opt.stated_pick_count === 0 && opt.pick_count > 0;
 
 /* ---------- state ---------- */
 const state = {
@@ -507,7 +537,12 @@ function mlLead(fight) {
   return { side, share: Math.max(a, b), opt: fight.ml[side] };
 }
 function isLock(share, opt) {
-  return opt && share >= LOCK.minShare && opt.avg_confidence >= LOCK.minConf && opt.pick_count >= LOCK.minPicks;
+  if (!opt || share < LOCK.minShare || opt.pick_count < LOCK.minPicks) return false;
+  // Stated conviction, or — when nobody stated any — a wide enough field that
+  // the headcount carries it on its own.
+  return isCounted(opt)
+    ? opt.pick_count >= LOCK.minVoices
+    : opt.avg_confidence >= LOCK.minConf;
 }
 function isPickem(fight) {
   const lead = mlLead(fight);
@@ -549,15 +584,21 @@ $("#overlay").addEventListener("click", (e) => { if (e.target.id === "overlay" |
 document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeOverlay(); });
 
 function capperTable(cappers) {
-  const rows = (cappers || []).map((c) => `
+  const rows = (cappers || []).map((c) => {
+    // A roundup entry is a tally line, not a stated pick: the tracker video
+    // says this channel is on this fighter and nothing more. Say so, rather
+    // than showing its placeholder confidence as if they had voiced it.
+    const viaTracker = c.source === "tracker";
+    return `
     <tr>
-      <td>${esc(c.name)}</td>
-      <td class="num">${esc(c.confidence)}/10</td>
+      <td>${esc(c.name)}${viaTracker ? ` <span class="tag">via tracker</span>` : ""}</td>
+      <td class="num">${viaTracker ? "—" : `${esc(c.confidence)}/10`}</td>
       <td class="num">${esc(c.trust)}</td>
       <td>${c.role && c.role !== "unknown" ? `<span class="tag ${esc(c.role)}">${esc(c.role)}</span>` : ""}</td>
       <td class="num">${esc(c.odds || "—")}</td>
-      <td class="why-cell">${esc(c.reasoning || "")}</td>
-    </tr>`).join("");
+      <td class="why-cell">${esc(viaTracker ? "—" : c.reasoning || "")}</td>
+    </tr>`;
+  }).join("");
   return `<div class="table-wrap"><table>
     <thead><tr><th>Capper</th><th>Conf</th><th>Trust</th><th>Framed as</th><th>Odds</th><th>Stated reasoning</th></tr></thead>
     <tbody>${rows}</tbody></table></div>`;
@@ -591,7 +632,7 @@ function controlsHtml(key, { sorts = true, filters = true, noPicksToggle = false
     <label>Find <input type="search" data-ctl-search placeholder="fighter name…" value="${esc(state.search)}"></label>
     ${filters ? `
     <label><input type="checkbox" data-ctl-pickems${s.hidePickems ? " checked" : ""}> Hide pick&rsquo;ems <span class="hint">(&lt;${PICKEM_MAX_SHARE}% lead)</span></label>
-    <label><input type="checkbox" data-ctl-locks${s.locksOnly ? " checked" : ""}> Locks only <span class="hint">(&ge;${LOCK.minShare}% share, conf &ge;${LOCK.minConf}, &ge;${LOCK.minPicks} cappers)</span></label>` : ""}
+    <label><input type="checkbox" data-ctl-locks${s.locksOnly ? " checked" : ""}> Locks only <span class="hint">(&ge;${LOCK.minShare}% share, conf &ge;${LOCK.minConf} or ${LOCK.minVoices}+ channels, &ge;${LOCK.minPicks} cappers)</span></label>` : ""}
     ${noPicksToggle ? `
     <label><input type="checkbox" data-ctl-nopicks${s.hideNoPicks ? " checked" : ""}> Hide fights without picks</label>` : ""}
   </div>`;
@@ -1553,10 +1594,24 @@ document.getElementById("about-btn").addEventListener("click", () => openOverlay
     <dt>picks</dt>
     <dd>How many cappers back this option. One capper counts once per option
     &mdash; if they said it in two videos, only their strongest statement counts.</dd>
+    <dt>&ldquo;via tracker&rdquo; tag</dt>
+    <dd>That capper's pick was read off the @PredictionsTracker roundup &mdash;
+    the pre-event video reporting which of 150+ channels is on which fighter
+    &mdash; rather than from their own upload. A roundup line states no
+    conviction, price, or reasoning, so it enters at neutral confidence and
+    counts as one unweighted voice. A capper's own video always supersedes
+    their roundup line.</dd>
     <dt>Lock badge + gold outline</dt>
     <dd>&ge;${LOCK.minShare}% consensus share, avg conf &ge;${LOCK.minConf}, and at least
-    ${LOCK.minPicks} cappers. Lock fights carry a gold outline around the whole
-    card so they read at a glance.</dd>
+    ${LOCK.minPicks} cappers. Where every backer came off the tracker roundup
+    &mdash; nobody stated a confidence to average &mdash; ${LOCK.minVoices}+ channels at
+    that share locks it instead. Lock fights carry a gold outline around the
+    whole card so they read at a glance.</dd>
+    <dt>avg conf on a roundup-only side</dt>
+    <dd>Where an option has picks from cappers' own videos, avg conf is the
+    average over those only &mdash; roundup lines state no confidence, so they
+    are counted as voices but never averaged in. An option backed solely by
+    roundup lines shows the placeholder 5.0.</dd>
     <dt>Main Event / Co-Main banners</dt>
     <dd>The last and second-to-last bouts of the official card (per ESPN's
     bout order). A cancelled main event keeps its banner — it's still the
@@ -1644,6 +1699,7 @@ fetch(`data.json?t=${Date.now()}`)
     return response.json();
   })
   .then((data) => {
+    normalizeConfidence(data);
     state.data = data;
     state.model = buildModel(data);
     const event = data.event || {};
