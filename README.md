@@ -80,6 +80,9 @@ python -m http.server -d docs 8000                    # open http://localhost:80
 | `--discover` / `--no-discover` | Force channel discovery on or off, overriding the config. |
 | `--no-cache` | Ignore cached transcripts/extractions and redo everything. |
 | `--config` / `--output` | Point at a different config or output path. |
+| `--picks-from-tracker URL` | Ingest a tracker roundup — one video carrying every channel's pick. Repeatable. See below. |
+| `--no-tracker-picks` | Skip the roundups listed in `config.json` for this run. |
+| `--apply-tracker-cappers` | Write channels first seen in a roundup into `config.json` at neutral trust. |
 | `--roster-from URL` | Derive trust scores from a tracker results video. See below. |
 | `--roster-mode` | `accumulate` (post-event reviews) or `replace` (period recap). |
 | `--apply-roster` | Merge the extracted roster into `config.json`. |
@@ -191,6 +194,50 @@ per-event videos already contributed** — pooling both would double-count. The
 normal rhythm is one `replace` to set a baseline, then `accumulate` after every
 card. Re-running the same video is a no-op, so a repeated run can't inflate
 anyone's sample.
+
+### Everyone's picks from one video (tracker roundups)
+
+The same channel also posts a **pre-event roundup**: a video that walks the
+card fight by fight and reports which prediction channels are on which
+fighter — often 150+ of them. That is by far the widest sample available in a
+week, and most of those channels have no entry here and no video this pipeline
+could read. `tracker.picks_videos` ingests it:
+
+```jsonc
+"tracker": {
+  "picks_videos": ["https://youtu.be/ROUNDUP_ID"]   // this week's roundup
+}
+```
+
+Every run then reads it alongside the per-capper videos. For a one-off, or to
+try a roundup without editing the config:
+
+```bash
+PYTHONPATH=src python -m mma_engine \
+  --picks-from-tracker https://youtu.be/ROUNDUP_ID
+```
+
+A roundup line is a thinner thing than a capper's own video, and is treated as
+one:
+
+- It states no conviction, price, or reasoning, so it enters at a neutral
+  confidence (`settings.tracker_picks.confidence`, 5/10) instead of a
+  made-up number, and is tagged `via tracker` on the dashboard.
+- **A capper's own video always wins.** If a channel is both in the roundup
+  and had its own video extracted this run, its roundup line for that fight is
+  dropped — one channel, one vote, cast by the richer source.
+- Channels with no `config.json` entry count as one unweighted voice each
+  (trust 5.0) rather than being thrown away. Their ids are derived from the
+  channel name, so they stay stable across runs without being written
+  anywhere; `--apply-tracker-cappers` writes them into `config.json` if you
+  want to hand-edit their trust or add a channel URL later.
+- Names are matched against each capper's `name` and `aliases`, with one edit
+  of caption slack, so a garbled "Funky Pick" still reaches Funky Picks.
+
+The ESPN card filter runs afterwards as always, so a roundup that also covers
+next week's card contributes nothing off-event. Flags: `--no-tracker-picks`
+skips the configured roundups for one run; `settings.tracker_picks.enabled`
+turns them off permanently.
 
 ### How a figure becomes a weight
 
@@ -670,10 +717,13 @@ schedule always sees the latest event's consensus. The shape is:
               "weight": 30.5,
               "pick_count": 6,
               "avg_confidence": 7.8,
+              "stated_pick_count": 6,         // backers who voiced a confidence...
+              "stated_avg_confidence": 7.8,   // ...and their average, roundup lines excluded
               "cappers": [
                 { "id": "artem_mma", "name": "Artem MMA", "confidence": 8,
-                  "trust": 7.5, "role": "favorite", "odds": -150,
-                  "stake": 2.0, "reasoning": "...", "video_url": "https://youtu.be/..." }
+                  "trust": 7.5, "role": "favorite", "odds": -150, "stake": 2.0,
+                  "reasoning": "...", "source": "video",   // or "tracker" (roundup)
+                  "video_url": "https://youtu.be/..." }
               ]
             }
           ]
@@ -830,6 +880,9 @@ accounts at 5.0 and adjust once you have a sample of their results.
 | `discovery.lookback_days` | `14` | Only consider uploads this recent. |
 | `discovery.max_videos_per_channel` | `3` | Cap per channel, newest first. |
 | `discovery.title_contains` | `[]` | Title must contain any of these (case-insensitive). |
+| `tracker_picks.enabled` | `true` | Ingest the roundup videos listed in `tracker.picks_videos`. With none listed this is a no-op. |
+| `tracker_picks.confidence` | `5` | Confidence every roundup pick enters at — a tally states no conviction. |
+| `tracker_picks.max_chunk_chars` | `12000` | Roundup transcripts are name-dense, so they chunk smaller than picks videos. |
 | `live_odds.enabled` | `true` | Fetch live moneylines when `ODDS_API_KEY` is set. With no key this is a no-op, so leaving it on is safe. |
 | `live_odds.regions` | `us` | Bookmaker regions to median over: `us`, `us2`, `uk`, `eu`, `au` (comma-joined). |
 | `proxy.enabled` | `false` | Route YouTube requests through a proxy. Only used for the optional unattended path — see **Optional: fully unattended runs on GitHub Actions**. |
@@ -839,8 +892,8 @@ accounts at 5.0 and adjust once you have a sample of their results.
 
 ## Caching and cost
 
-`cache/transcripts/` and `cache/extractions/` are keyed by video ID and
-gitignored. A re-run after a partial failure re-fetches and re-bills only the
+`cache/transcripts/`, `cache/extractions/`, and `cache/tracker_picks/` are
+keyed by video ID and gitignored. A re-run after a partial failure re-fetches and re-bills only the
 videos that are actually new. The static system prompt carries a cache
 breakpoint, so repeated extractions in one run read it from the prompt cache
 instead of re-billing it.
@@ -858,6 +911,7 @@ src/mma_engine/
   config.py                  # config loading, validation, URL → video ID
   discover.py                # upload discovery: Data API primary, RSS fallback
   roster.py                  # tracker-video → measured capper trust scores
+  tracker_picks.py           # tracker roundup → every channel's pick
   transcripts.py             # YouTube fetching, caching, jittered delays
   extract.py                 # Claude structured-output extraction, chunking
   normalize.py               # fighter-name and selection matching
@@ -874,6 +928,7 @@ integrations/                # patches for consuming sites (see Option 0)
 tests/test_aggregate.py      # normalization + aggregation tests
 tests/test_discover.py       # feed parsing, filtering, merge behavior
 tests/test_roster.py         # trust arithmetic, pooling, config merge
+tests/test_tracker_picks.py  # roundup merging, attribution, config merge
 tests/test_proxy.py          # proxy config from env vars
 tests/test_config.py         # settings defaults, merging, env overrides
 tests/test_odds.py           # odds parsing, matching, fail-open contract

@@ -54,6 +54,11 @@ class SourcedPick:
     capper: Capper
     video_id: str
     video_url: str
+    # "video" when it came from the capper's own upload, "tracker" when it was
+    # read off a predictions-tracker roundup of everyone's picks. Roundup picks
+    # carry no conviction, price, or reasoning, so the dashboard says so rather
+    # than showing a bare 5/10 as if the capper had stated it.
+    source_kind: str = "video"
 
     @property
     def trust_role(self) -> str:
@@ -158,12 +163,22 @@ def _option_payload(option: _Option, market_weight: float) -> dict[str, Any]:
     supporters = sorted(
         option.sources, key=lambda s: (s.weight, s.capper.name), reverse=True
     )
+    # "How sure do they say they are?" is a question only a capper's own video
+    # answers. A tracker roundup line carries a placeholder confidence, so it
+    # is reported separately rather than dragging the average toward neutral
+    # and, with it, every threshold the dashboard hangs off that average.
+    stated = [s for s in option.sources if s.source_kind == "video"]
+    stated_confidence = (
+        sum(s.pick.confidence for s in stated) / len(stated) if stated else 0.0
+    )
     return {
         "selection": option.label,
         "consensus_pct": _round(consensus, 1),
         "weight": _round(option.weight),
         "pick_count": len(option.sources),
         "avg_confidence": _round(option.avg_confidence, 1),
+        "stated_pick_count": len(stated),
+        "stated_avg_confidence": _round(stated_confidence, 1),
         "cappers": [
             {
                 "id": s.capper.id,
@@ -174,6 +189,7 @@ def _option_payload(option: _Option, market_weight: float) -> dict[str, Any]:
                 "odds": s.pick.odds_american,
                 "stake": s.pick.stake_units,
                 "reasoning": s.pick.reasoning,
+                "source": s.source_kind,
                 "video_url": s.video_url,
             }
             for s in supporters
@@ -274,7 +290,11 @@ def build_consensus(
         fights.append(
             {
                 "fight_id": key,
-                "display": f"{fighter_a} vs {fighter_b}".strip(" vs"),
+                # str.strip(" vs") strips those *characters*, so it ate the
+                # trailing letter of every name ending in s or v — "Jon Jones"
+                # rendered as "Jon Jone". Join instead, which does what the
+                # strip was there for: no dangling " vs " on a one-sided fight.
+                "display": " vs ".join(n for n in (fighter_a, fighter_b) if n),
                 "fighter_a": fighter_a,
                 "fighter_b": fighter_b,
                 "pick_count": total_picks,
