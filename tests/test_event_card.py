@@ -212,3 +212,30 @@ def test_event_payload_carries_card_provenance():
     annotate_consensus(payload, parse_card(espn_event()))
     assert payload["event"]["card"]["source"] == "espn"
     assert payload["event"]["card"]["bouts"] == 3
+
+
+def test_espn_spelling_reaches_the_option_labels_too():
+    """The heading was corrected but the percentages underneath still read
+    "Larion Douglas 89.7%" on a bout headed "Lerryan Douglas vs …"."""
+    card = parse_card(espn_event(fights=[("Lerryan Douglas", "Jamall Emmers", "STATUS_SCHEDULED")]))
+    fight = consensus_fight("Larion Douglas", "Jamall Emmers")
+    fight["markets"] = [
+        {
+            "bet_type": "moneyline",
+            "options": [{"selection": "Larion Douglas"}, {"selection": "Jamall Emmers"}],
+        },
+        {
+            "bet_type": "method_of_victory",
+            "options": [{"selection": "Larion Douglas by KO/TKO"}],
+        },
+    ]
+    payload = {"event": {}, "fights": [fight]}
+    annotate_consensus(payload, card)
+
+    kept = payload["fights"][0]
+    assert kept["display"] == "Lerryan Douglas vs Jamall Emmers"
+    assert [o["selection"] for o in kept["markets"][0]["options"]] == [
+        "Lerryan Douglas",
+        "Jamall Emmers",
+    ]
+    assert kept["markets"][1]["options"][0]["selection"] == "Lerryan Douglas by KO/TKO"

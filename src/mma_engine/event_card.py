@@ -172,6 +172,35 @@ def _match_card_fight(fight: dict[str, Any], card_fights: list[dict[str, Any]]) 
     return None
 
 
+def _relabel_options(fight: dict[str, Any], old: tuple[str, str], clean: tuple[str, str]) -> None:
+    """Carry ESPN's spelling into the option labels, not just the heading.
+
+    The heading is rebuilt from the card, but every option keeps whatever the
+    cappers called the fighter — so a bout headed "Lerryan Douglas vs Jamall
+    Emmers" was showing "Larion Douglas 89.7%" underneath it. A moneyline
+    option is exactly a fighter name, so it can be replaced outright once the
+    surnames match; other markets wrap the name in wording of their own ("X by
+    KO/TKO"), so there only the name itself is swapped, and only where the
+    old spelling actually appears.
+    """
+    for market in fight.get("markets") or []:
+        for option in market.get("options") or []:
+            label = option.get("selection", "")
+            if not label:
+                continue
+            if market.get("bet_type") == "moneyline":
+                for was, now in zip(old, clean):
+                    if _surnames_match(surname(label), surname(was)):
+                        option["selection"] = now
+                        break
+                continue
+            for was, now in zip(old, clean):
+                if was and was.lower() in label.lower():
+                    start = label.lower().index(was.lower())
+                    label = label[:start] + now + label[start + len(was):]
+            option["selection"] = label
+
+
 def _refresh_totals(payload: dict[str, Any]) -> None:
     """Recount the headline totals over the fights that survived the card
     filter, so "21 cappers across 61 fights" describes the payload the reader
@@ -261,6 +290,11 @@ def annotate_consensus(
         )
         clean_a = bout["fighter_a"] if aligned else bout["fighter_b"]
         clean_b = bout["fighter_b"] if aligned else bout["fighter_a"]
+        _relabel_options(
+            fight,
+            (fight.get("fighter_a", ""), fight.get("fighter_b", "")),
+            (clean_a, clean_b),
+        )
         fight["fighter_a"], fight["fighter_b"] = clean_a, clean_b
         fight["display"] = f"{clean_a} vs {clean_b}"
 
