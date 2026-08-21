@@ -10,7 +10,7 @@
       "name": "UFC Fight Night: Hernandez vs. Rodrigues",
       "date": "2026-08-22T21:00Z",
       "bouts": 13,
-      "off_card_dropped": 17
+      "off_card_dropped": 20
     },
     "odds": {
       "source": "the-odds-api",
@@ -20,8 +20,8 @@
     }
   },
   "totals": {
-    "fights": 16,
-    "picks": 54,
+    "fights": 13,
+    "picks": 49,
     "cappers": 5,
     "videos": 6
   },
@@ -1741,152 +1741,6 @@
       }
     },
     {
-      "fight_id": "puga|trembley",
-      "display": "Roman Puga vs Tanner Trembley",
-      "fighter_a": "Roman Puga",
-      "fighter_b": "Tanner Trembley",
-      "pick_count": 2,
-      "capper_count": 1,
-      "markets": [
-        {
-          "bet_type": "moneyline",
-          "label": "Moneyline",
-          "total_weight": 4.08,
-          "pick_count": 1,
-          "options": [
-            {
-              "selection": "Roman Puga",
-              "consensus_pct": 100.0,
-              "weight": 4.08,
-              "pick_count": 1,
-              "avg_confidence": 6.0,
-              "stated_pick_count": 1,
-              "stated_avg_confidence": 6.0,
-              "cappers": [
-                {
-                  "id": "betslam_sam",
-                  "name": "BetSlam with Sam",
-                  "confidence": 6,
-                  "trust": 6.8,
-                  "role": "unknown",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "Trembley started MMA late, has faced nobody of note and mostly submits opponents, while Puga is a young Mexican knockout artist who has never been submitted.",
-                  "source": "video",
-                  "video_url": "https://www.youtube.com/watch?v=gtBQ9hJBIA4"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "bet_type": "method_of_victory",
-          "label": "Method of Victory",
-          "total_weight": 4.26,
-          "pick_count": 1,
-          "options": [
-            {
-              "selection": "Roman Puga by KO/TKO",
-              "consensus_pct": 100.0,
-              "weight": 4.26,
-              "pick_count": 1,
-              "avg_confidence": 6.0,
-              "stated_pick_count": 1,
-              "stated_avg_confidence": 6.0,
-              "cappers": [
-                {
-                  "id": "betslam_sam",
-                  "name": "BetSlam with Sam",
-                  "confidence": 6,
-                  "trust": 7.1,
-                  "role": "unknown",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "Puga is a legitimate boxing threat with striking finishes; Sam said he'll take the KO if it's plus money.",
-                  "source": "video",
-                  "video_url": "https://www.youtube.com/watch?v=gtBQ9hJBIA4"
-                }
-              ]
-            }
-          ]
-        }
-      ],
-      "card_status": "cancelled"
-    },
-    {
-      "fight_id": "paxton|perez",
-      "display": "Logan Paxton vs Christian Perez",
-      "fighter_a": "Logan Paxton",
-      "fighter_b": "Christian Perez",
-      "pick_count": 2,
-      "capper_count": 1,
-      "markets": [
-        {
-          "bet_type": "moneyline",
-          "label": "Moneyline",
-          "total_weight": 4.88,
-          "pick_count": 1,
-          "options": [
-            {
-              "selection": "Christian Perez",
-              "consensus_pct": 100.0,
-              "weight": 4.88,
-              "pick_count": 1,
-              "avg_confidence": 8.0,
-              "stated_pick_count": 1,
-              "stated_avg_confidence": 8.0,
-              "cappers": [
-                {
-                  "id": "betslam_sam",
-                  "name": "BetSlam with Sam",
-                  "confidence": 8,
-                  "trust": 6.1,
-                  "role": "favorite",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "Called Perez the lock of the card — far more skilled, showed the real deal against Manuel Sosa, while Paxton is a meat-and-potatoes wrestler who's beaten only tin cans.",
-                  "source": "video",
-                  "video_url": "https://www.youtube.com/watch?v=gtBQ9hJBIA4"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "bet_type": "method_of_victory",
-          "label": "Method of Victory",
-          "total_weight": 4.97,
-          "pick_count": 1,
-          "options": [
-            {
-              "selection": "Christian Perez by submission",
-              "consensus_pct": 100.0,
-              "weight": 4.97,
-              "pick_count": 1,
-              "avg_confidence": 7.0,
-              "stated_pick_count": 1,
-              "stated_avg_confidence": 7.0,
-              "cappers": [
-                {
-                  "id": "betslam_sam",
-                  "name": "BetSlam with Sam",
-                  "confidence": 7,
-                  "trust": 7.1,
-                  "role": "favorite",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "Perez is far more skilled and should cook Paxton, whose only path is takedowns and ground and pound.",
-                  "source": "video",
-                  "video_url": "https://www.youtube.com/watch?v=gtBQ9hJBIA4"
-                }
-              ]
-            }
-          ]
-        }
-      ],
-      "card_status": "cancelled"
-    },
-    {
       "fight_id": "dosainvil|young",
       "display": "Stan Dorsainvil vs Gauge Young",
       "fighter_a": "Stan Dorsainvil",
@@ -1946,48 +1800,6 @@
           "best_american": -155
         }
       }
-    },
-    {
-      "fight_id": "brito|fazil",
-      "display": "Kaik Brito vs Namo Fazil",
-      "fighter_a": "Kaik Brito",
-      "fighter_b": "Namo Fazil",
-      "pick_count": 1,
-      "capper_count": 1,
-      "markets": [
-        {
-          "bet_type": "moneyline",
-          "label": "Moneyline",
-          "total_weight": 4.08,
-          "pick_count": 1,
-          "options": [
-            {
-              "selection": "Kaik Brito",
-              "consensus_pct": 100.0,
-              "weight": 4.08,
-              "pick_count": 1,
-              "avg_confidence": 6.0,
-              "stated_pick_count": 1,
-              "stated_avg_confidence": 6.0,
-              "cappers": [
-                {
-                  "id": "betslam_sam",
-                  "name": "BetSlam with Sam",
-                  "confidence": 6,
-                  "trust": 6.8,
-                  "role": "unknown",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "Brito is battle tested against real European competition while Fazil has been can crushing on a much weaker circuit; the fake tough guy act at the faceoff flipped Sam onto Brito.",
-                  "source": "video",
-                  "video_url": "https://www.youtube.com/watch?v=gtBQ9hJBIA4"
-                }
-              ]
-            }
-          ]
-        }
-      ],
-      "card_status": "cancelled"
     },
     {
       "fight_id": "deridder|dolidze",

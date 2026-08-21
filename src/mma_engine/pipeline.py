@@ -35,10 +35,22 @@ from .pasted_picks import (
 from .extract import PickExtractor
 from .proxy import ProxyConfigError, build_proxy_config, build_requests_proxies
 from .roster import RosterExtractor, build_capper_entry, merge_into_config
+from .roundup_slides import (
+    SlideReader,
+    SlideReport,
+    download_video,
+    extract_slides,
+    read_directory,
+)
 from .tracker_picks import (
     CapperDirectory,
     RoundupExtractor,
+    RoundupResult,
+    load_readings,
+    save_reading,
+    TrackerRoundup,
     merge_new_cappers,
+    merge_roundups,
     to_sourced_picks,
 )
 from .transcripts import TranscriptFetcher, build_cookie_config
@@ -235,6 +247,65 @@ def ingest_pasted_picks(
     sourced_picks[:] = kept + added
 
 
+def read_roundup_slides(
+    config: Config,
+    url: str,
+    video_id: str,
+    slides_dir: Path | None = None,
+) -> SlideReport:
+    """The picks printed on a roundup's slides, read with vision.
+
+    The channel names in these decks are on-screen text the host never says
+    aloud, so this — not the transcript — is where the roundup's attributions
+    actually live. Frames come from the video itself, or from screenshots
+    captured by hand when the download won't work.
+    """
+    settings = config.settings["tracker_picks"]
+    cache_root = Path("cache")
+
+    if slides_dir is not None:
+        frames = read_directory(slides_dir)
+        if not frames:
+            log.warning("  no slide images found in %s", slides_dir)
+            return SlideReport(error=f"no images in {slides_dir}")
+        log.info("  %d captured slide(s) from %s", len(frames), slides_dir)
+    else:
+        proxies = build_requests_proxies(config.settings)
+        video = download_video(
+            url,
+            cache_root / "roundup_video",
+            video_id=video_id,
+            height=int(settings["video_height"]),
+            proxy=proxies.get("https", "") if proxies else "",
+        )
+        if video is None:
+            return SlideReport(error="video download failed")
+        frames = extract_slides(
+            video,
+            cache_root / "slides" / "frames" / video_id,
+            scene_threshold=float(settings["scene_threshold"]),
+            max_frames=int(settings["max_frames"]),
+        )
+        if not bool(settings["keep_video"]):
+            video.unlink(missing_ok=True)
+        if not frames:
+            return SlideReport(error="no frames extracted")
+        log.info("  %d slide(s) cut from the video", len(frames))
+
+    reader = SlideReader(
+        model=str(settings["slide_model"]),
+        effort=str(settings["slide_effort"]),
+        cache_dir=cache_root / "slides",
+        use_cache=bool(config.settings["use_cache"]),
+    )
+    report = reader.read(frames)
+    log.info(
+        "  read %d slide(s) (%d from cache, %d failed)",
+        report.read + report.cached, report.cached, report.failed,
+    )
+    return report
+
+
 def ingest_tracker_roundups(
     config: Config,
     urls: list[str],
@@ -243,15 +314,20 @@ def ingest_tracker_roundups(
     sources: list[dict[str, Any]],
     apply_cappers: bool = False,
     skip_extraction: bool = False,
+    slides_dir: Path | None = None,
 ) -> str:
     """Add every channel's pick from the tracker's roundup video(s), in place.
 
-    Returns the event name the roundup states, if any. Fails open: a roundup
-    that can't be read costs the run nothing but its own picks.
+    Two readings of the same deck, merged: the transcript (which rarely names
+    a channel — the host says "eighty of eighty-one are on Dyer" and moves on)
+    and the slides themselves, where the names are actually printed. Returns
+    the event name the roundup states, if any. Fails open throughout: a
+    roundup that can't be read costs the run nothing but its own picks.
     """
     settings = config.settings["tracker_picks"]
-    if not urls or not settings["enabled"]:
+    if (not urls and slides_dir is None) or not settings["enabled"]:
         return ""
+    read_slides = bool(settings["read_slides"]) and not skip_extraction
 
     directory = CapperDirectory(config.cappers.values())
     # One channel is one vote per fight, cast by the richest source: a capper
@@ -274,12 +350,25 @@ def ingest_tracker_roundups(
     )
 
     event_name = ""
-    for url in urls:
-        try:
-            video_id = extract_video_id(url)
-        except ConfigError as exc:
-            log.warning("Skipping tracker roundup: %s", exc)
-            continue
+    # Captured slides with no roundup URL configured are a roundup in their
+    # own right: the deck is the source, the video was only ever how we got
+    # at it.
+    # Boards already transcribed into roundups/ — free, and the only source
+    # that works with no video download and no API call at all.
+    readings_dir = Path(settings["readings_dir"])
+    readings = load_readings(readings_dir)
+    entries = list(urls)
+    if not entries and (slides_dir is not None or readings):
+        entries = [""]
+    for url in entries:
+        if url:
+            try:
+                video_id = extract_video_id(url)
+            except ConfigError as exc:
+                log.warning("Skipping tracker roundup: %s", exc)
+                continue
+        else:
+            video_id = "captured_slides"
 
         log.info("Tracker roundup — %s", video_id)
         record: dict[str, Any] = {
@@ -293,28 +382,76 @@ def ingest_tracker_roundups(
             "pick_count": 0,
         }
 
-        transcript = fetcher.fetch(video_id)
-        if not transcript.ok:
-            record.update(status="transcript_failed", error=transcript.error)
-            log.warning("  transcript failed: %s", transcript.error)
-            sources.append(record)
-            continue
-        record["transcript_chars"] = transcript.char_count
+        collected: list[TrackerRoundup] = []
+        event_from_video = ""
 
-        if extractor is None:
-            record["status"] = "extraction_skipped"
+        transcribed = readings.pop(video_id, None)
+        if transcribed is None and not url and readings:
+            # Slides-only run: take whatever boards are on disk.
+            for stored_id, stored in list(readings.items()):
+                readings.pop(stored_id)
+                collected.append(stored[1])
+                record["reading_fights"] = record.get("reading_fights", 0) + len(
+                    stored[1].fights
+                )
+        elif transcribed is not None:
+            collected.append(transcribed[1])
+            record["reading_fights"] = len(transcribed[1].fights)
+
+        # The transcript: cheap, occasionally carries a name the host reads
+        # out, and never the whole board. Its failure is not this roundup's
+        # failure — the slides are the real source.
+        if url:
+            transcript = fetcher.fetch(video_id)
+            if not transcript.ok:
+                record.update(status="transcript_failed", error=transcript.error)
+                log.warning("  transcript failed: %s", transcript.error)
+            elif extractor is None:
+                record["status"] = "extraction_skipped"
+            else:
+                record["transcript_chars"] = transcript.char_count
+                spoken = extractor.extract(video_id, transcript.text, url)
+                if spoken.ok:
+                    event_from_video = spoken.event_name
+                    collected.append(
+                        TrackerRoundup(
+                            event_name=spoken.event_name, fights=spoken.fights
+                        )
+                    )
+                    if spoken.error:
+                        # Partial: some chunks came back, then the API stopped.
+                        record["error"] = spoken.error
+                else:
+                    record["error"] = spoken.error
+                    log.warning("  transcript extraction failed: %s", spoken.error)
+
+        # The slides, where the channel names are actually printed — unless a
+        # transcribed board already covers this deck, in which case there is
+        # nothing to pay a vision pass for.
+        if read_slides and transcribed is None:
+            slides = read_roundup_slides(config, url, video_id, slides_dir=slides_dir)
+            collected.extend(slides.roundups)
+            record.update(
+                slides_read=slides.read + slides.cached, slide_frames=slides.frames
+            )
+            if slides.error:
+                record["slides_error"] = slides.error
+
+        if not collected:
+            record["status"] = record.get("status") or "no_sources"
+            if record["status"] == "ok":
+                record["status"] = "empty"
             sources.append(record)
             continue
 
-        result = extractor.extract(video_id, transcript.text, url)
-        if not result.ok:
-            record.update(status="extraction_failed", error=result.error)
-            log.warning("  extraction failed: %s", result.error)
-            sources.append(record)
-            continue
-        if result.error:
-            # A partial roundup: some chunks came back, then the API stopped.
-            record["error"] = result.error
+        record["status"] = "ok"
+        fights = merge_roundups(collected)
+        if transcribed is None and fights:
+            # Keep what the slides cost money to read.
+            save_reading(readings_dir, video_id, url, fights, event_from_video)
+        result = RoundupResult(
+            video_id=video_id, fights=fights, event_name=event_from_video
+        )
 
         picks, stats = to_sourced_picks(
             result.fights,
@@ -355,6 +492,7 @@ def run_pipeline(
     roundup_urls: list[str] | None = None,
     apply_tracker_cappers: bool = False,
     pasted_notes: list[tuple[str, Path]] | None = None,
+    slides_dir: Path | None = None,
 ) -> dict[str, Any]:
     """Fetch transcripts, extract picks, aggregate, and write the payload."""
     settings = config.settings
@@ -459,6 +597,7 @@ def run_pipeline(
         sources=sources,
         apply_cappers=apply_tracker_cappers,
         skip_extraction=skip_extraction,
+        slides_dir=slides_dir,
     )
     event_name = event_name or roundup_event
 
@@ -478,16 +617,23 @@ def run_pipeline(
     # The previous run's payload is what detects a quiet cancellation — a
     # bout ESPN removes from the card outright was on_card last run and
     # unmatched now. Fail-open: no card, no annotation, pipeline continues.
-    previous_fights: list[dict[str, Any]] = []
+    previous: dict[str, Any] = {}
     if output_path.is_file():
         try:
-            previous_fights = json.loads(output_path.read_text(encoding="utf-8")).get(
-                "fights", []
-            )
+            previous = json.loads(output_path.read_text(encoding="utf-8"))
         except (json.JSONDecodeError, OSError):
             pass
     card = fetch_event_card(event.get("name") or "")
-    annotate_consensus(payload, card, previous_fights)
+    annotate_consensus(
+        payload,
+        card,
+        previous_fights=previous.get("fights") or [],
+        # Which card that payload was built for — the carry-over is only valid
+        # inside one event, and this is what says so.
+        previous_card_name=((previous.get("event") or {}).get("card") or {}).get(
+            "name", ""
+        ),
+    )
 
     # Current moneyline prices, so the dashboard can price a parlay rather
     # than only rank it. Runs after the card annotation so it only ever
@@ -754,6 +900,23 @@ def main(argv: list[str] | None = None) -> int:
         help="Skip the roundup videos listed in config.json for this run.",
     )
     roundup_group.add_argument(
+        "--roundup-slides",
+        metavar="DIR",
+        default=None,
+        help=(
+            "Read roundup slides you captured yourself (screenshots) from DIR "
+            "instead of downloading the video. Use when yt-dlp can't fetch it."
+        ),
+    )
+    roundup_group.add_argument(
+        "--no-roundup-slides",
+        action="store_true",
+        help=(
+            "Skip reading the roundup's slides — transcript only. Much cheaper, "
+            "and usually returns almost nothing: the names are printed, not said."
+        ),
+    )
+    roundup_group.add_argument(
         "--apply-tracker-cappers",
         action="store_true",
         help=(
@@ -853,6 +1016,9 @@ def main(argv: list[str] | None = None) -> int:
     )
     if not config.settings["tracker_picks"]["enabled"]:
         effective_roundups = []
+    if args.no_roundup_slides:
+        config.settings["tracker_picks"]["read_slides"] = False
+    slides_dir = Path(args.roundup_slides) if args.roundup_slides else None
 
     pasted_settings = config.settings["pasted_picks"]
     has_pasted = bool(pasted_notes) or (
@@ -862,7 +1028,7 @@ def main(argv: list[str] | None = None) -> int:
     # A roundup on its own is a perfectly good run: it carries every channel's
     # pick without needing a single per-capper video. So is a folder of pasted
     # cards.
-    if not videos and not effective_roundups and not has_pasted:
+    if not videos and not effective_roundups and not has_pasted and slides_dir is None:
         log.error(
             "No videos to process. Either add entries to the \"videos\" array in %s "
             "(e.g. {\"capper_id\": \"artem_mma\", \"url\": \"https://youtu.be/...\"}), "
@@ -884,6 +1050,7 @@ def main(argv: list[str] | None = None) -> int:
             roundup_urls=effective_roundups,
             apply_tracker_cappers=args.apply_tracker_cappers,
             pasted_notes=pasted_notes,
+            slides_dir=slides_dir,
         )
     except ProxyConfigError as exc:
         log.error("%s", exc)

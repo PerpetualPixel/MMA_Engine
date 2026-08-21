@@ -155,8 +155,37 @@ def test_annotate_detects_the_quiet_cancellation_via_previous_run():
     gone = consensus_fight("Mackenzie Dern", "Jillian Robertson")
     payload = {"event": {}, "fights": [gone]}
     previous = [consensus_fight("Mackenzie Dern", "Jillian Robertson", card_status="on_card")]
-    annotate_consensus(payload, card, previous_fights=previous)
+    annotate_consensus(
+        payload, card, previous_fights=previous, previous_card_name=card["name"]
+    )
     assert payload["fights"][0]["card_status"] == "cancelled"
+
+
+def test_a_previous_run_for_another_event_does_not_resurrect_its_card():
+    """Retargeting the engine used to keep the old card forever: every bout on
+    it was on_card last run and unmatched now, so all of them were flagged
+    cancelled and kept, out of reach of the off-card filter."""
+    card = parse_card(espn_event(fights=[("Islam Makhachev", "Ian Machado Garry", "STATUS_SCHEDULED")]))
+    last_week = consensus_fight("Kaik Brito", "Namo Fazil")
+    payload = {"event": {}, "fights": [last_week]}
+    previous = [consensus_fight("Kaik Brito", "Namo Fazil", card_status="on_card")]
+
+    annotate_consensus(
+        payload,
+        card,
+        previous_fights=previous,
+        previous_card_name="Dana White's Contender Series: Season 10, Week 2",
+    )
+    assert [f["display"] for f in payload["fights"]] == ["Islam Makhachev vs Ian Machado Garry"]
+
+
+def test_an_unnamed_previous_card_carries_nothing_over():
+    """No proof it is the same event, so the unmatched fight is dropped."""
+    card = parse_card(espn_event(fights=[("Islam Makhachev", "Ian Machado Garry", "STATUS_SCHEDULED")]))
+    payload = {"event": {}, "fights": [consensus_fight("Mackenzie Dern", "Jillian Robertson")]}
+    previous = [consensus_fight("Mackenzie Dern", "Jillian Robertson", card_status="on_card")]
+    annotate_consensus(payload, card, previous_fights=previous)
+    assert all(f["display"] != "Mackenzie Dern vs Jillian Robertson" for f in payload["fights"])
 
 
 def test_annotate_without_a_card_changes_nothing():

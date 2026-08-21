@@ -10,7 +10,7 @@
       "name": "UFC Fight Night: Hernandez vs. Rodrigues",
       "date": "2026-08-22T21:00Z",
       "bouts": 13,
-      "off_card_dropped": 17
+      "off_card_dropped": 20
     },
     "odds": {
       "source": "the-odds-api",
@@ -21,9 +21,9 @@
   },
   "source": "MMA_Engine trust-weighted capper consensus",
   "totals": {
-    "picks": 35,
+    "picks": 30,
     "strong": 1,
-    "lean": 29,
+    "lean": 24,
     "pass": 5
   },
   "picks": [
@@ -394,50 +394,6 @@
       ]
     },
     {
-      "fight_id": "paxton|perez",
-      "fight": "Logan Paxton vs Christian Perez",
-      "card_status": "cancelled",
-      "market": "method_of_victory",
-      "market_label": "Method of Victory",
-      "selection": "Christian Perez by submission",
-      "consensus_pct": 100.0,
-      "weight": 4.97,
-      "pick_count": 1,
-      "avg_confidence": 7.0,
-      "strength": 6.2,
-      "tier": "lean",
-      "suggested_units": 1.0,
-      "comments": [
-        {
-          "capper": "BetSlam with Sam",
-          "comment": "Perez is far more skilled and should cook Paxton, whose only path is takedowns and ground and pound.",
-          "confidence": 7
-        }
-      ]
-    },
-    {
-      "fight_id": "paxton|perez",
-      "fight": "Logan Paxton vs Christian Perez",
-      "card_status": "cancelled",
-      "market": "moneyline",
-      "market_label": "Moneyline",
-      "selection": "Christian Perez",
-      "consensus_pct": 100.0,
-      "weight": 4.88,
-      "pick_count": 1,
-      "avg_confidence": 8.0,
-      "strength": 6.2,
-      "tier": "lean",
-      "suggested_units": 1.0,
-      "comments": [
-        {
-          "capper": "BetSlam with Sam",
-          "comment": "Called Perez the lock of the card — far more skilled, showed the real deal against Manuel Sosa, while Paxton is a meat-and-potatoes wrestler who's beaten only tin cans.",
-          "confidence": 8
-        }
-      ]
-    },
-    {
       "fight_id": "douglas|emmers",
       "fight": "Lerryan Douglas vs Jamall Emmers",
       "card_status": "on_card",
@@ -511,72 +467,6 @@
         {
           "capper": "BetSlam with Sam",
           "comment": "Dyer is the better striker and Reed has three KO losses and has been finished recently; her better wins are years old.",
-          "confidence": 6
-        }
-      ]
-    },
-    {
-      "fight_id": "puga|trembley",
-      "fight": "Roman Puga vs Tanner Trembley",
-      "card_status": "cancelled",
-      "market": "method_of_victory",
-      "market_label": "Method of Victory",
-      "selection": "Roman Puga by KO/TKO",
-      "consensus_pct": 100.0,
-      "weight": 4.26,
-      "pick_count": 1,
-      "avg_confidence": 6.0,
-      "strength": 6.1,
-      "tier": "lean",
-      "suggested_units": 1.0,
-      "comments": [
-        {
-          "capper": "BetSlam with Sam",
-          "comment": "Puga is a legitimate boxing threat with striking finishes; Sam said he'll take the KO if it's plus money.",
-          "confidence": 6
-        }
-      ]
-    },
-    {
-      "fight_id": "puga|trembley",
-      "fight": "Roman Puga vs Tanner Trembley",
-      "card_status": "cancelled",
-      "market": "moneyline",
-      "market_label": "Moneyline",
-      "selection": "Roman Puga",
-      "consensus_pct": 100.0,
-      "weight": 4.08,
-      "pick_count": 1,
-      "avg_confidence": 6.0,
-      "strength": 6.0,
-      "tier": "lean",
-      "suggested_units": 1.0,
-      "comments": [
-        {
-          "capper": "BetSlam with Sam",
-          "comment": "Trembley started MMA late, has faced nobody of note and mostly submits opponents, while Puga is a young Mexican knockout artist who has never been submitted.",
-          "confidence": 6
-        }
-      ]
-    },
-    {
-      "fight_id": "brito|fazil",
-      "fight": "Kaik Brito vs Namo Fazil",
-      "card_status": "cancelled",
-      "market": "moneyline",
-      "market_label": "Moneyline",
-      "selection": "Kaik Brito",
-      "consensus_pct": 100.0,
-      "weight": 4.08,
-      "pick_count": 1,
-      "avg_confidence": 6.0,
-      "strength": 6.0,
-      "tier": "lean",
-      "suggested_units": 1.0,
-      "comments": [
-        {
-          "capper": "BetSlam with Sam",
-          "comment": "Brito is battle tested against real European competition while Fazil has been can crushing on a much weaker circuit; the fake tough guy act at the faceoff flipped Sam onto Brito.",
           "confidence": 6
         }
       ]

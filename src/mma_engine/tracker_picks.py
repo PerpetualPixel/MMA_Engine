@@ -402,6 +402,89 @@ def _failed(
     return RoundupResult(video_id=video_id, fights=[], ok=False, error=error)
 
 
+# -- boards read elsewhere -------------------------------------------------
+
+READINGS_DIR = "roundups"
+
+
+def load_readings(directory: Path) -> dict[str, tuple[str, TrackerRoundup]]:
+    """Roundup boards already transcribed, keyed by video id.
+
+    A deck that has been read once does not need reading again — not by the
+    vision pass, not by anyone. Dropping the transcription in `roundups/` as
+
+        {"video_id": "...", "source_url": "...", "event_name": "...",
+         "fights": [{"fighter_a": "...", "fighter_b": "...",
+                     "cappers_for_a": [...], "cappers_for_b": [...]}]}
+
+    makes it a first-class source: merged with whatever the transcript and the
+    slides give, free to re-run, and reviewable in a diff. It is also the way
+    in when the video can't be downloaded and the API can't be called — the
+    board is public information, and someone who has read it can just write it
+    down.
+    """
+    readings: dict[str, tuple[str, TrackerRoundup]] = {}
+    if not directory.is_dir():
+        return readings
+
+    for path in sorted(directory.glob("*.json")):
+        try:
+            raw = json.loads(path.read_text(encoding="utf-8"))
+            roundup = TrackerRoundup(
+                event_name=raw.get("event_name", ""),
+                fights=[
+                    TrackerFightPicks.model_validate(fight)
+                    for fight in raw.get("fights") or []
+                ],
+            )
+        except Exception as exc:
+            log.warning("Ignoring unreadable roundup reading %s: %s", path, exc)
+            continue
+        if not roundup.fights:
+            continue
+        video_id = str(raw.get("video_id") or path.stem)
+        readings[video_id] = (str(raw.get("source_url") or ""), roundup)
+        log.info(
+            "Roundup board read from %s: %d fight(s)", path.name, len(roundup.fights)
+        )
+    return readings
+
+
+def save_reading(
+    directory: Path,
+    video_id: str,
+    source_url: str,
+    fights: list[TrackerFightPicks],
+    event_name: str = "",
+) -> Path | None:
+    """Write a board that was just read to `roundups/`, so it is read once.
+
+    Reading a deck costs a vision call per slide. Once it is read, the result
+    is plain facts about a public video — worth keeping in the repo, where the
+    next run gets it for free, a diff shows exactly which channel was recorded
+    on which side, and a name the reader garbled can be corrected by hand.
+    Never overwrites: a file already there was either written by an earlier
+    run or corrected by a person, and both beat re-deriving it.
+    """
+    if not fights:
+        return None
+    directory.mkdir(parents=True, exist_ok=True)
+    path = directory / f"{video_id}.json"
+    if path.exists():
+        return None
+    payload = {
+        "video_id": video_id,
+        "source_url": source_url,
+        "event_name": event_name,
+        "fights": [fight.model_dump() for fight in fights],
+    }
+    path.write_text(
+        json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+    )
+    log.info("Wrote %s — %d fight(s), read once and free from here on", path, len(fights))
+    return path
+
+
 # -- attribution -----------------------------------------------------------
 
 

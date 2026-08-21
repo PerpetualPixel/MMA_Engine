@@ -308,6 +308,9 @@ def test_pipeline_ingests_a_roundup_into_the_sourced_picks(tmp_path, monkeypatch
             )
 
     monkeypatch.setattr(pipeline, "RoundupExtractor", FakeExtractor)
+    # A read board is written to roundups/ relative to the cwd; keep the run
+    # inside the tmp dir rather than the working tree.
+    monkeypatch.chdir(tmp_path)
     config = load_config(
         write_config(tmp_path, {**BASE_CONFIG, "tracker": {"picks_videos": []}})
     )
