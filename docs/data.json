@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-21T09:17:53+00:00",
+  "generated_at": "2026-08-21T09:40:39+00:00",
   "event": {
     "name": "Hernandez vs. Rodrigues",
     "date": "",
@@ -10,13 +10,13 @@
       "name": "UFC Fight Night: Hernandez vs. Rodrigues",
       "date": "2026-08-22T21:00Z",
       "bouts": 13,
-      "off_card_dropped": 54
+      "off_card_dropped": 57
     },
     "odds": {
       "source": "the-odds-api",
       "market": "h2h",
-      "fetched_at": "2026-08-21T09:17:53+00:00",
-      "fights_priced": 14
+      "fetched_at": "2026-08-21T09:40:40+00:00",
+      "fights_priced": 13
     }
   },
   "totals": {
@@ -305,10 +305,8 @@
       "kind": "tracker_roundup",
       "status": "ok",
       "pick_count": 0,
+      "reading_fights": 13,
       "transcript_chars": 24607,
-      "slides_read": 0,
-      "slide_frames": 0,
-      "slides_error": "video download failed",
       "capper_count": 0,
       "new_cappers": 0,
       "superseded": 0,
@@ -780,7 +778,7 @@
       "card_date": "2026-08-22T21:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-21T09:17:53+00:00",
+        "fetched_at": "2026-08-21T09:40:40+00:00",
         "commence_time": "2026-08-22T21:00:00Z",
         "a": {
           "american": -397,
@@ -1270,7 +1268,7 @@
       "card_date": "2026-08-22T21:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-21T09:17:53+00:00",
+        "fetched_at": "2026-08-21T09:40:40+00:00",
         "commence_time": "2026-08-22T21:00:00Z",
         "a": {
           "american": -177,
@@ -1888,7 +1886,7 @@
       "card_date": "2026-08-23T00:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-21T09:17:53+00:00",
+        "fetched_at": "2026-08-21T09:40:40+00:00",
         "commence_time": "2026-08-23T01:00:00Z",
         "a": {
           "american": -190,
@@ -2322,7 +2320,7 @@
       "card_date": "2026-08-23T00:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-21T09:17:53+00:00",
+        "fetched_at": "2026-08-21T09:40:40+00:00",
         "commence_time": "2026-08-23T00:00:00Z",
         "a": {
           "american": -145,
@@ -2678,7 +2676,7 @@
       "card_date": "2026-08-22T21:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-21T09:17:53+00:00",
+        "fetched_at": "2026-08-21T09:40:40+00:00",
         "commence_time": "2026-08-22T21:15:00Z",
         "a": {
           "american": -874,
@@ -3074,7 +3072,7 @@
       "card_date": "2026-08-22T21:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-21T09:17:53+00:00",
+        "fetched_at": "2026-08-21T09:40:40+00:00",
         "commence_time": "2026-08-22T21:00:00Z",
         "a": {
           "american": -136,
@@ -3406,7 +3404,7 @@
       "card_date": "2026-08-23T00:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-21T09:17:53+00:00",
+        "fetched_at": "2026-08-21T09:40:40+00:00",
         "commence_time": "2026-08-23T00:00:00Z",
         "a": {
           "american": 670,
@@ -3727,7 +3725,7 @@
       "card_date": "2026-08-23T00:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-21T09:17:53+00:00",
+        "fetched_at": "2026-08-21T09:40:40+00:00",
         "commence_time": "2026-08-23T00:00:00Z",
         "a": {
           "american": 435,
@@ -4081,7 +4079,7 @@
       "card_date": "2026-08-22T21:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-21T09:17:53+00:00",
+        "fetched_at": "2026-08-21T09:40:40+00:00",
         "commence_time": "2026-08-22T21:00:00Z",
         "a": {
           "american": -115,
@@ -4369,17 +4367,17 @@
       "card_date": "2026-08-23T00:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-21T09:17:53+00:00",
+        "fetched_at": "2026-08-21T09:40:40+00:00",
         "commence_time": "2026-08-23T00:00:00Z",
         "a": {
-          "american": -405,
-          "decimal": 1.247,
+          "american": -400,
+          "decimal": 1.25,
           "books": 8,
           "best_american": -375
         },
         "b": {
-          "american": 314,
-          "decimal": 4.145,
+          "american": 312,
+          "decimal": 4.12,
           "books": 8,
           "best_american": 340
         }
@@ -4677,7 +4675,7 @@
       "card_date": "2026-08-23T00:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-21T09:17:53+00:00",
+        "fetched_at": "2026-08-21T09:40:40+00:00",
         "commence_time": "2026-08-23T00:00:00Z",
         "a": {
           "american": -327,
@@ -4851,7 +4849,7 @@
       "card_date": "2026-08-22T21:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-21T09:17:53+00:00",
+        "fetched_at": "2026-08-21T09:40:40+00:00",
         "commence_time": "2026-08-22T21:00:00Z",
         "a": {
           "american": 135,
@@ -4943,7 +4941,7 @@
       "card_date": "2026-08-22T21:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-21T09:17:53+00:00",
+        "fetched_at": "2026-08-21T09:40:40+00:00",
         "commence_time": "2026-08-22T22:45:00Z",
         "a": {
           "american": -900,

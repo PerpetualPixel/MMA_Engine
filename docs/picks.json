@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-21T09:17:53+00:00",
+  "generated_at": "2026-08-21T09:40:39+00:00",
   "event": {
     "name": "Hernandez vs. Rodrigues",
     "date": "",
@@ -10,13 +10,13 @@
       "name": "UFC Fight Night: Hernandez vs. Rodrigues",
       "date": "2026-08-22T21:00Z",
       "bouts": 13,
-      "off_card_dropped": 54
+      "off_card_dropped": 57
     },
     "odds": {
       "source": "the-odds-api",
       "market": "h2h",
-      "fetched_at": "2026-08-21T09:17:53+00:00",
-      "fights_priced": 14
+      "fetched_at": "2026-08-21T09:40:40+00:00",
+      "fights_priced": 13
     }
   },
   "source": "MMA_Engine trust-weighted capper consensus",
