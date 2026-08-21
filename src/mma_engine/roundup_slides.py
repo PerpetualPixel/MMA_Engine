@@ -38,6 +38,7 @@ import logging
 import os
 import shutil
 import subprocess
+import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Iterable
@@ -227,7 +228,10 @@ def download_video(
 
     template = str(dest_dir / f"{video_id}.%(ext)s")
     command = [
-        "python",
+        # This interpreter, not whatever "python" happens to mean on PATH:
+        # the run is inside a venv and yt-dlp is installed there, not
+        # necessarily in the system Python.
+        sys.executable,
         "-m",
         "yt_dlp",
         "--quiet",

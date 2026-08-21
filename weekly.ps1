@@ -73,7 +73,20 @@ if ($LASTEXITCODE -ne 0) {
               "then rerun weekly.bat.")
     }
     git push
-    if ($LASTEXITCODE -ne 0) { Fail "git push failed - see the error above." }
+    if ($LASTEXITCODE -ne 0) {
+        # The remote moved while this run was working (a merged PR, another
+        # machine). Replay this commit on top of it and push again. -X theirs
+        # settles docs/data.json and docs/picks.json in favour of the payload
+        # this run just built, which is the newer of the two by definition.
+        Write-Host "Push rejected - the remote moved. Rebasing onto it and retrying." -ForegroundColor Yellow
+        git pull --rebase -X theirs origin main
+        if ($LASTEXITCODE -ne 0) {
+            Fail ("Rebase failed - run 'git status' and resolve it by hand. " +
+                  "Your consensus is committed locally, so nothing is lost.")
+        }
+        git push
+        if ($LASTEXITCODE -ne 0) { Fail "git push failed again - see the error above." }
+    }
     Write-Host ""
     Write-Host "Done - the dashboard updates in about a minute." -ForegroundColor Green
 } else {
