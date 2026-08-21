@@ -163,11 +163,12 @@ def _option_payload(option: _Option, market_weight: float) -> dict[str, Any]:
     supporters = sorted(
         option.sources, key=lambda s: (s.weight, s.capper.name), reverse=True
     )
-    # "How sure do they say they are?" is a question only a capper's own video
-    # answers. A tracker roundup line carries a placeholder confidence, so it
-    # is reported separately rather than dragging the average toward neutral
-    # and, with it, every threshold the dashboard hangs off that average.
-    stated = [s for s in option.sources if s.source_kind == "video"]
+    # "How sure do they say they are?" is a question the capper has to have
+    # answered — in their own video, or in a card pasted from a post they
+    # wrote. A tracker roundup line carries a placeholder confidence instead,
+    # so it is reported separately rather than dragging the average toward
+    # neutral and, with it, every threshold the dashboard hangs off it.
+    stated = [s for s in option.sources if s.source_kind != "tracker"]
     stated_confidence = (
         sum(s.pick.confidence for s in stated) / len(stated) if stated else 0.0
     )
