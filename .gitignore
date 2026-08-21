@@ -24,6 +24,13 @@ cache/
 # stops the next one from colliding with a `git pull` the way it just did.
 roster_proposal.json
 
+# Picks pasted from paywalled posts (Patreon and the like). Someone else's
+# paid writing — ours to read locally, never ours to publish. The folder and
+# its README stay tracked so the instructions travel with the repo; nothing
+# dropped into it does.
+pasted/*
+!pasted/README.md
+
 # OS / editor
 .DS_Store
 .idea/

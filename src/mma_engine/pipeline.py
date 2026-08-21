@@ -24,6 +24,14 @@ from .discover import ChannelDiscovery
 from .event_card import annotate_consensus, fetch_event_card
 from .normalize import fight_key
 from .odds import annotate_odds, fetch_live_odds
+from .pasted_picks import (
+    PastedNote,
+    collect_notes,
+    has_notes,
+    note_id,
+    parse_note,
+    supersede_video_picks,
+)
 from .extract import PickExtractor
 from .proxy import ProxyConfigError, build_proxy_config, build_requests_proxies
 from .roster import RosterExtractor, build_capper_entry, merge_into_config
@@ -95,6 +103,138 @@ def resolve_videos(config: Config) -> tuple[list[VideoRef], list[dict]]:
     return videos, report
 
 
+def ingest_pasted_picks(
+    config: Config,
+    sourced_picks: list[SourcedPick],
+    sources: list[dict[str, Any]],
+    extra_notes: list[tuple[str, Path]] | None = None,
+    skip_extraction: bool = False,
+) -> None:
+    """Read `pasted/` — cards pasted by hand from paywalled posts — in place.
+
+    Runs after the videos so a pasted card can supersede the same capper's
+    teaser video, and before the roundup so the roundup defers to both.
+    """
+    settings = config.settings["pasted_picks"]
+    if not settings["enabled"] and not extra_notes:
+        return
+
+    directory = Path(settings["dir"])
+    notes, skipped = collect_notes(
+        directory,
+        config.cappers.values(),
+        max_age_days=int(settings["max_age_days"]),
+    ) if settings["enabled"] else ([], [])
+
+    # --picks-from-text CAPPER_ID=FILE: a one-off paste that doesn't live in
+    # the folder, and isn't subject to its staleness guard.
+    for capper_id, path in extra_notes or []:
+        try:
+            capper = config.capper(capper_id)
+        except ConfigError as exc:
+            log.error("%s", exc)
+            continue
+        if not path.is_file():
+            log.error("No such pasted picks file: %s", path)
+            continue
+        text, source_url = parse_note(path.read_text(encoding="utf-8", errors="replace"))
+        if not text:
+            log.warning("%s is empty — nothing to extract", path)
+            continue
+        notes.append(
+            PastedNote(
+                capper=capper,
+                path=path,
+                text=text,
+                source_url=source_url,
+                paste_id=note_id(capper.id, text),
+            )
+        )
+
+    for row in skipped:
+        sources.append(
+            {
+                "video_id": "",
+                "url": row["path"],
+                "capper_id": "",
+                "capper": f"Pasted: {row['file']}",
+                "title": "",
+                "kind": "pasted",
+                "status": row["status"],
+                "pick_count": 0,
+            }
+        )
+    if not notes:
+        return
+
+    extractor = (
+        None
+        if skip_extraction
+        else PickExtractor(
+            model=config.settings["model"],
+            effort=config.settings["effort"],
+            max_tokens=int(config.settings["max_tokens"]),
+            max_chunk_chars=int(config.settings["max_transcript_chars"]),
+            use_cache=bool(config.settings["use_cache"]),
+        )
+    )
+
+    added: list[SourcedPick] = []
+    for note in notes:
+        log.info("Pasted picks — %s (%s)", note.capper.name, note.path.name)
+        record: dict[str, Any] = {
+            "video_id": note.paste_id,
+            "url": note.source_url,
+            "capper_id": note.capper.id,
+            "capper": note.capper.name,
+            "title": note.path.name,
+            "kind": "pasted",
+            "status": "ok",
+            "pick_count": 0,
+            "transcript_chars": len(note.text),
+        }
+        if extractor is None:
+            record["status"] = "extraction_skipped"
+            sources.append(record)
+            continue
+
+        extraction = extractor.extract(
+            video_id=note.paste_id,
+            transcript=note.text,
+            capper_name=note.capper.name,
+            video_url=note.source_url,
+        )
+        if not extraction.ok:
+            record.update(status="extraction_failed", error=extraction.error)
+            log.warning("  extraction failed: %s", extraction.error)
+            sources.append(record)
+            continue
+
+        record["pick_count"] = len(extraction.picks)
+        sources.append(record)
+        log.info("  %d picks", len(extraction.picks))
+        for pick in extraction.picks:
+            added.append(
+                SourcedPick(
+                    pick=pick,
+                    capper=note.capper,
+                    video_id=note.paste_id,
+                    video_url=note.source_url,
+                    source_kind="pasted",
+                )
+            )
+
+    if not added:
+        return
+    kept, dropped = supersede_video_picks(sourced_picks, added)
+    if dropped:
+        log.info(
+            "Dropped %d video pick(s) the pasted card(s) supersede — the paste "
+            "is the full card, the video was the teaser", dropped,
+        )
+    sourced_picks[:] = kept + added
+
+
 def ingest_tracker_roundups(
     config: Config,
     urls: list[str],
@@ -114,9 +254,9 @@ def ingest_tracker_roundups(
         return ""
 
     directory = CapperDirectory(config.cappers.values())
-    # One channel is one vote per fight, cast by the richer source: a capper
-    # whose own video this run already covers a fight doesn't also get counted
-    # off the roundup slide.
+    # One channel is one vote per fight, cast by the richest source: a capper
+    # whose own video (or pasted card) this run already covers a fight doesn't
+    # also get counted off the roundup slide.
     covered = frozenset(
         (s.capper.id, fight_key(s.pick.fighter_a, s.pick.fighter_b))
         for s in sourced_picks
@@ -196,7 +336,7 @@ def ingest_tracker_roundups(
         sources.append(record)
         log.info(
             "  %d picks from %d channels (%d already in config, %d new); "
-            "%d deferred to the capper's own video",
+            "%d deferred to the capper's own video or pasted card",
             stats.picks, stats.cappers, stats.matched, stats.minted, stats.superseded,
         )
 
@@ -214,6 +354,7 @@ def run_pipeline(
     discovery_report: list[dict] | None = None,
     roundup_urls: list[str] | None = None,
     apply_tracker_cappers: bool = False,
+    pasted_notes: list[tuple[str, Path]] | None = None,
 ) -> dict[str, Any]:
     """Fetch transcripts, extract picks, aggregate, and write the payload."""
     settings = config.settings
@@ -295,6 +436,16 @@ def run_pipeline(
                     video_url=video.url,
                 )
             )
+
+    # Cards pasted by hand from paywalled posts, for cappers whose YouTube
+    # upload is only a teaser these days.
+    ingest_pasted_picks(
+        config,
+        sourced_picks=sourced_picks,
+        sources=sources,
+        extra_notes=pasted_notes,
+        skip_extraction=skip_extraction,
+    )
 
     # The tracker's pre-event roundup: one video carrying every channel's pick,
     # including the many channels this pipeline can't read a video for. Runs
@@ -484,6 +635,16 @@ def _summarize(payload: dict[str, Any]) -> str:
         f"Cappers: {totals['cappers']}",
         f"Picks:   {totals['picks']} across {totals['fights']} fights",
     ]
+    pasted = [
+        s
+        for s in payload["sources"]
+        if s.get("kind") == "pasted" and s["status"] == "ok"
+    ]
+    if pasted:
+        lines.append(
+            f"Pasted:  {sum(p.get('pick_count', 0) for p in pasted)} picks hand-fed "
+            f"from {len(pasted)} card(s): {', '.join(p['capper'] for p in pasted)}"
+        )
     roundups = [
         s
         for s in payload["sources"]
@@ -557,6 +718,23 @@ def main(argv: list[str] | None = None) -> int:
             "List the videos discovery would process, then exit. No transcripts "
             "are fetched and no Claude API calls are made."
         ),
+    )
+    pasted_group = parser.add_argument_group("pasted picks (paywalled cards)")
+    pasted_group.add_argument(
+        "--picks-from-text",
+        metavar="CAPPER_ID=FILE",
+        action="append",
+        default=None,
+        help=(
+            "Extract picks from a text file you pasted yourself, attributed to "
+            "CAPPER_ID. Repeatable. For the weekly rhythm, drop files into "
+            "pasted/ named after the capper instead — no flag needed."
+        ),
+    )
+    pasted_group.add_argument(
+        "--no-pasted-picks",
+        action="store_true",
+        help="Skip the pasted/ folder for this run.",
     )
     roundup_group = parser.add_argument_group("tracker roundups (everyone's picks)")
     roundup_group.add_argument(
@@ -654,6 +832,19 @@ def main(argv: list[str] | None = None) -> int:
         print(_summarize_discovery(config, videos, discovery_report))
         return 0 if videos else 1
 
+    if args.no_pasted_picks:
+        config.settings["pasted_picks"]["enabled"] = False
+    pasted_notes: list[tuple[str, Path]] = []
+    for pair in args.picks_from_text or []:
+        capper_id, _, file_path = pair.partition("=")
+        if not capper_id or not file_path:
+            log.error(
+                "--picks-from-text wants CAPPER_ID=FILE, e.g. "
+                "--picks-from-text funky_picks=pasted/funky_picks.txt (got %r)", pair,
+            )
+            return 2
+        pasted_notes.append((capper_id, Path(file_path)))
+
     # None here means "whatever config.json lists"; the flags either replace
     # that list or empty it.
     roundup_urls = [] if args.no_tracker_picks else args.picks_from_tracker
@@ -663,15 +854,22 @@ def main(argv: list[str] | None = None) -> int:
     if not config.settings["tracker_picks"]["enabled"]:
         effective_roundups = []
 
+    pasted_settings = config.settings["pasted_picks"]
+    has_pasted = bool(pasted_notes) or (
+        pasted_settings["enabled"] and has_notes(Path(pasted_settings["dir"]))
+    )
+
     # A roundup on its own is a perfectly good run: it carries every channel's
-    # pick without needing a single per-capper video.
-    if not videos and not effective_roundups:
+    # pick without needing a single per-capper video. So is a folder of pasted
+    # cards.
+    if not videos and not effective_roundups and not has_pasted:
         log.error(
             "No videos to process. Either add entries to the \"videos\" array in %s "
             "(e.g. {\"capper_id\": \"artem_mma\", \"url\": \"https://youtu.be/...\"}), "
             "or enable settings.discovery to pull them from the capper channels. "
-            "A predictions-tracker roundup also works on its own: "
-            "--picks-from-tracker https://youtu.be/...",
+            "A predictions-tracker roundup works on its own too "
+            "(--picks-from-tracker https://youtu.be/...), as does a pasted "
+            "card in pasted/.",
             config.path,
         )
         return 2
@@ -685,6 +883,7 @@ def main(argv: list[str] | None = None) -> int:
             discovery_report=discovery_report,
             roundup_urls=effective_roundups,
             apply_tracker_cappers=args.apply_tracker_cappers,
+            pasted_notes=pasted_notes,
         )
     except ProxyConfigError as exc:
         log.error("%s", exc)

@@ -587,11 +587,14 @@ function capperTable(cappers) {
   const rows = (cappers || []).map((c) => {
     // A roundup entry is a tally line, not a stated pick: the tracker video
     // says this channel is on this fighter and nothing more. Say so, rather
-    // than showing its placeholder confidence as if they had voiced it.
+    // than showing its placeholder confidence as if they had voiced it. A
+    // pasted card is the opposite — the capper's own words, just not from a
+    // video — so it keeps its confidence and only gets a provenance tag.
     const viaTracker = c.source === "tracker";
+    const tag = viaTracker ? "via tracker" : c.source === "pasted" ? "pasted" : "";
     return `
     <tr>
-      <td>${esc(c.name)}${viaTracker ? ` <span class="tag">via tracker</span>` : ""}</td>
+      <td>${esc(c.name)}${tag ? ` <span class="tag">${esc(tag)}</span>` : ""}</td>
       <td class="num">${viaTracker ? "—" : `${esc(c.confidence)}/10`}</td>
       <td class="num">${esc(c.trust)}</td>
       <td>${c.role && c.role !== "unknown" ? `<span class="tag ${esc(c.role)}">${esc(c.role)}</span>` : ""}</td>
@@ -1594,6 +1597,12 @@ document.getElementById("about-btn").addEventListener("click", () => openOverlay
     <dt>picks</dt>
     <dd>How many cappers back this option. One capper counts once per option
     &mdash; if they said it in two videos, only their strongest statement counts.</dd>
+    <dt>&ldquo;pasted&rdquo; tag</dt>
+    <dd>That capper's picks were pasted in by hand from a post of theirs that
+    isn't on YouTube &mdash; a paywalled card, typically. They are the capper's
+    own words, so they carry real confidence and reasoning and count exactly
+    as a pick from a video does. A pasted card supersedes that capper's video
+    for any fight it covers.</dd>
     <dt>&ldquo;via tracker&rdquo; tag</dt>
     <dd>That capper's pick was read off the @PredictionsTracker roundup &mdash;
     the pre-event video reporting which of 150+ channels is on which fighter

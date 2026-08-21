@@ -80,6 +80,8 @@ python -m http.server -d docs 8000                    # open http://localhost:80
 | `--discover` / `--no-discover` | Force channel discovery on or off, overriding the config. |
 | `--no-cache` | Ignore cached transcripts/extractions and redo everything. |
 | `--config` / `--output` | Point at a different config or output path. |
+| `--picks-from-text CAPPER_ID=FILE` | Extract picks from a text file you pasted yourself. Repeatable. See **Paywalled cards** below. |
+| `--no-pasted-picks` | Skip the `pasted/` folder for this run. |
 | `--picks-from-tracker URL` | Ingest a tracker roundup — one video carrying every channel's pick. Repeatable. See below. |
 | `--no-tracker-picks` | Skip the roundups listed in `config.json` for this run. |
 | `--apply-tracker-cappers` | Write channels first seen in a roundup into `config.json` at neutral trust. |
@@ -238,6 +240,60 @@ The ESPN card filter runs afterwards as always, so a roundup that also covers
 next week's card contributes nothing off-event. Flags: `--no-tracker-picks`
 skips the configured roundups for one run; `settings.tracker_picks.enabled`
 turns them off permanently.
+
+---
+
+## Paywalled cards (`pasted/`)
+
+Cappers increasingly post their full card to Patreon and leave a two-play
+teaser on YouTube. The pipeline reads the teaser, records two picks where the
+capper made twelve, and says nothing about it — a high-trust voice quietly
+shrinks to a fraction of its weight, skewed toward whichever plays were loud
+enough to give away.
+
+The roundup above covers part of this: a paywalled capper still appears on the
+tracker's slide, so their side reaches the consensus even when their upload
+doesn't say. But a roundup line is *who*, never *how sure*. When you subscribe
+to a capper yourself, paste their card in instead:
+
+```
+pasted/funky_picks.txt          # named for the capper id...
+pasted/Funky Picks.txt          # ...or their name, or any listed alias
+```
+
+The file holds whatever they wrote. An optional first line naming the source
+is kept as the pick's link:
+
+```
+https://www.patreon.com/posts/12345678
+
+Main event: Hernandez by decision, 2 units. The wrestling gap is...
+```
+
+Every run reads the folder through the same extractor a transcript goes
+through, so these picks arrive with real confidence, stated odds, and the
+capper's own reasoning, and count as fully as a pick from a video. For a
+one-off outside the folder:
+
+```bash
+PYTHONPATH=src python -m mma_engine --picks-from-text funky_picks=card.txt
+```
+
+Three things worth knowing:
+
+- **`pasted/` is gitignored** (the folder and its README stay tracked, nothing
+  dropped in does). It holds someone else's paid writing, which is never ours
+  to publish. Nothing in the pipeline fetches from Patreon or anywhere else —
+  a person puts the text in the file, and should paste only what they are
+  entitled to read.
+- **A pasted card supersedes that capper's video** for any fight it covers.
+  The paste is the full card; the video was the teaser. Their roundup line
+  defers to both.
+- **Files go stale.** One untouched for longer than
+  `settings.pasted_picks.max_age_days` (14) is skipped and reported in the run
+  summary, so last month's card can't quietly keep voting. Extractions are
+  cached against a hash of the text, so re-running is free and editing the
+  file re-reads it.
 
 ### How a figure becomes a weight
 
@@ -880,6 +936,9 @@ accounts at 5.0 and adjust once you have a sample of their results.
 | `discovery.lookback_days` | `14` | Only consider uploads this recent. |
 | `discovery.max_videos_per_channel` | `3` | Cap per channel, newest first. |
 | `discovery.title_contains` | `[]` | Title must contain any of these (case-insensitive). |
+| `pasted_picks.enabled` | `true` | Read hand-pasted cards from `pasted/`. With an empty folder this is a no-op. |
+| `pasted_picks.dir` | `pasted` | Where those files live. |
+| `pasted_picks.max_age_days` | `14` | Skip (and report) files untouched for longer than this. `0` disables the guard. |
 | `tracker_picks.enabled` | `true` | Ingest the roundup videos listed in `tracker.picks_videos`. With none listed this is a no-op. |
 | `tracker_picks.confidence` | `5` | Confidence every roundup pick enters at — a tally states no conviction. |
 | `tracker_picks.max_chunk_chars` | `12000` | Roundup transcripts are name-dense, so they chunk smaller than picks videos. |
@@ -912,6 +971,7 @@ src/mma_engine/
   discover.py                # upload discovery: Data API primary, RSS fallback
   roster.py                  # tracker-video → measured capper trust scores
   tracker_picks.py           # tracker roundup → every channel's pick
+  pasted_picks.py            # hand-pasted cards → picks (paywalled posts)
   transcripts.py             # YouTube fetching, caching, jittered delays
   extract.py                 # Claude structured-output extraction, chunking
   normalize.py               # fighter-name and selection matching
@@ -921,6 +981,7 @@ src/mma_engine/
   consensus_client.py        # Python client for external integrations
   proxy.py                   # optional proxy for GitHub Actions' cloud IPs
   pipeline.py                # orchestration + CLI
+pasted/                      # hand-pasted cards — gitignored, see its README
 docs/index.html              # static dashboard (no build step, no CDN)
 docs/data.json               # generated output — also the integration feed
 docs/picks.json              # weighted picks feed for PerpetualPicks.com
@@ -929,6 +990,7 @@ tests/test_aggregate.py      # normalization + aggregation tests
 tests/test_discover.py       # feed parsing, filtering, merge behavior
 tests/test_roster.py         # trust arithmetic, pooling, config merge
 tests/test_tracker_picks.py  # roundup merging, attribution, config merge
+tests/test_pasted_picks.py   # pasted-card naming, staleness, superseding
 tests/test_proxy.py          # proxy config from env vars
 tests/test_config.py         # settings defaults, merging, env overrides
 tests/test_odds.py           # odds parsing, matching, fail-open contract

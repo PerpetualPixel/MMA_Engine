@@ -48,6 +48,18 @@ DEFAULT_SETTINGS: dict[str, Any] = {
         # Useful when a channel posts non-betting content in the same window.
         "title_contains": "",
     },
+    "pasted_picks": {
+        # Cards pasted by hand into `pasted/`, for cappers who now put their
+        # full card behind a paywall and leave a teaser on YouTube (see
+        # mma_engine.pasted_picks). Nothing is fetched — a person puts the
+        # text in the file. Enabled here means "read the folder if it exists".
+        "enabled": True,
+        "dir": "pasted",
+        # A hand-managed folder goes stale silently, so a file untouched for
+        # this long is skipped and reported rather than re-counted every week.
+        # 0 disables the guard.
+        "max_age_days": 14,
+    },
     "tracker_picks": {
         # Ingest the predictions tracker's pre-event roundup — one video that
         # reports which of 150+ channels picked which fighter (see
@@ -218,6 +230,10 @@ def load_config(path: str | Path = "config.json") -> Config:
     settings["live_odds"] = {
         **DEFAULT_SETTINGS["live_odds"],
         **(raw_settings.get("live_odds") or {}),
+    }
+    settings["pasted_picks"] = {
+        **DEFAULT_SETTINGS["pasted_picks"],
+        **(raw_settings.get("pasted_picks") or {}),
     }
     settings["tracker_picks"] = {
         **DEFAULT_SETTINGS["tracker_picks"],
