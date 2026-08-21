@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-20T10:06:16+00:00",
+  "generated_at": "2026-08-21T00:56:54+00:00",
   "event": {
     "name": "Hernandez vs. Rodrigues",
     "date": "",
@@ -10,19 +10,19 @@
       "name": "UFC Fight Night: Hernandez vs. Rodrigues",
       "date": "2026-08-22T21:00Z",
       "bouts": 13,
-      "off_card_dropped": 22
+      "off_card_dropped": 17
     },
     "odds": {
       "source": "the-odds-api",
       "market": "h2h",
-      "fetched_at": "2026-08-20T10:06:16+00:00",
+      "fetched_at": "2026-08-21T00:56:54+00:00",
       "fights_priced": 13
     }
   },
   "source": "MMA_Engine trust-weighted capper consensus",
   "totals": {
-    "picks": 37,
-    "strong": 3,
+    "picks": 35,
+    "strong": 1,
     "lean": 29,
     "pass": 5
   },
@@ -35,10 +35,10 @@
       "market_label": "Moneyline",
       "selection": "Kennedy Nzechukwu",
       "consensus_pct": 100.0,
-      "weight": 15.27,
-      "pick_count": 4,
-      "avg_confidence": 6.2,
-      "strength": 8.8,
+      "weight": 11.73,
+      "pick_count": 3,
+      "avg_confidence": 6.3,
+      "strength": 7.9,
       "tier": "strong",
       "suggested_units": 2.0,
       "quoted_odds": {
@@ -46,17 +46,12 @@
         "decimal": 2.15,
         "count": 3
       },
-      "value": 10.1,
+      "value": 9.1,
       "comments": [
         {
           "capper": "BetSlam with Sam",
           "comment": "Gaziev is fat, badly beaten up in his last two fights and likely to quit if it goes long; Nzechukwu is younger, less damaged and lives healthier — take the moneyline.",
           "confidence": 7
-        },
-        {
-          "capper": "Livid Larry MMA",
-          "comment": "Gaziev's cardio can't handle extended fights and he doubts the wrestling sticks past round one; Nzechukwu's volume, shot selection and body kicks should let him take over in rounds two and three.",
-          "confidence": 6
         },
         {
           "capper": "Axel MMA",
@@ -66,82 +61,6 @@
         {
           "capper": "Pure Picks MMA",
           "comment": "Gaziev struggled badly against Rozenstruik when he couldn't get the fight to the mat, and Nzechukwu is durable, hard to take down and can piece him up from the outside with length and power.",
-          "confidence": 5
-        }
-      ]
-    },
-    {
-      "fight_id": "haqparast|padilla",
-      "fight": "Nasrat Haqparast vs Chris Padilla",
-      "card_status": "on_card",
-      "market": "moneyline",
-      "market_label": "Moneyline",
-      "selection": "Chris Padilla",
-      "consensus_pct": 100.0,
-      "weight": 11.29,
-      "pick_count": 3,
-      "avg_confidence": 6.0,
-      "strength": 7.8,
-      "tier": "strong",
-      "suggested_units": 2.0,
-      "quoted_odds": {
-        "american": 102,
-        "decimal": 2.02,
-        "count": 2
-      },
-      "value": 8.0,
-      "comments": [
-        {
-          "capper": "BetSlam with Sam",
-          "comment": "Haqparast is damaged and beaten up after years of decisions and a recent head kick KO, while Padilla is on a five-fight UFC run and has a significantly better MMA mind; Padilla is the slam of the week for the price.",
-          "confidence": 8
-        },
-        {
-          "capper": "Livid Larry MMA",
-          "comment": "Odds are dead even; Padilla's pressure, pace and power can replicate what Ribovics and Gordon did to Haqparast, who is coming off damaging fights and a bad KO loss.",
-          "confidence": 5
-        },
-        {
-          "capper": "Pure Picks MMA",
-          "comment": "Haqparast's recent wins were close/split decisions he could have lost and he gets hit a lot, while Padilla is durable, high-volume with nasty elbows, knees and kicks and good cardio for three rounds; sees him winning by decision or TKO.",
-          "confidence": 5
-        }
-      ]
-    },
-    {
-      "fight_id": "douglas|emmers",
-      "fight": "Lerryan Douglas vs Jamall Emmers",
-      "card_status": "on_card",
-      "market": "method_of_victory",
-      "market_label": "Method of Victory",
-      "selection": "Larion Douglas by KO/TKO",
-      "consensus_pct": 100.0,
-      "weight": 10.21,
-      "pick_count": 3,
-      "avg_confidence": 6.0,
-      "strength": 7.6,
-      "tier": "strong",
-      "suggested_units": 2.0,
-      "quoted_odds": {
-        "american": -215,
-        "decimal": 1.465,
-        "count": 1
-      },
-      "value": 3.5,
-      "comments": [
-        {
-          "capper": "BetSlam with Sam",
-          "comment": "Emmers stays in the pocket and got clipped by Hyder Amil; Douglas is much faster and hits far too hard for that.",
-          "confidence": 6
-        },
-        {
-          "capper": "Livid Larry MMA",
-          "comment": "Douglas is one of the hardest hitters in the division with short compact power shots, Emmers was stumbled by a lesser striker, and he agrees with the odds in a high-paced first round.",
-          "confidence": 7
-        },
-        {
-          "capper": "Axel MMA",
-          "comment": "Expects Douglas to establish low kicks then crack Emmers upstairs for an early first-or-second-round finish.",
           "confidence": 5
         }
       ]
@@ -179,6 +98,39 @@
       ]
     },
     {
+      "fight_id": "haqparast|padilla",
+      "fight": "Nasrat Haqparast vs Chris Padilla",
+      "card_status": "on_card",
+      "market": "moneyline",
+      "market_label": "Moneyline",
+      "selection": "Chris Padilla",
+      "consensus_pct": 100.0,
+      "weight": 8.54,
+      "pick_count": 2,
+      "avg_confidence": 6.5,
+      "strength": 7.1,
+      "tier": "lean",
+      "suggested_units": 1.0,
+      "quoted_odds": {
+        "american": 102,
+        "decimal": 2.02,
+        "count": 2
+      },
+      "value": 7.2,
+      "comments": [
+        {
+          "capper": "BetSlam with Sam",
+          "comment": "Haqparast is damaged and beaten up after years of decisions and a recent head kick KO, while Padilla is on a five-fight UFC run and has a significantly better MMA mind; Padilla is the slam of the week for the price.",
+          "confidence": 8
+        },
+        {
+          "capper": "Pure Picks MMA",
+          "comment": "Haqparast's recent wins were close/split decisions he could have lost and he gets hit a lot, while Padilla is durable, high-volume with nasty elbows, knees and kicks and good cardio for three rounds; sees him winning by decision or TKO.",
+          "confidence": 5
+        }
+      ]
+    },
+    {
       "fight_id": "jones|madeiros",
       "fight": "Mason Jones vs MarQuel Mederos",
       "card_status": "on_card",
@@ -202,39 +154,6 @@
           "capper": "Axel MMA",
           "comment": "Leg of a +110 two-leg parlay; Jones's constant pressure and cage-cutting will wear down an opponent who wants to fight at range, leading to a late finish or decision.",
           "confidence": 7
-        }
-      ]
-    },
-    {
-      "fight_id": "haqparast|padilla",
-      "fight": "Nasrat Haqparast vs Chris Padilla",
-      "card_status": "on_card",
-      "market": "method_of_victory",
-      "market_label": "Method of Victory",
-      "selection": "Chris Padilla inside the distance (KO or submission)",
-      "consensus_pct": 100.0,
-      "weight": 7.72,
-      "pick_count": 2,
-      "avg_confidence": 6.0,
-      "strength": 6.9,
-      "tier": "lean",
-      "suggested_units": 1.0,
-      "quoted_odds": {
-        "american": 290,
-        "decimal": 3.9,
-        "count": 1
-      },
-      "value": 20.0,
-      "comments": [
-        {
-          "capper": "BetSlam with Sam",
-          "comment": "Haqparast's chin is compromised and Padilla fights smart in every realm; +290 inside the distance is worth laying money on.",
-          "confidence": 7
-        },
-        {
-          "capper": "Livid Larry MMA",
-          "comment": "He expects accumulated damage to tell late, with Padilla hunting a hurt Haqparast down, or otherwise a decision.",
-          "confidence": 5
         }
       ]
     },
@@ -332,35 +251,35 @@
       ]
     },
     {
-      "fight_id": "dyer|reed",
-      "fight": "Shanelle Dyer vs Elise Reed",
+      "fight_id": "douglas|emmers",
+      "fight": "Lerryan Douglas vs Jamall Emmers",
       "card_status": "on_card",
-      "market": "moneyline",
-      "market_label": "Moneyline",
-      "selection": "Chanel Dyer",
+      "market": "method_of_victory",
+      "market_label": "Method of Victory",
+      "selection": "Larion Douglas by KO/TKO",
       "consensus_pct": 100.0,
-      "weight": 5.98,
+      "weight": 6.36,
       "pick_count": 2,
       "avg_confidence": 5.5,
-      "strength": 6.5,
+      "strength": 6.6,
       "tier": "lean",
       "suggested_units": 1.0,
       "quoted_odds": {
-        "american": -696,
-        "decimal": 1.144,
-        "count": 2
+        "american": -215,
+        "decimal": 1.465,
+        "count": 1
       },
-      "value": 0.9,
+      "value": 3.1,
       "comments": [
         {
-          "capper": "Livid Larry MMA",
-          "comment": "Dyer is taller, rangier, faster and the better counter striker, and Reed leaves herself very open on the feet with her chin high; but he calls the big favorite price a disgrace and warns not to parlay the fight heavily.",
-          "confidence": 4
+          "capper": "BetSlam with Sam",
+          "comment": "Emmers stays in the pocket and got clipped by Hyder Amil; Douglas is much faster and hits far too hard for that.",
+          "confidence": 6
         },
         {
           "capper": "Axel MMA",
-          "comment": "Dyer has the better, slicker kickboxing and range control while Reed is unimpressive on the feet and will be a step behind all fight.",
-          "confidence": 7
+          "comment": "Expects Douglas to establish low kicks then crack Emmers upstairs for an early first-or-second-round finish.",
+          "confidence": 5
         }
       ]
     },
@@ -442,6 +361,34 @@
         {
           "capper": "BetSlam with Sam",
           "comment": "At +500 he loves it: if Jones gets the rangy striker Madeiros down he can submit him.",
+          "confidence": 7
+        }
+      ]
+    },
+    {
+      "fight_id": "haqparast|padilla",
+      "fight": "Nasrat Haqparast vs Chris Padilla",
+      "card_status": "on_card",
+      "market": "method_of_victory",
+      "market_label": "Method of Victory",
+      "selection": "Chris Padilla inside the distance (KO or submission)",
+      "consensus_pct": 100.0,
+      "weight": 4.97,
+      "pick_count": 1,
+      "avg_confidence": 7.0,
+      "strength": 6.2,
+      "tier": "lean",
+      "suggested_units": 1.0,
+      "quoted_odds": {
+        "american": 290,
+        "decimal": 3.9,
+        "count": 1
+      },
+      "value": 18.0,
+      "comments": [
+        {
+          "capper": "BetSlam with Sam",
+          "comment": "Haqparast's chin is compromised and Padilla fights smart in every realm; +290 inside the distance is worth laying money on.",
           "confidence": 7
         }
       ]
@@ -685,6 +632,34 @@
       ]
     },
     {
+      "fight_id": "dyer|reed",
+      "fight": "Shanelle Dyer vs Elise Reed",
+      "card_status": "on_card",
+      "market": "moneyline",
+      "market_label": "Moneyline",
+      "selection": "Chanel Dyer",
+      "consensus_pct": 100.0,
+      "weight": 3.78,
+      "pick_count": 1,
+      "avg_confidence": 7.0,
+      "strength": 5.9,
+      "tier": "lean",
+      "suggested_units": 1.0,
+      "quoted_odds": {
+        "american": -750,
+        "decimal": 1.133,
+        "count": 1
+      },
+      "value": 0.8,
+      "comments": [
+        {
+          "capper": "Axel MMA",
+          "comment": "Dyer has the better, slicker kickboxing and range control while Reed is unimpressive on the feet and will be a step behind all fight.",
+          "confidence": 7
+        }
+      ]
+    },
+    {
       "fight_id": "chavez|judice",
       "fight": "Jeisla Chaves vs Carli Judice",
       "card_status": "on_card",
@@ -835,50 +810,6 @@
       ]
     },
     {
-      "fight_id": "hernandez|rodrigues",
-      "fight": "Anthony Hernandez vs Gregory Rodrigues",
-      "card_status": "on_card",
-      "market": "prop",
-      "market_label": "Prop",
-      "selection": "Gregory Rodrigues by KO in rounds 1-2",
-      "consensus_pct": 100.0,
-      "weight": 2.75,
-      "pick_count": 1,
-      "avg_confidence": 5.0,
-      "strength": 5.7,
-      "tier": "lean",
-      "suggested_units": 1.0,
-      "comments": [
-        {
-          "capper": "Livid Larry MMA",
-          "comment": "He names this as one of the two best plays on the fight because of Rodrigues' power and devastating early body shots against a Hernandez who is susceptible to the body.",
-          "confidence": 5
-        }
-      ]
-    },
-    {
-      "fight_id": "mcvey|schultz",
-      "fight": "Jackson McVey vs Wes Schultz",
-      "card_status": "on_card",
-      "market": "over_under",
-      "market_label": "Over / Under",
-      "selection": "Under 1.5 rounds",
-      "consensus_pct": 100.0,
-      "weight": 2.2,
-      "pick_count": 1,
-      "avg_confidence": 4.0,
-      "strength": 5.6,
-      "tier": "lean",
-      "suggested_units": 1.0,
-      "comments": [
-        {
-          "capper": "Livid Larry MMA",
-          "comment": "He expects a hectic first round with either a McVey finish or a Schultz submission, so he leans an under 1.5 rounds / no-round-two type prop depending on price.",
-          "confidence": 4
-        }
-      ]
-    },
-    {
       "fight_id": "gaziev|nzechukwu",
       "fight": "Shamil Gaziev vs Kennedy Nzechukwu",
       "card_status": "on_card",
@@ -940,11 +871,11 @@
       "market": "moneyline",
       "market_label": "Moneyline",
       "selection": "Vitor Petrino",
-      "consensus_pct": 66.9,
-      "weight": 6.55,
+      "consensus_pct": 64.9,
+      "weight": 6.0,
       "pick_count": 2,
-      "avg_confidence": 6.0,
-      "strength": 4.4,
+      "avg_confidence": 5.5,
+      "strength": 4.2,
       "tier": "pass",
       "suggested_units": 0.0,
       "quoted_odds": {
@@ -952,12 +883,12 @@
         "decimal": 1.671,
         "count": 1
       },
-      "value": 3.0,
+      "value": 2.8,
       "comments": [
         {
           "capper": "Livid Larry MMA",
-          "comment": "He'll put a decent-sized play on Petrino's moneyline: he hits harder, moves better, throws cleaner combinations and could even get control time with offensive wrestling.",
-          "confidence": 7
+          "comment": "Picks Petrino to beat Spivac in the co-main event.",
+          "confidence": 6
         },
         {
           "capper": "Axel MMA",
@@ -972,24 +903,19 @@
       "card_status": "on_card",
       "market": "method_of_victory",
       "market_label": "Method of Victory",
-      "selection": "Jackson McVey by finish (KO/TKO)",
-      "consensus_pct": 59.7,
-      "weight": 4.98,
-      "pick_count": 2,
-      "avg_confidence": 5.0,
-      "strength": 3.7,
+      "selection": "Jackson McVey inside the distance",
+      "consensus_pct": 66.7,
+      "weight": 3.36,
+      "pick_count": 1,
+      "avg_confidence": 6.0,
+      "strength": 3.9,
       "tier": "pass",
       "suggested_units": 0.0,
       "comments": [
         {
-          "capper": "Livid Larry MMA",
-          "comment": "He won't pick Schultz to win again despite the grappling edge; McVey hits hard and has solid finishing ability on the feet and ground.",
+          "capper": "Artem MMA",
+          "comment": "McVey is the bigger, better striker with more finishing ability on the ground; Schultz's wrestling hasn't translated at UFC level.",
           "confidence": 6
-        },
-        {
-          "capper": "Axel MMA",
-          "comment": "He sees McVey landing a knee or elbow from the clinch to put Schultz down.",
-          "confidence": 4
         }
       ]
     },
@@ -1000,18 +926,18 @@
       "market": "method_of_victory",
       "market_label": "Method of Victory",
       "selection": "Anthony Hernandez by TKO in the late rounds",
-      "consensus_pct": 56.7,
-      "weight": 3.3,
+      "consensus_pct": 52.2,
+      "weight": 2.75,
       "pick_count": 1,
-      "avg_confidence": 6.0,
-      "strength": 3.3,
+      "avg_confidence": 5.0,
+      "strength": 3.0,
       "tier": "pass",
       "suggested_units": 0.0,
       "comments": [
         {
           "capper": "Livid Larry MMA",
-          "comment": "Official prediction is a late-rounds ground and pound TKO for Hernandez, whose gas tank advantage should let him drag Rodrigues into deep water past the first round and a half.",
-          "confidence": 6
+          "comment": "Expects a late-round TKO finish.",
+          "confidence": 5
         }
       ]
     },

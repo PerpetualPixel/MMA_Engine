@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-20T10:06:16+00:00",
+  "generated_at": "2026-08-21T00:56:54+00:00",
   "event": {
     "name": "Hernandez vs. Rodrigues",
     "date": "",
@@ -10,20 +10,20 @@
       "name": "UFC Fight Night: Hernandez vs. Rodrigues",
       "date": "2026-08-22T21:00Z",
       "bouts": 13,
-      "off_card_dropped": 22
+      "off_card_dropped": 17
     },
     "odds": {
       "source": "the-odds-api",
       "market": "h2h",
-      "fetched_at": "2026-08-20T10:06:16+00:00",
+      "fetched_at": "2026-08-21T00:56:54+00:00",
       "fights_priced": 13
     }
   },
   "totals": {
     "fights": 16,
-    "picks": 62,
+    "picks": 54,
     "cappers": 5,
-    "videos": 7
+    "videos": 6
   },
   "sources": [
     {
@@ -62,9 +62,10 @@
       "capper_id": "betslam_sam",
       "capper": "BetSlam with Sam",
       "title": "Kombat Kiwi Prop Hunting Live - UFC Sacramento Anthony Hernandez vs Gregory Rodrigues",
-      "status": "transcript_failed",
+      "status": "extraction_failed",
       "pick_count": 0,
-      "error": "No usable transcript: TranscriptsDisabled"
+      "transcript_chars": 125441,
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeEywJvEfLkhkVR9TY2gZ'}"
     },
     {
       "video_id": "jpsngFpF2rc",
@@ -87,6 +88,28 @@
       "transcript_chars": 88169
     },
     {
+      "video_id": "E2MLoOlxRkU",
+      "url": "https://www.youtube.com/watch?v=E2MLoOlxRkU",
+      "capper_id": "livid_larry",
+      "capper": "Livid Larry MMA",
+      "title": "UFC Sacramento: Hernandez vs Rodrigues | 3 Favorite Plays 🔥 #ufc #mma #ufcsacramento #ufcpicks",
+      "status": "extraction_failed",
+      "pick_count": 0,
+      "transcript_chars": 776,
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeEywKf8rP5b1Mc346QrZ'}"
+    },
+    {
+      "video_id": "58AetdUhGhs",
+      "url": "https://www.youtube.com/watch?v=58AetdUhGhs",
+      "capper_id": "livid_larry",
+      "capper": "Livid Larry MMA",
+      "title": "UFC Sacramento: Hernandez vs Rodrigues | Full Card Plays",
+      "status": "extraction_failed",
+      "pick_count": 0,
+      "transcript_chars": 6210,
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeEywLH6WnVw5UwZB2yg7'}"
+    },
+    {
       "video_id": "ijkFHViQmbc",
       "url": "https://www.youtube.com/watch?v=ijkFHViQmbc",
       "capper_id": "livid_larry",
@@ -95,16 +118,6 @@
       "status": "ok",
       "pick_count": 12,
       "transcript_chars": 877
-    },
-    {
-      "video_id": "74RPpmI3t-0",
-      "url": "https://www.youtube.com/watch?v=74RPpmI3t-0",
-      "capper_id": "livid_larry",
-      "capper": "Livid Larry MMA",
-      "title": "UFC Sacramento: Hernandez vs Rodrigues | Full Card Predictions & Breakdown",
-      "status": "ok",
-      "pick_count": 19,
-      "transcript_chars": 26533
     },
     {
       "video_id": "xIIdK8iI-jI",
@@ -125,7 +138,7 @@
       "status": "extraction_failed",
       "pick_count": 0,
       "transcript_chars": 59483,
-      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeDp8WTR3rmmzz3oUVBHt'}"
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeEywLv3Y5tQWk4HoAF1e'}"
     },
     {
       "video_id": "NUfcsi9Bai8",
@@ -136,7 +149,7 @@
       "status": "extraction_failed",
       "pick_count": 0,
       "transcript_chars": 38227,
-      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeDp8XMypBRfs6rBAjJq6'}"
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeEywMVXDwqXMXJJUGRDs'}"
     },
     {
       "video_id": "Ff2ez7G1k2o",
@@ -147,7 +160,7 @@
       "status": "extraction_failed",
       "pick_count": 0,
       "transcript_chars": 204390,
-      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeDp8zg3UeB3YPQ5JCJ1J'}"
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeEywNERRPi7c8Hm1P1jr'}"
     },
     {
       "video_id": "0vDik7YV1Ls",
@@ -158,7 +171,7 @@
       "status": "extraction_failed",
       "pick_count": 0,
       "transcript_chars": 22715,
-      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeDp91MUNxscAZkYNinUA'}"
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeEywNypQh5vgcutwcMPj'}"
     },
     {
       "video_id": "A_ym0sOW3R4",
@@ -169,7 +182,7 @@
       "status": "extraction_failed",
       "pick_count": 0,
       "transcript_chars": 43140,
-      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeDp923QGWB8EBfDgTZxX'}"
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeEywPa39WjUNeeMiUfWM'}"
     },
     {
       "video_id": "aURrrdkrFu4",
@@ -180,7 +193,7 @@
       "status": "extraction_failed",
       "pick_count": 0,
       "transcript_chars": 17401,
-      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeDp92moXL3hiUrwKJrxC'}"
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeEywQ82CJU28kgoDJrFH'}"
     },
     {
       "video_id": "33eJ5_oNjog",
@@ -191,7 +204,7 @@
       "status": "extraction_failed",
       "pick_count": 0,
       "transcript_chars": 6242,
-      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeDp93avB3DvwNTv1UmtW'}"
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeEywQmy7AbMjR9EJAQQV'}"
     },
     {
       "video_id": "tKxgORqkhbQ",
@@ -202,7 +215,7 @@
       "status": "extraction_failed",
       "pick_count": 0,
       "transcript_chars": 76472,
-      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeDp94M4RYeqSp8Banmim'}"
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeEywRdZKVNuXzpvvpeGU'}"
     },
     {
       "video_id": "FCgMgJpXOa8",
@@ -213,7 +226,7 @@
       "status": "extraction_failed",
       "pick_count": 0,
       "transcript_chars": 61783,
-      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeDp951z81XUhM9JZHb4d'}"
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeEywSBJDxtgvuTHFA73d'}"
     },
     {
       "video_id": "Ek6h_5yKPP0",
@@ -224,183 +237,64 @@
       "status": "extraction_failed",
       "pick_count": 0,
       "transcript_chars": 35683,
-      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeDp95jtxTTdZugSgZEkM'}"
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeEywSkmt7m9kTTyccmft'}"
+    },
+    {
+      "video_id": "B7O6aJE0TRs",
+      "url": "https://www.youtube.com/watch?v=B7O6aJE0TRs",
+      "capper_id": "kenny_okoye_mma",
+      "capper": "KennyOkoyeMMA",
+      "title": "UFC Fight Night Hernandez vs Robocop FULL Card Predictions (BEST BETS)",
+      "status": "extraction_failed",
+      "pick_count": 0,
+      "transcript_chars": 26905,
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeEywTNUx7Y5VBoTqUnqV'}"
+    },
+    {
+      "video_id": "lmf0tEziCng",
+      "url": "https://www.youtube.com/watch?v=lmf0tEziCng",
+      "capper_id": "the_mma_guru",
+      "capper": "THE MMA GURU",
+      "title": "UFC Fight Night Hernandez vs Rodrigues Predictions & Full Card Breakdown - UFC Sacramento Betting",
+      "status": "extraction_failed",
+      "pick_count": 0,
+      "transcript_chars": 38516,
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeEywa5JtGMNFieRHW22s'}"
+    },
+    {
+      "video_id": "pgVYN23ZOKY",
+      "url": "https://www.youtube.com/watch?v=pgVYN23ZOKY",
+      "capper_id": "mma_al_dente",
+      "capper": "MMA AL DENTE",
+      "title": "UFC HERNANDEZ VS. RODRIGUES Full Card Breakdown, Predictions,  and Bets",
+      "status": "extraction_failed",
+      "pick_count": 0,
+      "transcript_chars": 34282,
+      "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeEyxXUa1aTuMWUKffiHp'}"
+    },
+    {
+      "video_id": "B1IFeq8bgbY",
+      "url": "https://youtu.be/B1IFeq8bgbY",
+      "capper_id": "",
+      "capper": "Predictions tracker roundup",
+      "title": "",
+      "kind": "tracker_roundup",
+      "status": "ok",
+      "pick_count": 0,
+      "transcript_chars": 24607,
+      "capper_count": 0,
+      "new_cappers": 0,
+      "superseded": 0,
+      "fights": 13
     }
   ],
   "fights": [
-    {
-      "fight_id": "gaziev|nzechukwu",
-      "display": "Shamil Gaziev vs Kennedy Nzechukwu",
-      "fighter_a": "Shamil Gaziev",
-      "fighter_b": "Kennedy Nzechukwu",
-      "pick_count": 7,
-      "capper_count": 5,
-      "markets": [
-        {
-          "bet_type": "moneyline",
-          "label": "Moneyline",
-          "total_weight": 15.27,
-          "pick_count": 4,
-          "options": [
-            {
-              "selection": "Kennedy Nzechukwu",
-              "consensus_pct": 100.0,
-              "weight": 15.27,
-              "pick_count": 4,
-              "avg_confidence": 6.2,
-              "cappers": [
-                {
-                  "id": "betslam_sam",
-                  "name": "BetSlam with Sam",
-                  "confidence": 7,
-                  "trust": 7.3,
-                  "role": "underdog",
-                  "odds": "+115",
-                  "stake": "",
-                  "reasoning": "Gaziev is fat, badly beaten up in his last two fights and likely to quit if it goes long; Nzechukwu is younger, less damaged and lives healthier — take the moneyline.",
-                  "video_url": "https://www.youtube.com/watch?v=gtBQ9hJBIA4"
-                },
-                {
-                  "id": "axel_mma",
-                  "name": "Axel MMA",
-                  "confidence": 7,
-                  "trust": 5.6,
-                  "role": "underdog",
-                  "odds": "+115",
-                  "stake": "",
-                  "reasoning": "His 'plus money dog' — Gaziev's gas tank is poor and he's sloppy on the feet, while Nzechukwu is more technical with decent takedown defense and should take over late.",
-                  "video_url": "https://www.youtube.com/watch?v=KZ-OE-4Fyyc"
-                },
-                {
-                  "id": "livid_larry",
-                  "name": "Livid Larry MMA",
-                  "confidence": 6,
-                  "trust": 5.9,
-                  "role": "underdog",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "Gaziev's cardio can't handle extended fights and he doubts the wrestling sticks past round one; Nzechukwu's volume, shot selection and body kicks should let him take over in rounds two and three.",
-                  "video_url": "https://www.youtube.com/watch?v=74RPpmI3t-0"
-                },
-                {
-                  "id": "pure_picks",
-                  "name": "Pure Picks MMA",
-                  "confidence": 5,
-                  "trust": 5.4,
-                  "role": "underdog",
-                  "odds": "+115",
-                  "stake": "",
-                  "reasoning": "Gaziev struggled badly against Rozenstruik when he couldn't get the fight to the mat, and Nzechukwu is durable, hard to take down and can piece him up from the outside with length and power.",
-                  "video_url": "https://www.youtube.com/watch?v=xIIdK8iI-jI"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "bet_type": "method_of_victory",
-          "label": "Method of Victory",
-          "total_weight": 2.1,
-          "pick_count": 1,
-          "options": [
-            {
-              "selection": "Kennedy Nzechukwu by finish",
-              "consensus_pct": 100.0,
-              "weight": 2.1,
-              "pick_count": 1,
-              "avg_confidence": 5.0,
-              "cappers": [
-                {
-                  "id": "axel_mma",
-                  "name": "Axel MMA",
-                  "confidence": 5,
-                  "trust": 4.2,
-                  "role": "unknown",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "Leg of the +3327 parlay, admitted it's the scariest leg, but expects Gaziev to gas by the third round and Nzechukwu to land something big and finish him.",
-                  "video_url": "https://www.youtube.com/watch?v=KZ-OE-4Fyyc"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "bet_type": "round",
-          "label": "Round",
-          "total_weight": 4.1,
-          "pick_count": 2,
-          "options": [
-            {
-              "selection": "Kennedy Nzechukwu in round 3",
-              "consensus_pct": 54.6,
-              "weight": 2.24,
-              "pick_count": 1,
-              "avg_confidence": 4.0,
-              "cappers": [
-                {
-                  "id": "axel_mma",
-                  "name": "Axel MMA",
-                  "confidence": 4,
-                  "trust": 5.6,
-                  "role": "underdog",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "He sees Nzechukwu landing straight shots and finding a late finish, probably in the third, once Gaziev tires.",
-                  "video_url": "https://www.youtube.com/watch?v=5k3ZpKV4rKA"
-                }
-              ]
-            },
-            {
-              "selection": "Shamil Gaziev by KO in round 1",
-              "consensus_pct": 45.4,
-              "weight": 1.86,
-              "pick_count": 1,
-              "avg_confidence": 3.0,
-              "cappers": [
-                {
-                  "id": "artem_mma",
-                  "name": "Artem MMA",
-                  "confidence": 3,
-                  "trust": 6.2,
-                  "role": "unknown",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "Gaziev is dangerous for the first few minutes and Nzechukwu's chin and consistency can't be trusted; he repeatedly says he doesn't feel good about the pick.",
-                  "video_url": "https://www.youtube.com/watch?v=kRbuq1wHoTY"
-                }
-              ]
-            }
-          ]
-        }
-      ],
-      "card_status": "on_card",
-      "card_order": 5,
-      "card_date": "2026-08-22T21:00Z",
-      "live_odds": {
-        "source": "the-odds-api",
-        "fetched_at": "2026-08-20T10:06:16+00:00",
-        "commence_time": "2026-08-22T21:00:00Z",
-        "a": {
-          "american": -143,
-          "decimal": 1.6994,
-          "books": 8,
-          "best_american": -135
-        },
-        "b": {
-          "american": 116,
-          "decimal": 2.155,
-          "books": 8,
-          "best_american": 125
-        }
-      }
-    },
     {
       "fight_id": "hernandez|rodrigues",
       "display": "Anthony Hernandez vs Gregory Rodrigues",
       "fighter_a": "Anthony Hernandez",
       "fighter_b": "Gregory Rodrigues",
-      "pick_count": 8,
+      "pick_count": 7,
       "capper_count": 4,
       "markets": [
         {
@@ -415,6 +309,8 @@
               "weight": 7.88,
               "pick_count": 2,
               "avg_confidence": 6.5,
+              "stated_pick_count": 2,
+              "stated_avg_confidence": 6.5,
               "cappers": [
                 {
                   "id": "axel_mma",
@@ -425,6 +321,7 @@
                   "odds": "+145",
                   "stake": "",
                   "reasoning": "Called his 'savage underdog lock' — Rodrigues hits like a truck and he doesn't see Hernandez surviving that power or easily getting takedowns, expecting a first or second round finish.",
+                  "source": "video",
                   "video_url": "https://www.youtube.com/watch?v=KZ-OE-4Fyyc"
                 },
                 {
@@ -436,6 +333,7 @@
                   "odds": "",
                   "stake": "",
                   "reasoning": "He's never been an Anthony Hernandez guy; Rodriguez's power (accidental KO of Bruno Ferreira) should smash Hernandez if the fight is contested standing.",
+                  "source": "video",
                   "video_url": "https://www.youtube.com/watch?v=gtBQ9hJBIA4"
                 }
               ]
@@ -446,6 +344,8 @@
               "weight": 3.3,
               "pick_count": 1,
               "avg_confidence": 6.0,
+              "stated_pick_count": 1,
+              "stated_avg_confidence": 6.0,
               "cappers": [
                 {
                   "id": "livid_larry",
@@ -456,6 +356,7 @@
                   "odds": "",
                   "stake": "",
                   "reasoning": "Picks Hernandez to win the main event.",
+                  "source": "video",
                   "video_url": "https://www.youtube.com/watch?v=ijkFHViQmbc"
                 }
               ]
@@ -465,35 +366,40 @@
         {
           "bet_type": "method_of_victory",
           "label": "Method of Victory",
-          "total_weight": 5.82,
+          "total_weight": 5.27,
           "pick_count": 2,
           "options": [
             {
               "selection": "Anthony Hernandez by TKO in the late rounds",
-              "consensus_pct": 56.7,
-              "weight": 3.3,
+              "consensus_pct": 52.2,
+              "weight": 2.75,
               "pick_count": 1,
-              "avg_confidence": 6.0,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 1,
+              "stated_avg_confidence": 5.0,
               "cappers": [
                 {
                   "id": "livid_larry",
                   "name": "Livid Larry MMA",
-                  "confidence": 6,
+                  "confidence": 5,
                   "trust": 5.5,
                   "role": "unknown",
                   "odds": "",
                   "stake": "",
-                  "reasoning": "Official prediction is a late-rounds ground and pound TKO for Hernandez, whose gas tank advantage should let him drag Rodrigues into deep water past the first round and a half.",
-                  "video_url": "https://www.youtube.com/watch?v=74RPpmI3t-0"
+                  "reasoning": "Expects a late-round TKO finish.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=ijkFHViQmbc"
                 }
               ]
             },
             {
               "selection": "Gregory Rodrigues by KO",
-              "consensus_pct": 43.3,
+              "consensus_pct": 47.8,
               "weight": 2.52,
               "pick_count": 1,
               "avg_confidence": 6.0,
+              "stated_pick_count": 1,
+              "stated_avg_confidence": 6.0,
               "cappers": [
                 {
                   "id": "axel_mma",
@@ -504,6 +410,7 @@
                   "odds": "",
                   "stake": "",
                   "reasoning": "He doesn't see the fight reaching round three and predicts Rodrigues touches Hernandez's chin for a second round knockout.",
+                  "source": "video",
                   "video_url": "https://www.youtube.com/watch?v=5k3ZpKV4rKA"
                 }
               ]
@@ -522,6 +429,8 @@
               "weight": 3.4,
               "pick_count": 1,
               "avg_confidence": 5.0,
+              "stated_pick_count": 1,
+              "stated_avg_confidence": 5.0,
               "cappers": [
                 {
                   "id": "betslam_sam",
@@ -532,6 +441,7 @@
                   "odds": "+252",
                   "stake": "",
                   "reasoning": "Paired with Rodriguez's moneyline for +252 — if Rodriguez wins he thinks it comes inside 3.5 rounds and doesn't expect a late finish.",
+                  "source": "video",
                   "video_url": "https://www.youtube.com/watch?v=gtBQ9hJBIA4"
                 }
               ]
@@ -550,6 +460,8 @@
               "weight": 3.1,
               "pick_count": 1,
               "avg_confidence": 5.0,
+              "stated_pick_count": 1,
+              "stated_avg_confidence": 5.0,
               "cappers": [
                 {
                   "id": "artem_mma",
@@ -560,35 +472,8 @@
                   "odds": "",
                   "stake": "",
                   "reasoning": "Hernandez chose to box Strickland and shot no takedowns, and Rodrigues hits harder with two rounds of cardio; if it reaches round three Hernandez takes over.",
+                  "source": "video",
                   "video_url": "https://www.youtube.com/watch?v=kRbuq1wHoTY"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "bet_type": "prop",
-          "label": "Prop",
-          "total_weight": 2.75,
-          "pick_count": 1,
-          "options": [
-            {
-              "selection": "Gregory Rodrigues by KO in rounds 1-2",
-              "consensus_pct": 100.0,
-              "weight": 2.75,
-              "pick_count": 1,
-              "avg_confidence": 5.0,
-              "cappers": [
-                {
-                  "id": "livid_larry",
-                  "name": "Livid Larry MMA",
-                  "confidence": 5,
-                  "trust": 5.5,
-                  "role": "unknown",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "He names this as one of the two best plays on the fight because of Rodrigues' power and devastating early body shots against a Hernandez who is susceptible to the body.",
-                  "video_url": "https://www.youtube.com/watch?v=74RPpmI3t-0"
                 }
               ]
             }
@@ -600,209 +485,80 @@
       "card_date": "2026-08-23T00:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-20T10:06:16+00:00",
+        "fetched_at": "2026-08-21T00:56:54+00:00",
         "commence_time": "2026-08-23T01:00:00Z",
         "a": {
-          "american": -180,
-          "decimal": 1.5556,
+          "american": -188,
+          "decimal": 1.532,
           "books": 8,
-          "best_american": -177
+          "best_american": -183
         },
         "b": {
-          "american": 152,
-          "decimal": 2.515,
+          "american": 160,
+          "decimal": 2.595,
           "books": 8,
-          "best_american": 160
+          "best_american": 170
         }
       }
     },
     {
-      "fight_id": "mcvey|schultz",
-      "display": "Jackson McVey vs Wes Schultz",
-      "fighter_a": "Jackson McVey",
-      "fighter_b": "Wes Schultz",
+      "fight_id": "gaziev|nzechukwu",
+      "display": "Shamil Gaziev vs Kennedy Nzechukwu",
+      "fighter_a": "Shamil Gaziev",
+      "fighter_b": "Kennedy Nzechukwu",
       "pick_count": 6,
       "capper_count": 4,
       "markets": [
         {
           "bet_type": "moneyline",
           "label": "Moneyline",
-          "total_weight": 5.82,
-          "pick_count": 2,
+          "total_weight": 11.73,
+          "pick_count": 3,
           "options": [
             {
-              "selection": "Jackson McVey",
+              "selection": "Kennedy Nzechukwu",
               "consensus_pct": 100.0,
-              "weight": 5.82,
-              "pick_count": 2,
-              "avg_confidence": 5.0,
+              "weight": 11.73,
+              "pick_count": 3,
+              "avg_confidence": 6.3,
+              "stated_pick_count": 3,
+              "stated_avg_confidence": 6.3,
               "cappers": [
+                {
+                  "id": "betslam_sam",
+                  "name": "BetSlam with Sam",
+                  "confidence": 7,
+                  "trust": 7.3,
+                  "role": "underdog",
+                  "odds": "+115",
+                  "stake": "",
+                  "reasoning": "Gaziev is fat, badly beaten up in his last two fights and likely to quit if it goes long; Nzechukwu is younger, less damaged and lives healthier — take the moneyline.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=gtBQ9hJBIA4"
+                },
                 {
                   "id": "axel_mma",
                   "name": "Axel MMA",
                   "confidence": 7,
-                  "trust": 5.4,
-                  "role": "unknown",
-                  "odds": "",
+                  "trust": 5.6,
+                  "role": "underdog",
+                  "odds": "+115",
                   "stake": "",
-                  "reasoning": "Leg of the +110 two-leg parlay; McVey has improved a lot since the amateur loss years ago, should stop Schultz's takedowns, win the clinch with knees and elbows, and possibly finish him.",
+                  "reasoning": "His 'plus money dog' — Gaziev's gas tank is poor and he's sloppy on the feet, while Nzechukwu is more technical with decent takedown defense and should take over late.",
+                  "source": "video",
                   "video_url": "https://www.youtube.com/watch?v=KZ-OE-4Fyyc"
                 },
                 {
-                  "id": "betslam_sam",
-                  "name": "BetSlam with Sam",
-                  "confidence": 3,
-                  "trust": 6.8,
-                  "role": "unknown",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "McVey is bigger and younger and the loss to Schultz was long ago; Schultz has shown no improvement, but Sam stated low confidence and wrote down no prop.",
-                  "video_url": "https://www.youtube.com/watch?v=gtBQ9hJBIA4"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "bet_type": "method_of_victory",
-          "label": "Method of Victory",
-          "total_weight": 8.34,
-          "pick_count": 3,
-          "options": [
-            {
-              "selection": "Jackson McVey by finish (KO/TKO)",
-              "consensus_pct": 59.7,
-              "weight": 4.98,
-              "pick_count": 2,
-              "avg_confidence": 5.0,
-              "cappers": [
-                {
-                  "id": "livid_larry",
-                  "name": "Livid Larry MMA",
-                  "confidence": 6,
-                  "trust": 5.5,
-                  "role": "unknown",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "He won't pick Schultz to win again despite the grappling edge; McVey hits hard and has solid finishing ability on the feet and ground.",
-                  "video_url": "https://www.youtube.com/watch?v=74RPpmI3t-0"
-                },
-                {
-                  "id": "axel_mma",
-                  "name": "Axel MMA",
-                  "confidence": 4,
-                  "trust": 4.2,
-                  "role": "favorite",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "He sees McVey landing a knee or elbow from the clinch to put Schultz down.",
-                  "video_url": "https://www.youtube.com/watch?v=5k3ZpKV4rKA"
-                }
-              ]
-            },
-            {
-              "selection": "Jackson McVey inside the distance",
-              "consensus_pct": 40.3,
-              "weight": 3.36,
-              "pick_count": 1,
-              "avg_confidence": 6.0,
-              "cappers": [
-                {
-                  "id": "artem_mma",
-                  "name": "Artem MMA",
-                  "confidence": 6,
-                  "trust": 5.6,
-                  "role": "unknown",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "McVey is the bigger, better striker with more finishing ability on the ground; Schultz's wrestling hasn't translated at UFC level.",
-                  "video_url": "https://www.youtube.com/watch?v=kRbuq1wHoTY"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "bet_type": "over_under",
-          "label": "Over / Under",
-          "total_weight": 2.2,
-          "pick_count": 1,
-          "options": [
-            {
-              "selection": "Under 1.5 rounds",
-              "consensus_pct": 100.0,
-              "weight": 2.2,
-              "pick_count": 1,
-              "avg_confidence": 4.0,
-              "cappers": [
-                {
-                  "id": "livid_larry",
-                  "name": "Livid Larry MMA",
-                  "confidence": 4,
-                  "trust": 5.5,
-                  "role": "unknown",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "He expects a hectic first round with either a McVey finish or a Schultz submission, so he leans an under 1.5 rounds / no-round-two type prop depending on price.",
-                  "video_url": "https://www.youtube.com/watch?v=74RPpmI3t-0"
-                }
-              ]
-            }
-          ]
-        }
-      ],
-      "card_status": "on_card",
-      "card_order": 1,
-      "card_date": "2026-08-22T21:00Z",
-      "live_odds": {
-        "source": "the-odds-api",
-        "fetched_at": "2026-08-20T10:06:16+00:00",
-        "commence_time": "2026-08-22T21:00:00Z",
-        "a": {
-          "american": -177,
-          "decimal": 1.5635,
-          "books": 8,
-          "best_american": -170
-        },
-        "b": {
-          "american": 147,
-          "decimal": 2.475,
-          "books": 8,
-          "best_american": 150
-        }
-      }
-    },
-    {
-      "fight_id": "douglas|emmers",
-      "display": "Lerryan Douglas vs Jamall Emmers",
-      "fighter_a": "Lerryan Douglas",
-      "fighter_b": "Jamall Emmers",
-      "pick_count": 6,
-      "capper_count": 4,
-      "markets": [
-        {
-          "bet_type": "moneyline",
-          "label": "Moneyline",
-          "total_weight": 3.78,
-          "pick_count": 1,
-          "options": [
-            {
-              "selection": "Larion Douglas",
-              "consensus_pct": 100.0,
-              "weight": 3.78,
-              "pick_count": 1,
-              "avg_confidence": 7.0,
-              "cappers": [
-                {
-                  "id": "axel_mma",
-                  "name": "Axel MMA",
-                  "confidence": 7,
+                  "id": "pure_picks",
+                  "name": "Pure Picks MMA",
+                  "confidence": 5,
                   "trust": 5.4,
-                  "role": "favorite",
-                  "odds": "-380",
+                  "role": "underdog",
+                  "odds": "+115",
                   "stake": "",
-                  "reasoning": "Calls it an easy pick: Douglas is a powerhouse with strong calf kicks and Emmers is outmatched.",
-                  "video_url": "https://www.youtube.com/watch?v=5k3ZpKV4rKA"
+                  "reasoning": "Gaziev struggled badly against Rozenstruik when he couldn't get the fight to the mat, and Nzechukwu is durable, hard to take down and can piece him up from the outside with length and power.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=xIIdK8iI-jI"
                 }
               ]
             }
@@ -811,76 +567,29 @@
         {
           "bet_type": "method_of_victory",
           "label": "Method of Victory",
-          "total_weight": 10.21,
-          "pick_count": 3,
+          "total_weight": 2.1,
+          "pick_count": 1,
           "options": [
             {
-              "selection": "Larion Douglas by KO/TKO",
+              "selection": "Kennedy Nzechukwu by finish",
               "consensus_pct": 100.0,
-              "weight": 10.21,
-              "pick_count": 3,
-              "avg_confidence": 6.0,
+              "weight": 2.1,
+              "pick_count": 1,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 1,
+              "stated_avg_confidence": 5.0,
               "cappers": [
-                {
-                  "id": "betslam_sam",
-                  "name": "BetSlam with Sam",
-                  "confidence": 6,
-                  "trust": 7.1,
-                  "role": "favorite",
-                  "odds": "-215",
-                  "stake": "",
-                  "reasoning": "Emmers stays in the pocket and got clipped by Hyder Amil; Douglas is much faster and hits far too hard for that.",
-                  "video_url": "https://www.youtube.com/watch?v=gtBQ9hJBIA4"
-                },
-                {
-                  "id": "livid_larry",
-                  "name": "Livid Larry MMA",
-                  "confidence": 7,
-                  "trust": 5.5,
-                  "role": "favorite",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "Douglas is one of the hardest hitters in the division with short compact power shots, Emmers was stumbled by a lesser striker, and he agrees with the odds in a high-paced first round.",
-                  "video_url": "https://www.youtube.com/watch?v=74RPpmI3t-0"
-                },
                 {
                   "id": "axel_mma",
                   "name": "Axel MMA",
                   "confidence": 5,
                   "trust": 4.2,
-                  "role": "favorite",
+                  "role": "unknown",
                   "odds": "",
                   "stake": "",
-                  "reasoning": "Expects Douglas to establish low kicks then crack Emmers upstairs for an early first-or-second-round finish.",
-                  "video_url": "https://www.youtube.com/watch?v=5k3ZpKV4rKA"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "bet_type": "over_under",
-          "label": "Over / Under",
-          "total_weight": 4.76,
-          "pick_count": 1,
-          "options": [
-            {
-              "selection": "Under 1.5 rounds",
-              "consensus_pct": 100.0,
-              "weight": 4.76,
-              "pick_count": 1,
-              "avg_confidence": 7.0,
-              "cappers": [
-                {
-                  "id": "betslam_sam",
-                  "name": "BetSlam with Sam",
-                  "confidence": 7,
-                  "trust": 6.8,
-                  "role": "unknown",
-                  "odds": "-155",
-                  "stake": "",
-                  "reasoning": "Thinks the under 1.5 at -155 is better value than Douglas round-one KO or the -215 KO price, since Emmers' wrestling could extend round one slightly.",
-                  "video_url": "https://www.youtube.com/watch?v=gtBQ9hJBIA4"
+                  "reasoning": "Leg of the +3327 parlay, admitted it's the scariest leg, but expects Gaziev to gas by the third round and Nzechukwu to land something big and finish him.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=KZ-OE-4Fyyc"
                 }
               ]
             }
@@ -889,25 +598,51 @@
         {
           "bet_type": "round",
           "label": "Round",
-          "total_weight": 4.34,
-          "pick_count": 1,
+          "total_weight": 4.1,
+          "pick_count": 2,
           "options": [
             {
-              "selection": "Le'Veon Douglas by KO in round 1 or 2",
-              "consensus_pct": 100.0,
-              "weight": 4.34,
+              "selection": "Kennedy Nzechukwu in round 3",
+              "consensus_pct": 54.6,
+              "weight": 2.24,
               "pick_count": 1,
-              "avg_confidence": 7.0,
+              "avg_confidence": 4.0,
+              "stated_pick_count": 1,
+              "stated_avg_confidence": 4.0,
+              "cappers": [
+                {
+                  "id": "axel_mma",
+                  "name": "Axel MMA",
+                  "confidence": 4,
+                  "trust": 5.6,
+                  "role": "underdog",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "He sees Nzechukwu landing straight shots and finding a late finish, probably in the third, once Gaziev tires.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=5k3ZpKV4rKA"
+                }
+              ]
+            },
+            {
+              "selection": "Shamil Gaziev by KO in round 1",
+              "consensus_pct": 45.4,
+              "weight": 1.86,
+              "pick_count": 1,
+              "avg_confidence": 3.0,
+              "stated_pick_count": 1,
+              "stated_avg_confidence": 3.0,
               "cappers": [
                 {
                   "id": "artem_mma",
                   "name": "Artem MMA",
-                  "confidence": 7,
+                  "confidence": 3,
                   "trust": 6.2,
                   "role": "unknown",
                   "odds": "",
                   "stake": "",
-                  "reasoning": "Calls Douglas the hardest hitting featherweight on the roster and believes he's fixed his issues with pressure; warns Emmers' pressure and takedowns are the risk.",
+                  "reasoning": "Gaziev is dangerous for the first few minutes and Nzechukwu's chin and consistency can't be trusted; he repeatedly says he doesn't feel good about the pick.",
+                  "source": "video",
                   "video_url": "https://www.youtube.com/watch?v=kRbuq1wHoTY"
                 }
               ]
@@ -916,23 +651,23 @@
         }
       ],
       "card_status": "on_card",
-      "card_order": 6,
+      "card_order": 5,
       "card_date": "2026-08-22T21:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-20T10:06:16+00:00",
+        "fetched_at": "2026-08-21T00:56:54+00:00",
         "commence_time": "2026-08-22T21:00:00Z",
         "a": {
-          "american": -392,
-          "decimal": 1.2548,
+          "american": -136,
+          "decimal": 1.7327,
           "books": 8,
-          "best_american": -375
+          "best_american": -135
         },
         "b": {
-          "american": 301,
-          "decimal": 4.015,
+          "american": 114,
+          "decimal": 2.145,
           "books": 8,
-          "best_american": 310
+          "best_american": 125
         }
       }
     },
@@ -947,26 +682,29 @@
         {
           "bet_type": "moneyline",
           "label": "Moneyline",
-          "total_weight": 9.79,
+          "total_weight": 9.24,
           "pick_count": 3,
           "options": [
             {
               "selection": "Vitor Petrino",
-              "consensus_pct": 66.9,
-              "weight": 6.55,
+              "consensus_pct": 64.9,
+              "weight": 6.0,
               "pick_count": 2,
-              "avg_confidence": 6.0,
+              "avg_confidence": 5.5,
+              "stated_pick_count": 2,
+              "stated_avg_confidence": 5.5,
               "cappers": [
                 {
                   "id": "livid_larry",
                   "name": "Livid Larry MMA",
-                  "confidence": 7,
+                  "confidence": 6,
                   "trust": 5.5,
-                  "role": "favorite",
+                  "role": "unknown",
                   "odds": "",
                   "stake": "",
-                  "reasoning": "He'll put a decent-sized play on Petrino's moneyline: he hits harder, moves better, throws cleaner combinations and could even get control time with offensive wrestling.",
-                  "video_url": "https://www.youtube.com/watch?v=74RPpmI3t-0"
+                  "reasoning": "Picks Petrino to beat Spivac in the co-main event.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=ijkFHViQmbc"
                 },
                 {
                   "id": "axel_mma",
@@ -977,16 +715,19 @@
                   "odds": "-149",
                   "stake": "",
                   "reasoning": "Leaning Petrino because he has more power and pop, solid takedown defense (stuffed Thomas Petersen) and won't be outworked on the feet.",
+                  "source": "video",
                   "video_url": "https://www.youtube.com/watch?v=5k3ZpKV4rKA"
                 }
               ]
             },
             {
               "selection": "Sergei Spivak",
-              "consensus_pct": 33.1,
+              "consensus_pct": 35.1,
               "weight": 3.24,
               "pick_count": 1,
               "avg_confidence": 6.0,
+              "stated_pick_count": 1,
+              "stated_avg_confidence": 6.0,
               "cappers": [
                 {
                   "id": "pure_picks",
@@ -997,6 +738,7 @@
                   "odds": "+125",
                   "stake": "",
                   "reasoning": "Petrino is flaky and untrustworthy (losses to Anthony Smith and Jacoby, nearly finished by Aslund), while Spivak has far more heavyweight experience, strong wrestling and improved striking.",
+                  "source": "video",
                   "video_url": "https://www.youtube.com/watch?v=xIIdK8iI-jI"
                 }
               ]
@@ -1015,6 +757,8 @@
               "weight": 9.33,
               "pick_count": 3,
               "avg_confidence": 6.0,
+              "stated_pick_count": 3,
+              "stated_avg_confidence": 6.0,
               "cappers": [
                 {
                   "id": "artem_mma",
@@ -1025,6 +769,7 @@
                   "odds": "",
                   "stake": "",
                   "reasoning": "Petrino hits far too hard for Spivak's jab-based game and heavyweights don't get up well off their back; only risk is Petrino needlessly wrestling into a guillotine.",
+                  "source": "video",
                   "video_url": "https://www.youtube.com/watch?v=kRbuq1wHoTY"
                 },
                 {
@@ -1036,6 +781,7 @@
                   "odds": "",
                   "stake": "",
                   "reasoning": "Expects Petrino to win by KO.",
+                  "source": "video",
                   "video_url": "https://www.youtube.com/watch?v=ijkFHViQmbc"
                 },
                 {
@@ -1047,6 +793,7 @@
                   "odds": "",
                   "stake": "",
                   "reasoning": "He expects Petrino to unload a big combination and put Spivac out, calling a second round KO.",
+                  "source": "video",
                   "video_url": "https://www.youtube.com/watch?v=5k3ZpKV4rKA"
                 }
               ]
@@ -1059,11 +806,11 @@
       "card_date": "2026-08-23T00:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-20T10:06:16+00:00",
+        "fetched_at": "2026-08-21T00:56:54+00:00",
         "commence_time": "2026-08-23T00:00:00Z",
         "a": {
           "american": -145,
-          "decimal": 1.6897,
+          "decimal": 1.69,
           "books": 6,
           "best_american": -140
         },
@@ -1071,30 +818,32 @@
           "american": 123,
           "decimal": 2.23,
           "books": 6,
-          "best_american": 125
+          "best_american": 130
         }
       }
     },
     {
-      "fight_id": "dyer|reed",
-      "display": "Shanelle Dyer vs Elise Reed",
-      "fighter_a": "Shanelle Dyer",
-      "fighter_b": "Elise Reed",
+      "fight_id": "douglas|emmers",
+      "display": "Lerryan Douglas vs Jamall Emmers",
+      "fighter_a": "Lerryan Douglas",
+      "fighter_b": "Jamall Emmers",
       "pick_count": 5,
-      "capper_count": 4,
+      "capper_count": 3,
       "markets": [
         {
           "bet_type": "moneyline",
           "label": "Moneyline",
-          "total_weight": 5.98,
-          "pick_count": 2,
+          "total_weight": 3.78,
+          "pick_count": 1,
           "options": [
             {
-              "selection": "Chanel Dyer",
+              "selection": "Larion Douglas",
               "consensus_pct": 100.0,
-              "weight": 5.98,
-              "pick_count": 2,
-              "avg_confidence": 5.5,
+              "weight": 3.78,
+              "pick_count": 1,
+              "avg_confidence": 7.0,
+              "stated_pick_count": 1,
+              "stated_avg_confidence": 7.0,
               "cappers": [
                 {
                   "id": "axel_mma",
@@ -1102,21 +851,11 @@
                   "confidence": 7,
                   "trust": 5.4,
                   "role": "favorite",
-                  "odds": "-750",
+                  "odds": "-380",
                   "stake": "",
-                  "reasoning": "Dyer has the better, slicker kickboxing and range control while Reed is unimpressive on the feet and will be a step behind all fight.",
+                  "reasoning": "Calls it an easy pick: Douglas is a powerhouse with strong calf kicks and Emmers is outmatched.",
+                  "source": "video",
                   "video_url": "https://www.youtube.com/watch?v=5k3ZpKV4rKA"
-                },
-                {
-                  "id": "livid_larry",
-                  "name": "Livid Larry MMA",
-                  "confidence": 4,
-                  "trust": 5.5,
-                  "role": "favorite",
-                  "odds": "-650",
-                  "stake": "",
-                  "reasoning": "Dyer is taller, rangier, faster and the better counter striker, and Reed leaves herself very open on the feet with her chin high; but he calls the big favorite price a disgrace and warns not to parlay the fight heavily.",
-                  "video_url": "https://www.youtube.com/watch?v=74RPpmI3t-0"
                 }
               ]
             }
@@ -1125,25 +864,71 @@
         {
           "bet_type": "method_of_victory",
           "label": "Method of Victory",
-          "total_weight": 4.26,
-          "pick_count": 1,
+          "total_weight": 6.36,
+          "pick_count": 2,
           "options": [
             {
-              "selection": "Chanel Dyer by KO/TKO",
+              "selection": "Larion Douglas by KO/TKO",
               "consensus_pct": 100.0,
-              "weight": 4.26,
-              "pick_count": 1,
-              "avg_confidence": 6.0,
+              "weight": 6.36,
+              "pick_count": 2,
+              "avg_confidence": 5.5,
+              "stated_pick_count": 2,
+              "stated_avg_confidence": 5.5,
               "cappers": [
                 {
                   "id": "betslam_sam",
                   "name": "BetSlam with Sam",
                   "confidence": 6,
                   "trust": 7.1,
-                  "role": "unknown",
-                  "odds": "+115",
+                  "role": "favorite",
+                  "odds": "-215",
                   "stake": "",
-                  "reasoning": "Dyer is the better striker and Reed has three KO losses and has been finished recently; her better wins are years old.",
+                  "reasoning": "Emmers stays in the pocket and got clipped by Hyder Amil; Douglas is much faster and hits far too hard for that.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=gtBQ9hJBIA4"
+                },
+                {
+                  "id": "axel_mma",
+                  "name": "Axel MMA",
+                  "confidence": 5,
+                  "trust": 4.2,
+                  "role": "favorite",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Expects Douglas to establish low kicks then crack Emmers upstairs for an early first-or-second-round finish.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=5k3ZpKV4rKA"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bet_type": "over_under",
+          "label": "Over / Under",
+          "total_weight": 4.76,
+          "pick_count": 1,
+          "options": [
+            {
+              "selection": "Under 1.5 rounds",
+              "consensus_pct": 100.0,
+              "weight": 4.76,
+              "pick_count": 1,
+              "avg_confidence": 7.0,
+              "stated_pick_count": 1,
+              "stated_avg_confidence": 7.0,
+              "cappers": [
+                {
+                  "id": "betslam_sam",
+                  "name": "BetSlam with Sam",
+                  "confidence": 7,
+                  "trust": 6.8,
+                  "role": "unknown",
+                  "odds": "-155",
+                  "stake": "",
+                  "reasoning": "Thinks the under 1.5 at -155 is better value than Douglas round-one KO or the -215 KO price, since Emmers' wrestling could extend round one slightly.",
+                  "source": "video",
                   "video_url": "https://www.youtube.com/watch?v=gtBQ9hJBIA4"
                 }
               ]
@@ -1153,37 +938,29 @@
         {
           "bet_type": "round",
           "label": "Round",
-          "total_weight": 5.88,
-          "pick_count": 2,
+          "total_weight": 4.34,
+          "pick_count": 1,
           "options": [
             {
-              "selection": "Chanel Dyer by KO in round 2",
+              "selection": "Le'Veon Douglas by KO in round 1 or 2",
               "consensus_pct": 100.0,
-              "weight": 5.88,
-              "pick_count": 2,
-              "avg_confidence": 5.0,
+              "weight": 4.34,
+              "pick_count": 1,
+              "avg_confidence": 7.0,
+              "stated_pick_count": 1,
+              "stated_avg_confidence": 7.0,
               "cappers": [
                 {
                   "id": "artem_mma",
                   "name": "Artem MMA",
-                  "confidence": 6,
+                  "confidence": 7,
                   "trust": 6.2,
                   "role": "unknown",
                   "odds": "",
                   "stake": "",
-                  "reasoning": "Dyer is the bigger, more powerful striker with a kickboxing/Muay Thai base and good volume; he expects her to catch Reed, likely to the body, like she did against Ravena Oliveira.",
+                  "reasoning": "Calls Douglas the hardest hitting featherweight on the roster and believes he's fixed his issues with pressure; warns Emmers' pressure and takedowns are the risk.",
+                  "source": "video",
                   "video_url": "https://www.youtube.com/watch?v=kRbuq1wHoTY"
-                },
-                {
-                  "id": "axel_mma",
-                  "name": "Axel MMA",
-                  "confidence": 4,
-                  "trust": 5.4,
-                  "role": "favorite",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "He expects Dyer to pick Reed apart and eventually land a finishing shot, calling it a second round finish.",
-                  "video_url": "https://www.youtube.com/watch?v=5k3ZpKV4rKA"
                 }
               ]
             }
@@ -1191,23 +968,23 @@
         }
       ],
       "card_status": "on_card",
-      "card_order": 0,
+      "card_order": 6,
       "card_date": "2026-08-22T21:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-20T10:06:16+00:00",
-        "commence_time": "2026-08-22T21:15:00Z",
+        "fetched_at": "2026-08-21T00:56:54+00:00",
+        "commence_time": "2026-08-22T21:00:00Z",
         "a": {
-          "american": -842,
-          "decimal": 1.1187,
+          "american": -397,
+          "decimal": 1.2516,
           "books": 8,
-          "best_american": -750
+          "best_american": -375
         },
         "b": {
-          "american": 542,
-          "decimal": 6.42,
+          "american": 306,
+          "decimal": 4.065,
           "books": 8,
-          "best_american": 625
+          "best_american": 320
         }
       }
     },
@@ -1231,6 +1008,8 @@
               "weight": 7.37,
               "pick_count": 2,
               "avg_confidence": 6.5,
+              "stated_pick_count": 2,
+              "stated_avg_confidence": 6.5,
               "cappers": [
                 {
                   "id": "axel_mma",
@@ -1241,6 +1020,7 @@
                   "odds": "-1000",
                   "stake": "",
                   "reasoning": "Wint just demolished Matt Adams on Contender Series and Chapman is a low-output, unimpressive striker.",
+                  "source": "video",
                   "video_url": "https://www.youtube.com/watch?v=5k3ZpKV4rKA"
                 },
                 {
@@ -1252,6 +1032,7 @@
                   "odds": "-228",
                   "stake": "",
                   "reasoning": "Part of his Wint moneyline + under 1.5 rounds parlay; Wint probably wins and any knockout likely comes in the first seven and a half minutes, though he's small for heavyweight and the price isn't exciting.",
+                  "source": "video",
                   "video_url": "https://www.youtube.com/watch?v=gtBQ9hJBIA4"
                 }
               ]
@@ -1270,6 +1051,8 @@
               "weight": 3.4,
               "pick_count": 1,
               "avg_confidence": 5.0,
+              "stated_pick_count": 1,
+              "stated_avg_confidence": 5.0,
               "cappers": [
                 {
                   "id": "betslam_sam",
@@ -1280,6 +1063,7 @@
                   "odds": "-228",
                   "stake": "",
                   "reasoning": "Combined with Wint's moneyline at -228; knockout chances drop off dramatically in the second half of a heavyweight fight once both men tire.",
+                  "source": "video",
                   "video_url": "https://www.youtube.com/watch?v=gtBQ9hJBIA4"
                 }
               ]
@@ -1298,6 +1082,8 @@
               "weight": 7.58,
               "pick_count": 2,
               "avg_confidence": 6.5,
+              "stated_pick_count": 2,
+              "stated_avg_confidence": 6.5,
               "cappers": [
                 {
                   "id": "artem_mma",
@@ -1308,6 +1094,7 @@
                   "odds": "",
                   "stake": "",
                   "reasoning": "Wint just won on Contender Series taking no damage and has quick KO power; Chapman shies away when punches come at him.",
+                  "source": "video",
                   "video_url": "https://www.youtube.com/watch?v=kRbuq1wHoTY"
                 },
                 {
@@ -1319,6 +1106,7 @@
                   "odds": "",
                   "stake": "",
                   "reasoning": "He expects Wint to blitz Chapman and get another quick first round finish.",
+                  "source": "video",
                   "video_url": "https://www.youtube.com/watch?v=5k3ZpKV4rKA"
                 }
               ]
@@ -1331,11 +1119,11 @@
       "card_date": "2026-08-23T00:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-20T10:06:16+00:00",
+        "fetched_at": "2026-08-21T00:56:54+00:00",
         "commence_time": "2026-08-23T00:00:00Z",
         "a": {
-          "american": 678,
-          "decimal": 7.775,
+          "american": 670,
+          "decimal": 7.705,
           "books": 8,
           "best_american": 750
         },
@@ -1343,63 +1131,44 @@
           "american": -1100,
           "decimal": 1.0909,
           "books": 8,
-          "best_american": -950
+          "best_american": -1000
         }
       }
     },
     {
-      "fight_id": "haqparast|padilla",
-      "display": "Nasrat Haqparast vs Chris Padilla",
-      "fighter_a": "Nasrat Haqparast",
-      "fighter_b": "Chris Padilla",
-      "pick_count": 5,
+      "fight_id": "dyer|reed",
+      "display": "Shanelle Dyer vs Elise Reed",
+      "fighter_a": "Shanelle Dyer",
+      "fighter_b": "Elise Reed",
+      "pick_count": 4,
       "capper_count": 3,
       "markets": [
         {
           "bet_type": "moneyline",
           "label": "Moneyline",
-          "total_weight": 11.29,
-          "pick_count": 3,
+          "total_weight": 3.78,
+          "pick_count": 1,
           "options": [
             {
-              "selection": "Chris Padilla",
+              "selection": "Chanel Dyer",
               "consensus_pct": 100.0,
-              "weight": 11.29,
-              "pick_count": 3,
-              "avg_confidence": 6.0,
+              "weight": 3.78,
+              "pick_count": 1,
+              "avg_confidence": 7.0,
+              "stated_pick_count": 1,
+              "stated_avg_confidence": 7.0,
               "cappers": [
                 {
-                  "id": "betslam_sam",
-                  "name": "BetSlam with Sam",
-                  "confidence": 8,
-                  "trust": 7.3,
-                  "role": "underdog",
-                  "odds": "-103",
-                  "stake": "",
-                  "reasoning": "Haqparast is damaged and beaten up after years of decisions and a recent head kick KO, while Padilla is on a five-fight UFC run and has a significantly better MMA mind; Padilla is the slam of the week for the price.",
-                  "video_url": "https://www.youtube.com/watch?v=gtBQ9hJBIA4"
-                },
-                {
-                  "id": "livid_larry",
-                  "name": "Livid Larry MMA",
-                  "confidence": 5,
-                  "trust": 5.5,
-                  "role": "unknown",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "Odds are dead even; Padilla's pressure, pace and power can replicate what Ribovics and Gordon did to Haqparast, who is coming off damaging fights and a bad KO loss.",
-                  "video_url": "https://www.youtube.com/watch?v=74RPpmI3t-0"
-                },
-                {
-                  "id": "pure_picks",
-                  "name": "Pure Picks MMA",
-                  "confidence": 5,
+                  "id": "axel_mma",
+                  "name": "Axel MMA",
+                  "confidence": 7,
                   "trust": 5.4,
-                  "role": "underdog",
-                  "odds": "+107",
+                  "role": "favorite",
+                  "odds": "-750",
                   "stake": "",
-                  "reasoning": "Haqparast's recent wins were close/split decisions he could have lost and he gets hit a lot, while Padilla is durable, high-volume with nasty elbows, knees and kicks and good cardio for three rounds; sees him winning by decision or TKO.",
-                  "video_url": "https://www.youtube.com/watch?v=xIIdK8iI-jI"
+                  "reasoning": "Dyer has the better, slicker kickboxing and range control while Reed is unimpressive on the feet and will be a step behind all fight.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=5k3ZpKV4rKA"
                 }
               ]
             }
@@ -1408,37 +1177,72 @@
         {
           "bet_type": "method_of_victory",
           "label": "Method of Victory",
-          "total_weight": 7.72,
-          "pick_count": 2,
+          "total_weight": 4.26,
+          "pick_count": 1,
           "options": [
             {
-              "selection": "Chris Padilla inside the distance (KO or submission)",
+              "selection": "Chanel Dyer by KO/TKO",
               "consensus_pct": 100.0,
-              "weight": 7.72,
-              "pick_count": 2,
+              "weight": 4.26,
+              "pick_count": 1,
               "avg_confidence": 6.0,
+              "stated_pick_count": 1,
+              "stated_avg_confidence": 6.0,
               "cappers": [
                 {
                   "id": "betslam_sam",
                   "name": "BetSlam with Sam",
-                  "confidence": 7,
+                  "confidence": 6,
                   "trust": 7.1,
-                  "role": "underdog",
-                  "odds": "+290",
+                  "role": "unknown",
+                  "odds": "+115",
                   "stake": "",
-                  "reasoning": "Haqparast's chin is compromised and Padilla fights smart in every realm; +290 inside the distance is worth laying money on.",
+                  "reasoning": "Dyer is the better striker and Reed has three KO losses and has been finished recently; her better wins are years old.",
+                  "source": "video",
                   "video_url": "https://www.youtube.com/watch?v=gtBQ9hJBIA4"
-                },
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bet_type": "round",
+          "label": "Round",
+          "total_weight": 5.88,
+          "pick_count": 2,
+          "options": [
+            {
+              "selection": "Chanel Dyer by KO in round 2",
+              "consensus_pct": 100.0,
+              "weight": 5.88,
+              "pick_count": 2,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 2,
+              "stated_avg_confidence": 5.0,
+              "cappers": [
                 {
-                  "id": "livid_larry",
-                  "name": "Livid Larry MMA",
-                  "confidence": 5,
-                  "trust": 5.5,
+                  "id": "artem_mma",
+                  "name": "Artem MMA",
+                  "confidence": 6,
+                  "trust": 6.2,
                   "role": "unknown",
                   "odds": "",
                   "stake": "",
-                  "reasoning": "He expects accumulated damage to tell late, with Padilla hunting a hurt Haqparast down, or otherwise a decision.",
-                  "video_url": "https://www.youtube.com/watch?v=74RPpmI3t-0"
+                  "reasoning": "Dyer is the bigger, more powerful striker with a kickboxing/Muay Thai base and good volume; he expects her to catch Reed, likely to the body, like she did against Ravena Oliveira.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=kRbuq1wHoTY"
+                },
+                {
+                  "id": "axel_mma",
+                  "name": "Axel MMA",
+                  "confidence": 4,
+                  "trust": 5.4,
+                  "role": "favorite",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "He expects Dyer to pick Reed apart and eventually land a finishing shot, calling it a second round finish.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=5k3ZpKV4rKA"
                 }
               ]
             }
@@ -1446,23 +1250,150 @@
         }
       ],
       "card_status": "on_card",
-      "card_order": 4,
+      "card_order": 0,
       "card_date": "2026-08-22T21:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-20T10:06:16+00:00",
-        "commence_time": "2026-08-22T21:00:00Z",
+        "fetched_at": "2026-08-21T00:56:54+00:00",
+        "commence_time": "2026-08-22T21:15:00Z",
         "a": {
-          "american": -120,
-          "decimal": 1.8299,
+          "american": -874,
+          "decimal": 1.1144,
           "books": 8,
-          "best_american": -115
+          "best_american": -750
         },
         "b": {
-          "american": 100,
-          "decimal": 2.0,
+          "american": 572,
+          "decimal": 6.725,
           "books": 8,
-          "best_american": 105
+          "best_american": 600
+        }
+      }
+    },
+    {
+      "fight_id": "mcvey|schultz",
+      "display": "Jackson McVey vs Wes Schultz",
+      "fighter_a": "Jackson McVey",
+      "fighter_b": "Wes Schultz",
+      "pick_count": 4,
+      "capper_count": 3,
+      "markets": [
+        {
+          "bet_type": "moneyline",
+          "label": "Moneyline",
+          "total_weight": 5.82,
+          "pick_count": 2,
+          "options": [
+            {
+              "selection": "Jackson McVey",
+              "consensus_pct": 100.0,
+              "weight": 5.82,
+              "pick_count": 2,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 2,
+              "stated_avg_confidence": 5.0,
+              "cappers": [
+                {
+                  "id": "axel_mma",
+                  "name": "Axel MMA",
+                  "confidence": 7,
+                  "trust": 5.4,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Leg of the +110 two-leg parlay; McVey has improved a lot since the amateur loss years ago, should stop Schultz's takedowns, win the clinch with knees and elbows, and possibly finish him.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=KZ-OE-4Fyyc"
+                },
+                {
+                  "id": "betslam_sam",
+                  "name": "BetSlam with Sam",
+                  "confidence": 3,
+                  "trust": 6.8,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "McVey is bigger and younger and the loss to Schultz was long ago; Schultz has shown no improvement, but Sam stated low confidence and wrote down no prop.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=gtBQ9hJBIA4"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bet_type": "method_of_victory",
+          "label": "Method of Victory",
+          "total_weight": 5.04,
+          "pick_count": 2,
+          "options": [
+            {
+              "selection": "Jackson McVey inside the distance",
+              "consensus_pct": 66.7,
+              "weight": 3.36,
+              "pick_count": 1,
+              "avg_confidence": 6.0,
+              "stated_pick_count": 1,
+              "stated_avg_confidence": 6.0,
+              "cappers": [
+                {
+                  "id": "artem_mma",
+                  "name": "Artem MMA",
+                  "confidence": 6,
+                  "trust": 5.6,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "McVey is the bigger, better striker with more finishing ability on the ground; Schultz's wrestling hasn't translated at UFC level.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=kRbuq1wHoTY"
+                }
+              ]
+            },
+            {
+              "selection": "Jackson McVey by finish (KO/TKO)",
+              "consensus_pct": 33.3,
+              "weight": 1.68,
+              "pick_count": 1,
+              "avg_confidence": 4.0,
+              "stated_pick_count": 1,
+              "stated_avg_confidence": 4.0,
+              "cappers": [
+                {
+                  "id": "axel_mma",
+                  "name": "Axel MMA",
+                  "confidence": 4,
+                  "trust": 4.2,
+                  "role": "favorite",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "He sees McVey landing a knee or elbow from the clinch to put Schultz down.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=5k3ZpKV4rKA"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "card_status": "on_card",
+      "card_order": 1,
+      "card_date": "2026-08-22T21:00Z",
+      "live_odds": {
+        "source": "the-odds-api",
+        "fetched_at": "2026-08-21T00:56:54+00:00",
+        "commence_time": "2026-08-22T21:00:00Z",
+        "a": {
+          "american": -175,
+          "decimal": 1.5714,
+          "books": 8,
+          "best_american": -170
+        },
+        "b": {
+          "american": 146,
+          "decimal": 2.46,
+          "books": 8,
+          "best_american": 150
         }
       }
     },
@@ -1486,6 +1417,8 @@
               "weight": 3.78,
               "pick_count": 1,
               "avg_confidence": 7.0,
+              "stated_pick_count": 1,
+              "stated_avg_confidence": 7.0,
               "cappers": [
                 {
                   "id": "axel_mma",
@@ -1496,6 +1429,7 @@
                   "odds": "-525",
                   "stake": "",
                   "reasoning": "Judice's slick kickboxing, speed and range management are too much for the power-loading Chavez.",
+                  "source": "video",
                   "video_url": "https://www.youtube.com/watch?v=5k3ZpKV4rKA"
                 }
               ]
@@ -1514,6 +1448,8 @@
               "weight": 6.78,
               "pick_count": 2,
               "avg_confidence": 6.0,
+              "stated_pick_count": 2,
+              "stated_avg_confidence": 6.0,
               "cappers": [
                 {
                   "id": "betslam_sam",
@@ -1524,6 +1460,7 @@
                   "odds": "+125",
                   "stake": "",
                   "reasoning": "Judice is the better striker with more volume but has won the vast majority of her UFC fights by decision, and Chavez is incredibly tough and won't quit; he sees a damage-based decision.",
+                  "source": "video",
                   "video_url": "https://www.youtube.com/watch?v=gtBQ9hJBIA4"
                 },
                 {
@@ -1535,6 +1472,7 @@
                   "odds": "",
                   "stake": "",
                   "reasoning": "He sees Judice picking Chavez apart from distance for 15 minutes and winning on the cards.",
+                  "source": "video",
                   "video_url": "https://www.youtube.com/watch?v=5k3ZpKV4rKA"
                 }
               ]
@@ -1553,6 +1491,8 @@
               "weight": 3.78,
               "pick_count": 1,
               "avg_confidence": 7.0,
+              "stated_pick_count": 1,
+              "stated_avg_confidence": 7.0,
               "cappers": [
                 {
                   "id": "axel_mma",
@@ -1563,6 +1503,7 @@
                   "odds": "",
                   "stake": "",
                   "reasoning": "Leg of the +103 two-leg parlay; Judice is the far superior kickboxer with better range management and should pick Chavez apart to a decision rather than an early finish.",
+                  "source": "video",
                   "video_url": "https://www.youtube.com/watch?v=KZ-OE-4Fyyc"
                 }
               ]
@@ -1575,19 +1516,19 @@
       "card_date": "2026-08-23T00:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-20T10:06:16+00:00",
+        "fetched_at": "2026-08-21T00:56:54+00:00",
         "commence_time": "2026-08-23T00:00:00Z",
         "a": {
-          "american": 412,
-          "decimal": 5.125,
+          "american": 435,
+          "decimal": 5.35,
           "books": 8,
-          "best_american": 430
+          "best_american": 450
         },
         "b": {
-          "american": -575,
-          "decimal": 1.1739,
+          "american": -600,
+          "decimal": 1.1667,
           "books": 8,
-          "best_american": -525
+          "best_american": -530
         }
       }
     },
@@ -1611,6 +1552,8 @@
               "weight": 7.86,
               "pick_count": 2,
               "avg_confidence": 6.5,
+              "stated_pick_count": 2,
+              "stated_avg_confidence": 6.5,
               "cappers": [
                 {
                   "id": "betslam_sam",
@@ -1621,6 +1564,7 @@
                   "odds": "",
                   "stake": "",
                   "reasoning": "Jones is a savage with a reach advantage who should out-tough Madeiros, as shown in his war with Axel Solar.",
+                  "source": "video",
                   "video_url": "https://www.youtube.com/watch?v=gtBQ9hJBIA4"
                 },
                 {
@@ -1632,6 +1576,7 @@
                   "odds": "",
                   "stake": "",
                   "reasoning": "Leg of a +110 two-leg parlay; Jones's constant pressure and cage-cutting will wear down an opponent who wants to fight at range, leading to a late finish or decision.",
+                  "source": "video",
                   "video_url": "https://www.youtube.com/watch?v=KZ-OE-4Fyyc"
                 }
               ]
@@ -1650,6 +1595,8 @@
               "weight": 4.97,
               "pick_count": 1,
               "avg_confidence": 7.0,
+              "stated_pick_count": 1,
+              "stated_avg_confidence": 7.0,
               "cappers": [
                 {
                   "id": "betslam_sam",
@@ -1660,6 +1607,7 @@
                   "odds": "+500",
                   "stake": "",
                   "reasoning": "At +500 he loves it: if Jones gets the rangy striker Madeiros down he can submit him.",
+                  "source": "video",
                   "video_url": "https://www.youtube.com/watch?v=gtBQ9hJBIA4"
                 }
               ]
@@ -1672,19 +1620,123 @@
       "card_date": "2026-08-23T00:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-20T10:06:16+00:00",
+        "fetched_at": "2026-08-21T00:56:54+00:00",
         "commence_time": "2026-08-23T00:00:00Z",
         "a": {
-          "american": -285,
-          "decimal": 1.3503,
+          "american": -317,
+          "decimal": 1.3151,
           "books": 8,
-          "best_american": -275
+          "best_american": -286
         },
         "b": {
-          "american": 230,
-          "decimal": 3.3,
+          "american": 258,
+          "decimal": 3.575,
           "books": 8,
-          "best_american": 240
+          "best_american": 267
+        }
+      }
+    },
+    {
+      "fight_id": "haqparast|padilla",
+      "display": "Nasrat Haqparast vs Chris Padilla",
+      "fighter_a": "Nasrat Haqparast",
+      "fighter_b": "Chris Padilla",
+      "pick_count": 3,
+      "capper_count": 2,
+      "markets": [
+        {
+          "bet_type": "moneyline",
+          "label": "Moneyline",
+          "total_weight": 8.54,
+          "pick_count": 2,
+          "options": [
+            {
+              "selection": "Chris Padilla",
+              "consensus_pct": 100.0,
+              "weight": 8.54,
+              "pick_count": 2,
+              "avg_confidence": 6.5,
+              "stated_pick_count": 2,
+              "stated_avg_confidence": 6.5,
+              "cappers": [
+                {
+                  "id": "betslam_sam",
+                  "name": "BetSlam with Sam",
+                  "confidence": 8,
+                  "trust": 7.3,
+                  "role": "underdog",
+                  "odds": "-103",
+                  "stake": "",
+                  "reasoning": "Haqparast is damaged and beaten up after years of decisions and a recent head kick KO, while Padilla is on a five-fight UFC run and has a significantly better MMA mind; Padilla is the slam of the week for the price.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=gtBQ9hJBIA4"
+                },
+                {
+                  "id": "pure_picks",
+                  "name": "Pure Picks MMA",
+                  "confidence": 5,
+                  "trust": 5.4,
+                  "role": "underdog",
+                  "odds": "+107",
+                  "stake": "",
+                  "reasoning": "Haqparast's recent wins were close/split decisions he could have lost and he gets hit a lot, while Padilla is durable, high-volume with nasty elbows, knees and kicks and good cardio for three rounds; sees him winning by decision or TKO.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=xIIdK8iI-jI"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bet_type": "method_of_victory",
+          "label": "Method of Victory",
+          "total_weight": 4.97,
+          "pick_count": 1,
+          "options": [
+            {
+              "selection": "Chris Padilla inside the distance (KO or submission)",
+              "consensus_pct": 100.0,
+              "weight": 4.97,
+              "pick_count": 1,
+              "avg_confidence": 7.0,
+              "stated_pick_count": 1,
+              "stated_avg_confidence": 7.0,
+              "cappers": [
+                {
+                  "id": "betslam_sam",
+                  "name": "BetSlam with Sam",
+                  "confidence": 7,
+                  "trust": 7.1,
+                  "role": "underdog",
+                  "odds": "+290",
+                  "stake": "",
+                  "reasoning": "Haqparast's chin is compromised and Padilla fights smart in every realm; +290 inside the distance is worth laying money on.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=gtBQ9hJBIA4"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "card_status": "on_card",
+      "card_order": 4,
+      "card_date": "2026-08-22T21:00Z",
+      "live_odds": {
+        "source": "the-odds-api",
+        "fetched_at": "2026-08-21T00:56:54+00:00",
+        "commence_time": "2026-08-22T21:00:00Z",
+        "a": {
+          "american": -117,
+          "decimal": 1.8511,
+          "books": 8,
+          "best_american": -110
+        },
+        "b": {
+          "american": -102,
+          "decimal": 1.9756,
+          "books": 8,
+          "best_american": 105
         }
       }
     },
@@ -1708,6 +1760,8 @@
               "weight": 4.08,
               "pick_count": 1,
               "avg_confidence": 6.0,
+              "stated_pick_count": 1,
+              "stated_avg_confidence": 6.0,
               "cappers": [
                 {
                   "id": "betslam_sam",
@@ -1718,6 +1772,7 @@
                   "odds": "",
                   "stake": "",
                   "reasoning": "Trembley started MMA late, has faced nobody of note and mostly submits opponents, while Puga is a young Mexican knockout artist who has never been submitted.",
+                  "source": "video",
                   "video_url": "https://www.youtube.com/watch?v=gtBQ9hJBIA4"
                 }
               ]
@@ -1736,6 +1791,8 @@
               "weight": 4.26,
               "pick_count": 1,
               "avg_confidence": 6.0,
+              "stated_pick_count": 1,
+              "stated_avg_confidence": 6.0,
               "cappers": [
                 {
                   "id": "betslam_sam",
@@ -1746,6 +1803,7 @@
                   "odds": "",
                   "stake": "",
                   "reasoning": "Puga is a legitimate boxing threat with striking finishes; Sam said he'll take the KO if it's plus money.",
+                  "source": "video",
                   "video_url": "https://www.youtube.com/watch?v=gtBQ9hJBIA4"
                 }
               ]
@@ -1775,6 +1833,8 @@
               "weight": 4.88,
               "pick_count": 1,
               "avg_confidence": 8.0,
+              "stated_pick_count": 1,
+              "stated_avg_confidence": 8.0,
               "cappers": [
                 {
                   "id": "betslam_sam",
@@ -1785,6 +1845,7 @@
                   "odds": "",
                   "stake": "",
                   "reasoning": "Called Perez the lock of the card — far more skilled, showed the real deal against Manuel Sosa, while Paxton is a meat-and-potatoes wrestler who's beaten only tin cans.",
+                  "source": "video",
                   "video_url": "https://www.youtube.com/watch?v=gtBQ9hJBIA4"
                 }
               ]
@@ -1803,6 +1864,8 @@
               "weight": 4.97,
               "pick_count": 1,
               "avg_confidence": 7.0,
+              "stated_pick_count": 1,
+              "stated_avg_confidence": 7.0,
               "cappers": [
                 {
                   "id": "betslam_sam",
@@ -1813,6 +1876,7 @@
                   "odds": "",
                   "stake": "",
                   "reasoning": "Perez is far more skilled and should cook Paxton, whose only path is takedowns and ground and pound.",
+                  "source": "video",
                   "video_url": "https://www.youtube.com/watch?v=gtBQ9hJBIA4"
                 }
               ]
@@ -1842,6 +1906,8 @@
               "weight": 2.8,
               "pick_count": 1,
               "avg_confidence": 5.0,
+              "stated_pick_count": 1,
+              "stated_avg_confidence": 5.0,
               "cappers": [
                 {
                   "id": "artem_mma",
@@ -1852,6 +1918,7 @@
                   "odds": "",
                   "stake": "",
                   "reasoning": "Young has 14 pro fights versus Dosainvil's six, and Young's volume should add up against Dosainvil's poor defense; expects a close decision.",
+                  "source": "video",
                   "video_url": "https://www.youtube.com/watch?v=kRbuq1wHoTY"
                 }
               ]
@@ -1864,19 +1931,19 @@
       "card_date": "2026-08-22T21:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-20T10:06:16+00:00",
+        "fetched_at": "2026-08-21T00:56:54+00:00",
         "commence_time": "2026-08-22T21:00:00Z",
         "a": {
-          "american": 130,
-          "decimal": 2.3,
+          "american": 135,
+          "decimal": 2.35,
           "books": 7,
-          "best_american": 138
+          "best_american": 140
         },
         "b": {
           "american": -160,
           "decimal": 1.625,
           "books": 7,
-          "best_american": -143
+          "best_american": -155
         }
       }
     },
@@ -1900,6 +1967,8 @@
               "weight": 4.08,
               "pick_count": 1,
               "avg_confidence": 6.0,
+              "stated_pick_count": 1,
+              "stated_avg_confidence": 6.0,
               "cappers": [
                 {
                   "id": "betslam_sam",
@@ -1910,6 +1979,7 @@
                   "odds": "",
                   "stake": "",
                   "reasoning": "Brito is battle tested against real European competition while Fazil has been can crushing on a much weaker circuit; the fake tough guy act at the faceoff flipped Sam onto Brito.",
+                  "source": "video",
                   "video_url": "https://www.youtube.com/watch?v=gtBQ9hJBIA4"
                 }
               ]
@@ -1939,6 +2009,8 @@
               "weight": 4.08,
               "pick_count": 1,
               "avg_confidence": 6.0,
+              "stated_pick_count": 1,
+              "stated_avg_confidence": 6.0,
               "cappers": [
                 {
                   "id": "betslam_sam",
@@ -1949,6 +2021,7 @@
                   "odds": "",
                   "stake": "",
                   "reasoning": "Dolidze is done at this point and will fade once things stop going his way; de Ridder is the bigger, undrained A-side, so don't get cute with props, just take him straight.",
+                  "source": "video",
                   "video_url": "https://www.youtube.com/watch?v=gtBQ9hJBIA4"
                 }
               ]
@@ -1961,19 +2034,19 @@
       "card_date": "2026-08-23T00:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-20T10:06:16+00:00",
+        "fetched_at": "2026-08-21T00:56:54+00:00",
         "commence_time": "2026-08-23T00:00:00Z",
         "a": {
-          "american": -400,
-          "decimal": 1.25,
+          "american": -405,
+          "decimal": 1.247,
           "books": 8,
-          "best_american": -380
+          "best_american": -375
         },
         "b": {
-          "american": 310,
-          "decimal": 4.095,
+          "american": 318,
+          "decimal": 4.18,
           "books": 8,
-          "best_american": 320
+          "best_american": 340
         }
       }
     },
@@ -1990,13 +2063,13 @@
       "card_date": "2026-08-22T21:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-20T10:06:16+00:00",
+        "fetched_at": "2026-08-21T00:56:54+00:00",
         "commence_time": "2026-08-22T22:45:00Z",
         "a": {
           "american": -900,
           "decimal": 1.1111,
           "books": 7,
-          "best_american": -800
+          "best_american": -750
         },
         "b": {
           "american": 586,
@@ -2088,14 +2161,19 @@
       "feed_videos": 15,
       "selected": [
         {
+          "video_id": "E2MLoOlxRkU",
+          "title": "UFC Sacramento: Hernandez vs Rodrigues | 3 Favorite Plays 🔥 #ufc #mma #ufcsacramento #ufcpicks",
+          "published": "2026-08-20T16:16:43+00:00"
+        },
+        {
+          "video_id": "58AetdUhGhs",
+          "title": "UFC Sacramento: Hernandez vs Rodrigues | Full Card Plays",
+          "published": "2026-08-20T13:25:58+00:00"
+        },
+        {
           "video_id": "ijkFHViQmbc",
           "title": "UFC Sacramento: Hernandes vs Rodrigues | Main Card Picks #ufcsacramento #ufc #fightpicks #ufcpicks",
           "published": "2026-08-18T11:41:47+00:00"
-        },
-        {
-          "video_id": "74RPpmI3t-0",
-          "title": "UFC Sacramento: Hernandez vs Rodrigues | Full Card Predictions & Breakdown",
-          "published": "2026-08-18T11:07:08+00:00"
         }
       ]
     },
@@ -2266,11 +2344,11 @@
       "feed_videos": 15,
       "selected": [],
       "recent_titles": [
+        "2026-08-20  🥊LFA 239 BEST BETS! Mecate vs. Exposito | Predictions, Betting Picks & FREE PLAY 🔥",
+        "2026-08-20  SOCCER BEST BETS TODAY ⚽🔥 Europa League + Conference League Picks & Predictions | 8/20/26",
+        "2026-08-20  🎾ATP & WTA Cincinnati Masters Quarterfinals 🔥 BEST BETS & PICKS | Tennis Predictions 💰8/20/26",
         "2026-08-19  ⚾🔥 MLB BEST BETS & PICKS | Full Slate Breakdown, Predictions & Player Props! 💰",
-        "2026-08-19  ⚽️ SOCCER BEST BETS TODAY ⚽🔥 MLS + CHAMPIONS LEAGUE PICKS & PREDICTIONS | FREE PLAY💰",
-        "2026-08-19  🎾 Cincinnati Open Day 7 BEST BETS 🔥 ATP & WTA Tennis Predictions & Picks",
-        "2026-08-18  ⚾🔥 MLB BEST BETS & PICKS | Full Slate Breakdown, Predictions & Player Props! 💰",
-        "2026-08-18  🚨 DWCS WEEK 2 BEST BETS! | Dana White’s Contender Series Predictions & Betting Picks 🔥"
+        "2026-08-19  ⚽️ SOCCER BEST BETS TODAY ⚽🔥 MLS + CHAMPIONS LEAGUE PICKS & PREDICTIONS | FREE PLAY💰"
       ]
     },
     {
@@ -2345,11 +2423,11 @@
       "feed_videos": 15,
       "selected": [],
       "recent_titles": [
+        "2026-08-20  Islam Makhachev is in DANGER...Can he Beat Prates & Morales?",
         "2026-08-16  UFC 330: Full Card Reaction and Results",
         "2026-08-16  GENIUS!!! How Islam Makhachev BEAT Ian Garry (UFC 330 Breakdown)",
         "2026-08-14  ISLAM VS GARRY! UFC 330 FULL Picks, Predictions and Breakdown",
-        "2026-08-12  Islam vs Garry, Gaethje's Moving Up? Strickland's Future | Let's Talk MMA",
-        "2026-08-09  SHOCKING!!! Salkilld is a PROBLEM (Mateusz Gamrot vs Quillan Salkilld and Full Card Reaction)"
+        "2026-08-12  Islam vs Garry, Gaethje's Moving Up? Strickland's Future | Let's Talk MMA"
       ]
     },
     {
@@ -2358,13 +2436,12 @@
       "status": "ok",
       "channel_id": "UUtX1d2j5qrWr_i-Y7CKvj4g",
       "feed_videos": 15,
-      "selected": [],
-      "recent_titles": [
-        "2026-08-19  Volk vs Movsar is WAY More One-Sided Than We Think... (UFC 333 Early Thoughts)",
-        "2026-08-19  DWCS Week 2 | LIVESTREAM",
-        "2026-08-18  Islam Makhachev Has A MAJOR SIZE Problem...",
-        "2026-08-17  The ULTIMATE UFC GOAT Debate: Jones vs Islam (ft Wade Concept)",
-        "2026-08-16  UNDISPUTED GOAT #islammakhachev  #ufc330  #edit  #iangarry  #makhachev"
+      "selected": [
+        {
+          "video_id": "B7O6aJE0TRs",
+          "title": "UFC Fight Night Hernandez vs Robocop FULL Card Predictions (BEST BETS)",
+          "published": "2026-08-20T19:07:04+00:00"
+        }
       ]
     },
     {
@@ -2375,11 +2452,11 @@
       "feed_videos": 15,
       "selected": [],
       "recent_titles": [
+        "2026-08-20  The Ultimate BedtimeMMA UFC QnA (100% Honest)",
         "2026-08-19  UFC Sacramento Full Card Predictions (BEDTIME BICKS)",
         "2026-08-18  The Best UFC Hatewatches I've Experienced (Top 10)",
         "2026-08-17  My Reaction To UFC 333 Announcement (Volk vs Evloev, Merab vs Yan)",
-        "2026-08-16  The Best Fights To Make After UFC 330 (Makhachev vs Garry)",
-        "2026-08-16  UFC 330 Immediate Reaction/Recap (Makhachev vs Garry)"
+        "2026-08-16  The Best Fights To Make After UFC 330 (Makhachev vs Garry)"
       ]
     },
     {
@@ -2390,11 +2467,11 @@
       "feed_videos": 15,
       "selected": [],
       "recent_titles": [
+        "2026-08-20  Robocop Will DESTROY Fluffy!",
         "2026-08-18  GENIE PICKS DWCS WEEK 2 #ufc #mma #fyp #dwcs #week2 #shorts",
         "2026-08-14  GENIE PICKS UFC 330 MAKHACHEV VS GARRY #UFC #MMA #SHORTS #FIGHTNIGHT #PARAMOUNTPLUS",
         "2026-08-11  GENIE PICKS DWCS WEEK 1 #UFC #MMA #DWCS #WEEK1 #UFCFIGHTNIGHT #SHORTS",
-        "2026-08-10  Genie Picks UFC 330",
-        "2026-08-07  GENIE PICKS GAMROT VS SALKILD #UFC #MMA #FIGHT #QUICK #PICKS #SHORTS #UFCFIGHTNIGHT #PARAMOUNTPLUS"
+        "2026-08-10  Genie Picks UFC 330"
       ]
     },
     {
@@ -2405,11 +2482,11 @@
       "feed_videos": 15,
       "selected": [],
       "recent_titles": [
+        "2026-08-20  Hey guys! Sorry for no video last night. Here’s Colby’s OFFICIAL PICKS FOR THIS WEEKEND!",
+        "2026-08-20  Hey guys sorry for no video last night. Here’s Brodies OFFICIAL PICKS FOR THIS WEEKEND!",
         "2026-08-13  LETS TALK UFC 330! FULL CARD PREDICTIONS!",
         "2026-08-06  WE LOVE THIS SPORT",
-        "2026-08-06  Let's Talk UFC Fight NIght Gamrot vs Salkilld!!!!",
-        "2026-08-05  UFC VEGAS SALKILLD VS GAMROT FULL PREDICTIONS",
-        "2026-08-01  UFC FIGHT NIGHT MEDIC VS RODRIGUEZ CHEAT SHEET! FIGHTER FACE OFFS AND BETS!"
+        "2026-08-06  Let's Talk UFC Fight NIght Gamrot vs Salkilld!!!!"
       ]
     },
     {
@@ -2418,13 +2495,12 @@
       "status": "ok",
       "channel_id": "UUIhQvpinmS8Eq6PrQ021DKQ",
       "feed_videos": 15,
-      "selected": [],
-      "recent_titles": [
-        "2026-08-19  Din Thomas ABANDONS Robertson For Losing? Strickland TRASHES HIM? Contender Series Reaction?",
-        "2026-08-17  UFC 333 OFFICIAL! Volkanovski vs Evloev? Yan vs Dvalishvili 3? My Early Predictions & Reaction",
-        "2026-08-16  UFC 330 Event Recap Makhachev vs Machado Garry Full Card Reaction & Breakdown",
-        "2026-08-16  Islam Makhachev DEFEATS Ian Machado Garry? WORST RESULT EVER? Full Fight Reaction & Breakdown?",
-        "2026-08-16  UFC 330 LIVE MAKHACHEV VS MACHADO GARRY LIVESTREAM & FULL FIGHT COMPANION"
+      "selected": [
+        {
+          "video_id": "lmf0tEziCng",
+          "title": "UFC Fight Night Hernandez vs Rodrigues Predictions & Full Card Breakdown - UFC Sacramento Betting",
+          "published": "2026-08-20T15:41:55+00:00"
+        }
       ]
     },
     {
@@ -2448,13 +2524,12 @@
       "status": "ok",
       "channel_id": "UU6LlyJz9Mkm1MTU3EW4ZJPA",
       "feed_videos": 15,
-      "selected": [],
-      "recent_titles": [
-        "2026-08-16  UFC 330 RECAP",
-        "2026-08-12  UFC 330 Full Card Breakdown, Predictions, and Bets",
-        "2026-08-10  UFC Gamrot/Salkilld Recap",
-        "2026-08-06  Gigi Canuto vs. Carol Foro Prediction, UFC VEGAS 120 Bets, UFC 330 Early Bets",
-        "2026-08-01  UFC Fight Night 284 Gamrot vs. Salkilld Full Card Breakdown and Predictions"
+      "selected": [
+        {
+          "video_id": "pgVYN23ZOKY",
+          "title": "UFC HERNANDEZ VS. RODRIGUES Full Card Breakdown, Predictions,  and Bets",
+          "published": "2026-08-20T13:00:46+00:00"
+        }
       ]
     }
   ]
