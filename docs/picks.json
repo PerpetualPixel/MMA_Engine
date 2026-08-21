@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-21T00:56:54+00:00",
+  "generated_at": "2026-08-21T02:16:49+00:00",
   "event": {
     "name": "Hernandez vs. Rodrigues",
     "date": "",
@@ -10,35 +10,98 @@
       "name": "UFC Fight Night: Hernandez vs. Rodrigues",
       "date": "2026-08-22T21:00Z",
       "bouts": 13,
-      "off_card_dropped": 20
+      "off_card_dropped": 49
     },
     "odds": {
       "source": "the-odds-api",
       "market": "h2h",
-      "fetched_at": "2026-08-21T00:56:54+00:00",
-      "fights_priced": 13
+      "fetched_at": "2026-08-21T02:16:49+00:00",
+      "fights_priced": 14
     }
   },
   "source": "MMA_Engine trust-weighted capper consensus",
   "totals": {
-    "picks": 30,
-    "strong": 1,
-    "lean": 24,
-    "pass": 5
+    "picks": 58,
+    "strong": 11,
+    "lean": 34,
+    "pass": 13
   },
   "picks": [
     {
-      "fight_id": "gaziev|nzechukwu",
-      "fight": "Shamil Gaziev vs Kennedy Nzechukwu",
+      "fight_id": "douglas|emmers",
+      "fight": "Lerryan Douglas vs Jamall Emmers",
       "card_status": "on_card",
-      "market": "moneyline",
-      "market_label": "Moneyline",
-      "selection": "Kennedy Nzechukwu",
+      "market": "method_of_victory",
+      "market_label": "Method of Victory",
+      "selection": "Larion Douglas by KO/TKO",
       "consensus_pct": 100.0,
-      "weight": 11.73,
-      "pick_count": 3,
-      "avg_confidence": 6.3,
-      "strength": 7.9,
+      "weight": 30.59,
+      "pick_count": 8,
+      "avg_confidence": 6.1,
+      "strength": 10.0,
+      "tier": "strong",
+      "suggested_units": 2.0,
+      "quoted_odds": {
+        "american": -395,
+        "decimal": 1.253,
+        "count": 4
+      },
+      "value": 2.5,
+      "comments": [
+        {
+          "capper": "MMA Lock of the Night",
+          "comment": "Expects Douglas to walk Emmers down and eventually find a big knockout.",
+          "confidence": 7
+        },
+        {
+          "capper": "BetSlam with Sam",
+          "comment": "Emmers stays in the pocket and got clipped by Hyder Amil; Douglas is much faster and hits far too hard for that.",
+          "confidence": 6
+        },
+        {
+          "capper": "MMA Husky Hustler",
+          "comment": "Douglas is dangerous enough on the feet that Emmers eventually can't take wrestling entry risks without getting caught.",
+          "confidence": 6
+        },
+        {
+          "capper": "MMA OddsBreaker (Adam)",
+          "comment": "Adam sees it as a showcase fight and expects Douglas to knock Emmers out in the first round.",
+          "confidence": 7
+        },
+        {
+          "capper": "KennyOkoyeMMA",
+          "comment": "Believes Emmers will engage in boxing but be a step behind and won't take Douglas's straight punches.",
+          "confidence": 7
+        },
+        {
+          "capper": "TonyHasDiedMMA",
+          "comment": "Emmers is 37, was chinned by Nate Landwehr and boxed up by Jack Jenkins; Douglas has six straight knockouts and crazy power, though there's some worry about Emmers' takedowns.",
+          "confidence": 5
+        },
+        {
+          "capper": "THE MMA GURU",
+          "comment": "Douglas's jab and KO power plus his move to a better gym; thinks he hurts Emmers early and finishes against the cage, though he admits there is value on Emmers.",
+          "confidence": 6
+        },
+        {
+          "capper": "Axel MMA",
+          "comment": "Expects Douglas to establish low kicks then crack Emmers upstairs for an early first-or-second-round finish.",
+          "confidence": 5
+        }
+      ]
+    },
+    {
+      "fight_id": "dyer|reed",
+      "fight": "Shanelle Dyer vs Elise Reed",
+      "card_status": "on_card",
+      "market": "method_of_victory",
+      "market_label": "Method of Victory",
+      "selection": "Chanel Dyer by KO/TKO",
+      "consensus_pct": 100.0,
+      "weight": 24.55,
+      "pick_count": 6,
+      "avg_confidence": 6.5,
+      "strength": 10.0,
       "tier": "strong",
       "suggested_units": 2.0,
       "quoted_odds": {
@@ -46,12 +109,446 @@
         "decimal": 2.15,
         "count": 3
       },
+      "value": 11.5,
+      "comments": [
+        {
+          "capper": "MMA Lock of the Night",
+          "comment": "Believes Dyer ends up getting a finish.",
+          "confidence": 6
+        },
+        {
+          "capper": "BetSlam with Sam",
+          "comment": "Reed has already been KO'd by Sajara Eubanks and is at the end of her career, and the UFC matched Dyer with a striker who won't take her down; they warned not to load up since it's roughly 50/50 between a KO and a decision.",
+          "confidence": 6
+        },
+        {
+          "capper": "MMA OddsBreaker (Adam)",
+          "comment": "Adam agreed it's an easy fight for Dyer and that this is likely the end of the road in the UFC for Reed, who he sees as a bottom-tier fighter.",
+          "confidence": 7
+        },
+        {
+          "capper": "We Want Picks (Jacob)",
+          "comment": "A big favorite at plus money in what he believes is the most likely outcome; he didn't place it but likes it.",
+          "confidence": 6
+        },
+        {
+          "capper": "TonyHasDiedMMA",
+          "comment": "Reed leaves her head on the center line, has a bad chin and no fast-twitch athleticism, and has been finished by anyone with skill; Dyer should chin her in the first exchange.",
+          "confidence": 6
+        },
+        {
+          "capper": "THE MMA GURU",
+          "comment": "Dyer is more talented and Reed's only real weapon is okay boxing; he doesn't see Reed out-striking or out-grappling her, expecting a first or second round TKO.",
+          "confidence": 8
+        }
+      ]
+    },
+    {
+      "fight_id": "dyer|reed",
+      "fight": "Shanelle Dyer vs Elise Reed",
+      "card_status": "on_card",
+      "market": "moneyline",
+      "market_label": "Moneyline",
+      "selection": "Chanel Dyer",
+      "consensus_pct": 92.7,
+      "weight": 22.87,
+      "pick_count": 5,
+      "avg_confidence": 7.2,
+      "strength": 9.3,
+      "tier": "strong",
+      "suggested_units": 2.0,
+      "quoted_odds": {
+        "american": -750,
+        "decimal": 1.133,
+        "count": 2
+      },
+      "value": 1.2,
+      "comments": [
+        {
+          "capper": "We Want Picks (Jacob)",
+          "comment": "Dyer is massive for the division with 150+ Muay Thai fights, crazy power, clean technique and speed; Reed shouldn't be able to close distance for takedowns or stay safe striking. Both Angelo and Jacob agree with the odds and the 96% community read.",
+          "confidence": 9
+        },
+        {
+          "capper": "MMA Lock of the Night",
+          "comment": "Expects the fight to be more competitive than the -750 line since Reed is a good taekwondo specialist, but still sees Dyer getting the job done.",
+          "confidence": 6
+        },
+        {
+          "capper": "Locked Door MMA",
+          "comment": "Dyer is the far better Muay Thai/kickboxing striker with power and speed, while Reed fights with her hands low, gets hit and has no quality wins.",
+          "confidence": 7
+        },
+        {
+          "capper": "KennyOkoyeMMA",
+          "comment": "Dyer is better everywhere and should outstrike Reed, who tends to get beaten up.",
+          "confidence": 7
+        },
+        {
+          "capper": "Axel MMA",
+          "comment": "Dyer has the better, slicker kickboxing and range control while Reed is unimpressive on the feet and will be a step behind all fight.",
+          "confidence": 7
+        }
+      ]
+    },
+    {
+      "fight_id": "chavez|judice",
+      "fight": "Jeisla Chaves vs Carli Judice",
+      "card_status": "on_card",
+      "market": "moneyline",
+      "market_label": "Moneyline",
+      "selection": "Carli Judice",
+      "consensus_pct": 100.0,
+      "weight": 16.28,
+      "pick_count": 4,
+      "avg_confidence": 6.8,
+      "strength": 9.1,
+      "tier": "strong",
+      "suggested_units": 2.0,
+      "quoted_odds": {
+        "american": -525,
+        "decimal": 1.19,
+        "count": 1
+      },
+      "value": 1.7,
+      "comments": [
+        {
+          "capper": "We Want Picks (Jacob)",
+          "comment": "Both cappers land on Judice: she's the crisper, faster, higher-volume striker who doesn't slow down, and Jacob thinks Chavez is limited, will get worn down and possibly finished. Angelo notes the price is disgusting and he'd never bet it at 5-to-1, so it's a pick rather than a bet.",
+          "confidence": 5
+        },
+        {
+          "capper": "Locked Door MMA",
+          "comment": "Named the lock of the night: better striker, volume, speed and movement, while Chavez barely beat a poor opponent in her debut.",
+          "confidence": 10
+        },
+        {
+          "capper": "Axel MMA",
+          "comment": "Judice's slick kickboxing, speed and range management are too much for the power-loading Chavez.",
+          "confidence": 7
+        },
+        {
+          "capper": "Couch Warrior Podcast",
+          "comment": "Judice is sharper, faster and improving each fight; her output and pace should be too much for the still-green Chavez.",
+          "confidence": 5
+        }
+      ]
+    },
+    {
+      "fight_id": "haqparast|padilla",
+      "fight": "Nasrat Haqparast vs Chris Padilla",
+      "card_status": "on_card",
+      "market": "moneyline",
+      "market_label": "Moneyline",
+      "selection": "Chris Padilla",
+      "consensus_pct": 89.8,
+      "weight": 27.61,
+      "pick_count": 6,
+      "avg_confidence": 7.0,
+      "strength": 9.0,
+      "tier": "strong",
+      "suggested_units": 2.0,
+      "quoted_odds": {
+        "american": 104,
+        "decimal": 2.035,
+        "count": 2
+      },
+      "value": 9.3,
+      "comments": [
+        {
+          "capper": "MMA Lock of the Night",
+          "comment": "Padilla's constant forward pressure, cage cutting and damage should beat the slowing Haqparast, who makes small striking defense mistakes.",
+          "confidence": 6
+        },
+        {
+          "capper": "BetSlam with Sam",
+          "comment": "Slam of the week: Padilla is better than Haqparast everywhere except pure boxing, and Haqparast is defensively porous (160 strikes absorbed vs Ribovics), coming off a brutal KO loss with lots of mileage.",
+          "confidence": 9
+        },
+        {
+          "capper": "Locked Door MMA",
+          "comment": "Padilla is the smarter fighter with better grappling, elbows and round-stealing ability, while Haqparast gets hit far too much; good underdog value in a close fight.",
+          "confidence": 6
+        },
+        {
+          "capper": "We Want Picks (Jacob)",
+          "comment": "Padilla will close the distance, clinch against the cage, grind and rack up control time; Hakparast has looked bad in fights he shouldn't. Jacob backs Padilla's pressure, elbows and knees.",
+          "confidence": 7
+        },
+        {
+          "capper": "Livid Larry MMA",
+          "comment": "Underdog lock of the card and an official money line play; he believes Padilla can apply heavy pressure and trade damaging shots like Rivovic and Jared Gordon did to Haqparast, winning by decision or late TKO.",
+          "confidence": 9
+        },
+        {
+          "capper": "Pure Picks MMA",
+          "comment": "Haqparast's recent wins were close/split decisions he could have lost and he gets hit a lot, while Padilla is durable, high-volume with nasty elbows, knees and kicks and good cardio for three rounds; sees him winning by decision or TKO.",
+          "confidence": 5
+        }
+      ]
+    },
+    {
+      "fight_id": "douglas|emmers",
+      "fight": "Lerryan Douglas vs Jamall Emmers",
+      "card_status": "on_card",
+      "market": "moneyline",
+      "market_label": "Moneyline",
+      "selection": "Larion Douglas",
+      "consensus_pct": 89.7,
+      "weight": 23.51,
+      "pick_count": 6,
+      "avg_confidence": 6.2,
+      "strength": 9.0,
+      "tier": "strong",
+      "suggested_units": 2.0,
+      "quoted_odds": {
+        "american": -385,
+        "decimal": 1.26,
+        "count": 2
+      },
+      "value": 2.3,
+      "comments": [
+        {
+          "capper": "MMA Lock of the Night",
+          "comment": "Douglas is the new boogeyman in the UFC and should walk Emmers down and shrug off his takedowns.",
+          "confidence": 7
+        },
+        {
+          "capper": "We Want Picks (Jacob)",
+          "comment": "Douglas is a strong prospect with a great jab and boxing out of Cub's gym; Jacob thinks it's a bad stylistic matchup for Emmers, though Angelo is hesitant to bet at the price due to Emmers' wrestling and power.",
+          "confidence": 5
+        },
+        {
+          "capper": "Locked Door MMA",
+          "comment": "Douglas is quick, covers ground, occupies with the jab and comes over the top; they think he clips Emmers, and the moneyline price is fine for the juicer parlay.",
+          "confidence": 6
+        },
+        {
+          "capper": "KennyOkoyeMMA",
+          "comment": "Douglas has heavy hands, a good high guard and strong boxing; sees value at -390 and used him as a parlay leg.",
+          "confidence": 8
+        },
+        {
+          "capper": "MMA AL DENTE",
+          "comment": "Prediction is Douglas by round-one knockout given seven straight knockout wins and deceptive lunging power, though he hasn't yet committed a bet.",
+          "confidence": 4
+        },
+        {
+          "capper": "Axel MMA",
+          "comment": "Calls it an easy pick: Douglas is a powerhouse with strong calf kicks and Emmers is outmatched.",
+          "confidence": 7
+        }
+      ]
+    },
+    {
+      "fight_id": "mcvey|schultz",
+      "fight": "Jackson McVey vs Wes Schultz",
+      "card_status": "on_card",
+      "market": "moneyline",
+      "market_label": "Moneyline",
+      "selection": "Jackson McVey",
+      "consensus_pct": 87.7,
+      "weight": 26.18,
+      "pick_count": 8,
+      "avg_confidence": 5.4,
+      "strength": 8.8,
+      "tier": "strong",
+      "suggested_units": 2.0,
+      "quoted_odds": {
+        "american": -180,
+        "decimal": 1.556,
+        "count": 1
+      },
+      "value": 4.9,
+      "comments": [
+        {
+          "capper": "We Want Picks (Jacob)",
+          "comment": "Jacob says Schultz has forgotten how to shoot takedowns and has non-existent striking, while McVey has flashes of belonging with knees, elbows and offensive wrestling.",
+          "confidence": 6
+        },
+        {
+          "capper": "BetSlam with Sam",
+          "comment": "McVey is bigger and younger and the loss to Schultz was long ago; Schultz has shown no improvement, but Sam stated low confidence and wrote down no prop.",
+          "confidence": 3
+        },
+        {
+          "capper": "Locked Door MMA",
+          "comment": "Schultz has abysmal striking and atrocious takedowns and immediately sits to his back; McVey is bigger with much better striking.",
+          "confidence": 7
+        },
+        {
+          "capper": "KennyOkoyeMMA",
+          "comment": "Lean toward McVey because he uses his kickboxing and range better in what should be a striking fight.",
+          "confidence": 5
+        },
+        {
+          "capper": "MMA AL DENTE",
+          "comment": "Official prediction: McVey is a ferocious clinch fighter with a string of round-one finishes and he expects him to rough Schultz up early, though he's still waiting on props.",
+          "confidence": 5
+        },
+        {
+          "capper": "THE MMA GURU",
+          "comment": "McVey has a higher ceiling, is more explosive on the feet, has submission and clinch/cage work, and is the slight favorite; leaning to a second-round TKO.",
+          "confidence": 5
+        },
+        {
+          "capper": "Axel MMA",
+          "comment": "Leg of the +110 two-leg parlay; McVey has improved a lot since the amateur loss years ago, should stop Schultz's takedowns, win the clinch with knees and elbows, and possibly finish him.",
+          "confidence": 7
+        },
+        {
+          "capper": "Couch Warrior Podcast",
+          "comment": "Schultz has atrocious takedown defense, poor striking and cardio, and was controlled by a retired 35-year-old kickboxer; McVey should beat him up in the clinch and get him out early, though not a fight to lay big units on.",
+          "confidence": 5
+        }
+      ]
+    },
+    {
+      "fight_id": "jones|mederos",
+      "fight": "Mason Jones vs MarQuel Mederos",
+      "card_status": "on_card",
+      "market": "moneyline",
+      "market_label": "Moneyline",
+      "selection": "Mason Jones",
+      "consensus_pct": 85.7,
+      "weight": 25.65,
+      "pick_count": 7,
+      "avg_confidence": 6.0,
+      "strength": 8.6,
+      "tier": "strong",
+      "suggested_units": 2.0,
+      "quoted_odds": {
+        "american": -260,
+        "decimal": 1.385,
+        "count": 1
+      },
+      "value": 3.3,
+      "comments": [
+        {
+          "capper": "MMA Lock of the Night",
+          "comment": "Jones's pace, pressure and chaos plus his grappling should break Mederos down in rounds two and three and win on the scorecards.",
+          "confidence": 6
+        },
+        {
+          "capper": "Locked Door MMA",
+          "comment": "Jones is durable, bigger, has dog in him and makes opponents fight a dirty fight, while Mederos moves backwards constantly and doesn't sit down on shots.",
+          "confidence": 7
+        },
+        {
+          "capper": "KennyOkoyeMMA",
+          "comment": "Jones is more well-rounded with better activity and can mix in wrestling, while Mederos can go passive; sees Jones pulling away after an early competitive round.",
+          "confidence": 6
+        },
+        {
+          "capper": "MMA AL DENTE",
+          "comment": "Prediction is Jones by decision; he's skilled everywhere, ferocious, and should duplicate the success Chris Padilla had against Mederos - he even says he may have talked himself into the moneyline.",
+          "confidence": 5
+        },
+        {
+          "capper": "We Want Picks (Jacob)",
+          "comment": "Jones is a special kind of savage who will make it ugly and won't give the clean, technical Mederos room to breathe.",
+          "confidence": 7
+        },
+        {
+          "capper": "Axel MMA",
+          "comment": "Leg of a +110 two-leg parlay; Jones's constant pressure and cage-cutting will wear down an opponent who wants to fight at range, leading to a late finish or decision.",
+          "confidence": 7
+        },
+        {
+          "capper": "Couch Warrior Podcast",
+          "comment": "Mederos can be paced and grappled; Jones' relentless pressure, output and better grappling should take over the later rounds, likely a Jones decision, though the line may be a bit wide.",
+          "confidence": 4
+        }
+      ]
+    },
+    {
+      "fight_id": "chapman|wint",
+      "fight": "Terrance Chatman vs Anthony Wint",
+      "card_status": "on_card",
+      "market": "method_of_victory",
+      "market_label": "Method of Victory",
+      "selection": "Anthony Wint by KO/TKO",
+      "consensus_pct": 85.0,
+      "weight": 21.24,
+      "pick_count": 5,
+      "avg_confidence": 7.0,
+      "strength": 8.5,
+      "tier": "strong",
+      "suggested_units": 2.0,
+      "quoted_odds": {
+        "american": -1000,
+        "decimal": 1.1,
+        "count": 5
+      },
+      "value": 0.9,
+      "comments": [
+        {
+          "capper": "MMA Lock of the Night",
+          "comment": "Wint's athleticism, method and power should find the big shot for a first-round knockout, though Chapman may be more competitive than expected.",
+          "confidence": 5
+        },
+        {
+          "capper": "MMA OddsBreaker (Adam)",
+          "comment": "Wint is an athletic heavyweight prospect and the fight is set up for Chapman to get knocked out; a Chapman win would be one of the biggest upsets of the year.",
+          "confidence": 8
+        },
+        {
+          "capper": "We Want Picks (Jacob)",
+          "comment": "He calls -145 unbelievable odds for a former NFL linebacker who hits like a freight train against a small, non-athletic opponent.",
+          "confidence": 7
+        },
+        {
+          "capper": "TonyHasDiedMMA",
+          "comment": "Wint is an explosive, athletic heavyweight with all finishes while Chapman is out of shape with poor competition; he'll land and Chapman goes down (though the -1000 price is too big).",
+          "confidence": 7
+        },
+        {
+          "capper": "THE MMA GURU",
+          "comment": "Wint has crazy power and athleticism while Chapman is out of shape with a padded record; a layup debut finish.",
+          "confidence": 8
+        }
+      ]
+    },
+    {
+      "fight_id": "gaziev|nzechukwu",
+      "fight": "Shamil Gaziev vs Kennedy Nzechukwu",
+      "card_status": "on_card",
+      "market": "moneyline",
+      "market_label": "Moneyline",
+      "selection": "Kennedy Nzechukwu",
+      "consensus_pct": 78.6,
+      "weight": 21.12,
+      "pick_count": 6,
+      "avg_confidence": 5.7,
+      "strength": 7.9,
+      "tier": "strong",
+      "suggested_units": 2.0,
+      "quoted_odds": {
+        "american": 115,
+        "decimal": 2.15,
+        "count": 2
+      },
       "value": 9.1,
       "comments": [
         {
           "capper": "BetSlam with Sam",
-          "comment": "Gaziev is fat, badly beaten up in his last two fights and likely to quit if it goes long; Nzechukwu is younger, less damaged and lives healthier — take the moneyline.",
+          "comment": "Sam was shocked Nzechukwu was an underdog: Gaziev looks fatter, is nearly 37 and took heavy damage in his last fights, while Nzechukwu is now coaching basics and just needs a jab and leg kick plus a wrestling edge.",
           "confidence": 7
+        },
+        {
+          "capper": "Locked Door MMA",
+          "comment": "Lesser of two evils pick: Nzechukwu is quicker, more athletic with better stance and striking, and Gaziev fights with low hands, gasses and quit on the stool.",
+          "confidence": 6
+        },
+        {
+          "capper": "KennyOkoyeMMA",
+          "comment": "Calls it a 50/50 and says he isn't confident enough to parlay it, but Nzechukwu picks his shots and has looked better at heavyweight if Gaziev strikes with him.",
+          "confidence": 3
+        },
+        {
+          "capper": "We Want Picks (Jacob)",
+          "comment": "Gaziev is on a two-fight KO skid, is hittable and reliant on one right hand, while Nzechukwu is bigger, longer, more polished and has decent takedown defense from his Buchecha camp.",
+          "confidence": 6
         },
         {
           "capper": "Axel MMA",
@@ -66,20 +563,73 @@
       ]
     },
     {
+      "fight_id": "deridder|dolidze",
+      "fight": "Reinier de Ridder vs Roman Dolidze",
+      "card_status": "on_card",
+      "market": "moneyline",
+      "market_label": "Moneyline",
+      "selection": "Reinier de Ridder",
+      "consensus_pct": 85.2,
+      "weight": 17.21,
+      "pick_count": 4,
+      "avg_confidence": 6.8,
+      "strength": 7.9,
+      "tier": "strong",
+      "suggested_units": 2.0,
+      "comments": [
+        {
+          "capper": "BetSlam with Sam",
+          "comment": "Dolidze is done at this point and will fade once things stop going his way; de Ridder is the bigger, undrained A-side, so don't get cute with props, just take him straight.",
+          "confidence": 6
+        },
+        {
+          "capper": "Locked Door MMA",
+          "comment": "De Ridder is the better striker of two poor strikers and the better grappler, plus he's no longer draining himself to make middleweight; included in the 'basic' picks.",
+          "confidence": 8
+        },
+        {
+          "capper": "KennyOkoyeMMA",
+          "comment": "Thinks the odds are far too wide and wouldn't bet much, but de Ridder's superior grappling and control time should sneak him a close, possibly decision win.",
+          "confidence": 4
+        },
+        {
+          "capper": "We Want Picks (Jacob)",
+          "comment": "He absolutely loves RDR here: the move to light heavyweight suits his size, he'll manage range, land jump knees and Dolidze will break mentally.",
+          "confidence": 9
+        }
+      ]
+    },
+    {
       "fight_id": "petrino|spivac",
       "fight": "Vitor Petrino vs Serghei Spivac",
       "card_status": "on_card",
       "market": "method_of_victory",
       "market_label": "Method of Victory",
       "selection": "Vitor Petrino by KO",
-      "consensus_pct": 100.0,
-      "weight": 9.33,
-      "pick_count": 3,
-      "avg_confidence": 6.0,
+      "consensus_pct": 78.0,
+      "weight": 17.64,
+      "pick_count": 5,
+      "avg_confidence": 6.2,
       "strength": 7.3,
       "tier": "lean",
       "suggested_units": 1.0,
+      "quoted_odds": {
+        "american": -175,
+        "decimal": 1.571,
+        "count": 1
+      },
+      "value": 4.2,
       "comments": [
+        {
+          "capper": "MMA Husky Hustler",
+          "comment": "Petrino's heavyweight power is the difference; if Spivak can't consistently get him down he'll have problems standing in front of him.",
+          "confidence": 6
+        },
+        {
+          "capper": "MMA OddsBreaker (Adam)",
+          "comment": "Petrino looks better at heavyweight without the weight cut, has power and a good ground game, while Spivak has a bad chin.",
+          "confidence": 7
+        },
         {
           "capper": "Artem MMA",
           "comment": "Petrino hits far too hard for Spivak's jab-based game and heavyweights don't get up well off their back; only risk is Petrino needlessly wrestling into a guillotine.",
@@ -98,61 +648,67 @@
       ]
     },
     {
-      "fight_id": "haqparast|padilla",
-      "fight": "Nasrat Haqparast vs Chris Padilla",
-      "card_status": "on_card",
+      "fight_id": "paxton|perez",
+      "fight": "Logan Paxton vs Christian Perez",
+      "card_status": "cancelled",
       "market": "moneyline",
       "market_label": "Moneyline",
-      "selection": "Chris Padilla",
+      "selection": "Christian Perez",
       "consensus_pct": 100.0,
-      "weight": 8.54,
-      "pick_count": 2,
-      "avg_confidence": 6.5,
-      "strength": 7.1,
-      "tier": "lean",
-      "suggested_units": 1.0,
-      "quoted_odds": {
-        "american": 102,
-        "decimal": 2.02,
-        "count": 2
-      },
-      "value": 7.2,
-      "comments": [
-        {
-          "capper": "BetSlam with Sam",
-          "comment": "Haqparast is damaged and beaten up after years of decisions and a recent head kick KO, while Padilla is on a five-fight UFC run and has a significantly better MMA mind; Padilla is the slam of the week for the price.",
-          "confidence": 8
-        },
-        {
-          "capper": "Pure Picks MMA",
-          "comment": "Haqparast's recent wins were close/split decisions he could have lost and he gets hit a lot, while Padilla is durable, high-volume with nasty elbows, knees and kicks and good cardio for three rounds; sees him winning by decision or TKO.",
-          "confidence": 5
-        }
-      ]
-    },
-    {
-      "fight_id": "jones|madeiros",
-      "fight": "Mason Jones vs MarQuel Mederos",
-      "card_status": "on_card",
-      "market": "moneyline",
-      "market_label": "Moneyline",
-      "selection": "Mason Jones",
-      "consensus_pct": 100.0,
-      "weight": 7.86,
+      "weight": 8.03,
       "pick_count": 2,
       "avg_confidence": 6.5,
       "strength": 7.0,
       "tier": "lean",
       "suggested_units": 1.0,
+      "quoted_odds": {
+        "american": -225,
+        "decimal": 1.444,
+        "count": 1
+      },
+      "value": 3.1,
+      "comments": [
+        {
+          "capper": "MMA OddsBreaker (Adam)",
+          "comment": "Adam picks Perez without further explanation.",
+          "confidence": 5
+        },
+        {
+          "capper": "BetSlam with Sam",
+          "comment": "Called Perez the lock of the card — far more skilled, showed the real deal against Manuel Sosa, while Paxton is a meat-and-potatoes wrestler who's beaten only tin cans.",
+          "confidence": 8
+        }
+      ]
+    },
+    {
+      "fight_id": "chapman|wint",
+      "fight": "Terrance Chatman vs Anthony Wint",
+      "card_status": "on_card",
+      "market": "over_under",
+      "market_label": "Over / Under",
+      "selection": "Under 1.5 rounds",
+      "consensus_pct": 100.0,
+      "weight": 7.67,
+      "pick_count": 2,
+      "avg_confidence": 6.0,
+      "strength": 6.9,
+      "tier": "lean",
+      "suggested_units": 1.0,
+      "quoted_odds": {
+        "american": -143,
+        "decimal": 1.7,
+        "count": 2
+      },
+      "value": 4.8,
       "comments": [
         {
           "capper": "BetSlam with Sam",
-          "comment": "Jones is a savage with a reach advantage who should out-tough Madeiros, as shown in his war with Axel Solar.",
-          "confidence": 6
+          "comment": "Combined with Wint's moneyline at -228; knockout chances drop off dramatically in the second half of a heavyweight fight once both men tire.",
+          "confidence": 5
         },
         {
-          "capper": "Axel MMA",
-          "comment": "Leg of a +110 two-leg parlay; Jones's constant pressure and cage-cutting will wear down an opponent who wants to fight at range, leading to a late finish or decision.",
+          "capper": "We Want Picks (Jacob)",
+          "comment": "Wint should smoke his overmatched opponent in a few minutes; parlayed with the Spivak/Petrino over 1.5.",
           "confidence": 7
         }
       ]
@@ -185,100 +741,94 @@
       ]
     },
     {
-      "fight_id": "chapman|wint",
-      "fight": "Terrance Chatman vs Anthony Wint",
-      "card_status": "on_card",
+      "fight_id": "puga|trembley",
+      "fight": "Roman Puga vs Tanner Trembley",
+      "card_status": "cancelled",
       "market": "moneyline",
       "market_label": "Moneyline",
-      "selection": "Anthony Wint",
+      "selection": "Roman Puga",
       "consensus_pct": 100.0,
-      "weight": 7.37,
+      "weight": 7.23,
       "pick_count": 2,
-      "avg_confidence": 6.5,
+      "avg_confidence": 5.5,
       "strength": 6.8,
       "tier": "lean",
       "suggested_units": 1.0,
       "quoted_odds": {
-        "american": -371,
-        "decimal": 1.269,
-        "count": 2
+        "american": -170,
+        "decimal": 1.588,
+        "count": 1
       },
-      "value": 1.8,
+      "value": 4.0,
       "comments": [
         {
           "capper": "BetSlam with Sam",
-          "comment": "Part of his Wint moneyline + under 1.5 rounds parlay; Wint probably wins and any knockout likely comes in the first seven and a half minutes, though he's small for heavyweight and the price isn't exciting.",
-          "confidence": 5
+          "comment": "Trembley started MMA late, has faced nobody of note and mostly submits opponents, while Puga is a young Mexican knockout artist who has never been submitted.",
+          "confidence": 6
         },
         {
-          "capper": "Axel MMA",
-          "comment": "Wint just demolished Matt Adams on Contender Series and Chapman is a low-output, unimpressive striker.",
-          "confidence": 8
+          "capper": "MMA OddsBreaker (Adam)",
+          "comment": "Adam simply sides with Puga on the Contender Series card.",
+          "confidence": 5
         }
       ]
     },
     {
-      "fight_id": "chavez|judice",
-      "fight": "Jeisla Chaves vs Carli Judice",
+      "fight_id": "dyer|reed",
+      "fight": "Shanelle Dyer vs Elise Reed",
       "card_status": "on_card",
-      "market": "method_of_victory",
-      "market_label": "Method of Victory",
-      "selection": "Carli Judice by decision",
+      "market": "over_under",
+      "market_label": "Over / Under",
+      "selection": "Under 2.5 rounds",
       "consensus_pct": 100.0,
-      "weight": 6.78,
+      "weight": 6.86,
       "pick_count": 2,
-      "avg_confidence": 6.0,
+      "avg_confidence": 5.5,
+      "strength": 6.7,
+      "tier": "lean",
+      "suggested_units": 1.0,
+      "comments": [
+        {
+          "capper": "Locked Door MMA",
+          "comment": "They think Dyer wins inside the distance and suggested parlaying this fight's under 2.5 with other unders on the card.",
+          "confidence": 5
+        },
+        {
+          "capper": "We Want Picks (Jacob)",
+          "comment": "He expects Dyer to beat Reed up badly and get a finish.",
+          "confidence": 6
+        }
+      ]
+    },
+    {
+      "fight_id": "jones|mederos",
+      "fight": "Mason Jones vs MarQuel Mederos",
+      "card_status": "on_card",
+      "market": "over_under",
+      "market_label": "Over / Under",
+      "selection": "Over 2.5 rounds",
+      "consensus_pct": 100.0,
+      "weight": 6.66,
+      "pick_count": 2,
+      "avg_confidence": 5.5,
       "strength": 6.7,
       "tier": "lean",
       "suggested_units": 1.0,
       "quoted_odds": {
-        "american": 125,
-        "decimal": 2.25,
+        "american": -200,
+        "decimal": 1.5,
         "count": 1
       },
-      "value": 8.4,
+      "value": 3.4,
       "comments": [
         {
-          "capper": "BetSlam with Sam",
-          "comment": "Judice is the better striker with more volume but has won the vast majority of her UFC fights by decision, and Chavez is incredibly tough and won't quit; he sees a damage-based decision.",
+          "capper": "We Want Picks (Jacob)",
+          "comment": "Both men are very tough so he expects the fight to go long.",
           "confidence": 6
         },
         {
-          "capper": "Axel MMA",
-          "comment": "He sees Judice picking Chavez apart from distance for 15 minutes and winning on the cards.",
-          "confidence": 6
-        }
-      ]
-    },
-    {
-      "fight_id": "douglas|emmers",
-      "fight": "Lerryan Douglas vs Jamall Emmers",
-      "card_status": "on_card",
-      "market": "method_of_victory",
-      "market_label": "Method of Victory",
-      "selection": "Larion Douglas by KO/TKO",
-      "consensus_pct": 100.0,
-      "weight": 6.36,
-      "pick_count": 2,
-      "avg_confidence": 5.5,
-      "strength": 6.6,
-      "tier": "lean",
-      "suggested_units": 1.0,
-      "quoted_odds": {
-        "american": -215,
-        "decimal": 1.465,
-        "count": 1
-      },
-      "value": 3.1,
-      "comments": [
-        {
-          "capper": "BetSlam with Sam",
-          "comment": "Emmers stays in the pocket and got clipped by Hyder Amil; Douglas is much faster and hits far too hard for that.",
-          "confidence": 6
-        },
-        {
-          "capper": "Axel MMA",
-          "comment": "Expects Douglas to establish low kicks then crack Emmers upstairs for an early first-or-second-round finish.",
+          "capper": "MMA AL DENTE",
+          "comment": "He bet the over because he thinks this one is a grind that goes the distance.",
           "confidence": 5
         }
       ]
@@ -311,14 +861,14 @@
       ]
     },
     {
-      "fight_id": "mcvey|schultz",
-      "fight": "Jackson McVey vs Wes Schultz",
+      "fight_id": "hernandez|rodrigues",
+      "fight": "Anthony Hernandez vs Gregory Rodrigues",
       "card_status": "on_card",
-      "market": "moneyline",
-      "market_label": "Moneyline",
-      "selection": "Jackson McVey",
+      "market": "round",
+      "market_label": "Round",
+      "selection": "Gregory Rodrigues by KO in round 1 or 2",
       "consensus_pct": 100.0,
-      "weight": 5.82,
+      "weight": 5.85,
       "pick_count": 2,
       "avg_confidence": 5.0,
       "strength": 6.5,
@@ -326,24 +876,24 @@
       "suggested_units": 1.0,
       "comments": [
         {
-          "capper": "BetSlam with Sam",
-          "comment": "McVey is bigger and younger and the loss to Schultz was long ago; Schultz has shown no improvement, but Sam stated low confidence and wrote down no prop.",
-          "confidence": 3
+          "capper": "Artem MMA",
+          "comment": "Hernandez chose to box Strickland and shot no takedowns, and Rodrigues hits harder with two rounds of cardio; if it reaches round three Hernandez takes over.",
+          "confidence": 5
         },
         {
-          "capper": "Axel MMA",
-          "comment": "Leg of the +110 two-leg parlay; McVey has improved a lot since the amateur loss years ago, should stop Schultz's takedowns, win the clinch with knees and elbows, and possibly finish him.",
-          "confidence": 7
+          "capper": "Livid Larry MMA",
+          "comment": "A hedge play on the main event since an early KO is the most likely scenario if Rodrigues wins.",
+          "confidence": 5
         }
       ]
     },
     {
-      "fight_id": "jones|madeiros",
-      "fight": "Mason Jones vs MarQuel Mederos",
-      "card_status": "on_card",
+      "fight_id": "paxton|perez",
+      "fight": "Logan Paxton vs Christian Perez",
+      "card_status": "cancelled",
       "market": "method_of_victory",
       "market_label": "Method of Victory",
-      "selection": "Mason Jones by submission",
+      "selection": "Christian Perez by submission",
       "consensus_pct": 100.0,
       "weight": 4.97,
       "pick_count": 1,
@@ -351,55 +901,21 @@
       "strength": 6.2,
       "tier": "lean",
       "suggested_units": 1.0,
-      "quoted_odds": {
-        "american": 500,
-        "decimal": 6.0,
-        "count": 1
-      },
-      "value": 31.0,
       "comments": [
         {
           "capper": "BetSlam with Sam",
-          "comment": "At +500 he loves it: if Jones gets the rangy striker Madeiros down he can submit him.",
+          "comment": "Perez is far more skilled and should cook Paxton, whose only path is takedowns and ground and pound.",
           "confidence": 7
         }
       ]
     },
     {
-      "fight_id": "haqparast|padilla",
-      "fight": "Nasrat Haqparast vs Chris Padilla",
+      "fight_id": "mcvey|schultz",
+      "fight": "Jackson McVey vs Wes Schultz",
       "card_status": "on_card",
-      "market": "method_of_victory",
-      "market_label": "Method of Victory",
-      "selection": "Chris Padilla inside the distance (KO or submission)",
-      "consensus_pct": 100.0,
-      "weight": 4.97,
-      "pick_count": 1,
-      "avg_confidence": 7.0,
-      "strength": 6.2,
-      "tier": "lean",
-      "suggested_units": 1.0,
-      "quoted_odds": {
-        "american": 290,
-        "decimal": 3.9,
-        "count": 1
-      },
-      "value": 18.0,
-      "comments": [
-        {
-          "capper": "BetSlam with Sam",
-          "comment": "Haqparast's chin is compromised and Padilla fights smart in every realm; +290 inside the distance is worth laying money on.",
-          "confidence": 7
-        }
-      ]
-    },
-    {
-      "fight_id": "douglas|emmers",
-      "fight": "Lerryan Douglas vs Jamall Emmers",
-      "card_status": "on_card",
-      "market": "over_under",
-      "market_label": "Over / Under",
-      "selection": "Under 1.5 rounds",
+      "market": "round",
+      "market_label": "Round",
+      "selection": "Jackson McVey to finish in round 1",
       "consensus_pct": 100.0,
       "weight": 4.76,
       "pick_count": 1,
@@ -407,17 +923,39 @@
       "strength": 6.2,
       "tier": "lean",
       "suggested_units": 1.0,
-      "quoted_odds": {
-        "american": -155,
-        "decimal": 1.645,
-        "count": 1
-      },
-      "value": 4.0,
       "comments": [
         {
           "capper": "BetSlam with Sam",
-          "comment": "Thinks the under 1.5 at -155 is better value than Douglas round-one KO or the -215 KO price, since Emmers' wrestling could extend round one slightly.",
+          "comment": "All seven of McVey's wins come in the first round (KO or submission off a takedown attempt), and they dismiss Schultz's win over a retired, out-of-shape Ben Johnston.",
           "confidence": 7
+        }
+      ]
+    },
+    {
+      "fight_id": "barbosa|kuse",
+      "fight": "Marcio Barbosa vs Ryan Kuse",
+      "card_status": "on_card",
+      "market": "moneyline",
+      "market_label": "Moneyline",
+      "selection": "Marcio Barbosa",
+      "consensus_pct": 100.0,
+      "weight": 4.72,
+      "pick_count": 1,
+      "avg_confidence": 8.0,
+      "strength": 6.2,
+      "tier": "lean",
+      "suggested_units": 1.0,
+      "quoted_odds": {
+        "american": -850,
+        "decimal": 1.118,
+        "count": 1
+      },
+      "value": 0.7,
+      "comments": [
+        {
+          "capper": "THE MMA GURU",
+          "comment": "Massive gap in competition — Barbosa knocked out his debut opponent and ran the LFA gauntlet while Kuse fought cans; expects an early knockout.",
+          "confidence": 8
         }
       ]
     },
@@ -444,12 +982,12 @@
       ]
     },
     {
-      "fight_id": "dyer|reed",
-      "fight": "Shanelle Dyer vs Elise Reed",
-      "card_status": "on_card",
+      "fight_id": "puga|trembley",
+      "fight": "Roman Puga vs Tanner Trembley",
+      "card_status": "cancelled",
       "market": "method_of_victory",
       "market_label": "Method of Victory",
-      "selection": "Chanel Dyer by KO/TKO",
+      "selection": "Roman Puga by KO/TKO",
       "consensus_pct": 100.0,
       "weight": 4.26,
       "pick_count": 1,
@@ -457,27 +995,21 @@
       "strength": 6.1,
       "tier": "lean",
       "suggested_units": 1.0,
-      "quoted_odds": {
-        "american": 115,
-        "decimal": 2.15,
-        "count": 1
-      },
-      "value": 7.0,
       "comments": [
         {
           "capper": "BetSlam with Sam",
-          "comment": "Dyer is the better striker and Reed has three KO losses and has been finished recently; her better wins are years old.",
+          "comment": "Puga is a legitimate boxing threat with striking finishes; Sam said he'll take the KO if it's plus money.",
           "confidence": 6
         }
       ]
     },
     {
-      "fight_id": "deridder|dolidze",
-      "fight": "Reinier de Ridder vs Roman Dolidze",
-      "card_status": "on_card",
+      "fight_id": "brito|fazil",
+      "fight": "Kaik Brito vs Namo Fazil",
+      "card_status": "cancelled",
       "market": "moneyline",
       "market_label": "Moneyline",
-      "selection": "Reinier de Ridder",
+      "selection": "Kaik Brito",
       "consensus_pct": 100.0,
       "weight": 4.08,
       "pick_count": 1,
@@ -488,92 +1020,8 @@
       "comments": [
         {
           "capper": "BetSlam with Sam",
-          "comment": "Dolidze is done at this point and will fade once things stop going his way; de Ridder is the bigger, undrained A-side, so don't get cute with props, just take him straight.",
+          "comment": "Brito is battle tested against real European competition while Fazil has been can crushing on a much weaker circuit; the fake tough guy act at the faceoff flipped Sam onto Brito.",
           "confidence": 6
-        }
-      ]
-    },
-    {
-      "fight_id": "douglas|emmers",
-      "fight": "Lerryan Douglas vs Jamall Emmers",
-      "card_status": "on_card",
-      "market": "moneyline",
-      "market_label": "Moneyline",
-      "selection": "Larion Douglas",
-      "consensus_pct": 100.0,
-      "weight": 3.78,
-      "pick_count": 1,
-      "avg_confidence": 7.0,
-      "strength": 5.9,
-      "tier": "lean",
-      "suggested_units": 1.0,
-      "quoted_odds": {
-        "american": -380,
-        "decimal": 1.263,
-        "count": 1
-      },
-      "value": 1.6,
-      "comments": [
-        {
-          "capper": "Axel MMA",
-          "comment": "Calls it an easy pick: Douglas is a powerhouse with strong calf kicks and Emmers is outmatched.",
-          "confidence": 7
-        }
-      ]
-    },
-    {
-      "fight_id": "dyer|reed",
-      "fight": "Shanelle Dyer vs Elise Reed",
-      "card_status": "on_card",
-      "market": "moneyline",
-      "market_label": "Moneyline",
-      "selection": "Chanel Dyer",
-      "consensus_pct": 100.0,
-      "weight": 3.78,
-      "pick_count": 1,
-      "avg_confidence": 7.0,
-      "strength": 5.9,
-      "tier": "lean",
-      "suggested_units": 1.0,
-      "quoted_odds": {
-        "american": -750,
-        "decimal": 1.133,
-        "count": 1
-      },
-      "value": 0.8,
-      "comments": [
-        {
-          "capper": "Axel MMA",
-          "comment": "Dyer has the better, slicker kickboxing and range control while Reed is unimpressive on the feet and will be a step behind all fight.",
-          "confidence": 7
-        }
-      ]
-    },
-    {
-      "fight_id": "chavez|judice",
-      "fight": "Jeisla Chaves vs Carli Judice",
-      "card_status": "on_card",
-      "market": "moneyline",
-      "market_label": "Moneyline",
-      "selection": "Carli Judice",
-      "consensus_pct": 100.0,
-      "weight": 3.78,
-      "pick_count": 1,
-      "avg_confidence": 7.0,
-      "strength": 5.9,
-      "tier": "lean",
-      "suggested_units": 1.0,
-      "quoted_odds": {
-        "american": -525,
-        "decimal": 1.19,
-        "count": 1
-      },
-      "value": 1.1,
-      "comments": [
-        {
-          "capper": "Axel MMA",
-          "comment": "Judice's slick kickboxing, speed and range management are too much for the power-loading Chavez.",
-          "confidence": 7
         }
       ]
     },
@@ -600,12 +1048,202 @@
       ]
     },
     {
-      "fight_id": "hernandez|rodrigues",
-      "fight": "Anthony Hernandez vs Gregory Rodrigues",
+      "fight_id": "petrino|spivac",
+      "fight": "Vitor Petrino vs Serghei Spivac",
+      "card_status": "on_card",
+      "market": "prop",
+      "market_label": "Prop",
+      "selection": "Sergei Spivak +3.5 (spread)",
+      "consensus_pct": 100.0,
+      "weight": 3.66,
+      "pick_count": 1,
+      "avg_confidence": 6.0,
+      "strength": 5.9,
+      "tier": "lean",
+      "suggested_units": 1.0,
+      "comments": [
+        {
+          "capper": "We Want Picks (Jacob)",
+          "comment": "He thinks Spivak can win outright but bought points for protection; Petrino is athletic but a quitter and struggles defensively in grappling.",
+          "confidence": 6
+        }
+      ]
+    },
+    {
+      "fight_id": "haqparast|padilla",
+      "fight": "Nasrat Haqparast vs Chris Padilla",
       "card_status": "on_card",
       "market": "over_under",
       "market_label": "Over / Under",
-      "selection": "Under 3.5 rounds",
+      "selection": "Over 2.5 rounds",
+      "consensus_pct": 100.0,
+      "weight": 3.66,
+      "pick_count": 1,
+      "avg_confidence": 6.0,
+      "strength": 5.9,
+      "tier": "lean",
+      "suggested_units": 1.0,
+      "comments": [
+        {
+          "capper": "We Want Picks (Jacob)",
+          "comment": "Both fighters are very tough so he expects the fight to go past 2.5.",
+          "confidence": 6
+        }
+      ]
+    },
+    {
+      "fight_id": "mcvey|schultz",
+      "fight": "Jackson McVey vs Wes Schultz",
+      "card_status": "on_card",
+      "market": "over_under",
+      "market_label": "Over / Under",
+      "selection": "Under 1.5 rounds",
+      "consensus_pct": 100.0,
+      "weight": 3.6,
+      "pick_count": 1,
+      "avg_confidence": 6.0,
+      "strength": 5.9,
+      "tier": "lean",
+      "suggested_units": 1.0,
+      "comments": [
+        {
+          "capper": "MMA AL DENTE",
+          "comment": "The only bet he has placed on this fight; he thinks whether McVey wins or loses it likely ends inside a round and a half.",
+          "confidence": 6
+        }
+      ]
+    },
+    {
+      "fight_id": "hernandez|rodrigues",
+      "fight": "Anthony Hernandez vs Gregory Rodrigues",
+      "card_status": "on_card",
+      "market": "moneyline",
+      "market_label": "Moneyline",
+      "selection": "Gregory Rodrigues",
+      "consensus_pct": 57.5,
+      "weight": 21.04,
+      "pick_count": 5,
+      "avg_confidence": 6.8,
+      "strength": 5.8,
+      "tier": "lean",
+      "suggested_units": 1.0,
+      "quoted_odds": {
+        "american": 145,
+        "decimal": 2.45,
+        "count": 1
+      },
+      "value": 8.4,
+      "comments": [
+        {
+          "capper": "BetSlam with Sam",
+          "comment": "He's never been an Anthony Hernandez guy; Rodriguez's power (accidental KO of Bruno Ferreira) should smash Hernandez if the fight is contested standing.",
+          "confidence": 5
+        },
+        {
+          "capper": "Locked Door MMA",
+          "comment": "Rodriguez has power, precision and world-class grappling with improved cardio, and Hernandez is weak to the body and can be hurt; they expect Robocop to do damage in the first three rounds.",
+          "confidence": 7
+        },
+        {
+          "capper": "KennyOkoyeMMA",
+          "comment": "Rodrigues is massive and powerful, Hernandez's takedown entries are poor and he's soft to the body; nearly calls it an underdog lock and uses it as a parlay leg.",
+          "confidence": 7
+        },
+        {
+          "capper": "We Want Picks (Jacob)",
+          "comment": "Hernandez has never faced anyone like Rodrigues; takedowns will be very hard against a really good wrestler/grappler, and Rodrigues hits harder than anyone Hernandez has faced and can hurt him on the feet.",
+          "confidence": 7
+        },
+        {
+          "capper": "Axel MMA",
+          "comment": "Called his 'savage underdog lock' — Rodrigues hits like a truck and he doesn't see Hernandez surviving that power or easily getting takedowns, expecting a first or second round finish.",
+          "confidence": 8
+        }
+      ]
+    },
+    {
+      "fight_id": "haqparast|padilla",
+      "fight": "Nasrat Haqparast vs Chris Padilla",
+      "card_status": "on_card",
+      "market": "method_of_victory",
+      "market_label": "Method of Victory",
+      "selection": "Chris Padilla inside the distance (KO or submission)",
+      "consensus_pct": 67.4,
+      "weight": 14.27,
+      "pick_count": 3,
+      "avg_confidence": 7.0,
+      "strength": 5.8,
+      "tier": "lean",
+      "suggested_units": 1.0,
+      "quoted_odds": {
+        "american": 290,
+        "decimal": 3.9,
+        "count": 1
+      },
+      "value": 16.8,
+      "comments": [
+        {
+          "capper": "MMA Lock of the Night",
+          "comment": "Padilla's hard-nosed Muay Thai should let him dictate pace, march Haqparast down with knees and elbows and land the more effective shots for a knockout.",
+          "confidence": 6
+        },
+        {
+          "capper": "BetSlam with Sam",
+          "comment": "Haqparast's chin is compromised and Padilla fights smart in every realm; +290 inside the distance is worth laying money on.",
+          "confidence": 7
+        },
+        {
+          "capper": "TonyHasDiedMMA",
+          "comment": "Calls it an easy pick despite near-even odds: Haqparast has been through wars and has been knocked out/beaten up repeatedly, and Padilla brings volume with real pop, unlike Rebecki.",
+          "confidence": 8
+        }
+      ]
+    },
+    {
+      "fight_id": "chapman|wint",
+      "fight": "Terrance Chatman vs Anthony Wint",
+      "card_status": "on_card",
+      "market": "moneyline",
+      "market_label": "Moneyline",
+      "selection": "Anthony Wint",
+      "consensus_pct": 71.3,
+      "weight": 12.81,
+      "pick_count": 3,
+      "avg_confidence": 7.0,
+      "strength": 5.8,
+      "tier": "lean",
+      "suggested_units": 1.0,
+      "quoted_odds": {
+        "american": -371,
+        "decimal": 1.269,
+        "count": 2
+      },
+      "value": 1.6,
+      "comments": [
+        {
+          "capper": "We Want Picks (Jacob)",
+          "comment": "Wint is a -950 favorite against a guy who doesn't belong in the UFC; used as a parlay and round robin anchor.",
+          "confidence": 8
+        },
+        {
+          "capper": "BetSlam with Sam",
+          "comment": "Part of his Wint moneyline + under 1.5 rounds parlay; Wint probably wins and any knockout likely comes in the first seven and a half minutes, though he's small for heavyweight and the price isn't exciting.",
+          "confidence": 5
+        },
+        {
+          "capper": "Axel MMA",
+          "comment": "Wint just demolished Matt Adams on Contender Series and Chapman is a low-output, unimpressive striker.",
+          "confidence": 8
+        }
+      ]
+    },
+    {
+      "fight_id": "petrino|spivac",
+      "fight": "Vitor Petrino vs Serghei Spivac",
+      "card_status": "on_card",
+      "market": "round",
+      "market_label": "Round",
+      "selection": "Vitor Petrino by KO in round 1",
       "consensus_pct": 100.0,
       "weight": 3.4,
       "pick_count": 1,
@@ -614,22 +1252,22 @@
       "tier": "lean",
       "suggested_units": 1.0,
       "quoted_odds": {
-        "american": 252,
-        "decimal": 3.52,
+        "american": 550,
+        "decimal": 6.5,
         "count": 1
       },
-      "value": 14.6,
+      "value": 31.9,
       "comments": [
         {
           "capper": "BetSlam with Sam",
-          "comment": "Paired with Rodriguez's moneyline for +252 — if Rodriguez wins he thinks it comes inside 3.5 rounds and doesn't expect a late finish.",
+          "comment": "Expects Petrino to land heavy early and Spivac to crumble; 'down to hit that' at the price.",
           "confidence": 5
         }
       ]
     },
     {
-      "fight_id": "chapman|wint",
-      "fight": "Terrance Chatman vs Anthony Wint",
+      "fight_id": "gaziev|nzechukwu",
+      "fight": "Shamil Gaziev vs Kennedy Nzechukwu",
       "card_status": "on_card",
       "market": "over_under",
       "market_label": "Over / Under",
@@ -641,60 +1279,10 @@
       "strength": 5.8,
       "tier": "lean",
       "suggested_units": 1.0,
-      "quoted_odds": {
-        "american": -228,
-        "decimal": 1.439,
-        "count": 1
-      },
-      "value": 2.5,
       "comments": [
         {
           "capper": "BetSlam with Sam",
-          "comment": "Combined with Wint's moneyline at -228; knockout chances drop off dramatically in the second half of a heavyweight fight once both men tire.",
-          "confidence": 5
-        }
-      ]
-    },
-    {
-      "fight_id": "hernandez|rodrigues",
-      "fight": "Anthony Hernandez vs Gregory Rodrigues",
-      "card_status": "on_card",
-      "market": "round",
-      "market_label": "Round",
-      "selection": "Gregory Rodrigues by KO in round 1 or 2",
-      "consensus_pct": 100.0,
-      "weight": 3.1,
-      "pick_count": 1,
-      "avg_confidence": 5.0,
-      "strength": 5.8,
-      "tier": "lean",
-      "suggested_units": 1.0,
-      "comments": [
-        {
-          "capper": "Artem MMA",
-          "comment": "Hernandez chose to box Strickland and shot no takedowns, and Rodrigues hits harder with two rounds of cardio; if it reaches round three Hernandez takes over.",
-          "confidence": 5
-        }
-      ]
-    },
-    {
-      "fight_id": "dosainvil|young",
-      "fight": "Stan Dorsainvil vs Gauge Young",
-      "card_status": "on_card",
-      "market": "method_of_victory",
-      "market_label": "Method of Victory",
-      "selection": "Gage Young by decision",
-      "consensus_pct": 100.0,
-      "weight": 2.8,
-      "pick_count": 1,
-      "avg_confidence": 5.0,
-      "strength": 5.7,
-      "tier": "lean",
-      "suggested_units": 1.0,
-      "comments": [
-        {
-          "capper": "Artem MMA",
-          "comment": "Young has 14 pro fights versus Dosainvil's six, and Young's volume should add up against Dosainvil's poor defense; expects a close decision.",
+          "comment": "If Gaziev wins it has to be in round one, so they take the under and hope for violence either way.",
           "confidence": 5
         }
       ]
@@ -703,54 +1291,149 @@
       "fight_id": "gaziev|nzechukwu",
       "fight": "Shamil Gaziev vs Kennedy Nzechukwu",
       "card_status": "on_card",
-      "market": "method_of_victory",
-      "market_label": "Method of Victory",
-      "selection": "Kennedy Nzechukwu by finish",
+      "market": "prop",
+      "market_label": "Prop",
+      "selection": "Kennedy Nzechukwu to win inside the distance in round 1",
       "consensus_pct": 100.0,
-      "weight": 2.1,
+      "weight": 3.4,
       "pick_count": 1,
       "avg_confidence": 5.0,
-      "strength": 5.5,
+      "strength": 5.8,
       "tier": "lean",
       "suggested_units": 1.0,
+      "quoted_odds": {
+        "american": 450,
+        "decimal": 5.5,
+        "count": 1
+      },
+      "value": 26.1,
       "comments": [
         {
-          "capper": "Axel MMA",
-          "comment": "Leg of the +3327 parlay, admitted it's the scariest leg, but expects Gaziev to gas by the third round and Nzechukwu to land something big and finish him.",
+          "capper": "BetSlam with Sam",
+          "comment": "Nzechukwu can knock out any heavyweight if he lands clean and Gaziev will be there to be hit, though Adam is unsure about his aggression.",
           "confidence": 5
         }
       ]
     },
     {
-      "fight_id": "hernandez|rodrigues",
-      "fight": "Anthony Hernandez vs Gregory Rodrigues",
+      "fight_id": "mcvey|schultz",
+      "fight": "Jackson McVey vs Wes Schultz",
       "card_status": "on_card",
-      "market": "moneyline",
-      "market_label": "Moneyline",
-      "selection": "Gregory Rodrigues",
-      "consensus_pct": 70.5,
-      "weight": 7.88,
-      "pick_count": 2,
-      "avg_confidence": 6.5,
-      "strength": 4.9,
-      "tier": "pass",
-      "suggested_units": 0.0,
+      "market": "prop",
+      "market_label": "Prop",
+      "selection": "Fight ends in round 1",
+      "consensus_pct": 100.0,
+      "weight": 3.3,
+      "pick_count": 1,
+      "avg_confidence": 6.0,
+      "strength": 5.8,
+      "tier": "lean",
+      "suggested_units": 1.0,
+      "comments": [
+        {
+          "capper": "Livid Larry MMA",
+          "comment": "Expects an action-packed first round where either guy could win by submission or KO.",
+          "confidence": 6
+        }
+      ]
+    },
+    {
+      "fight_id": "mcvay|schultz",
+      "fight": "Jackson McVey vs Wes Schultz",
+      "card_status": "on_card",
+      "market": "round",
+      "market_label": "Round",
+      "selection": "Fight to end in round 1",
+      "consensus_pct": 100.0,
+      "weight": 3.3,
+      "pick_count": 1,
+      "avg_confidence": 6.0,
+      "strength": 5.8,
+      "tier": "lean",
+      "suggested_units": 1.0,
+      "comments": [
+        {
+          "capper": "Livid Larry MMA",
+          "comment": "Listed among his regular props for the card.",
+          "confidence": 6
+        }
+      ]
+    },
+    {
+      "fight_id": "jones|mederos",
+      "fight": "Mason Jones vs MarQuel Mederos",
+      "card_status": "on_card",
+      "market": "prop",
+      "market_label": "Prop",
+      "selection": "Marquel Mederos +7.5 points",
+      "consensus_pct": 100.0,
+      "weight": 3.0,
+      "pick_count": 1,
+      "avg_confidence": 5.0,
+      "strength": 5.8,
+      "tier": "lean",
+      "suggested_units": 1.0,
       "quoted_odds": {
-        "american": 145,
-        "decimal": 2.45,
+        "american": -165,
+        "decimal": 1.606,
         "count": 1
       },
-      "value": 7.1,
+      "value": 3.5,
+      "comments": [
+        {
+          "capper": "MMA AL DENTE",
+          "comment": "He bet the point spread expecting a tight, grinding fight that Jones wins without dominance.",
+          "confidence": 5
+        }
+      ]
+    },
+    {
+      "fight_id": "chavez|judice",
+      "fight": "Jeisla Chaves vs Carli Judice",
+      "card_status": "on_card",
+      "market": "prop",
+      "market_label": "Prop",
+      "selection": "Ja Chavez to win inside the distance (decision = no action)",
+      "consensus_pct": 100.0,
+      "weight": 2.19,
+      "pick_count": 1,
+      "avg_confidence": 3.0,
+      "strength": 5.5,
+      "tier": "lean",
+      "suggested_units": 1.0,
+      "quoted_odds": {
+        "american": 375,
+        "decimal": 4.75,
+        "count": 1
+      },
+      "value": 20.6,
       "comments": [
         {
           "capper": "BetSlam with Sam",
-          "comment": "He's never been an Anthony Hernandez guy; Rodriguez's power (accidental KO of Bruno Ferreira) should smash Hernandez if the fight is contested standing.",
-          "confidence": 5
-        },
+          "comment": "Sees value in the long price, which is inflated because the market expects Judice to finish; also notes Brazilian base is the best base for a female fighter.",
+          "confidence": 3
+        }
+      ]
+    },
+    {
+      "fight_id": "deridder|dolidze",
+      "fight": "Reinier de Ridder vs Roman Dolidze",
+      "card_status": "on_card",
+      "market": "round",
+      "market_label": "Round",
+      "selection": "Reinier de Ridder by submission in round 2 or 3",
+      "consensus_pct": 100.0,
+      "weight": 1.83,
+      "pick_count": 1,
+      "avg_confidence": 3.0,
+      "strength": 5.5,
+      "tier": "lean",
+      "suggested_units": 1.0,
+      "comments": [
         {
-          "capper": "Axel MMA",
-          "comment": "Called his 'savage underdog lock' — Rodrigues hits like a truck and he doesn't see Hernandez surviving that power or easily getting takedowns, expecting a first or second round finish.",
-          "confidence": 8
+          "capper": "We Want Picks (Jacob)",
+          "comment": "Floated as an interesting angle given RDR's grappling edge, though they question whether Dolidze ever gets submitted.",
+          "confidence": 3
         }
       ]
     },
@@ -761,20 +1444,40 @@
       "market": "moneyline",
       "market_label": "Moneyline",
       "selection": "Vitor Petrino",
-      "consensus_pct": 64.9,
-      "weight": 6.0,
-      "pick_count": 2,
-      "avg_confidence": 5.5,
-      "strength": 4.2,
-      "tier": "pass",
-      "suggested_units": 0.0,
+      "consensus_pct": 53.9,
+      "weight": 21.04,
+      "pick_count": 6,
+      "avg_confidence": 5.7,
+      "strength": 5.4,
+      "tier": "lean",
+      "suggested_units": 1.0,
       "quoted_odds": {
         "american": -149,
         "decimal": 1.671,
-        "count": 1
+        "count": 3
       },
-      "value": 2.8,
+      "value": 3.6,
       "comments": [
+        {
+          "capper": "BetSlam with Sam",
+          "comment": "Thinks Petrino is fraudulent but that Spivac has never come back from adversity, and Petrino will land heavy early.",
+          "confidence": 6
+        },
+        {
+          "capper": "MMA Lock of the Night",
+          "comment": "Petrino is the more athletic fighter with big power and improved takedown defense; the capper is intrigued if the line drifts toward -125/+100 and expects Petrino to win a decision.",
+          "confidence": 5
+        },
+        {
+          "capper": "Locked Door MMA",
+          "comment": "Petrino is faster with a sharp jab and can grapple in his own right; Spivac doesn't put a heavy pace on people, though Petrino's gas tank is a concern in a close fight.",
+          "confidence": 6
+        },
+        {
+          "capper": "MMA AL DENTE",
+          "comment": "He bet Petrino's moneyline; the speed and athleticism advantage should keep Spivac from getting the fight to the ground, and Petrino wins a kickboxing battle.",
+          "confidence": 6
+        },
         {
           "capper": "Livid Larry MMA",
           "comment": "Picks Petrino to beat Spivac in the co-main event.",
@@ -788,24 +1491,89 @@
       ]
     },
     {
-      "fight_id": "mcvey|schultz",
+      "fight_id": "mcvay|schultz",
       "fight": "Jackson McVey vs Wes Schultz",
+      "card_status": "on_card",
+      "market": "moneyline",
+      "market_label": "Moneyline",
+      "selection": "McVay",
+      "consensus_pct": 100.0,
+      "weight": 1.65,
+      "pick_count": 1,
+      "avg_confidence": 3.0,
+      "strength": 5.4,
+      "tier": "lean",
+      "suggested_units": 1.0,
+      "comments": [
+        {
+          "capper": "Livid Larry MMA",
+          "comment": "Leg in his long shot prelim parlay.",
+          "confidence": 3
+        }
+      ]
+    },
+    {
+      "fight_id": "dorsainvil|young",
+      "fight": "Stan Dorsainvil vs Gauge Young",
       "card_status": "on_card",
       "market": "method_of_victory",
       "market_label": "Method of Victory",
-      "selection": "Jackson McVey inside the distance",
-      "consensus_pct": 66.7,
-      "weight": 3.36,
-      "pick_count": 1,
-      "avg_confidence": 6.0,
-      "strength": 3.9,
-      "tier": "pass",
-      "suggested_units": 0.0,
+      "selection": "Gage Young by decision",
+      "consensus_pct": 71.9,
+      "weight": 9.08,
+      "pick_count": 3,
+      "avg_confidence": 5.3,
+      "strength": 5.2,
+      "tier": "lean",
+      "suggested_units": 1.0,
+      "quoted_odds": {
+        "american": -120,
+        "decimal": 1.833,
+        "count": 1
+      },
+      "value": 4.3,
       "comments": [
         {
-          "capper": "Artem MMA",
-          "comment": "McVey is the bigger, better striker with more finishing ability on the ground; Schultz's wrestling hasn't translated at UFC level.",
+          "capper": "MMA OddsBreaker (Adam)",
+          "comment": "Young has a full camp and prior UFC experience, and his decision loss to Colon looks fine in hindsight, while Dorseinvil debuts on short notice.",
           "confidence": 6
+        },
+        {
+          "capper": "Artem MMA",
+          "comment": "Young has 14 pro fights versus Dosainvil's six, and Young's volume should add up against Dosainvil's poor defense; expects a close decision.",
+          "confidence": 5
+        },
+        {
+          "capper": "THE MMA GURU",
+          "comment": "Young is tough with great cardio, proven against better competition, and Dorsainvil is on short notice; expects a 29-28 decision.",
+          "confidence": 5
+        }
+      ]
+    },
+    {
+      "fight_id": "petrino|spivac",
+      "fight": "Vitor Petrino vs Serghei Spivac",
+      "card_status": "on_card",
+      "market": "over_under",
+      "market_label": "Over / Under",
+      "selection": "Over 1.5 rounds",
+      "consensus_pct": 71.9,
+      "weight": 8.68,
+      "pick_count": 2,
+      "avg_confidence": 7.0,
+      "strength": 5.2,
+      "tier": "lean",
+      "suggested_units": 1.0,
+      "comments": [
+        {
+          "capper": "KennyOkoyeMMA",
+          "comment": "PrizePicks play; both are talented and Spivac can weather an early storm and use wrestling to slow Petrino down, elongating the fight.",
+          "confidence": 7
+        },
+        {
+          "capper": "We Want Picks (Jacob)",
+          "comment": "Neither man is an insane first-round finisher and both are tough, so the fight should go longer; parlayed with the Wint under 1.5 at -104.",
+          "confidence": 7
         }
       ]
     },
@@ -815,19 +1583,291 @@
       "card_status": "on_card",
       "market": "method_of_victory",
       "market_label": "Method of Victory",
-      "selection": "Anthony Hernandez by TKO in the late rounds",
-      "consensus_pct": 52.2,
-      "weight": 2.75,
-      "pick_count": 1,
-      "avg_confidence": 5.0,
-      "strength": 3.0,
+      "selection": "Gregory Rodrigues by KO",
+      "consensus_pct": 47.8,
+      "weight": 17.84,
+      "pick_count": 5,
+      "avg_confidence": 6.4,
+      "strength": 4.5,
       "tier": "pass",
       "suggested_units": 0.0,
       "comments": [
         {
-          "capper": "Livid Larry MMA",
-          "comment": "Expects a late-round TKO finish.",
+          "capper": "BetSlam with Sam",
+          "comment": "Rodriguez hits like a freight train with fight-ending body kicks and huge power, and Hernandez is breakable (KO'd by Kevin Holland, hurt by Michel Pereira, possible rib issue).",
+          "confidence": 6
+        },
+        {
+          "capper": "KennyOkoyeMMA",
+          "comment": "Expects Rodrigues to stuff takedowns, keep it standing and hurt the hittable Hernandez to the body or with heavy hands.",
+          "confidence": 6
+        },
+        {
+          "capper": "TonyHasDiedMMA",
+          "comment": "Rodrigues is bigger, more physical and more powerful with elite BJJ and thudding body kicks; Hernandez has no knockout power, has been hurt to the body by everyone, and abandoned his takedown-heavy game plan against Strickland.",
+          "confidence": 7
+        },
+        {
+          "capper": "THE MMA GURU",
+          "comment": "Rodrigues has the size, power and underrated grappling to avoid being dominated, and Hernandez is vulnerable to body work; expects a TKO in the first two rounds.",
+          "confidence": 7
+        },
+        {
+          "capper": "Axel MMA",
+          "comment": "He doesn't see the fight reaching round three and predicts Rodrigues touches Hernandez's chin for a second round knockout.",
+          "confidence": 6
+        }
+      ]
+    },
+    {
+      "fight_id": "chavez|judice",
+      "fight": "Jeisla Chaves vs Carli Judice",
+      "card_status": "on_card",
+      "market": "method_of_victory",
+      "market_label": "Method of Victory",
+      "selection": "Carli Judice by decision",
+      "consensus_pct": 50.7,
+      "weight": 13.56,
+      "pick_count": 4,
+      "avg_confidence": 6.0,
+      "strength": 4.3,
+      "tier": "pass",
+      "suggested_units": 0.0,
+      "quoted_odds": {
+        "american": -139,
+        "decimal": 1.72,
+        "count": 2
+      },
+      "value": 3.1,
+      "comments": [
+        {
+          "capper": "BetSlam with Sam",
+          "comment": "Judice is the better striker with more volume but has won the vast majority of her UFC fights by decision, and Chavez is incredibly tough and won't quit; he sees a damage-based decision.",
+          "confidence": 6
+        },
+        {
+          "capper": "MMA OddsBreaker (Adam)",
+          "comment": "Adam thinks Judice is one of the most exciting women's fighters and doesn't rate Chavez, but expects a point fight to go the distance.",
+          "confidence": 6
+        },
+        {
+          "capper": "THE MMA GURU",
+          "comment": "Judice is rangy, technical with good takedown defense and has faced better competition; expects her to win a striking battle on the scorecards.",
+          "confidence": 6
+        },
+        {
+          "capper": "Axel MMA",
+          "comment": "He sees Judice picking Chavez apart from distance for 15 minutes and winning on the cards.",
+          "confidence": 6
+        }
+      ]
+    },
+    {
+      "fight_id": "deridder|dolidze",
+      "fight": "Reinier de Ridder vs Roman Dolidze",
+      "card_status": "on_card",
+      "market": "method_of_victory",
+      "market_label": "Method of Victory",
+      "selection": "Reinier de Ridder by decision",
+      "consensus_pct": 48.8,
+      "weight": 13.36,
+      "pick_count": 4,
+      "avg_confidence": 5.5,
+      "strength": 4.1,
+      "tier": "pass",
+      "suggested_units": 0.0,
+      "quoted_odds": {
+        "american": -400,
+        "decimal": 1.25,
+        "count": 3
+      },
+      "value": 1.0,
+      "comments": [
+        {
+          "capper": "BetSlam with Sam",
+          "comment": "Dolidze is on a last-fight, low-urgency run at 205 while RDR is taking it seriously and is the better fighter on his best day; leaning to a grinding decision rather than the round-one sub price.",
           "confidence": 5
+        },
+        {
+          "capper": "MMA OddsBreaker (Adam)",
+          "comment": "He expects de Ridder to bounce back after the camp switch to ATT and no longer cutting to 185, though he says -400 is heavy and he wouldn't run to the window to bet it.",
+          "confidence": 5
+        },
+        {
+          "capper": "We Want Picks (Jacob)",
+          "comment": "Dolidze's best days are behind him and he's tough, so plus money on the most likely outcome, a de Ridder decision.",
+          "confidence": 6
+        },
+        {
+          "capper": "THE MMA GURU",
+          "comment": "Expects the busier clinch work, knees to the body and better scrambles/grappling to win rounds, even if he gets clipped at some point.",
+          "confidence": 6
+        }
+      ]
+    },
+    {
+      "fight_id": "jones|mederos",
+      "fight": "Mason Jones vs MarQuel Mederos",
+      "card_status": "on_card",
+      "market": "method_of_victory",
+      "market_label": "Method of Victory",
+      "selection": "Mason Jones by decision",
+      "consensus_pct": 54.6,
+      "weight": 8.76,
+      "pick_count": 2,
+      "avg_confidence": 6.0,
+      "strength": 3.9,
+      "tier": "pass",
+      "suggested_units": 0.0,
+      "quoted_odds": {
+        "american": -255,
+        "decimal": 1.392,
+        "count": 1
+      },
+      "value": 1.5,
+      "comments": [
+        {
+          "capper": "MMA Lock of the Night",
+          "comment": "Jones' ability to create wars and force pocket exchanges, plus leaning on his grappling, should grind out a decision over the athletic Medeiros.",
+          "confidence": 6
+        },
+        {
+          "capper": "MMA OddsBreaker (Adam)",
+          "comment": "Adam thinks Mason Jones is underrated and really good, and expects a back-and-forth fight that Jones wins on the cards.",
+          "confidence": 6
+        }
+      ]
+    },
+    {
+      "fight_id": "dorsainvil|young",
+      "fight": "Stan Dorsainvil vs Gauge Young",
+      "card_status": "on_card",
+      "market": "moneyline",
+      "market_label": "Moneyline",
+      "selection": "Gage Young",
+      "consensus_pct": 58.9,
+      "weight": 6.28,
+      "pick_count": 2,
+      "avg_confidence": 5.0,
+      "strength": 3.9,
+      "tier": "pass",
+      "suggested_units": 0.0,
+      "comments": [
+        {
+          "capper": "Locked Door MMA",
+          "comment": "Young has far more experience against tough competition, good boxing, volume and grappling, while the short-notice debutant is 5-0 against low-level opposition; also used as a juicer parlay leg.",
+          "confidence": 6
+        },
+        {
+          "capper": "BetSlam with Sam",
+          "comment": "Sam had already placed a one-unit premium play on Young as a slight favorite based on his durability and skill set, though he has since hedged with the Dorsainvil KO.",
+          "confidence": 4
+        }
+      ]
+    },
+    {
+      "fight_id": "douglas|emmers",
+      "fight": "Lerryan Douglas vs Jamall Emmers",
+      "card_status": "on_card",
+      "market": "over_under",
+      "market_label": "Over / Under",
+      "selection": "Under 1.5 rounds",
+      "consensus_pct": 59.8,
+      "weight": 4.76,
+      "pick_count": 1,
+      "avg_confidence": 7.0,
+      "strength": 3.7,
+      "tier": "pass",
+      "suggested_units": 0.0,
+      "quoted_odds": {
+        "american": -155,
+        "decimal": 1.645,
+        "count": 1
+      },
+      "value": 2.4,
+      "comments": [
+        {
+          "capper": "BetSlam with Sam",
+          "comment": "Thinks the under 1.5 at -155 is better value than Douglas round-one KO or the -215 KO price, since Emmers' wrestling could extend round one slightly.",
+          "confidence": 7
+        }
+      ]
+    },
+    {
+      "fight_id": "douglas|emmers",
+      "fight": "Lerryan Douglas vs Jamall Emmers",
+      "card_status": "on_card",
+      "market": "prop",
+      "market_label": "Prop",
+      "selection": "Leon Douglas to win and under 1.5 rounds (same game)",
+      "consensus_pct": 53.8,
+      "weight": 4.27,
+      "pick_count": 1,
+      "avg_confidence": 7.0,
+      "strength": 3.3,
+      "tier": "pass",
+      "suggested_units": 0.0,
+      "quoted_odds": {
+        "american": 103,
+        "decimal": 2.03,
+        "count": 1
+      },
+      "value": 3.4,
+      "comments": [
+        {
+          "capper": "BetSlam with Sam",
+          "comment": "Douglas is the hardest hitter at 145, Emmers is 37 and hasn't used his grappling, and the straight KO (-200) and moneyline (-400) prices are unplayable so they take the same-game price.",
+          "confidence": 7
+        }
+      ]
+    },
+    {
+      "fight_id": "hernandez|rodrigues",
+      "fight": "Anthony Hernandez vs Gregory Rodrigues",
+      "card_status": "on_card",
+      "market": "over_under",
+      "market_label": "Over / Under",
+      "selection": "Over 3.5 rounds",
+      "consensus_pct": 51.8,
+      "weight": 3.66,
+      "pick_count": 1,
+      "avg_confidence": 6.0,
+      "strength": 3.1,
+      "tier": "pass",
+      "suggested_units": 0.0,
+      "comments": [
+        {
+          "capper": "We Want Picks (Jacob)",
+          "comment": "Because he's picking Hernandez, who will have to survive early, he expects the fight to go long.",
+          "confidence": 6
+        }
+      ]
+    },
+    {
+      "fight_id": "haqparast|padilla",
+      "fight": "Nasrat Haqparast vs Chris Padilla",
+      "card_status": "on_card",
+      "market": "round",
+      "market_label": "Round",
+      "selection": "Chris Padilla to win in round 2",
+      "consensus_pct": 50.0,
+      "weight": 4.08,
+      "pick_count": 1,
+      "avg_confidence": 6.0,
+      "strength": 3.0,
+      "tier": "pass",
+      "suggested_units": 0.0,
+      "quoted_odds": {
+        "american": 900,
+        "decimal": 10.0,
+        "count": 1
+      },
+      "value": 27.0,
+      "comments": [
+        {
+          "capper": "BetSlam with Sam",
+          "comment": "Adam takes round 2 because the stats support a Padilla round-two victory; both agree it won't be round one.",
+          "confidence": 6
         }
       ]
     },
@@ -850,6 +1890,100 @@
           "capper": "Axel MMA",
           "comment": "He sees Nzechukwu landing straight shots and finding a late finish, probably in the third, once Gaziev tires.",
           "confidence": 4
+        }
+      ]
+    },
+    {
+      "fight_id": "mcvey|schultz",
+      "fight": "Jackson McVey vs Wes Schultz",
+      "card_status": "on_card",
+      "market": "method_of_victory",
+      "market_label": "Method of Victory",
+      "selection": "Jackson McVey by finish (KO/TKO)",
+      "consensus_pct": 41.6,
+      "weight": 7.49,
+      "pick_count": 2,
+      "avg_confidence": 5.5,
+      "strength": 2.9,
+      "tier": "pass",
+      "suggested_units": 0.0,
+      "quoted_odds": {
+        "american": -180,
+        "decimal": 1.556,
+        "count": 1
+      },
+      "value": 1.6,
+      "comments": [
+        {
+          "capper": "MMA Lock of the Night",
+          "comment": "McVey has grown since their amateur meeting, is much stronger and more well-rounded; he should keep it standing with defensive grappling and batter Schultz with knees and elbows in the clinch.",
+          "confidence": 7
+        },
+        {
+          "capper": "Axel MMA",
+          "comment": "He sees McVey landing a knee or elbow from the clinch to put Schultz down.",
+          "confidence": 4
+        }
+      ]
+    },
+    {
+      "fight_id": "gaziev|nzechukwu",
+      "fight": "Shamil Gaziev vs Kennedy Nzechukwu",
+      "card_status": "on_card",
+      "market": "method_of_victory",
+      "market_label": "Method of Victory",
+      "selection": "Shamil Gaziev by KO/TKO in round 1",
+      "consensus_pct": 43.1,
+      "weight": 7.02,
+      "pick_count": 2,
+      "avg_confidence": 6.0,
+      "strength": 2.9,
+      "tier": "pass",
+      "suggested_units": 0.0,
+      "quoted_odds": {
+        "american": -130,
+        "decimal": 1.769,
+        "count": 1
+      },
+      "value": 2.2,
+      "comments": [
+        {
+          "capper": "MMA OddsBreaker (Adam)",
+          "comment": "Adam says Kennedy is the most inconsistent guy on the roster and doesn't trust him; he thinks Gaziev can knock him out early.",
+          "confidence": 6
+        },
+        {
+          "capper": "TonyHasDiedMMA",
+          "comment": "Nzechukwu's wins are poor (drew with Buchecha, lost to an old OSP) and he's been knocked out before; Gaziev's one-two and leg kicks should find the mark early.",
+          "confidence": 6
+        }
+      ]
+    },
+    {
+      "fight_id": "hernandez|rodrigues",
+      "fight": "Anthony Hernandez vs Gregory Rodrigues",
+      "card_status": "on_card",
+      "market": "prop",
+      "market_label": "Prop",
+      "selection": "Gregory Rodriguez to win in under 3.5 rounds",
+      "consensus_pct": 30.3,
+      "weight": 5.11,
+      "pick_count": 1,
+      "avg_confidence": 7.0,
+      "strength": 1.9,
+      "tier": "pass",
+      "suggested_units": 0.0,
+      "quoted_odds": {
+        "american": 279,
+        "decimal": 3.79,
+        "count": 1
+      },
+      "value": 5.3,
+      "comments": [
+        {
+          "capper": "BetSlam with Sam",
+          "comment": "That's the only way Rodriguez wins, and it covers multiple rounds and both finish methods (KO or choke/ground and pound).",
+          "confidence": 7
         }
       ]
     }
