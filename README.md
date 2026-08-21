@@ -82,6 +82,8 @@ python -m http.server -d docs 8000                    # open http://localhost:80
 | `--config` / `--output` | Point at a different config or output path. |
 | `--picks-from-text CAPPER_ID=FILE` | Extract picks from a text file you pasted yourself. Repeatable. See **Paywalled cards** below. |
 | `--no-pasted-picks` | Skip the `pasted/` folder for this run. |
+| `--roundup-slides DIR` | Read roundup boards from screenshots in DIR instead of downloading the video. |
+| `--no-roundup-slides` | Skip the visual pass; transcript only (cheap, and usually finds nothing). |
 | `--picks-from-tracker URL` | Ingest a tracker roundup — one video carrying every channel's pick. Repeatable. See below. |
 | `--no-tracker-picks` | Skip the roundups listed in `config.json` for this run. |
 | `--apply-tracker-cappers` | Write channels first seen in a roundup into `config.json` at neutral trust. |
@@ -218,6 +220,58 @@ try a roundup without editing the config:
 PYTHONPATH=src python -m mma_engine \
   --picks-from-tracker https://youtu.be/ROUNDUP_ID
 ```
+
+### The names are printed, not spoken
+
+A roundup is a slide deck. Each bout gets a board with the two fighters at the
+edges and eighty-odd channel names printed in columns on whichever side they
+picked — while the audio says "eighty of eighty-one are on Dyer" and never
+reads a name out. Extraction from the captions therefore returns almost
+nothing, correctly: there is nothing there to extract.
+
+So the picks are read off the slides. Every run:
+
+1. downloads the roundup video (yt-dlp, video only, 720p),
+2. cuts one frame per slide change (ffmpeg — shipped by the `imageio-ffmpeg`
+   wheel, so there is nothing to install by hand),
+3. reads each frame with a vision call, and
+4. merges the result with whatever the transcript gave.
+
+Each frame is cached against its own bytes, so a run interrupted part-way
+(a spent API balance, most often) resumes for free. The slides print their own
+tally — "YouTube Predictions 80/81" — which the reader reports separately from
+the names it read, so a board where it caught 74 of 80 says so in the log
+instead of quietly shorting the consensus.
+
+**Boards are read once.** A deck that has been read is written to
+`roundups/<video_id>.json` and reused by every later run for free. Those files
+are plain, reviewable data — fighter, side, channel names — so a garbled name
+can be fixed by hand, and a board can be written from scratch when the video
+won't download at all:
+
+```jsonc
+{
+  "video_id": "B1IFeq8bgbY",
+  "source_url": "https://youtu.be/B1IFeq8bgbY",
+  "fights": [
+    { "fighter_a": "Shanelle Dyer", "fighter_b": "Elise Reed",
+      "cappers_for_a": ["138 MMA", "Artem MMA", "…"],
+      "cappers_for_b": ["The Golden Octagon (Matt)"] }
+  ]
+}
+```
+
+If yt-dlp can't fetch the video, screenshot the boards and point the reader at
+them instead:
+
+```bash
+PYTHONPATH=src python -m mma_engine --roundup-slides ~/Desktop/roundup-shots
+```
+
+`--no-roundup-slides` skips the whole visual pass for a run (much cheaper, and
+returns almost nothing — the names are printed, not said).
+
+### How a roundup pick counts
 
 A roundup line is a thinner thing than a capper's own video, and is treated as
 one:
@@ -942,6 +996,14 @@ accounts at 5.0 and adjust once you have a sample of their results.
 | `tracker_picks.enabled` | `true` | Ingest the roundup videos listed in `tracker.picks_videos`. With none listed this is a no-op. |
 | `tracker_picks.confidence` | `5` | Confidence every roundup pick enters at — a tally states no conviction. |
 | `tracker_picks.max_chunk_chars` | `12000` | Roundup transcripts are name-dense, so they chunk smaller than picks videos. |
+| `tracker_picks.read_slides` | `true` | Read the roundup's slides with vision — where the channel names actually are. |
+| `tracker_picks.slide_model` | `claude-sonnet-5` | Model for slide reading; closer to OCR than judgement, and dozens of frames per deck. |
+| `tracker_picks.slide_effort` | `medium` | Reasoning effort for slide reading. |
+| `tracker_picks.scene_threshold` | `0.15` | How much the picture must change to count as a new slide. Low on purpose: two boards for one bout (moneyline, then method) look alike. |
+| `tracker_picks.max_frames` | `80` | Ceiling on frames read from one deck. |
+| `tracker_picks.video_height` | `720` | Download resolution — enough to read the smallest name. |
+| `tracker_picks.keep_video` | `false` | Keep the downloaded video after the frames are cut. |
+| `tracker_picks.readings_dir` | `roundups` | Where boards already read are stored and reused. |
 | `live_odds.enabled` | `true` | Fetch live moneylines when `ODDS_API_KEY` is set. With no key this is a no-op, so leaving it on is safe. |
 | `live_odds.regions` | `us` | Bookmaker regions to median over: `us`, `us2`, `uk`, `eu`, `au` (comma-joined). |
 | `proxy.enabled` | `false` | Route YouTube requests through a proxy. Only used for the optional unattended path — see **Optional: fully unattended runs on GitHub Actions**. |
@@ -971,6 +1033,7 @@ src/mma_engine/
   discover.py                # upload discovery: Data API primary, RSS fallback
   roster.py                  # tracker-video → measured capper trust scores
   tracker_picks.py           # tracker roundup → every channel's pick
+  roundup_slides.py          # roundup slides → picks (yt-dlp, ffmpeg, vision)
   pasted_picks.py            # hand-pasted cards → picks (paywalled posts)
   transcripts.py             # YouTube fetching, caching, jittered delays
   extract.py                 # Claude structured-output extraction, chunking
@@ -982,6 +1045,7 @@ src/mma_engine/
   proxy.py                   # optional proxy for GitHub Actions' cloud IPs
   pipeline.py                # orchestration + CLI
 pasted/                      # hand-pasted cards — gitignored, see its README
+roundups/                    # roundup boards already read, reused for free
 docs/index.html              # static dashboard (no build step, no CDN)
 docs/data.json               # generated output — also the integration feed
 docs/picks.json              # weighted picks feed for PerpetualPicks.com
@@ -990,6 +1054,7 @@ tests/test_aggregate.py      # normalization + aggregation tests
 tests/test_discover.py       # feed parsing, filtering, merge behavior
 tests/test_roster.py         # trust arithmetic, pooling, config merge
 tests/test_tracker_picks.py  # roundup merging, attribution, config merge
+tests/test_roundup_slides.py # frame extraction, slide cache, count check
 tests/test_pasted_picks.py   # pasted-card naming, staleness, superseding
 tests/test_proxy.py          # proxy config from env vars
 tests/test_config.py         # settings defaults, merging, env overrides

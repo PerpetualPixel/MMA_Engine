@@ -8,3 +8,8 @@ requests>=2.31
 anthropic>=0.121,<1
 python-dotenv>=1.0
 pydantic>=2.7,<3
+
+# A static ffmpeg binary, used to cut one frame per slide out of a tracker
+# roundup video (mma_engine.roundup_slides). Shipped as a wheel precisely so
+# the weekly Windows run doesn't need a system ffmpeg installed by hand.
+imageio-ffmpeg>=0.4.9

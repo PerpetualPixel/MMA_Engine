@@ -198,6 +198,7 @@ def annotate_consensus(
     payload: dict[str, Any],
     card: dict[str, Any] | None,
     previous_fights: list[dict[str, Any]] | None = None,
+    previous_card_name: str = "",
 ) -> None:
     """Reduce the consensus to this event's card, in place.
 
@@ -207,14 +208,34 @@ def annotate_consensus(
     bout ESPN simply removes from the card (rather than marking canceled) was
     on_card last run and unmatched now — that is a cancellation the user
     should see, so it is kept and flagged rather than dropped with the rest.
+
+    That carry-over only makes sense within one event. `previous_card_name` is
+    the card the prior payload was built for, and the bouts are carried over
+    only when it is the same card as this run's. Retargeting the engine to the
+    next event used to resurrect the whole previous card as "cancelled" —
+    every bout was on_card last run and unmatched now, so a Contender Series
+    card sat on the Fight Night dashboard indefinitely, immune to the off-card
+    filter that exists to prevent exactly that. An unnamed previous card is
+    treated as a different one: without proof it is the same event, dropping
+    an unmatched fight is the safe direction.
     """
     if not card:
         return
 
     previously_on_card: set[tuple[str, str]] = set()
-    for fight in previous_fights or []:
-        if fight.get("card_status") in ("on_card", "cancelled"):
-            previously_on_card.add(_card_key(fight))
+    same_card = bool(previous_card_name) and _normalize_event_name(
+        previous_card_name
+    ) == _normalize_event_name(card["name"])
+    if same_card:
+        for fight in previous_fights or []:
+            if fight.get("card_status") in ("on_card", "cancelled"):
+                previously_on_card.add(_card_key(fight))
+    elif previous_fights:
+        log.info(
+            "Previous payload was for %r, not %r — its bouts are a different "
+            "event's and are not carried over",
+            previous_card_name or "(un-annotated)", card["name"],
+        )
 
     matched_orders: set[int] = set()
     kept: list[dict[str, Any]] = []

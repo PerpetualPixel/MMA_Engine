@@ -73,6 +73,29 @@ DEFAULT_SETTINGS: dict[str, Any] = {
         # Roundup transcripts are name-dense and the response is one line per
         # name, so they are chunked smaller than a normal picks video.
         "max_chunk_chars": 12000,
+        # Read the roundup's slides, which is where the channel names are
+        # actually printed — the host says "eighty of eighty-one are on Dyer"
+        # and never reads the board out, so the transcript alone comes back
+        # nearly empty. Downloads the video (yt-dlp), cuts a frame per slide
+        # (ffmpeg, shipped by the imageio-ffmpeg wheel), and reads each frame
+        # with vision. See mma_engine.roundup_slides.
+        "read_slides": True,
+        # Slide reading is closer to OCR than to judgement and runs to dozens
+        # of frames, so it gets its own, cheaper model.
+        "slide_model": "claude-sonnet-5",
+        "slide_effort": "medium",
+        # How much the picture must change to count as a new slide, and the
+        # ceiling on frames read from one deck.
+        "scene_threshold": 0.15,
+        "max_frames": 80,
+        # 720p reads the smallest name on these decks; more is wasted tokens.
+        "video_height": 720,
+        # Keep the downloaded video after the frames are cut (it is large).
+        "keep_video": False,
+        # Where boards that have already been read are kept. A deck read once
+        # is written here and reused for free by every later run, and can be
+        # corrected by hand — see mma_engine.tracker_picks.load_readings.
+        "readings_dir": "roundups",
     },
     "live_odds": {
         # Current moneyline prices from The Odds API, stamped onto each bout so
