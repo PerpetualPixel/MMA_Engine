@@ -21,10 +21,10 @@
   },
   "source": "MMA_Engine trust-weighted capper consensus",
   "totals": {
-    "picks": 59,
+    "picks": 52,
     "strong": 13,
-    "lean": 31,
-    "pass": 15
+    "lean": 23,
+    "pass": 16
   },
   "picks": [
     {
@@ -261,10 +261,10 @@
       "market": "moneyline",
       "market_label": "Moneyline",
       "selection": "Jackson McVey",
-      "consensus_pct": 87.7,
-      "weight": 26.18,
-      "pick_count": 8,
-      "avg_confidence": 5.4,
+      "consensus_pct": 88.4,
+      "weight": 27.83,
+      "pick_count": 9,
+      "avg_confidence": 5.1,
       "strength": 8.8,
       "tier": "strong",
       "suggested_units": 2.0,
@@ -304,6 +304,11 @@
           "capper": "THE MMA GURU",
           "comment": "McVey has a higher ceiling, is more explosive on the feet, has submission and clinch/cage work, and is the slight favorite; leaning to a second-round TKO.",
           "confidence": 5
+        },
+        {
+          "capper": "Livid Larry MMA",
+          "comment": "Leg in his long shot prelim parlay.",
+          "confidence": 3
         },
         {
           "capper": "Axel MMA",
@@ -763,72 +768,6 @@
       ]
     },
     {
-      "fight_id": "paxton|perez",
-      "fight": "Logan Paxton vs Christian Perez",
-      "card_status": "cancelled",
-      "market": "moneyline",
-      "market_label": "Moneyline",
-      "selection": "Christian Perez",
-      "consensus_pct": 100.0,
-      "weight": 8.03,
-      "pick_count": 2,
-      "avg_confidence": 6.5,
-      "strength": 7.0,
-      "tier": "lean",
-      "suggested_units": 1.0,
-      "quoted_odds": {
-        "american": -225,
-        "decimal": 1.444,
-        "count": 1
-      },
-      "value": 3.1,
-      "comments": [
-        {
-          "capper": "MMA OddsBreaker (Adam)",
-          "comment": "Adam picks Perez without further explanation.",
-          "confidence": 5
-        },
-        {
-          "capper": "BetSlam with Sam",
-          "comment": "Called Perez the lock of the card — far more skilled, showed the real deal against Manuel Sosa, while Paxton is a meat-and-potatoes wrestler who's beaten only tin cans.",
-          "confidence": 8
-        }
-      ]
-    },
-    {
-      "fight_id": "puga|trembley",
-      "fight": "Roman Puga vs Tanner Trembley",
-      "card_status": "cancelled",
-      "market": "moneyline",
-      "market_label": "Moneyline",
-      "selection": "Roman Puga",
-      "consensus_pct": 100.0,
-      "weight": 7.23,
-      "pick_count": 2,
-      "avg_confidence": 5.5,
-      "strength": 6.8,
-      "tier": "lean",
-      "suggested_units": 1.0,
-      "quoted_odds": {
-        "american": -170,
-        "decimal": 1.588,
-        "count": 1
-      },
-      "value": 4.0,
-      "comments": [
-        {
-          "capper": "BetSlam with Sam",
-          "comment": "Trembley started MMA late, has faced nobody of note and mostly submits opponents, while Puga is a young Mexican knockout artist who has never been submitted.",
-          "confidence": 6
-        },
-        {
-          "capper": "MMA OddsBreaker (Adam)",
-          "comment": "Adam simply sides with Puga on the Contender Series card.",
-          "confidence": 5
-        }
-      ]
-    },
-    {
       "fight_id": "jones|mederos",
       "fight": "Mason Jones vs MarQuel Mederos",
       "card_status": "on_card",
@@ -858,33 +797,6 @@
           "capper": "MMA AL DENTE",
           "comment": "He bet the over because he thinks this one is a grind that goes the distance.",
           "confidence": 5
-        }
-      ]
-    },
-    {
-      "fight_id": "mcvey|schultz",
-      "fight": "Jackson McVey vs Wes Schultz",
-      "card_status": "on_card",
-      "market": "round",
-      "market_label": "Round",
-      "selection": "Jackson McVey to finish in round 1",
-      "consensus_pct": 100.0,
-      "weight": 5.96,
-      "pick_count": 2,
-      "avg_confidence": 4.5,
-      "strength": 6.5,
-      "tier": "lean",
-      "suggested_units": 1.0,
-      "comments": [
-        {
-          "capper": "BetSlam with Sam",
-          "comment": "All seven of McVey's wins come in the first round (KO or submission off a takedown attempt), and they dismiss Schultz's win over a retired, out-of-shape Ben Johnston.",
-          "confidence": 7
-        },
-        {
-          "capper": "MMA Prediction Guru",
-          "comment": "Says he has almost no confidence but has to make a prediction; sees a quick one-round fight where McVey catches Schultz coming in.",
-          "confidence": 2
         }
       ]
     },
@@ -969,28 +881,6 @@
       ]
     },
     {
-      "fight_id": "paxton|perez",
-      "fight": "Logan Paxton vs Christian Perez",
-      "card_status": "cancelled",
-      "market": "method_of_victory",
-      "market_label": "Method of Victory",
-      "selection": "Christian Perez by submission",
-      "consensus_pct": 100.0,
-      "weight": 4.97,
-      "pick_count": 1,
-      "avg_confidence": 7.0,
-      "strength": 6.2,
-      "tier": "lean",
-      "suggested_units": 1.0,
-      "comments": [
-        {
-          "capper": "BetSlam with Sam",
-          "comment": "Perez is far more skilled and should cook Paxton, whose only path is takedowns and ground and pound.",
-          "confidence": 7
-        }
-      ]
-    },
-    {
       "fight_id": "barbosa|kuse",
       "fight": "Marcio Barbosa vs Ryan Kuse",
       "card_status": "on_card",
@@ -1041,28 +931,6 @@
       ]
     },
     {
-      "fight_id": "puga|trembley",
-      "fight": "Roman Puga vs Tanner Trembley",
-      "card_status": "cancelled",
-      "market": "method_of_victory",
-      "market_label": "Method of Victory",
-      "selection": "Roman Puga by KO/TKO",
-      "consensus_pct": 100.0,
-      "weight": 4.26,
-      "pick_count": 1,
-      "avg_confidence": 6.0,
-      "strength": 6.1,
-      "tier": "lean",
-      "suggested_units": 1.0,
-      "comments": [
-        {
-          "capper": "BetSlam with Sam",
-          "comment": "Puga is a legitimate boxing threat with striking finishes; Sam said he'll take the KO if it's plus money.",
-          "confidence": 6
-        }
-      ]
-    },
-    {
       "fight_id": "hernandez|rodrigues",
       "fight": "Anthony Hernandez vs Gregory Rodrigues",
       "card_status": "on_card",
@@ -1097,28 +965,6 @@
           "capper": "Livid Larry MMA",
           "comment": "A hedge play on the main event since an early KO is the most likely scenario if Rodrigues wins.",
           "confidence": 5
-        }
-      ]
-    },
-    {
-      "fight_id": "brito|fazil",
-      "fight": "Kaik Brito vs Namo Fazil",
-      "card_status": "cancelled",
-      "market": "moneyline",
-      "market_label": "Moneyline",
-      "selection": "Kaik Brito",
-      "consensus_pct": 100.0,
-      "weight": 4.08,
-      "pick_count": 1,
-      "avg_confidence": 6.0,
-      "strength": 6.0,
-      "tier": "lean",
-      "suggested_units": 1.0,
-      "comments": [
-        {
-          "capper": "BetSlam with Sam",
-          "comment": "Brito is battle tested against real European competition while Fazil has been can crushing on a much weaker circuit; the fake tough guy act at the faceoff flipped Sam onto Brito.",
-          "confidence": 6
         }
       ]
     },
@@ -1349,28 +1195,6 @@
       ]
     },
     {
-      "fight_id": "mcvay|schultz",
-      "fight": "Jackson McVey vs Wes Schultz",
-      "card_status": "on_card",
-      "market": "round",
-      "market_label": "Round",
-      "selection": "Fight to end in round 1",
-      "consensus_pct": 100.0,
-      "weight": 3.3,
-      "pick_count": 1,
-      "avg_confidence": 6.0,
-      "strength": 5.8,
-      "tier": "lean",
-      "suggested_units": 1.0,
-      "comments": [
-        {
-          "capper": "Livid Larry MMA",
-          "comment": "Listed among his regular props for the card.",
-          "confidence": 6
-        }
-      ]
-    },
-    {
       "fight_id": "jones|mederos",
       "fight": "Mason Jones vs MarQuel Mederos",
       "card_status": "on_card",
@@ -1444,28 +1268,6 @@
         {
           "capper": "We Want Picks (Jacob)",
           "comment": "Floated as an interesting angle given RDR's grappling edge, though they question whether Dolidze ever gets submitted.",
-          "confidence": 3
-        }
-      ]
-    },
-    {
-      "fight_id": "mcvay|schultz",
-      "fight": "Jackson McVey vs Wes Schultz",
-      "card_status": "on_card",
-      "market": "moneyline",
-      "market_label": "Moneyline",
-      "selection": "Jackson McVey",
-      "consensus_pct": 100.0,
-      "weight": 1.65,
-      "pick_count": 1,
-      "avg_confidence": 3.0,
-      "strength": 5.4,
-      "tier": "lean",
-      "suggested_units": 1.0,
-      "comments": [
-        {
-          "capper": "Livid Larry MMA",
-          "comment": "Leg in his long shot prelim parlay.",
           "confidence": 3
         }
       ]
@@ -1740,6 +1542,33 @@
           "capper": "We Want Picks (Jacob)",
           "comment": "He expects Dyer to beat Reed up badly and get a finish.",
           "confidence": 6
+        }
+      ]
+    },
+    {
+      "fight_id": "mcvey|schultz",
+      "fight": "Jackson McVey vs Wes Schultz",
+      "card_status": "on_card",
+      "market": "round",
+      "market_label": "Round",
+      "selection": "Jackson McVey to finish in round 1",
+      "consensus_pct": 64.4,
+      "weight": 5.96,
+      "pick_count": 2,
+      "avg_confidence": 4.5,
+      "strength": 4.2,
+      "tier": "pass",
+      "suggested_units": 0.0,
+      "comments": [
+        {
+          "capper": "BetSlam with Sam",
+          "comment": "All seven of McVey's wins come in the first round (KO or submission off a takedown attempt), and they dismiss Schultz's win over a retired, out-of-shape Ben Johnston.",
+          "confidence": 7
+        },
+        {
+          "capper": "MMA Prediction Guru",
+          "comment": "Says he has almost no confidence but has to make a prediction; sees a quick one-round fight where McVey catches Schultz coming in.",
+          "confidence": 2
         }
       ]
     },

@@ -201,6 +201,109 @@ def _relabel_options(fight: dict[str, Any], old: tuple[str, str], clean: tuple[s
             option["selection"] = label
 
 
+def _option_weight(option: dict[str, Any]) -> float:
+    """An option's weight, recomputed from its backers.
+
+    weight = trust x (confidence / 10), summed — the same arithmetic
+    aggregate.py does, redone here because merging two entries for one bout
+    changes who is backing what.
+    """
+    return sum(
+        float(capper.get("trust", 0.0)) * float(capper.get("confidence", 0)) / 10.0
+        for capper in option.get("cappers") or []
+    )
+
+
+def _restat_option(option: dict[str, Any]) -> None:
+    """Recount an option from its capper list."""
+    cappers = option.get("cappers") or []
+    option["weight"] = round(_option_weight(option), 2)
+    option["pick_count"] = len(cappers)
+    if cappers:
+        option["avg_confidence"] = round(
+            sum(float(c.get("confidence", 0)) for c in cappers) / len(cappers), 1
+        )
+    stated = [c for c in cappers if c.get("source", "video") != "tracker"]
+    option["stated_pick_count"] = len(stated)
+    option["stated_avg_confidence"] = (
+        round(sum(float(c.get("confidence", 0)) for c in stated) / len(stated), 1)
+        if stated
+        else 0.0
+    )
+
+
+def _merge_fight(target: dict[str, Any], extra: dict[str, Any]) -> None:
+    """Fold one consensus fight into another for the same bout, in place.
+
+    Both entries are already relabelled to ESPN's spellings, so options line
+    up on their labels. A capper appearing on both sides of the merge votes
+    once, with their stronger statement — the same rule aggregation applies
+    within a fight. Everything downstream of the capper lists (weights,
+    counts, consensus shares) is recomputed rather than added up, so the
+    merged fight reads exactly as it would have had the two spellings never
+    diverged.
+    """
+    markets = {market.get("bet_type"): market for market in target.get("markets") or []}
+
+    for market in extra.get("markets") or []:
+        into = markets.get(market.get("bet_type"))
+        if into is None:
+            target.setdefault("markets", []).append(market)
+            markets[market.get("bet_type")] = market
+            continue
+
+        options = {
+            (option.get("selection") or "").strip().casefold(): option
+            for option in into.get("options") or []
+        }
+        for option in market.get("options") or []:
+            key = (option.get("selection") or "").strip().casefold()
+            match = options.get(key)
+            if match is None:
+                into.setdefault("options", []).append(option)
+                options[key] = option
+                continue
+            by_id = {c.get("id"): c for c in match.get("cappers") or []}
+            for capper in option.get("cappers") or []:
+                seen = by_id.get(capper.get("id"))
+                weight = lambda c: float(c.get("trust", 0)) * float(c.get("confidence", 0))
+                if seen is None or weight(capper) > weight(seen):
+                    by_id[capper.get("id")] = capper
+            match["cappers"] = sorted(
+                by_id.values(),
+                key=lambda c: (float(c.get("trust", 0)) * float(c.get("confidence", 0)), c.get("name", "")),
+                reverse=True,
+            )
+
+    for market in target.get("markets") or []:
+        for option in market.get("options") or []:
+            _restat_option(option)
+        total = sum(float(o.get("weight", 0.0)) for o in market.get("options") or [])
+        market["total_weight"] = round(total, 2)
+        market["pick_count"] = sum(int(o.get("pick_count", 0)) for o in market.get("options") or [])
+        for option in market.get("options") or []:
+            option["consensus_pct"] = (
+                round(float(option["weight"]) / total * 100.0, 1) if total else 0.0
+            )
+        market["options"] = sorted(
+            market.get("options") or [],
+            key=lambda o: (o.get("weight", 0), o.get("pick_count", 0)),
+            reverse=True,
+        )
+
+    target["pick_count"] = sum(
+        int(market.get("pick_count", 0)) for market in target.get("markets") or []
+    )
+    target["capper_count"] = len(
+        {
+            capper.get("id")
+            for market in target.get("markets") or []
+            for option in market.get("options") or []
+            for capper in option.get("cappers") or []
+        }
+    )
+
+
 def _refresh_totals(payload: dict[str, Any]) -> None:
     """Recount the headline totals over the fights that survived the card
     filter, so "21 cappers across 61 fights" describes the payload the reader
@@ -238,6 +341,14 @@ def annotate_consensus(
     on_card last run and unmatched now — that is a cancellation the user
     should see, so it is kept and flagged rather than dropped with the rest.
 
+    A cancellation carries a stamp of the card it was called on
+    (`cancelled_from_card`). Without it the carry-over feeds itself: a fight
+    flagged cancelled is in the previous payload as cancelled, so the next run
+    flags it again, and the next — three Contender Series bouts rode that loop
+    into a Fight Night card and could not be evicted by anything short of
+    editing the payload by hand. Only fights this event actually put on its
+    card are carried, and the stamp is what proves it.
+
     That carry-over only makes sense within one event. `previous_card_name` is
     the card the prior payload was built for, and the bouts are carried over
     only when it is the same card as this run's. Retargeting the engine to the
@@ -257,7 +368,13 @@ def annotate_consensus(
     ) == _normalize_event_name(card["name"])
     if same_card:
         for fight in previous_fights or []:
-            if fight.get("card_status") in ("on_card", "cancelled"):
+            status = fight.get("card_status")
+            was_on_this_card = status == "on_card" or (
+                status == "cancelled"
+                and _normalize_event_name(fight.get("cancelled_from_card", ""))
+                == _normalize_event_name(card["name"])
+            )
+            if was_on_this_card:
                 previously_on_card.add(_card_key(fight))
     elif previous_fights:
         log.info(
@@ -266,20 +383,20 @@ def annotate_consensus(
             previous_card_name or "(un-annotated)", card["name"],
         )
 
-    matched_orders: set[int] = set()
+    matched_orders: dict[int, dict[str, Any]] = {}
     kept: list[dict[str, Any]] = []
     dropped = 0
+    merged = 0
     for fight in payload.get("fights") or []:
         bout = _match_card_fight(fight, card["fights"])
         if bout is None:
             if _card_key(fight) in previously_on_card:
                 fight["card_status"] = "cancelled"
+                fight["cancelled_from_card"] = card["name"]
                 kept.append(fight)
             else:
                 dropped += 1
             continue
-        kept.append(fight)
-        matched_orders.add(bout["order"])
         fight["card_status"] = "cancelled" if bout["cancelled"] else "on_card"
         fight["card_order"] = bout["order"]
         fight["card_date"] = bout.get("date")
@@ -298,6 +415,24 @@ def annotate_consensus(
         fight["fighter_a"], fight["fighter_b"] = clean_a, clean_b
         fight["display"] = f"{clean_a} vs {clean_b}"
 
+        # ESPN says this is one bout, so it is one fight. Two consensus
+        # entries reach the same bout when the cappers' spellings diverge far
+        # enough to survive the surname canonicalizer ("Schultz" / "Schiltz"),
+        # and the card was rendering the bout twice — once with 22 picks and
+        # once with 2. Fold the second into the first.
+        existing = matched_orders.get(bout["order"])
+        if existing is None:
+            matched_orders[bout["order"]] = fight
+            kept.append(fight)
+        else:
+            _merge_fight(existing, fight)
+            merged += 1
+
+    if merged:
+        log.info(
+            "Merged %d consensus fight(s) into a bout already matched — the "
+            "same fight under two spellings", merged,
+        )
     payload["fights"] = kept
 
     # The rest of the card, so the dashboard shows every bout — a fight

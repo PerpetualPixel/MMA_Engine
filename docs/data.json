@@ -20,8 +20,8 @@
     }
   },
   "totals": {
-    "fights": 17,
-    "picks": 236,
+    "fights": 13,
+    "picks": 229,
     "cappers": 18,
     "videos": 25
   },
@@ -801,23 +801,23 @@
       "display": "Jackson McVey vs Wes Schultz",
       "fighter_a": "Jackson McVey",
       "fighter_b": "Wes Schultz",
-      "pick_count": 22,
+      "pick_count": 24,
       "capper_count": 16,
       "markets": [
         {
           "bet_type": "moneyline",
           "label": "Moneyline",
-          "total_weight": 29.84,
-          "pick_count": 9,
+          "total_weight": 31.49,
+          "pick_count": 10,
           "options": [
             {
               "selection": "Jackson McVey",
-              "consensus_pct": 87.7,
-              "weight": 26.18,
-              "pick_count": 8,
-              "avg_confidence": 5.4,
-              "stated_pick_count": 8,
-              "stated_avg_confidence": 5.4,
+              "consensus_pct": 88.4,
+              "weight": 27.83,
+              "pick_count": 9,
+              "avg_confidence": 5.1,
+              "stated_pick_count": 9,
+              "stated_avg_confidence": 5.1,
               "cappers": [
                 {
                   "id": "locked_door_mma",
@@ -914,12 +914,24 @@
                   "reasoning": "McVey is bigger and younger and the loss to Schultz was long ago; Schultz has shown no improvement, but Sam stated low confidence and wrote down no prop.",
                   "source": "video",
                   "video_url": "https://www.youtube.com/watch?v=gtBQ9hJBIA4"
+                },
+                {
+                  "id": "livid_larry",
+                  "name": "Livid Larry MMA",
+                  "confidence": 3,
+                  "trust": 5.5,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Leg in his long shot prelim parlay.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=58AetdUhGhs"
                 }
               ]
             },
             {
               "selection": "Wes Schultz",
-              "consensus_pct": 12.3,
+              "consensus_pct": 11.6,
               "weight": 3.66,
               "pick_count": 1,
               "avg_confidence": 6.0,
@@ -1158,12 +1170,12 @@
         {
           "bet_type": "round",
           "label": "Round",
-          "total_weight": 5.96,
-          "pick_count": 2,
+          "total_weight": 9.26,
+          "pick_count": 3,
           "options": [
             {
               "selection": "Jackson McVey to finish in round 1",
-              "consensus_pct": 100.0,
+              "consensus_pct": 64.4,
               "weight": 5.96,
               "pick_count": 2,
               "avg_confidence": 4.5,
@@ -1193,6 +1205,29 @@
                   "reasoning": "Says he has almost no confidence but has to make a prediction; sees a quick one-round fight where McVey catches Schultz coming in.",
                   "source": "video",
                   "video_url": "https://www.youtube.com/watch?v=NGV2zoAc1rw"
+                }
+              ]
+            },
+            {
+              "selection": "Fight to end in round 1",
+              "consensus_pct": 35.6,
+              "weight": 3.3,
+              "pick_count": 1,
+              "avg_confidence": 6.0,
+              "stated_pick_count": 1,
+              "stated_avg_confidence": 6.0,
+              "cappers": [
+                {
+                  "id": "livid_larry",
+                  "name": "Livid Larry MMA",
+                  "confidence": 6,
+                  "trust": 5.5,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Listed among his regular props for the card.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=58AetdUhGhs"
                 }
               ]
             }
@@ -4833,176 +4868,6 @@
       }
     },
     {
-      "fight_id": "puga|trembley",
-      "display": "Roman Puga vs Tanner Trembley",
-      "fighter_a": "Roman Puga",
-      "fighter_b": "Tanner Trembley",
-      "pick_count": 3,
-      "capper_count": 2,
-      "markets": [
-        {
-          "bet_type": "moneyline",
-          "label": "Moneyline",
-          "total_weight": 7.23,
-          "pick_count": 2,
-          "options": [
-            {
-              "selection": "Roman Puga",
-              "consensus_pct": 100.0,
-              "weight": 7.23,
-              "pick_count": 2,
-              "avg_confidence": 5.5,
-              "stated_pick_count": 2,
-              "stated_avg_confidence": 5.5,
-              "cappers": [
-                {
-                  "id": "betslam_sam",
-                  "name": "BetSlam with Sam",
-                  "confidence": 6,
-                  "trust": 6.8,
-                  "role": "unknown",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "Trembley started MMA late, has faced nobody of note and mostly submits opponents, while Puga is a young Mexican knockout artist who has never been submitted.",
-                  "source": "video",
-                  "video_url": "https://www.youtube.com/watch?v=gtBQ9hJBIA4"
-                },
-                {
-                  "id": "mma_odds_breaker_adam",
-                  "name": "MMA OddsBreaker (Adam)",
-                  "confidence": 5,
-                  "trust": 6.3,
-                  "role": "favorite",
-                  "odds": "-170",
-                  "stake": "",
-                  "reasoning": "Adam simply sides with Puga on the Contender Series card.",
-                  "source": "video",
-                  "video_url": "https://www.youtube.com/watch?v=Ek6h_5yKPP0"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "bet_type": "method_of_victory",
-          "label": "Method of Victory",
-          "total_weight": 4.26,
-          "pick_count": 1,
-          "options": [
-            {
-              "selection": "Roman Puga by KO/TKO",
-              "consensus_pct": 100.0,
-              "weight": 4.26,
-              "pick_count": 1,
-              "avg_confidence": 6.0,
-              "stated_pick_count": 1,
-              "stated_avg_confidence": 6.0,
-              "cappers": [
-                {
-                  "id": "betslam_sam",
-                  "name": "BetSlam with Sam",
-                  "confidence": 6,
-                  "trust": 7.1,
-                  "role": "unknown",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "Puga is a legitimate boxing threat with striking finishes; Sam said he'll take the KO if it's plus money.",
-                  "source": "video",
-                  "video_url": "https://www.youtube.com/watch?v=gtBQ9hJBIA4"
-                }
-              ]
-            }
-          ]
-        }
-      ],
-      "card_status": "cancelled"
-    },
-    {
-      "fight_id": "paxton|perez",
-      "display": "Logan Paxton vs Christian Perez",
-      "fighter_a": "Logan Paxton",
-      "fighter_b": "Christian Perez",
-      "pick_count": 3,
-      "capper_count": 2,
-      "markets": [
-        {
-          "bet_type": "moneyline",
-          "label": "Moneyline",
-          "total_weight": 8.03,
-          "pick_count": 2,
-          "options": [
-            {
-              "selection": "Christian Perez",
-              "consensus_pct": 100.0,
-              "weight": 8.03,
-              "pick_count": 2,
-              "avg_confidence": 6.5,
-              "stated_pick_count": 2,
-              "stated_avg_confidence": 6.5,
-              "cappers": [
-                {
-                  "id": "betslam_sam",
-                  "name": "BetSlam with Sam",
-                  "confidence": 8,
-                  "trust": 6.1,
-                  "role": "favorite",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "Called Perez the lock of the card — far more skilled, showed the real deal against Manuel Sosa, while Paxton is a meat-and-potatoes wrestler who's beaten only tin cans.",
-                  "source": "video",
-                  "video_url": "https://www.youtube.com/watch?v=gtBQ9hJBIA4"
-                },
-                {
-                  "id": "mma_odds_breaker_adam",
-                  "name": "MMA OddsBreaker (Adam)",
-                  "confidence": 5,
-                  "trust": 6.3,
-                  "role": "favorite",
-                  "odds": "-225",
-                  "stake": "",
-                  "reasoning": "Adam picks Perez without further explanation.",
-                  "source": "video",
-                  "video_url": "https://www.youtube.com/watch?v=Ek6h_5yKPP0"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "bet_type": "method_of_victory",
-          "label": "Method of Victory",
-          "total_weight": 4.97,
-          "pick_count": 1,
-          "options": [
-            {
-              "selection": "Christian Perez by submission",
-              "consensus_pct": 100.0,
-              "weight": 4.97,
-              "pick_count": 1,
-              "avg_confidence": 7.0,
-              "stated_pick_count": 1,
-              "stated_avg_confidence": 7.0,
-              "cappers": [
-                {
-                  "id": "betslam_sam",
-                  "name": "BetSlam with Sam",
-                  "confidence": 7,
-                  "trust": 7.1,
-                  "role": "favorite",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "Perez is far more skilled and should cook Paxton, whose only path is takedowns and ground and pound.",
-                  "source": "video",
-                  "video_url": "https://www.youtube.com/watch?v=gtBQ9hJBIA4"
-                }
-              ]
-            }
-          ]
-        }
-      ],
-      "card_status": "cancelled"
-    },
-    {
       "fight_id": "barbosa|kuse",
       "display": "Marcio Barbosa vs Ryan Kuse",
       "fighter_a": "Marcio Barbosa",
@@ -5093,140 +4958,6 @@
           "best_american": 600
         }
       }
-    },
-    {
-      "fight_id": "mcvay|schultz",
-      "display": "Jackson McVey vs Wes Schultz",
-      "fighter_a": "Jackson McVey",
-      "fighter_b": "Wes Schultz",
-      "pick_count": 2,
-      "capper_count": 1,
-      "markets": [
-        {
-          "bet_type": "moneyline",
-          "label": "Moneyline",
-          "total_weight": 1.65,
-          "pick_count": 1,
-          "options": [
-            {
-              "selection": "Jackson McVey",
-              "consensus_pct": 100.0,
-              "weight": 1.65,
-              "pick_count": 1,
-              "avg_confidence": 3.0,
-              "stated_pick_count": 1,
-              "stated_avg_confidence": 3.0,
-              "cappers": [
-                {
-                  "id": "livid_larry",
-                  "name": "Livid Larry MMA",
-                  "confidence": 3,
-                  "trust": 5.5,
-                  "role": "unknown",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "Leg in his long shot prelim parlay.",
-                  "source": "video",
-                  "video_url": "https://www.youtube.com/watch?v=58AetdUhGhs"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "bet_type": "round",
-          "label": "Round",
-          "total_weight": 3.3,
-          "pick_count": 1,
-          "options": [
-            {
-              "selection": "Fight to end in round 1",
-              "consensus_pct": 100.0,
-              "weight": 3.3,
-              "pick_count": 1,
-              "avg_confidence": 6.0,
-              "stated_pick_count": 1,
-              "stated_avg_confidence": 6.0,
-              "cappers": [
-                {
-                  "id": "livid_larry",
-                  "name": "Livid Larry MMA",
-                  "confidence": 6,
-                  "trust": 5.5,
-                  "role": "unknown",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "Listed among his regular props for the card.",
-                  "source": "video",
-                  "video_url": "https://www.youtube.com/watch?v=58AetdUhGhs"
-                }
-              ]
-            }
-          ]
-        }
-      ],
-      "card_status": "on_card",
-      "card_order": 1,
-      "card_date": "2026-08-22T21:00Z",
-      "live_odds": {
-        "source": "the-odds-api",
-        "fetched_at": "2026-08-21T09:17:53+00:00",
-        "commence_time": "2026-08-22T21:00:00Z",
-        "a": {
-          "american": -177,
-          "decimal": 1.5635,
-          "books": 8,
-          "best_american": -170
-        },
-        "b": {
-          "american": 148,
-          "decimal": 2.48,
-          "books": 8,
-          "best_american": 154
-        }
-      }
-    },
-    {
-      "fight_id": "brito|fazil",
-      "display": "Kaik Brito vs Namo Fazil",
-      "fighter_a": "Kaik Brito",
-      "fighter_b": "Namo Fazil",
-      "pick_count": 1,
-      "capper_count": 1,
-      "markets": [
-        {
-          "bet_type": "moneyline",
-          "label": "Moneyline",
-          "total_weight": 4.08,
-          "pick_count": 1,
-          "options": [
-            {
-              "selection": "Kaik Brito",
-              "consensus_pct": 100.0,
-              "weight": 4.08,
-              "pick_count": 1,
-              "avg_confidence": 6.0,
-              "stated_pick_count": 1,
-              "stated_avg_confidence": 6.0,
-              "cappers": [
-                {
-                  "id": "betslam_sam",
-                  "name": "BetSlam with Sam",
-                  "confidence": 6,
-                  "trust": 6.8,
-                  "role": "unknown",
-                  "odds": "",
-                  "stake": "",
-                  "reasoning": "Brito is battle tested against real European competition while Fazil has been can crushing on a much weaker circuit; the fake tough guy act at the faceoff flipped Sam onto Brito.",
-                  "source": "video",
-                  "video_url": "https://www.youtube.com/watch?v=gtBQ9hJBIA4"
-                }
-              ]
-            }
-          ]
-        }
-      ],
-      "card_status": "cancelled"
     }
   ],
   "discovery": [

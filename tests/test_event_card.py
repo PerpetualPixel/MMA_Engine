@@ -239,3 +239,111 @@ def test_espn_spelling_reaches_the_option_labels_too():
         "Jamall Emmers",
     ]
     assert kept["markets"][1]["options"][0]["selection"] == "Lerryan Douglas by KO/TKO"
+
+
+def _capper(capper_id, name, confidence, trust, source="video"):
+    return {
+        "id": capper_id, "name": name, "confidence": confidence,
+        "trust": trust, "role": "unknown", "odds": "", "stake": "",
+        "reasoning": "", "source": source, "video_url": "",
+    }
+
+
+def _ml_fight(a, b, selection, cappers):
+    fight = consensus_fight(a, b)
+    fight["markets"] = [
+        {
+            "bet_type": "moneyline",
+            "label": "Moneyline",
+            "total_weight": 0,
+            "pick_count": len(cappers),
+            "options": [
+                {
+                    "selection": selection,
+                    "consensus_pct": 100.0,
+                    "weight": 0,
+                    "pick_count": len(cappers),
+                    "avg_confidence": 0,
+                    "stated_pick_count": len(cappers),
+                    "stated_avg_confidence": 0,
+                    "cappers": cappers,
+                }
+            ],
+        }
+    ]
+    return fight
+
+
+def test_two_spellings_of_one_bout_are_merged_not_listed_twice():
+    """The card was rendering the same bout twice — 22 picks under one
+    spelling, 2 under another — because both matched the same ESPN bout."""
+    card = parse_card(espn_event(fights=[("Jackson McVey", "Wes Schultz", "STATUS_SCHEDULED")]))
+    big = _ml_fight("Jackson McVey", "Wes Schultz", "Jackson McVey",
+                    [_capper("a", "A", 8, 7.0), _capper("b", "B", 6, 5.0)])
+    small = _ml_fight("Jackson McVey", "Wes Schiltz", "Jackson McVey",
+                      [_capper("c", "C", 4, 5.0)])
+    payload = {"event": {}, "fights": [big, small]}
+
+    annotate_consensus(payload, card)
+
+    assert len(payload["fights"]) == 1
+    fight = payload["fights"][0]
+    assert fight["display"] == "Jackson McVey vs Wes Schultz"
+    option = fight["markets"][0]["options"][0]
+    assert [c["id"] for c in option["cappers"]] == ["a", "b", "c"]
+    assert option["pick_count"] == 3
+    # 5.6 + 3.0 + 2.0, recomputed rather than added from stale totals.
+    assert option["weight"] == pytest.approx(10.6)
+    assert option["consensus_pct"] == 100.0
+    assert fight["pick_count"] == 3
+
+
+def test_merging_keeps_one_vote_per_capper():
+    card = parse_card(espn_event(fights=[("Jackson McVey", "Wes Schultz", "STATUS_SCHEDULED")]))
+    strong = _ml_fight("Jackson McVey", "Wes Schultz", "Jackson McVey",
+                       [_capper("a", "A", 9, 7.0)])
+    weak = _ml_fight("Jackson McVey", "Wes Schiltz", "Jackson McVey",
+                     [_capper("a", "A", 3, 7.0)])
+    payload = {"event": {}, "fights": [strong, weak]}
+
+    annotate_consensus(payload, card)
+
+    option = payload["fights"][0]["markets"][0]["options"][0]
+    assert option["pick_count"] == 1
+    assert option["cappers"][0]["confidence"] == 9
+
+
+def test_a_cancellation_does_not_rederive_itself_forever():
+    """A fight flagged cancelled appears in the next run's previous payload as
+    cancelled — which used to be enough to flag it again, for ever."""
+    card = parse_card(espn_event(fights=[("Islam Makhachev", "Ian Machado Garry", "STATUS_SCHEDULED")]))
+    stale = consensus_fight("Kaik Brito", "Namo Fazil")
+    payload = {"event": {}, "fights": [stale]}
+    # Last run's payload, carrying it as cancelled but with no record of ever
+    # having been on this card.
+    previous = [consensus_fight("Kaik Brito", "Namo Fazil", card_status="cancelled")]
+
+    annotate_consensus(
+        payload, card, previous_fights=previous, previous_card_name=card["name"]
+    )
+    assert all("Brito" not in f["display"] for f in payload["fights"])
+
+
+def test_a_cancellation_from_this_card_still_persists():
+    card = parse_card(espn_event(fights=[("Islam Makhachev", "Ian Machado Garry", "STATUS_SCHEDULED")]))
+    gone = consensus_fight("Mackenzie Dern", "Jillian Robertson")
+    payload = {"event": {}, "fights": [gone]}
+    previous = [
+        dict(
+            consensus_fight("Mackenzie Dern", "Jillian Robertson", card_status="cancelled"),
+            cancelled_from_card=card["name"],
+        )
+    ]
+
+    annotate_consensus(
+        payload, card, previous_fights=previous, previous_card_name=card["name"]
+    )
+    kept = next(f for f in payload["fights"] if "Dern" in f["display"])
+    assert kept["card_status"] == "cancelled"
+    # And it keeps its stamp, so it survives the run after this one too.
+    assert kept["cancelled_from_card"] == card["name"]
