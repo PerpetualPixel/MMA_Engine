@@ -1,16 +1,163 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-24T02:43:42+00:00",
+  "generated_at": "2026-08-24T03:08:27+00:00",
   "event": {
     "name": "Contender Series: Season 10, Week 3",
-    "date": ""
+    "date": "",
+    "notes": "\"name\" is matched as a substring against ESPN's own event name (punctuation and case are ignored, but spelling is NOT — no typo tolerance here, unlike fighter-name matching elsewhere), and the FIRST match inside the 45-day scoreboard window wins. That last part is why a weekly series must carry its season and week: ESPN names this card \"Dana White's Contender Series: Season 10, Week 3\", and \"Contender Series\" alone would match whichever week sits earliest in the window rather than this one. A one-off card (\"UFC 330\", \"Hernandez vs. Rodrigues\") is unique in that window and needs no qualifier. If the run logs \"No ESPN card found matching ...\", the name is wrong: nothing is filtered that run and off-card fights come back.",
+    "card": {
+      "source": "espn",
+      "name": "Dana White's Contender Series: Season 10, Week 3",
+      "date": "2026-08-25T23:00Z",
+      "bouts": 5,
+      "off_card_dropped": 33
+    },
+    "odds": {
+      "source": "the-odds-api",
+      "market": "h2h",
+      "fetched_at": "2026-08-24T03:08:27+00:00",
+      "fights_priced": 1
+    }
   },
   "source": "MMA_Engine trust-weighted capper consensus",
   "totals": {
-    "picks": 0,
+    "picks": 6,
     "strong": 0,
-    "lean": 0,
+    "lean": 6,
     "pass": 0
   },
-  "picks": []
+  "picks": [
+    {
+      "fight_id": "apodaca|mir",
+      "fight": "Alex Apodaca vs Bella Mir",
+      "card_status": "on_card",
+      "market": "moneyline",
+      "market_label": "Moneyline",
+      "selection": "Bella Mir",
+      "consensus_pct": 100.0,
+      "weight": 5.49,
+      "pick_count": 1,
+      "avg_confidence": 9.0,
+      "strength": 6.4,
+      "tier": "lean",
+      "suggested_units": 1.0,
+      "comments": [
+        {
+          "capper": "Artem MMA",
+          "comment": "Mir should be one of the biggest favorites of the season - national champion wrestler with UFC BJJ grappling experience - facing an opponent on three weeks' notice whose striking he doesn't rate.",
+          "confidence": 9
+        }
+      ]
+    },
+    {
+      "fight_id": "balletto|clancy",
+      "fight": "Gary Balletto vs Sean Clancy Jr.",
+      "card_status": "on_card",
+      "market": "moneyline",
+      "market_label": "Moneyline",
+      "selection": "Sean Clancy Jr.",
+      "consensus_pct": 100.0,
+      "weight": 4.96,
+      "pick_count": 1,
+      "avg_confidence": 8.0,
+      "strength": 6.2,
+      "tier": "lean",
+      "suggested_units": 1.0,
+      "comments": [
+        {
+          "capper": "Artem MMA",
+          "comment": "Clancy is one of the best prospects of the season, has stepped up in competition, and his cage pressure plus excellent body work should overwhelm Balletto, who hasn't fought MMA in over a year and has been out-sped and out-scrambled before.",
+          "confidence": 8
+        }
+      ]
+    },
+    {
+      "fight_id": "humphrey|miranda",
+      "fight": "Ronald Humphrey vs Alexis Miranda",
+      "card_status": "on_card",
+      "market": "method_of_victory",
+      "market_label": "Method of Victory",
+      "selection": "Ronald Humphrey by KO/TKO",
+      "consensus_pct": 100.0,
+      "weight": 4.41,
+      "pick_count": 1,
+      "avg_confidence": 7.0,
+      "strength": 6.1,
+      "tier": "lean",
+      "suggested_units": 1.0,
+      "comments": [
+        {
+          "capper": "The Wager Zone",
+          "comment": "Miranda is very hittable, doesn't move his head and leaves his chin up, plus poor takedown defense; Humphrey beats him everywhere and should land big shots early in round one.",
+          "confidence": 7
+        }
+      ]
+    },
+    {
+      "fight_id": "apodaca|mir",
+      "fight": "Alex Apodaca vs Bella Mir",
+      "card_status": "on_card",
+      "market": "method_of_victory",
+      "market_label": "Method of Victory",
+      "selection": "Bella Mir by submission",
+      "consensus_pct": 100.0,
+      "weight": 3.92,
+      "pick_count": 1,
+      "avg_confidence": 7.0,
+      "strength": 6.0,
+      "tier": "lean",
+      "suggested_units": 1.0,
+      "comments": [
+        {
+          "capper": "Artem MMA",
+          "comment": "Apodaca runs into the pocket with hands down and chin up, which lets Mir duck under to the hips; Mir is very good once she gets the takedown, having taken a Kimura off her last opponent.",
+          "confidence": 7
+        }
+      ]
+    },
+    {
+      "fight_id": "humphrey|miranda",
+      "fight": "Ronald Humphrey vs Alexis Miranda",
+      "card_status": "on_card",
+      "market": "round",
+      "market_label": "Round",
+      "selection": "Ronald Humphrey by KO/TKO in round 1",
+      "consensus_pct": 100.0,
+      "weight": 3.72,
+      "pick_count": 1,
+      "avg_confidence": 6.0,
+      "strength": 5.9,
+      "tier": "lean",
+      "suggested_units": 1.0,
+      "comments": [
+        {
+          "capper": "Artem MMA",
+          "comment": "Humphrey throws with big power, strikes and wrestles well, while Miranda has shown no power, poor takedown defense and fights on the back foot, so Humphrey has nothing to respect and should land something big early.",
+          "confidence": 6
+        }
+      ]
+    },
+    {
+      "fight_id": "balletto|clancy",
+      "fight": "Gary Balletto vs Sean Clancy Jr.",
+      "card_status": "on_card",
+      "market": "round",
+      "market_label": "Round",
+      "selection": "Sean Clancy Jr. by KO/TKO in round 1",
+      "consensus_pct": 100.0,
+      "weight": 3.72,
+      "pick_count": 1,
+      "avg_confidence": 6.0,
+      "strength": 5.9,
+      "tier": "lean",
+      "suggested_units": 1.0,
+      "comments": [
+        {
+          "capper": "Artem MMA",
+          "comment": "He expects the pressure and body work to add up quickly against a fighter coming off a long MMA layoff, predicting a first-round knockout.",
+          "confidence": 6
+        }
+      ]
+    }
+  ]
 }

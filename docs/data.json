@@ -1,16 +1,894 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-24T02:43:42+00:00",
+  "generated_at": "2026-08-24T03:08:27+00:00",
   "event": {
     "name": "Contender Series: Season 10, Week 3",
-    "date": ""
+    "date": "",
+    "notes": "\"name\" is matched as a substring against ESPN's own event name (punctuation and case are ignored, but spelling is NOT — no typo tolerance here, unlike fighter-name matching elsewhere), and the FIRST match inside the 45-day scoreboard window wins. That last part is why a weekly series must carry its season and week: ESPN names this card \"Dana White's Contender Series: Season 10, Week 3\", and \"Contender Series\" alone would match whichever week sits earliest in the window rather than this one. A one-off card (\"UFC 330\", \"Hernandez vs. Rodrigues\") is unique in that window and needs no qualifier. If the run logs \"No ESPN card found matching ...\", the name is wrong: nothing is filtered that run and off-card fights come back.",
+    "card": {
+      "source": "espn",
+      "name": "Dana White's Contender Series: Season 10, Week 3",
+      "date": "2026-08-25T23:00Z",
+      "bouts": 5,
+      "off_card_dropped": 33
+    },
+    "odds": {
+      "source": "the-odds-api",
+      "market": "h2h",
+      "fetched_at": "2026-08-24T03:08:27+00:00",
+      "fights_priced": 1
+    }
   },
   "totals": {
-    "fights": 0,
-    "picks": 0,
-    "cappers": 0,
-    "videos": 0
+    "fights": 5,
+    "picks": 6,
+    "cappers": 2,
+    "videos": 2
   },
-  "sources": [],
-  "fights": []
+  "sources": [
+    {
+      "video_id": "Q91pByWDgrI",
+      "url": "https://www.youtube.com/watch?v=Q91pByWDgrI",
+      "capper_id": "artem_mma",
+      "capper": "Artem MMA",
+      "title": "Contender Series 2026: Week 3 Preview and Predictions",
+      "status": "ok",
+      "pick_count": 8,
+      "transcript_chars": 20425
+    },
+    {
+      "video_id": "qvHd5Vi4NSo",
+      "url": "https://www.youtube.com/watch?v=qvHd5Vi4NSo",
+      "capper_id": "betslam_sam",
+      "capper": "BetSlam with Sam",
+      "title": "Live DWCS Predictions + UFC Shangahi Early Predictions Umar Nurmagomedov vs Song Yadong",
+      "status": "transcript_failed",
+      "pick_count": 0,
+      "error": "No usable transcript: TranscriptsDisabled"
+    },
+    {
+      "video_id": "gtBQ9hJBIA4",
+      "url": "https://www.youtube.com/watch?v=gtBQ9hJBIA4",
+      "capper_id": "betslam_sam",
+      "capper": "BetSlam with Sam",
+      "title": "Live DWCS Predictions + UFC Sacramento Prop Hunting Anthony Hernandez vs Gregory Rodrigues",
+      "status": "ok",
+      "pick_count": 30,
+      "transcript_chars": 88169
+    },
+    {
+      "video_id": "-_ELBhLxo58",
+      "url": "https://www.youtube.com/watch?v=-_ELBhLxo58",
+      "capper_id": "livid_larry",
+      "capper": "Livid Larry MMA",
+      "title": "Dana White’s Contender Series 2026: Week 2 | Full Card Fight Companion",
+      "status": "ok",
+      "pick_count": 11,
+      "transcript_chars": 77519
+    },
+    {
+      "video_id": "XC06GJwsTXE",
+      "url": "https://www.youtube.com/watch?v=XC06GJwsTXE",
+      "capper_id": "couch_warrior",
+      "capper": "Couch Warrior Podcast",
+      "title": "Dana White's Contender Series Week 2  - Full Card Betting Breakdowns, Predictions & Picks",
+      "status": "ok",
+      "pick_count": 5,
+      "transcript_chars": 34087
+    },
+    {
+      "video_id": "jBJWkj1IYII",
+      "url": "https://www.youtube.com/watch?v=jBJWkj1IYII",
+      "capper_id": "tony_has_died",
+      "capper": "TonyHasDiedMMA",
+      "title": "DWCS Was CRAZY!!!! Dark Souls II",
+      "status": "ok",
+      "pick_count": 1,
+      "transcript_chars": 43891
+    },
+    {
+      "video_id": "29_aNjAhrmU",
+      "url": "https://www.youtube.com/watch?v=29_aNjAhrmU",
+      "capper_id": "tony_has_died",
+      "capper": "TonyHasDiedMMA",
+      "title": "My Immediate Reaction To DWCS Season 10 Episode 2: That Was The Greatest Knockout I Have Ever Seen",
+      "status": "ok",
+      "pick_count": 0,
+      "transcript_chars": 14752
+    },
+    {
+      "video_id": "aOcgEGa5jVE",
+      "url": "https://www.youtube.com/watch?v=aOcgEGa5jVE",
+      "capper_id": "we_want_picks",
+      "capper": "We Want Picks (Jacob)",
+      "title": "🔴 Week 2 Contender Series LIVESTREAM! COMMENTARY & REACTIONS!",
+      "status": "transcript_failed",
+      "pick_count": 0,
+      "error": "No usable transcript: TranscriptsDisabled"
+    },
+    {
+      "video_id": "Fh7LeOLLJkM",
+      "url": "https://www.youtube.com/watch?v=Fh7LeOLLJkM",
+      "capper_id": "we_want_picks",
+      "capper": "We Want Picks (Jacob)",
+      "title": "DWCS 2026: Week 2: FULL CARD Predictions",
+      "status": "ok",
+      "pick_count": 6,
+      "transcript_chars": 29202
+    },
+    {
+      "video_id": "9JKfJa0k2pM",
+      "url": "https://www.youtube.com/watch?v=9JKfJa0k2pM",
+      "capper_id": "mma_lock_of_the_night",
+      "capper": "MMA Lock of the Night",
+      "title": "Contender Series 2026 Week 2 Watch Party Buddies",
+      "status": "ok",
+      "pick_count": 9,
+      "transcript_chars": 99293
+    },
+    {
+      "video_id": "CskBvz8xWw8",
+      "url": "https://www.youtube.com/watch?v=CskBvz8xWw8",
+      "capper_id": "mma_lock_of_the_night",
+      "capper": "MMA Lock of the Night",
+      "title": "Dana White's Contender Series 2026 Week 2 Predictions",
+      "status": "ok",
+      "pick_count": 7,
+      "transcript_chars": 33544
+    },
+    {
+      "video_id": "rn5YfkCf8y0",
+      "url": "https://www.youtube.com/watch?v=rn5YfkCf8y0",
+      "capper_id": "the_wager_zone",
+      "capper": "The Wager Zone",
+      "title": "🥊Dana White’s Contender Series S10 Week 3 | FULL CARD Breakdown, Predictions & Best Bets 🔥",
+      "status": "ok",
+      "pick_count": 7,
+      "transcript_chars": 6338
+    },
+    {
+      "video_id": "2Fno300Z2ws",
+      "url": "https://www.youtube.com/watch?v=2Fno300Z2ws",
+      "capper_id": "mma_prediction_guru",
+      "capper": "MMA Prediction Guru",
+      "title": "DANA WHITE CONTENDER SERIES 2026 WEEK 2 FULL CARD BREAKDOWN & PREDICTIONS",
+      "status": "ok",
+      "pick_count": 7,
+      "transcript_chars": 33064
+    },
+    {
+      "video_id": "c-g8ALip62Y",
+      "url": "https://www.youtube.com/watch?v=c-g8ALip62Y",
+      "capper_id": "kenny_okoye_mma",
+      "capper": "KennyOkoyeMMA",
+      "title": "DWCS Week 2 | LIVESTREAM",
+      "status": "ok",
+      "pick_count": 8,
+      "transcript_chars": 109886
+    },
+    {
+      "video_id": "DGVawn0Aldc",
+      "url": "https://www.youtube.com/watch?v=DGVawn0Aldc",
+      "capper_id": "ufc_genie",
+      "capper": "UFC Genie",
+      "title": "GENIE PICKS DWCS WEEK 2 #ufc #mma #fyp #dwcs #week2 #shorts",
+      "status": "transcript_failed",
+      "pick_count": 0,
+      "error": "No usable transcript: TranscriptsDisabled"
+    },
+    {
+      "video_id": "2I7fb0TusIE",
+      "url": "https://www.youtube.com/watch?v=2I7fb0TusIE",
+      "capper_id": "the_mma_guru",
+      "capper": "THE MMA GURU",
+      "title": "Din Thomas ABANDONS Robertson For Losing? Strickland TRASHES HIM? Contender Series Reaction?",
+      "status": "ok",
+      "pick_count": 0,
+      "transcript_chars": 32888
+    }
+  ],
+  "fights": [
+    {
+      "fight_id": "humphrey|miranda",
+      "display": "Ronald Humphrey vs Alexis Miranda",
+      "fighter_a": "Ronald Humphrey",
+      "fighter_b": "Alexis Miranda",
+      "pick_count": 2,
+      "capper_count": 2,
+      "markets": [
+        {
+          "bet_type": "method_of_victory",
+          "label": "Method of Victory",
+          "total_weight": 4.41,
+          "pick_count": 1,
+          "options": [
+            {
+              "selection": "Ronald Humphrey by KO/TKO",
+              "consensus_pct": 100.0,
+              "weight": 4.41,
+              "pick_count": 1,
+              "avg_confidence": 7.0,
+              "stated_pick_count": 1,
+              "stated_avg_confidence": 7.0,
+              "cappers": [
+                {
+                  "id": "the_wager_zone",
+                  "name": "The Wager Zone",
+                  "confidence": 7,
+                  "trust": 6.3,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Miranda is very hittable, doesn't move his head and leaves his chin up, plus poor takedown defense; Humphrey beats him everywhere and should land big shots early in round one.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=rn5YfkCf8y0"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bet_type": "round",
+          "label": "Round",
+          "total_weight": 3.72,
+          "pick_count": 1,
+          "options": [
+            {
+              "selection": "Ronald Humphrey by KO/TKO in round 1",
+              "consensus_pct": 100.0,
+              "weight": 3.72,
+              "pick_count": 1,
+              "avg_confidence": 6.0,
+              "stated_pick_count": 1,
+              "stated_avg_confidence": 6.0,
+              "cappers": [
+                {
+                  "id": "artem_mma",
+                  "name": "Artem MMA",
+                  "confidence": 6,
+                  "trust": 6.2,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Humphrey throws with big power, strikes and wrestles well, while Miranda has shown no power, poor takedown defense and fights on the back foot, so Humphrey has nothing to respect and should land something big early.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=Q91pByWDgrI"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "card_status": "on_card",
+      "card_order": 1,
+      "card_date": "2026-08-26T23:00Z"
+    },
+    {
+      "fight_id": "balletto|clancy",
+      "display": "Gary Balletto vs Sean Clancy Jr.",
+      "fighter_a": "Gary Balletto",
+      "fighter_b": "Sean Clancy Jr.",
+      "pick_count": 2,
+      "capper_count": 1,
+      "markets": [
+        {
+          "bet_type": "moneyline",
+          "label": "Moneyline",
+          "total_weight": 4.96,
+          "pick_count": 1,
+          "options": [
+            {
+              "selection": "Sean Clancy Jr.",
+              "consensus_pct": 100.0,
+              "weight": 4.96,
+              "pick_count": 1,
+              "avg_confidence": 8.0,
+              "stated_pick_count": 1,
+              "stated_avg_confidence": 8.0,
+              "cappers": [
+                {
+                  "id": "artem_mma",
+                  "name": "Artem MMA",
+                  "confidence": 8,
+                  "trust": 6.2,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Clancy is one of the best prospects of the season, has stepped up in competition, and his cage pressure plus excellent body work should overwhelm Balletto, who hasn't fought MMA in over a year and has been out-sped and out-scrambled before.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=Q91pByWDgrI"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bet_type": "round",
+          "label": "Round",
+          "total_weight": 3.72,
+          "pick_count": 1,
+          "options": [
+            {
+              "selection": "Sean Clancy Jr. by KO/TKO in round 1",
+              "consensus_pct": 100.0,
+              "weight": 3.72,
+              "pick_count": 1,
+              "avg_confidence": 6.0,
+              "stated_pick_count": 1,
+              "stated_avg_confidence": 6.0,
+              "cappers": [
+                {
+                  "id": "artem_mma",
+                  "name": "Artem MMA",
+                  "confidence": 6,
+                  "trust": 6.2,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "He expects the pressure and body work to add up quickly against a fighter coming off a long MMA layoff, predicting a first-round knockout.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=Q91pByWDgrI"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "card_status": "on_card",
+      "card_order": 2,
+      "card_date": "2026-08-26T23:00Z"
+    },
+    {
+      "fight_id": "apodaca|mir",
+      "display": "Alex Apodaca vs Bella Mir",
+      "fighter_a": "Alex Apodaca",
+      "fighter_b": "Bella Mir",
+      "pick_count": 2,
+      "capper_count": 1,
+      "markets": [
+        {
+          "bet_type": "moneyline",
+          "label": "Moneyline",
+          "total_weight": 5.49,
+          "pick_count": 1,
+          "options": [
+            {
+              "selection": "Bella Mir",
+              "consensus_pct": 100.0,
+              "weight": 5.49,
+              "pick_count": 1,
+              "avg_confidence": 9.0,
+              "stated_pick_count": 1,
+              "stated_avg_confidence": 9.0,
+              "cappers": [
+                {
+                  "id": "artem_mma",
+                  "name": "Artem MMA",
+                  "confidence": 9,
+                  "trust": 6.1,
+                  "role": "favorite",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Mir should be one of the biggest favorites of the season - national champion wrestler with UFC BJJ grappling experience - facing an opponent on three weeks' notice whose striking he doesn't rate.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=Q91pByWDgrI"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bet_type": "method_of_victory",
+          "label": "Method of Victory",
+          "total_weight": 3.92,
+          "pick_count": 1,
+          "options": [
+            {
+              "selection": "Bella Mir by submission",
+              "consensus_pct": 100.0,
+              "weight": 3.92,
+              "pick_count": 1,
+              "avg_confidence": 7.0,
+              "stated_pick_count": 1,
+              "stated_avg_confidence": 7.0,
+              "cappers": [
+                {
+                  "id": "artem_mma",
+                  "name": "Artem MMA",
+                  "confidence": 7,
+                  "trust": 5.6,
+                  "role": "favorite",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Apodaca runs into the pocket with hands down and chin up, which lets Mir duck under to the hips; Mir is very good once she gets the takedown, having taken a Kimura off her last opponent.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=Q91pByWDgrI"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "card_status": "on_card",
+      "card_order": 4,
+      "card_date": "2026-08-26T23:00Z"
+    },
+    {
+      "fight_id": "galanti|petruzzella",
+      "display": "Carlos Petruzzella vs Nick Galanti",
+      "fighter_a": "Carlos Petruzzella",
+      "fighter_b": "Nick Galanti",
+      "pick_count": 0,
+      "capper_count": 0,
+      "markets": [],
+      "card_status": "on_card",
+      "card_order": 0,
+      "card_date": "2026-08-26T23:00Z"
+    },
+    {
+      "fight_id": "piazzon|uriel",
+      "display": "Mario Piazzon vs Guilherme Uriel",
+      "fighter_a": "Mario Piazzon",
+      "fighter_b": "Guilherme Uriel",
+      "pick_count": 0,
+      "capper_count": 0,
+      "markets": [],
+      "card_status": "on_card",
+      "card_order": 3,
+      "card_date": "2026-08-26T23:00Z",
+      "live_odds": {
+        "source": "the-odds-api",
+        "fetched_at": "2026-08-24T03:08:27+00:00",
+        "commence_time": "2026-08-25T23:00:00Z",
+        "a": {
+          "american": 174,
+          "decimal": 2.74,
+          "books": 3,
+          "best_american": 185
+        },
+        "b": {
+          "american": -215,
+          "decimal": 1.4651,
+          "books": 3,
+          "best_american": -200
+        }
+      }
+    }
+  ],
+  "discovery": [
+    {
+      "capper_id": "artem_mma",
+      "capper": "Artem MMA",
+      "status": "ok",
+      "channel_id": "UUpSQhfFzpZ9COp_WiKSUEkQ",
+      "feed_videos": 15,
+      "selected": [
+        {
+          "video_id": "Q91pByWDgrI",
+          "title": "Contender Series 2026: Week 3 Preview and Predictions",
+          "published": "2026-08-22T08:26:23+00:00"
+        }
+      ]
+    },
+    {
+      "capper_id": "axel_mma",
+      "capper": "Axel MMA",
+      "status": "ok",
+      "channel_id": "UUa5_vw8K2CzUhsWJIJ7UT3g",
+      "feed_videos": 15,
+      "selected": [],
+      "recent_titles": [
+        "2026-08-22  PFL Tampa: Cyborg vs Vieira Full Card Predictions & Betting Breakdown + Underdog Lock",
+        "2026-08-20  Best Bets For UFC Sacramento! Hernandez vs Rodrigues Betting Breakdown & UNDERDOG LOCK",
+        "2026-08-19  UFC Sacramento: Hernandez vs Rodrigues Full Card Predictions & Betting Breakdown",
+        "2026-08-17  DWCS 2026 Week 2 Full Card Predictions | LOCK PARLAY & CONFIDENT PICKS",
+        "2026-08-13  Best Bets For UFC 330! Makhachev vs Machado Garry Betting Breakdown & Underdog Lock"
+      ]
+    },
+    {
+      "capper_id": "betslam_sam",
+      "capper": "BetSlam with Sam",
+      "status": "ok",
+      "channel_id": "UU7LH9bWIKZd82LpdouIBOLw",
+      "feed_videos": 15,
+      "selected": [
+        {
+          "video_id": "qvHd5Vi4NSo",
+          "title": "Live DWCS Predictions + UFC Shangahi Early Predictions Umar Nurmagomedov vs Song Yadong",
+          "published": "2026-08-24T00:26:06+00:00"
+        },
+        {
+          "video_id": "gtBQ9hJBIA4",
+          "title": "Live DWCS Predictions + UFC Sacramento Prop Hunting Anthony Hernandez vs Gregory Rodrigues",
+          "published": "2026-08-18T05:32:17+00:00"
+        }
+      ]
+    },
+    {
+      "capper_id": "funky_picks",
+      "capper": "Funkybunch MMA",
+      "status": "ok",
+      "channel_id": "UUwOnVxzxkqDOYnEhhffNMAA",
+      "feed_videos": 15,
+      "selected": [],
+      "recent_titles": [
+        "2026-08-21  Robbing the Bookies | Best Locks for Hernandez vs Rodrigues | 100 to 1000 Ep.13 #ufc #mma #betting",
+        "2026-08-15  BEST LOCKS for UFC 330 Makhachev vs Garry | 100 to 1000 Ep.12 #ufc330 #mma #betting #makachev #garry",
+        "2026-08-13  THE LAST REMAINING LOCK | UFC 330 Islam Makhachev vs Ian Garry #ufc330 #mma #makhachev #garry #ufc",
+        "2026-08-08  Ty Miller will KO Billy Ray Goff #ufcvegas120 #ufc #mma #betting #miller #goff",
+        "2026-08-08  Alexia Thainara will DOMINATE Amanda Lemos #ufcvegas120 #ufc #mma #betting #thainara #lemos"
+      ]
+    },
+    {
+      "capper_id": "livid_larry",
+      "capper": "Livid Larry MMA",
+      "status": "ok",
+      "channel_id": "UUuJCJmR5QdtA2Iv3nwJXMJA",
+      "feed_videos": 15,
+      "selected": [
+        {
+          "video_id": "-_ELBhLxo58",
+          "title": "Dana White’s Contender Series 2026: Week 2 | Full Card Fight Companion",
+          "published": "2026-08-19T01:38:26+00:00"
+        }
+      ]
+    },
+    {
+      "capper_id": "pure_picks",
+      "capper": "Pure Picks MMA",
+      "status": "ok",
+      "channel_id": "UUexkxAaMZNo0jPntvxpTmvw",
+      "feed_videos": 15,
+      "selected": [],
+      "recent_titles": [
+        "2026-08-19  UFC Sacramento BEST BETS Hernandez vs Rodrigues | Best UNDERDOGS",
+        "2026-08-12  Makhachev vs Machado Garry FULL CARD PREDICTIONS | UFC 330",
+        "2026-08-05  Gamrot vs Salkilld PICKS and PREDICTIONS | UFC Vegas 120",
+        "2026-07-29  Medic vs Rodriguez PICKS and PREDICTIONS | UFC Belgrade",
+        "2026-07-21  Ankalaev vs Guskov PICKS and PREDICTIONS | UFC Abu Dhabi"
+      ]
+    },
+    {
+      "capper_id": "couch_warrior",
+      "capper": "Couch Warrior Podcast",
+      "status": "ok",
+      "channel_id": "UUZtPH7fOOC8Nmz89jw36h6w",
+      "feed_videos": 15,
+      "selected": [
+        {
+          "video_id": "XC06GJwsTXE",
+          "title": "Dana White's Contender Series Week 2  - Full Card Betting Breakdowns, Predictions & Picks",
+          "published": "2026-08-18T11:37:37+00:00"
+        }
+      ]
+    },
+    {
+      "capper_id": "tony_has_died",
+      "capper": "TonyHasDiedMMA",
+      "status": "ok",
+      "channel_id": "UUAELXX1-cUSA5Lc7aDFMZsw",
+      "feed_videos": 15,
+      "selected": [
+        {
+          "video_id": "jBJWkj1IYII",
+          "title": "DWCS Was CRAZY!!!! Dark Souls II",
+          "published": "2026-08-19T17:18:16+00:00"
+        },
+        {
+          "video_id": "29_aNjAhrmU",
+          "title": "My Immediate Reaction To DWCS Season 10 Episode 2: That Was The Greatest Knockout I Have Ever Seen",
+          "published": "2026-08-19T01:55:24+00:00"
+        }
+      ]
+    },
+    {
+      "capper_id": "double_vision",
+      "capper": "Double Vision MMA 365",
+      "status": "ok",
+      "channel_id": "UUd5OuiQfbs2Si4dlz9VqgcA",
+      "feed_videos": 15,
+      "selected": [],
+      "recent_titles": [
+        "2026-08-21  UFC Fight Night Hernandez vs Rodrigues",
+        "2026-08-14  UFC 330 Makhachev vs Garry",
+        "2026-08-04  UFC Fight Night Gamrot vs Salkilld",
+        "2026-07-31  UFC Fight Night Medic vs Rodriguez",
+        "2026-07-21  UFC Fight Night Ankalaev vs Guskov"
+      ]
+    },
+    {
+      "capper_id": "we_want_picks",
+      "capper": "We Want Picks (Jacob)",
+      "status": "ok",
+      "channel_id": "UUmy3jyYMJlbzwIAi-Y1YYpg",
+      "feed_videos": 15,
+      "selected": [
+        {
+          "video_id": "aOcgEGa5jVE",
+          "title": "🔴 Week 2 Contender Series LIVESTREAM! COMMENTARY & REACTIONS!",
+          "published": "2026-08-19T01:36:54+00:00"
+        },
+        {
+          "video_id": "Fh7LeOLLJkM",
+          "title": "DWCS 2026: Week 2: FULL CARD Predictions",
+          "published": "2026-08-17T18:00:09+00:00"
+        }
+      ]
+    },
+    {
+      "capper_id": "mma_husky_hustler",
+      "capper": "MMA Husky Hustler",
+      "status": "ok",
+      "channel_id": "UUFjXgUzCT23D11yF4bcEl2g",
+      "feed_videos": 15,
+      "selected": [],
+      "recent_titles": [
+        "2026-08-18  UFC Fight Night: Hernandez vs. Rodrigues. Full card predictions",
+        "2026-08-09  The Lisan Al-Paw",
+        "2026-08-09  UFC 330: Makhachev vs. Machado Garry. Full card predictions",
+        "2026-08-06  UFC Fight Night: Gamrot vs. Salkilld. Full card predictions",
+        "2026-08-01  Revenge of the Cabbage – A Brady & Uncle Weezy Story 🥬"
+      ]
+    },
+    {
+      "capper_id": "mma_lock_of_the_night",
+      "capper": "MMA Lock of the Night",
+      "status": "ok",
+      "channel_id": "UUlwn3zgkfyne2Ecj36Dl7ZQ",
+      "feed_videos": 15,
+      "selected": [
+        {
+          "video_id": "9JKfJa0k2pM",
+          "title": "Contender Series 2026 Week 2 Watch Party Buddies",
+          "published": "2026-08-19T14:14:02+00:00"
+        },
+        {
+          "video_id": "CskBvz8xWw8",
+          "title": "Dana White's Contender Series 2026 Week 2 Predictions",
+          "published": "2026-08-17T19:09:06+00:00"
+        }
+      ]
+    },
+    {
+      "capper_id": "pick_em_mma",
+      "capper": "Pick 'em MMA",
+      "status": "ok",
+      "channel_id": "UUUbGPoZ-WS-ieH74mb44jIQ",
+      "feed_videos": 15,
+      "selected": [],
+      "recent_titles": [
+        "2026-08-04  UFC Fight Night: Gamrot vs. Salkilld Full Card Predictions",
+        "2026-07-29  PFL New York: Nurmagomedov vs. Colgan Full Card Predictions",
+        "2026-07-26  UFC Fight Night Belgrade: Medic vs. Rodriguez Full Card Predictions",
+        "2026-07-20  UFC Fight Night: Ankalaev vs. Guskov Full Card Predictions",
+        "2026-07-13  UFC Fight Night: Du Plessis vs. Usman Full Card Predictions"
+      ]
+    },
+    {
+      "capper_id": "left_lane_mma",
+      "capper": "Left Lane MMA",
+      "status": "ok",
+      "channel_id": "UUnuU5RSN-AAmU4_VCajYVCw",
+      "feed_videos": 15,
+      "selected": [],
+      "recent_titles": [
+        "2026-08-12  Islam Makhachev Will DOMINATE Ian Garry at UFC 330! - Full Card Picks",
+        "2026-07-24  UFC Abu Dhabi Last Minute Quick Picks (Ankalaev vs Guskov)",
+        "2026-07-19  Dricus Du Plessis DOMINATES Kamaru Usman - UFC OKC Reaction",
+        "2026-07-17  Dricus Du Plessis is going to COLONIZE Kamaru Usman at UFC OKC - Full Card Predictions",
+        "2026-07-12  WORST OUTCOME - McGregor Loses by INJURY... (UFC 329 Instant Reaction)"
+      ]
+    },
+    {
+      "capper_id": "fight_ferry",
+      "capper": "FightFairy",
+      "status": "ok",
+      "channel_id": "UUTpZE2p5MWKRYup1uU2MQ9w",
+      "feed_videos": 15,
+      "selected": [],
+      "recent_titles": [
+        "2026-08-05  Taking a 3 week break to work on a project…",
+        "2026-07-26  Asia vs Caucasus? | UFC Fight Night Ankalaev vs Guskov reaction & recap",
+        "2026-07-26  UFC Ankalaev vs Guskov LIVESTREAM & Fight Companion",
+        "2026-07-21  Drawing Ilia Topuria pt. 2",
+        "2026-07-19  UFC Du Plessis vs Usman RECAP & REACTION"
+      ]
+    },
+    {
+      "capper_id": "the_wager_zone",
+      "capper": "The Wager Zone",
+      "status": "ok",
+      "channel_id": "UUifVih_HPGoctNCg0gO-VqQ",
+      "feed_videos": 15,
+      "selected": [
+        {
+          "video_id": "rn5YfkCf8y0",
+          "title": "🥊Dana White’s Contender Series S10 Week 3 | FULL CARD Breakdown, Predictions & Best Bets 🔥",
+          "published": "2026-08-24T01:14:05+00:00"
+        }
+      ]
+    },
+    {
+      "capper_id": "mma_bg",
+      "capper": "MMA BG",
+      "status": "ok",
+      "channel_id": "UUYJY8wof1p4WcgTiwEfe0nQ",
+      "feed_videos": 7,
+      "selected": [],
+      "recent_titles": [
+        "2026-08-15  UFC 330 Makhachev vs. Garry Full Card Breakdown (feat. LetsBetMMA)",
+        "2026-07-24  Nurullo Aliev vs. Mike Davis Fight Breakdown",
+        "2026-07-10  UFC 329 McGregor vs. Holloway 2 Full Card Breakdown (feat. LetsBetMMA)",
+        "2026-06-12  UFC Freedom 250 Topuria vs. Gaethje Full Card Predictions",
+        "2026-04-30  Josiah Harrell discusses brain disease, faith, and more! | Exclusive Interview"
+      ]
+    },
+    {
+      "capper_id": "mma_prediction_guru",
+      "capper": "MMA Prediction Guru",
+      "status": "ok",
+      "channel_id": "UU_Y5a5fuf58q7EJpqnvtV2w",
+      "feed_videos": 15,
+      "selected": [
+        {
+          "video_id": "2Fno300Z2ws",
+          "title": "DANA WHITE CONTENDER SERIES 2026 WEEK 2 FULL CARD BREAKDOWN & PREDICTIONS",
+          "published": "2026-08-18T02:45:05+00:00"
+        }
+      ]
+    },
+    {
+      "capper_id": "locked_door_mma",
+      "capper": "Locked Door MMA",
+      "status": "ok",
+      "channel_id": "UU4HFh-HteQUcPzwsvpog94A",
+      "feed_videos": 15,
+      "selected": [],
+      "recent_titles": [
+        "2026-08-23  13 weeks straight of profitability! #ufc #ufcfightnight #fyp #trending #viral #ufcpredictions",
+        "2026-08-23  Robo Cop is the man! #ufc #mma #fyp #trending #ufcfightnight #ufcpicks",
+        "2026-08-22  The winning streak heads out to Cali this weekend! #ufc #ufcfightnight #fyp #trending #viral",
+        "2026-08-21  After last weeks choke we are breaking our own rule! #ufc #ufcfightnight #fyp #trending #viral",
+        "2026-08-20  UFC Sacramento main card picks! #ufc #fyp #ufcpicks #trending #mma #danawhite"
+      ]
+    },
+    {
+      "capper_id": "mma_parlay_king_23",
+      "capper": "MMAParlayKing23",
+      "status": "failed",
+      "error": "ValueError: Could not parse a channel ID or @handle from 'https://www.youtube.com/c/MMAParlayKing'. Use a /channel/UC... or @handle URL."
+    },
+    {
+      "capper_id": "mma_odds_breaker_adam",
+      "capper": "MMA OddsBreaker (Adam)",
+      "status": "ok",
+      "channel_id": "UUxVb-x5w0Dh4DxYaizCTbZg",
+      "feed_videos": 15,
+      "selected": [],
+      "recent_titles": [
+        "2026-08-24  UFC Shanghai: Nurmagomedov vs. Song Preview MMAOB Daily Podcast For August 23rd",
+        "2026-08-23  UFC Sacramento: Hernandez vs. Rodrigues Recap MMAOB Daily Podcast For August 23rd",
+        "2026-08-18  UFC Sacramento preview 💸 The Gamblers Perspective #169",
+        "2026-08-17  UFC Sacramento: Hernandez vs. Rodrigues Preview MMAOB Daily Podcast For August 16th",
+        "2026-08-17  UFC 330: Makhachev vs. Machado Garry Recap MMAOB Daily Podcast For August 16th"
+      ]
+    },
+    {
+      "capper_id": "the_weasle",
+      "capper": "TheWeasle",
+      "status": "ok",
+      "channel_id": "UUZD2qRU8J82XGdGdUWYneNQ",
+      "feed_videos": 15,
+      "selected": [],
+      "recent_titles": [
+        "2026-08-23  INSANE Main Event...Reinier DOMINATES (UFC Anthony Hernandez vs Gregory Rodrigues Reaction)",
+        "2026-08-20  Islam Makhachev is in DANGER...Can he Beat Prates & Morales?",
+        "2026-08-16  UFC 330: Full Card Reaction and Results",
+        "2026-08-16  GENIUS!!! How Islam Makhachev BEAT Ian Garry (UFC 330 Breakdown)",
+        "2026-08-14  ISLAM VS GARRY! UFC 330 FULL Picks, Predictions and Breakdown"
+      ]
+    },
+    {
+      "capper_id": "kenny_okoye_mma",
+      "capper": "KennyOkoyeMMA",
+      "status": "ok",
+      "channel_id": "UUtX1d2j5qrWr_i-Y7CKvj4g",
+      "feed_videos": 15,
+      "selected": [
+        {
+          "video_id": "c-g8ALip62Y",
+          "title": "DWCS Week 2 | LIVESTREAM",
+          "published": "2026-08-19T01:41:09+00:00"
+        }
+      ]
+    },
+    {
+      "capper_id": "bedtime_mma",
+      "capper": "Bedtime MMA",
+      "status": "ok",
+      "channel_id": "UUQAMRRo7fPbQMzlJWOexlZg",
+      "feed_videos": 15,
+      "selected": [],
+      "recent_titles": [
+        "2026-08-23  UFC Sacramento Immediate Reaction/Recap (Hernandez vs Rodrigues)",
+        "2026-08-21  UFC Fighters In A Horror Movie Tier List",
+        "2026-08-20  The Ultimate BedtimeMMA UFC QnA (100% Honest)",
+        "2026-08-19  UFC Sacramento Full Card Predictions (BEDTIME BICKS)",
+        "2026-08-18  The Best UFC Hatewatches I've Experienced (Top 10)"
+      ]
+    },
+    {
+      "capper_id": "ufc_genie",
+      "capper": "UFC Genie",
+      "status": "ok",
+      "channel_id": "UULes56YLqgcm7S9PUrzTmmA",
+      "feed_videos": 15,
+      "selected": [
+        {
+          "video_id": "DGVawn0Aldc",
+          "title": "GENIE PICKS DWCS WEEK 2 #ufc #mma #fyp #dwcs #week2 #shorts",
+          "published": "2026-08-18T20:56:08+00:00"
+        }
+      ]
+    },
+    {
+      "capper_id": "lets_talk_mma",
+      "capper": "Let's Talk MMA (Colby)",
+      "status": "ok",
+      "channel_id": "UUbANjRUDrzn67a6PpoIuE-Q",
+      "feed_videos": 15,
+      "selected": [],
+      "recent_titles": [
+        "2026-08-22  UFC FIGHT NIGHT HERNANDES VS RODRIGUEZ FULL CHEAT SHEET",
+        "2026-08-20  Hey guys! Sorry for no video last night. Here’s Colby’s OFFICIAL PICKS FOR THIS WEEKEND!",
+        "2026-08-20  Hey guys sorry for no video last night. Here’s Brodies OFFICIAL PICKS FOR THIS WEEKEND!",
+        "2026-08-13  LETS TALK UFC 330! FULL CARD PREDICTIONS!",
+        "2026-08-06  WE LOVE THIS SPORT"
+      ]
+    },
+    {
+      "capper_id": "the_mma_guru",
+      "capper": "THE MMA GURU",
+      "status": "ok",
+      "channel_id": "UUIhQvpinmS8Eq6PrQ021DKQ",
+      "feed_videos": 15,
+      "selected": [
+        {
+          "video_id": "2I7fb0TusIE",
+          "title": "Din Thomas ABANDONS Robertson For Losing? Strickland TRASHES HIM? Contender Series Reaction?",
+          "published": "2026-08-19T06:07:25+00:00"
+        }
+      ]
+    },
+    {
+      "capper_id": "young_pastey",
+      "capper": "Young Pastey",
+      "status": "ok",
+      "channel_id": "UUu5vfcRDIrSDSxQpd2Cf3cw",
+      "feed_videos": 15,
+      "selected": [],
+      "recent_titles": [
+        "2026-08-21  UFC Sacramento Hernandez vs Rodrigues Official Bets!!!",
+        "2026-08-19  UFC Sacramento Full Card Picks and Predictions!",
+        "2026-08-14  UFC 330 Makhachev vs Garry Official Bets!!!",
+        "2026-08-12  UFC 330 Makhachev vs Garry Full Card Picks and Predictions!",
+        "2026-08-07  UFC Vegas 120 Gamrot vs Salkilld Official Bets!!!"
+      ]
+    },
+    {
+      "capper_id": "mma_al_dente",
+      "capper": "MMA AL DENTE",
+      "status": "ok",
+      "channel_id": "UU6LlyJz9Mkm1MTU3EW4ZJPA",
+      "feed_videos": 15,
+      "selected": [],
+      "recent_titles": [
+        "2026-08-23  UFC HERNANDEZ VS. RODRIGUES RECAP",
+        "2026-08-20  UFC HERNANDEZ VS. RODRIGUES Full Card Breakdown, Predictions,  and Bets",
+        "2026-08-16  UFC 330 RECAP",
+        "2026-08-12  UFC 330 Full Card Breakdown, Predictions, and Bets",
+        "2026-08-10  UFC Gamrot/Salkilld Recap"
+      ]
+    }
+  ]
 }
