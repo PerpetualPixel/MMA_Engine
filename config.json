@@ -1,16 +1,14 @@
 {
   "event": {
-    "name": "Hernandez vs. Rodrigues",
+    "name": "Contender Series: Season 10, Week 3",
     "date": "",
-    "notes": "\"name\" is matched as a substring against ESPN's own event name (punctuation and case are ignored, but spelling is NOT — no typo tolerance here, unlike fighter-name matching elsewhere in the pipeline), and the FIRST match in the scoreboard window wins. ESPN spells the main-event surname \"Rodrigues\" (Gregory Rodrigues, Brazilian) rather than the more common \"Rodriguez\" — confirm against ESPN before a run if this ever looks wrong. A one-off Fight Night is unique inside the 45-day lookahead so a short name like this is enough; for a weekly series (e.g. Contender Series) the name needs season+week instead, see git history. Discovery pulls recent uploads from each capper channel and keeps the ones whose title matches settings.discovery.title_contains. Add entries to \"videos\" only to pin a specific video by hand."
+    "notes": "\"name\" is matched as a substring against ESPN's own event name (punctuation and case are ignored, but spelling is NOT — no typo tolerance here, unlike fighter-name matching elsewhere), and the FIRST match inside the 45-day scoreboard window wins. That last part is why a weekly series must carry its season and week: ESPN names this card \"Dana White's Contender Series: Season 10, Week 3\", and \"Contender Series\" alone would match whichever week sits earliest in the window rather than this one. A one-off card (\"UFC 330\", \"Hernandez vs. Rodrigues\") is unique in that window and needs no qualifier. If the run logs \"No ESPN card found matching ...\", the name is wrong: nothing is filtered that run and off-card fights come back."
   },
   "tracker": {
     "channel_url": "https://www.youtube.com/@UFCPredictionsTracker",
     "notes": "Source for capper trust scores. Feed a period recap with --roster-from ... --roster-mode replace to reset the baseline, then each post-event review with the default accumulate mode.",
-    "picks_notes": "\"picks_videos\" is the tracker's PRE-event roundup — the video that goes fight by fight naming which channels picked which fighter. Every run reads the ones listed here and adds those picks to the consensus (see src/mma_engine/tracker_picks.py). Replace the URL each week with the new event's roundup; a stale one costs nothing but a wasted transcript fetch, since anything not on the ESPN card is dropped anyway. Roundup picks enter at neutral confidence and a channel's own video always supersedes their roundup line.",
-    "picks_videos": [
-      "https://youtu.be/B1IFeq8bgbY"
-    ],
+    "picks_notes": "\"picks_videos\" is the tracker's PRE-event roundup — the slide deck naming which channels picked which fighter (see src/mma_engine/roundup_slides.py). Replace it with this event's roundup each week and clear it when retargeting: a stale URL costs a video download and a vision pass to read a board whose fights are all off this card. A deck already read is kept in roundups/<video_id>.json and reused for free.",
+    "picks_videos": [],
     "period_recaps": [
       "https://www.youtube.com/watch?v=rLxl9yy3Tbc"
     ],
@@ -33,12 +31,12 @@
     "use_cache": true,
     "discovery": {
       "enabled": true,
-      "lookback_days": 14,
+      "lookback_days": 7,
       "max_videos_per_channel": 3,
       "title_contains": [
-        "hernandez",
-        "rodrigues",
-        "rodriguez"
+        "contender series",
+        "dwcs",
+        "dana white"
       ]
     },
     "live_odds": {
