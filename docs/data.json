@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-24T03:08:27+00:00",
+  "generated_at": "2026-08-25T02:03:35+00:00",
   "event": {
     "name": "Contender Series: Season 10, Week 3",
     "date": "",
@@ -10,20 +10,20 @@
       "name": "Dana White's Contender Series: Season 10, Week 3",
       "date": "2026-08-25T23:00Z",
       "bouts": 5,
-      "off_card_dropped": 33
+      "off_card_dropped": 38
     },
     "odds": {
       "source": "the-odds-api",
       "market": "h2h",
-      "fetched_at": "2026-08-24T03:08:27+00:00",
-      "fights_priced": 1
+      "fetched_at": "2026-08-25T02:03:36+00:00",
+      "fights_priced": 5
     }
   },
   "totals": {
     "fights": 5,
-    "picks": 6,
-    "cappers": 2,
-    "videos": 2
+    "picks": 31,
+    "cappers": 6,
+    "videos": 7
   },
   "sources": [
     {
@@ -35,6 +35,16 @@
       "status": "ok",
       "pick_count": 8,
       "transcript_chars": 20425
+    },
+    {
+      "video_id": "f7CfedZ-P6U",
+      "url": "https://www.youtube.com/watch?v=f7CfedZ-P6U",
+      "capper_id": "axel_mma",
+      "capper": "Axel MMA",
+      "title": "DWCS 2026 Week 3 Full Card Predictions | UNDERDOG LOCK & CONFIDENT PICKS",
+      "status": "ok",
+      "pick_count": 10,
+      "transcript_chars": 13574
     },
     {
       "video_id": "qvHd5Vi4NSo",
@@ -55,6 +65,16 @@
       "status": "ok",
       "pick_count": 30,
       "transcript_chars": 88169
+    },
+    {
+      "video_id": "xbu7bwpCvVk",
+      "url": "https://www.youtube.com/watch?v=xbu7bwpCvVk",
+      "capper_id": "livid_larry",
+      "capper": "Livid Larry MMA",
+      "title": "Dana White’s Contender Series 2026: Week 3 | Full Card Predictions and Breakdown",
+      "status": "ok",
+      "pick_count": 5,
+      "transcript_chars": 13705
     },
     {
       "video_id": "-_ELBhLxo58",
@@ -97,6 +117,16 @@
       "transcript_chars": 14752
     },
     {
+      "video_id": "q-UoYfz2Y_g",
+      "url": "https://www.youtube.com/watch?v=q-UoYfz2Y_g",
+      "capper_id": "we_want_picks",
+      "capper": "We Want Picks (Jacob)",
+      "title": "DWCS 2026: Week 3: FULL CARD Predictions",
+      "status": "ok",
+      "pick_count": 5,
+      "transcript_chars": 18730
+    },
+    {
       "video_id": "aOcgEGa5jVE",
       "url": "https://www.youtube.com/watch?v=aOcgEGa5jVE",
       "capper_id": "we_want_picks",
@@ -107,14 +137,14 @@
       "error": "No usable transcript: TranscriptsDisabled"
     },
     {
-      "video_id": "Fh7LeOLLJkM",
-      "url": "https://www.youtube.com/watch?v=Fh7LeOLLJkM",
-      "capper_id": "we_want_picks",
-      "capper": "We Want Picks (Jacob)",
-      "title": "DWCS 2026: Week 2: FULL CARD Predictions",
+      "video_id": "hb2E2ZAXIlw",
+      "url": "https://www.youtube.com/watch?v=hb2E2ZAXIlw",
+      "capper_id": "mma_lock_of_the_night",
+      "capper": "MMA Lock of the Night",
+      "title": "Dana White's Contender Series 2026 Week 3 Predictions",
       "status": "ok",
-      "pick_count": 6,
-      "transcript_chars": 29202
+      "pick_count": 7,
+      "transcript_chars": 32783
     },
     {
       "video_id": "9JKfJa0k2pM",
@@ -127,14 +157,14 @@
       "transcript_chars": 99293
     },
     {
-      "video_id": "CskBvz8xWw8",
-      "url": "https://www.youtube.com/watch?v=CskBvz8xWw8",
-      "capper_id": "mma_lock_of_the_night",
-      "capper": "MMA Lock of the Night",
-      "title": "Dana White's Contender Series 2026 Week 2 Predictions",
+      "video_id": "uJ7nX9Ozwyg",
+      "url": "https://www.youtube.com/watch?v=uJ7nX9Ozwyg",
+      "capper_id": "the_wager_zone",
+      "capper": "The Wager Zone",
+      "title": "🥊Dana White’s Contender Series Week 3 | FULL CARD Breakdown, Predictions & Best Bets 🔥",
       "status": "ok",
       "pick_count": 7,
-      "transcript_chars": 33544
+      "transcript_chars": 6309
     },
     {
       "video_id": "rn5YfkCf8y0",
@@ -193,24 +223,67 @@
       "display": "Ronald Humphrey vs Alexis Miranda",
       "fighter_a": "Ronald Humphrey",
       "fighter_b": "Alexis Miranda",
-      "pick_count": 2,
-      "capper_count": 2,
+      "pick_count": 7,
+      "capper_count": 6,
       "markets": [
         {
-          "bet_type": "method_of_victory",
-          "label": "Method of Victory",
-          "total_weight": 4.41,
+          "bet_type": "moneyline",
+          "label": "Moneyline",
+          "total_weight": 4.86,
           "pick_count": 1,
           "options": [
             {
-              "selection": "Ronald Humphrey by KO/TKO",
+              "selection": "Ronald Humphrey",
               "consensus_pct": 100.0,
-              "weight": 4.41,
+              "weight": 4.86,
               "pick_count": 1,
-              "avg_confidence": 7.0,
+              "avg_confidence": 9.0,
               "stated_pick_count": 1,
+              "stated_avg_confidence": 9.0,
+              "cappers": [
+                {
+                  "id": "axel_mma",
+                  "name": "Axel MMA",
+                  "confidence": 9,
+                  "trust": 5.4,
+                  "role": "favorite",
+                  "odds": "-750",
+                  "stake": "",
+                  "reasoning": "Humphrey is a pressure striker with solid wrestling against an awkward, unimpressive Miranda; called a lock and one of his most confident picks.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=f7CfedZ-P6U"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bet_type": "method_of_victory",
+          "label": "Method of Victory",
+          "total_weight": 21.28,
+          "pick_count": 5,
+          "options": [
+            {
+              "selection": "Ronald Humphrey by TKO",
+              "consensus_pct": 100.0,
+              "weight": 21.28,
+              "pick_count": 5,
+              "avg_confidence": 7.0,
+              "stated_pick_count": 5,
               "stated_avg_confidence": 7.0,
               "cappers": [
+                {
+                  "id": "mma_lock_of_the_night",
+                  "name": "MMA Lock of the Night",
+                  "confidence": 7,
+                  "trust": 8.3,
+                  "role": "favorite",
+                  "odds": "-950",
+                  "stake": "",
+                  "reasoning": "Humphrey's nasty Muay Thai, poise and 100% finish rate versus a completely unremarkable Miranda who has no power and has been outstruck by low-level opposition; expects the knockout within two rounds. Notes -950 moneyline isn't parlayable.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=hb2E2ZAXIlw"
+                },
                 {
                   "id": "the_wager_zone",
                   "name": "The Wager Zone",
@@ -219,9 +292,45 @@
                   "role": "unknown",
                   "odds": "",
                   "stake": "",
-                  "reasoning": "Miranda is very hittable, doesn't move his head and leaves his chin up, plus poor takedown defense; Humphrey beats him everywhere and should land big shots early in round one.",
+                  "reasoning": "Miranda is hittable, doesn't move his head, leaves his chin up and has poor takedown defense; Humphrey beats him everywhere and should land big shots early.",
                   "source": "video",
-                  "video_url": "https://www.youtube.com/watch?v=rn5YfkCf8y0"
+                  "video_url": "https://www.youtube.com/watch?v=uJ7nX9Ozwyg"
+                },
+                {
+                  "id": "we_want_picks",
+                  "name": "We Want Picks (Jacob)",
+                  "confidence": 7,
+                  "trust": 6.1,
+                  "role": "favorite",
+                  "odds": "-800",
+                  "stake": "",
+                  "reasoning": "Humphrey is 4-0 with all KOs and throws with huge power, while Miranda gets backed up, has no finishing ability or jiu-jitsu to threaten him.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=q-UoYfz2Y_g"
+                },
+                {
+                  "id": "livid_larry",
+                  "name": "Livid Larry MMA",
+                  "confidence": 7,
+                  "trust": 5.5,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Calls it a night-and-day athletic gap: Humphrey is far more explosive, powerful and faster, and should either chin Miranda on the feet or ground-and-pound him out early.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=xbu7bwpCvVk"
+                },
+                {
+                  "id": "axel_mma",
+                  "name": "Axel MMA",
+                  "confidence": 7,
+                  "trust": 4.2,
+                  "role": "favorite",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Says Humphrey walks him down, lands something big and finishes early; suggests propping him by TKO.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=f7CfedZ-P6U"
                 }
               ]
             }
@@ -261,15 +370,412 @@
       ],
       "card_status": "on_card",
       "card_order": 1,
-      "card_date": "2026-08-26T23:00Z"
+      "card_date": "2026-08-25T23:00Z",
+      "live_odds": {
+        "source": "the-odds-api",
+        "fetched_at": "2026-08-25T02:03:36+00:00",
+        "commence_time": "2026-08-25T23:00:00Z",
+        "a": {
+          "american": -950,
+          "decimal": 1.1053,
+          "books": 3,
+          "best_american": -800
+        },
+        "b": {
+          "american": 637,
+          "decimal": 7.37,
+          "books": 3,
+          "best_american": 660
+        }
+      }
+    },
+    {
+      "fight_id": "apodaca|mir",
+      "display": "Alex Apodaca vs Bella Mir",
+      "fighter_a": "Alex Apodaca",
+      "fighter_b": "Bella Mir",
+      "pick_count": 9,
+      "capper_count": 5,
+      "markets": [
+        {
+          "bet_type": "moneyline",
+          "label": "Moneyline",
+          "total_weight": 18.06,
+          "pick_count": 4,
+          "options": [
+            {
+              "selection": "Bella Mir",
+              "consensus_pct": 100.0,
+              "weight": 18.06,
+              "pick_count": 4,
+              "avg_confidence": 7.5,
+              "stated_pick_count": 4,
+              "stated_avg_confidence": 7.5,
+              "cappers": [
+                {
+                  "id": "the_wager_zone",
+                  "name": "The Wager Zone",
+                  "confidence": 9,
+                  "trust": 6.3,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Mir is elite grappler - national champion wrestler, IBJJF no-gi and Pan-American champion - with improving striking, and he thinks she was given a favorable matchup.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=uJ7nX9Ozwyg"
+                },
+                {
+                  "id": "artem_mma",
+                  "name": "Artem MMA",
+                  "confidence": 9,
+                  "trust": 6.1,
+                  "role": "favorite",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Mir should be one of the biggest favorites of the season - national champion wrestler with UFC BJJ grappling experience - facing an opponent on three weeks' notice whose striking he doesn't rate.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=Q91pByWDgrI"
+                },
+                {
+                  "id": "axel_mma",
+                  "name": "Axel MMA",
+                  "confidence": 9,
+                  "trust": 5.4,
+                  "role": "favorite",
+                  "odds": "-2000",
+                  "stake": "",
+                  "reasoning": "Mir's grappling and jiu-jitsu are far superior and Apodaca's takedown defense won't hold up; listed as a most confident pick.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=f7CfedZ-P6U"
+                },
+                {
+                  "id": "mma_lock_of_the_night",
+                  "name": "MMA Lock of the Night",
+                  "confidence": 3,
+                  "trust": 6.8,
+                  "role": "favorite",
+                  "odds": "-4000",
+                  "stake": "",
+                  "reasoning": "Mir is clearly the better wrestler and grappler with more explosiveness and power, though he notes -4000 isn't parlayable and there's little to bet.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=hb2E2ZAXIlw"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bet_type": "method_of_victory",
+          "label": "Method of Victory",
+          "total_weight": 20.3,
+          "pick_count": 5,
+          "options": [
+            {
+              "selection": "Bella Mir by submission",
+              "consensus_pct": 100.0,
+              "weight": 20.3,
+              "pick_count": 5,
+              "avg_confidence": 6.8,
+              "stated_pick_count": 5,
+              "stated_avg_confidence": 6.8,
+              "cappers": [
+                {
+                  "id": "we_want_picks",
+                  "name": "We Want Picks (Jacob)",
+                  "confidence": 8,
+                  "trust": 6.1,
+                  "role": "favorite",
+                  "odds": "-500",
+                  "stake": "",
+                  "reasoning": "National champion wrestler who dominates once on top and finds submissions; Apodaca walks into the clinch and can't hurt her on the feet.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=q-UoYfz2Y_g"
+                },
+                {
+                  "id": "the_wager_zone",
+                  "name": "The Wager Zone",
+                  "confidence": 7,
+                  "trust": 6.3,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Very confident in her wrestling to get it to the floor and finish with a first-round submission.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=uJ7nX9Ozwyg"
+                },
+                {
+                  "id": "mma_lock_of_the_night",
+                  "name": "MMA Lock of the Night",
+                  "confidence": 5,
+                  "trust": 8.3,
+                  "role": "favorite",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "He expects Mir to take the fight down, get whatever position she wants and eventually find a submission; interested in the submission prop if the price is bettable.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=hb2E2ZAXIlw"
+                },
+                {
+                  "id": "artem_mma",
+                  "name": "Artem MMA",
+                  "confidence": 7,
+                  "trust": 5.6,
+                  "role": "favorite",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Apodaca runs into the pocket with hands down and chin up, which lets Mir duck under to the hips; Mir is very good once she gets the takedown, having taken a Kimura off her last opponent.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=Q91pByWDgrI"
+                },
+                {
+                  "id": "axel_mma",
+                  "name": "Axel MMA",
+                  "confidence": 7,
+                  "trust": 4.2,
+                  "role": "favorite",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "He expects her to get the takedown and find an early submission; recommends the Mir-by-sub prop.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=f7CfedZ-P6U"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "card_status": "on_card",
+      "card_order": 4,
+      "card_date": "2026-08-25T23:00Z",
+      "live_odds": {
+        "source": "the-odds-api",
+        "fetched_at": "2026-08-25T02:03:36+00:00",
+        "commence_time": "2026-08-25T23:00:00Z",
+        "a": {
+          "american": 1300,
+          "decimal": 14.0,
+          "books": 3,
+          "best_american": 1450
+        },
+        "b": {
+          "american": -3000,
+          "decimal": 1.0333,
+          "books": 3,
+          "best_american": -2200
+        }
+      }
+    },
+    {
+      "fight_id": "galante|petrazella",
+      "display": "Nick Galanti vs Carlos Petruzzella",
+      "fighter_a": "Nick Galanti",
+      "fighter_b": "Carlos Petruzzella",
+      "pick_count": 7,
+      "capper_count": 4,
+      "markets": [
+        {
+          "bet_type": "moneyline",
+          "label": "Moneyline",
+          "total_weight": 7.2,
+          "pick_count": 2,
+          "options": [
+            {
+              "selection": "Carlos Petruzzella",
+              "consensus_pct": 62.2,
+              "weight": 4.48,
+              "pick_count": 1,
+              "avg_confidence": 8.0,
+              "stated_pick_count": 1,
+              "stated_avg_confidence": 8.0,
+              "cappers": [
+                {
+                  "id": "axel_mma",
+                  "name": "Axel MMA",
+                  "confidence": 8,
+                  "trust": 5.6,
+                  "role": "underdog",
+                  "odds": "+195",
+                  "stake": "",
+                  "reasoning": "Petrazella is an explosive, wild combination striker while Galante's striking is hittable, and Petrazella's jiu-jitsu should stop or survive Galante's takedown attempts. Named as his 'savage underdog lock'.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=f7CfedZ-P6U"
+                }
+              ]
+            },
+            {
+              "selection": "Nick Galanti",
+              "consensus_pct": 37.8,
+              "weight": 2.72,
+              "pick_count": 1,
+              "avg_confidence": 4.0,
+              "stated_pick_count": 1,
+              "stated_avg_confidence": 4.0,
+              "cappers": [
+                {
+                  "id": "mma_lock_of_the_night",
+                  "name": "MMA Lock of the Night",
+                  "confidence": 4,
+                  "trust": 6.8,
+                  "role": "favorite",
+                  "odds": "-250",
+                  "stake": "",
+                  "reasoning": "He picks Galante to win because his wrestling should be the difference maker and he can find safety in takedowns, but he thinks the -250 price is too wide and that Petrazzella's BJJ and aggression make it tougher than the odds suggest.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=hb2E2ZAXIlw"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bet_type": "method_of_victory",
+          "label": "Method of Victory",
+          "total_weight": 13.74,
+          "pick_count": 4,
+          "options": [
+            {
+              "selection": "Carlos Petrazella by KO/TKO",
+              "consensus_pct": 45.9,
+              "weight": 6.3,
+              "pick_count": 2,
+              "avg_confidence": 6.0,
+              "stated_pick_count": 2,
+              "stated_avg_confidence": 6.0,
+              "cappers": [
+                {
+                  "id": "the_wager_zone",
+                  "name": "The Wager Zone",
+                  "confidence": 6,
+                  "trust": 6.3,
+                  "role": "underdog",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Galante needs takedowns to win and Petrazella has decent takedown defense and sprawls well; if the takedowns are stopped, Galante is hittable and gets caught with big shots.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=rn5YfkCf8y0"
+                },
+                {
+                  "id": "axel_mma",
+                  "name": "Axel MMA",
+                  "confidence": 6,
+                  "trust": 4.2,
+                  "role": "underdog",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "He believes Petrazella lands one big shot and gets a highlight-reel knockout on Galante.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=f7CfedZ-P6U"
+                }
+              ]
+            },
+            {
+              "selection": "Carlos Petruzzella by KO/TKO",
+              "consensus_pct": 27.5,
+              "weight": 3.78,
+              "pick_count": 1,
+              "avg_confidence": 6.0,
+              "stated_pick_count": 1,
+              "stated_avg_confidence": 6.0,
+              "cappers": [
+                {
+                  "id": "the_wager_zone",
+                  "name": "The Wager Zone",
+                  "confidence": 6,
+                  "trust": 6.3,
+                  "role": "underdog",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Galante needs takedowns to win but Petrozzella sprawls well and has decent takedown defense; Galante is hittable and can get caught with big shots. Also framed as a fade on Galante.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=uJ7nX9Ozwyg"
+                }
+              ]
+            },
+            {
+              "selection": "Nick Galanti by submission",
+              "consensus_pct": 26.6,
+              "weight": 3.66,
+              "pick_count": 1,
+              "avg_confidence": 6.0,
+              "stated_pick_count": 1,
+              "stated_avg_confidence": 6.0,
+              "cappers": [
+                {
+                  "id": "we_want_picks",
+                  "name": "We Want Picks (Jacob)",
+                  "confidence": 6,
+                  "trust": 6.1,
+                  "role": "favorite",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Grappler vs grappler fight where Galante consistently takes the back in his fights and should out-scramble Petraella; if not a sub, a control-based decision.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=q-UoYfz2Y_g"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bet_type": "round",
+          "label": "Round",
+          "total_weight": 2.8,
+          "pick_count": 1,
+          "options": [
+            {
+              "selection": "Carlos Petrazella in round 1",
+              "consensus_pct": 100.0,
+              "weight": 2.8,
+              "pick_count": 1,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 1,
+              "stated_avg_confidence": 5.0,
+              "cappers": [
+                {
+                  "id": "axel_mma",
+                  "name": "Axel MMA",
+                  "confidence": 5,
+                  "trust": 5.6,
+                  "role": "underdog",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "He expects it to end early with Galante getting caught cold in the first round.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=f7CfedZ-P6U"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "card_status": "on_card",
+      "card_order": 0,
+      "card_date": "2026-08-25T23:00Z",
+      "live_odds": {
+        "source": "the-odds-api",
+        "fetched_at": "2026-08-25T02:03:36+00:00",
+        "commence_time": "2026-08-25T23:00:00Z",
+        "a": {
+          "american": -250,
+          "decimal": 1.4,
+          "books": 3,
+          "best_american": -235
+        },
+        "b": {
+          "american": 207,
+          "decimal": 3.07,
+          "books": 3,
+          "best_american": 210
+        }
+      }
     },
     {
       "fight_id": "balletto|clancy",
       "display": "Gary Balletto vs Sean Clancy Jr.",
       "fighter_a": "Gary Balletto",
       "fighter_b": "Sean Clancy Jr.",
-      "pick_count": 2,
-      "capper_count": 1,
+      "pick_count": 5,
+      "capper_count": 4,
       "markets": [
         {
           "bet_type": "moneyline",
@@ -297,6 +803,80 @@
                   "reasoning": "Clancy is one of the best prospects of the season, has stepped up in competition, and his cage pressure plus excellent body work should overwhelm Balletto, who hasn't fought MMA in over a year and has been out-sped and out-scrambled before.",
                   "source": "video",
                   "video_url": "https://www.youtube.com/watch?v=Q91pByWDgrI"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bet_type": "method_of_victory",
+          "label": "Method of Victory",
+          "total_weight": 6.96,
+          "pick_count": 2,
+          "options": [
+            {
+              "selection": "Sean Clancy Jr. by TKO (body shot), likely round 2",
+              "consensus_pct": 100.0,
+              "weight": 6.96,
+              "pick_count": 2,
+              "avg_confidence": 6.0,
+              "stated_pick_count": 2,
+              "stated_avg_confidence": 6.0,
+              "cappers": [
+                {
+                  "id": "we_want_picks",
+                  "name": "We Want Picks (Jacob)",
+                  "confidence": 6,
+                  "trust": 6.1,
+                  "role": "favorite",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Clancy's boxing and body work have evolved and Balletto leaves himself open to counters in MMA; a submission is also possible but he lands on the KO.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=q-UoYfz2Y_g"
+                },
+                {
+                  "id": "livid_larry",
+                  "name": "Livid Larry MMA",
+                  "confidence": 6,
+                  "trust": 5.5,
+                  "role": "unknown",
+                  "odds": "",
+                  "stake": "",
+                  "reasoning": "Clancy is the better prospect and more talented everywhere; since Balletto is durable and hard to finish to the head, he expects Clancy to soften him up with kicks to the body and finish with a body-shot TKO in the second.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=xbu7bwpCvVk"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bet_type": "over_under",
+          "label": "Over / Under",
+          "total_weight": 4.26,
+          "pick_count": 1,
+          "options": [
+            {
+              "selection": "Under 1.5 rounds",
+              "consensus_pct": 100.0,
+              "weight": 4.26,
+              "pick_count": 1,
+              "avg_confidence": 6.0,
+              "stated_pick_count": 1,
+              "stated_avg_confidence": 6.0,
+              "cappers": [
+                {
+                  "id": "mma_lock_of_the_night",
+                  "name": "MMA Lock of the Night",
+                  "confidence": 6,
+                  "trust": 7.1,
+                  "role": "unknown",
+                  "odds": "-300",
+                  "stake": "",
+                  "reasoning": "Clancy Jr. is a far superior, much bigger well-rounded grappler who should get Balletto down almost immediately and finish quickly; he'd take the under 1.5 at anything better than -300.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=hb2E2ZAXIlw"
                 }
               ]
             }
@@ -336,42 +916,82 @@
       ],
       "card_status": "on_card",
       "card_order": 2,
-      "card_date": "2026-08-26T23:00Z"
+      "card_date": "2026-08-25T23:00Z",
+      "live_odds": {
+        "source": "the-odds-api",
+        "fetched_at": "2026-08-25T02:03:36+00:00",
+        "commence_time": "2026-08-25T23:00:00Z",
+        "a": {
+          "american": 636,
+          "decimal": 7.365,
+          "books": 2,
+          "best_american": 660
+        },
+        "b": {
+          "american": -947,
+          "decimal": 1.1056,
+          "books": 2,
+          "best_american": -900
+        }
+      }
     },
     {
-      "fight_id": "apodaca|mir",
-      "display": "Alex Apodaca vs Bella Mir",
-      "fighter_a": "Alex Apodaca",
-      "fighter_b": "Bella Mir",
-      "pick_count": 2,
-      "capper_count": 1,
+      "fight_id": "piazon|uriel",
+      "display": "Mario Piazzon vs Guilherme Uriel",
+      "fighter_a": "Mario Piazzon",
+      "fighter_b": "Guilherme Uriel",
+      "pick_count": 3,
+      "capper_count": 2,
       "markets": [
         {
           "bet_type": "moneyline",
           "label": "Moneyline",
-          "total_weight": 5.49,
-          "pick_count": 1,
+          "total_weight": 8.07,
+          "pick_count": 2,
           "options": [
             {
-              "selection": "Bella Mir",
-              "consensus_pct": 100.0,
-              "weight": 5.49,
+              "selection": "Mario Piazzon",
+              "consensus_pct": 61.0,
+              "weight": 4.92,
               "pick_count": 1,
-              "avg_confidence": 9.0,
+              "avg_confidence": 6.0,
               "stated_pick_count": 1,
-              "stated_avg_confidence": 9.0,
+              "stated_avg_confidence": 6.0,
               "cappers": [
                 {
-                  "id": "artem_mma",
-                  "name": "Artem MMA",
-                  "confidence": 9,
-                  "trust": 6.1,
-                  "role": "favorite",
+                  "id": "mma_lock_of_the_night",
+                  "name": "MMA Lock of the Night",
+                  "confidence": 6,
+                  "trust": 8.2,
+                  "role": "underdog",
+                  "odds": "+175",
+                  "stake": "",
+                  "reasoning": "Calls Piazon the best dog on the card, fading Uriel's poor gas tank and rudimentary overextending power striking, while Piazon has shown he can go into rounds two and three and grapple.",
+                  "source": "video",
+                  "video_url": "https://www.youtube.com/watch?v=hb2E2ZAXIlw"
+                }
+              ]
+            },
+            {
+              "selection": "Guilherme Uriel",
+              "consensus_pct": 39.0,
+              "weight": 3.15,
+              "pick_count": 1,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 1,
+              "stated_avg_confidence": 5.0,
+              "cappers": [
+                {
+                  "id": "the_wager_zone",
+                  "name": "The Wager Zone",
+                  "confidence": 5,
+                  "trust": 6.3,
+                  "role": "unknown",
                   "odds": "",
                   "stake": "",
-                  "reasoning": "Mir should be one of the biggest favorites of the season - national champion wrestler with UFC BJJ grappling experience - facing an opponent on three weeks' notice whose striking he doesn't rate.",
+                  "reasoning": "Close fight, but Pinzon is hittable and swings wild hooks; Uriel can straighten up a shot, mix in wrestling and has faced better competition.",
                   "source": "video",
-                  "video_url": "https://www.youtube.com/watch?v=Q91pByWDgrI"
+                  "video_url": "https://www.youtube.com/watch?v=uJ7nX9Ozwyg"
                 }
               ]
             }
@@ -380,29 +1000,29 @@
         {
           "bet_type": "method_of_victory",
           "label": "Method of Victory",
-          "total_weight": 3.92,
+          "total_weight": 4.15,
           "pick_count": 1,
           "options": [
             {
-              "selection": "Bella Mir by submission",
+              "selection": "Mario Piazzon by TKO in round 2 or 3",
               "consensus_pct": 100.0,
-              "weight": 3.92,
+              "weight": 4.15,
               "pick_count": 1,
-              "avg_confidence": 7.0,
+              "avg_confidence": 5.0,
               "stated_pick_count": 1,
-              "stated_avg_confidence": 7.0,
+              "stated_avg_confidence": 5.0,
               "cappers": [
                 {
-                  "id": "artem_mma",
-                  "name": "Artem MMA",
-                  "confidence": 7,
-                  "trust": 5.6,
-                  "role": "favorite",
+                  "id": "mma_lock_of_the_night",
+                  "name": "MMA Lock of the Night",
+                  "confidence": 5,
+                  "trust": 8.3,
+                  "role": "underdog",
                   "odds": "",
                   "stake": "",
-                  "reasoning": "Apodaca runs into the pocket with hands down and chin up, which lets Mir duck under to the hips; Mir is very good once she gets the takedown, having taken a Kimura off her last opponent.",
+                  "reasoning": "Expects Piazon to create a slugfest, wear Uriel down in the clinch and finish him by TKO once Uriel gasses in the later rounds.",
                   "source": "video",
-                  "video_url": "https://www.youtube.com/watch?v=Q91pByWDgrI"
+                  "video_url": "https://www.youtube.com/watch?v=hb2E2ZAXIlw"
                 }
               ]
             }
@@ -410,47 +1030,23 @@
         }
       ],
       "card_status": "on_card",
-      "card_order": 4,
-      "card_date": "2026-08-26T23:00Z"
-    },
-    {
-      "fight_id": "galanti|petruzzella",
-      "display": "Carlos Petruzzella vs Nick Galanti",
-      "fighter_a": "Carlos Petruzzella",
-      "fighter_b": "Nick Galanti",
-      "pick_count": 0,
-      "capper_count": 0,
-      "markets": [],
-      "card_status": "on_card",
-      "card_order": 0,
-      "card_date": "2026-08-26T23:00Z"
-    },
-    {
-      "fight_id": "piazzon|uriel",
-      "display": "Mario Piazzon vs Guilherme Uriel",
-      "fighter_a": "Mario Piazzon",
-      "fighter_b": "Guilherme Uriel",
-      "pick_count": 0,
-      "capper_count": 0,
-      "markets": [],
-      "card_status": "on_card",
       "card_order": 3,
-      "card_date": "2026-08-26T23:00Z",
+      "card_date": "2026-08-25T23:00Z",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-08-24T03:08:27+00:00",
+        "fetched_at": "2026-08-25T02:03:36+00:00",
         "commence_time": "2026-08-25T23:00:00Z",
         "a": {
-          "american": 174,
-          "decimal": 2.74,
+          "american": 155,
+          "decimal": 2.55,
           "books": 3,
-          "best_american": 185
+          "best_american": 157
         },
         "b": {
-          "american": -215,
-          "decimal": 1.4651,
+          "american": -180,
+          "decimal": 1.5556,
           "books": 3,
-          "best_american": -200
+          "best_american": -178
         }
       }
     }
@@ -476,13 +1072,12 @@
       "status": "ok",
       "channel_id": "UUa5_vw8K2CzUhsWJIJ7UT3g",
       "feed_videos": 15,
-      "selected": [],
-      "recent_titles": [
-        "2026-08-22  PFL Tampa: Cyborg vs Vieira Full Card Predictions & Betting Breakdown + Underdog Lock",
-        "2026-08-20  Best Bets For UFC Sacramento! Hernandez vs Rodrigues Betting Breakdown & UNDERDOG LOCK",
-        "2026-08-19  UFC Sacramento: Hernandez vs Rodrigues Full Card Predictions & Betting Breakdown",
-        "2026-08-17  DWCS 2026 Week 2 Full Card Predictions | LOCK PARLAY & CONFIDENT PICKS",
-        "2026-08-13  Best Bets For UFC 330! Makhachev vs Machado Garry Betting Breakdown & Underdog Lock"
+      "selected": [
+        {
+          "video_id": "f7CfedZ-P6U",
+          "title": "DWCS 2026 Week 3 Full Card Predictions | UNDERDOG LOCK & CONFIDENT PICKS",
+          "published": "2026-08-24T03:54:25+00:00"
+        }
       ]
     },
     {
@@ -526,6 +1121,11 @@
       "channel_id": "UUuJCJmR5QdtA2Iv3nwJXMJA",
       "feed_videos": 15,
       "selected": [
+        {
+          "video_id": "xbu7bwpCvVk",
+          "title": "Dana White’s Contender Series 2026: Week 3 | Full Card Predictions and Breakdown",
+          "published": "2026-08-24T13:37:49+00:00"
+        },
         {
           "video_id": "-_ELBhLxo58",
           "title": "Dana White’s Contender Series 2026: Week 2 | Full Card Fight Companion",
@@ -604,14 +1204,14 @@
       "feed_videos": 15,
       "selected": [
         {
+          "video_id": "q-UoYfz2Y_g",
+          "title": "DWCS 2026: Week 3: FULL CARD Predictions",
+          "published": "2026-08-24T15:00:13+00:00"
+        },
+        {
           "video_id": "aOcgEGa5jVE",
           "title": "🔴 Week 2 Contender Series LIVESTREAM! COMMENTARY & REACTIONS!",
           "published": "2026-08-19T01:36:54+00:00"
-        },
-        {
-          "video_id": "Fh7LeOLLJkM",
-          "title": "DWCS 2026: Week 2: FULL CARD Predictions",
-          "published": "2026-08-17T18:00:09+00:00"
         }
       ]
     },
@@ -623,11 +1223,11 @@
       "feed_videos": 15,
       "selected": [],
       "recent_titles": [
+        "2026-08-24  UFC Fight Night: Nurmagomedov vs. Song. Full card predictions",
         "2026-08-18  UFC Fight Night: Hernandez vs. Rodrigues. Full card predictions",
         "2026-08-09  The Lisan Al-Paw",
         "2026-08-09  UFC 330: Makhachev vs. Machado Garry. Full card predictions",
-        "2026-08-06  UFC Fight Night: Gamrot vs. Salkilld. Full card predictions",
-        "2026-08-01  Revenge of the Cabbage – A Brady & Uncle Weezy Story 🥬"
+        "2026-08-06  UFC Fight Night: Gamrot vs. Salkilld. Full card predictions"
       ]
     },
     {
@@ -638,14 +1238,14 @@
       "feed_videos": 15,
       "selected": [
         {
+          "video_id": "hb2E2ZAXIlw",
+          "title": "Dana White's Contender Series 2026 Week 3 Predictions",
+          "published": "2026-08-24T22:12:43+00:00"
+        },
+        {
           "video_id": "9JKfJa0k2pM",
           "title": "Contender Series 2026 Week 2 Watch Party Buddies",
           "published": "2026-08-19T14:14:02+00:00"
-        },
-        {
-          "video_id": "CskBvz8xWw8",
-          "title": "Dana White's Contender Series 2026 Week 2 Predictions",
-          "published": "2026-08-17T19:09:06+00:00"
         }
       ]
     },
@@ -701,6 +1301,11 @@
       "channel_id": "UUifVih_HPGoctNCg0gO-VqQ",
       "feed_videos": 15,
       "selected": [
+        {
+          "video_id": "uJ7nX9Ozwyg",
+          "title": "🥊Dana White’s Contender Series Week 3 | FULL CARD Breakdown, Predictions & Best Bets 🔥",
+          "published": "2026-08-25T00:29:25+00:00"
+        },
         {
           "video_id": "rn5YfkCf8y0",
           "title": "🥊Dana White’s Contender Series S10 Week 3 | FULL CARD Breakdown, Predictions & Best Bets 🔥",
@@ -767,7 +1372,7 @@
       "selected": [],
       "recent_titles": [
         "2026-08-24  UFC Shanghai: Nurmagomedov vs. Song Preview MMAOB Daily Podcast For August 23rd",
-        "2026-08-23  UFC Sacramento: Hernandez vs. Rodrigues Recap MMAOB Daily Podcast For August 23rd",
+        "2026-08-24  UFC Sacramento: Hernandez vs. Rodrigues Recap MMAOB Daily Podcast For August 23rd",
         "2026-08-18  UFC Sacramento preview 💸 The Gamblers Perspective #169",
         "2026-08-17  UFC Sacramento: Hernandez vs. Rodrigues Preview MMAOB Daily Podcast For August 16th",
         "2026-08-17  UFC 330: Makhachev vs. Machado Garry Recap MMAOB Daily Podcast For August 16th"
@@ -810,11 +1415,11 @@
       "feed_videos": 15,
       "selected": [],
       "recent_titles": [
+        "2026-08-24  Building The Final UFC PPVs of 2026",
         "2026-08-23  UFC Sacramento Immediate Reaction/Recap (Hernandez vs Rodrigues)",
         "2026-08-21  UFC Fighters In A Horror Movie Tier List",
         "2026-08-20  The Ultimate BedtimeMMA UFC QnA (100% Honest)",
-        "2026-08-19  UFC Sacramento Full Card Predictions (BEDTIME BICKS)",
-        "2026-08-18  The Best UFC Hatewatches I've Experienced (Top 10)"
+        "2026-08-19  UFC Sacramento Full Card Predictions (BEDTIME BICKS)"
       ]
     },
     {

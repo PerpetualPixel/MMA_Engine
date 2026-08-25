@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-24T03:08:27+00:00",
+  "generated_at": "2026-08-25T02:03:35+00:00",
   "event": {
     "name": "Contender Series: Season 10, Week 3",
     "date": "",
@@ -10,23 +10,119 @@
       "name": "Dana White's Contender Series: Season 10, Week 3",
       "date": "2026-08-25T23:00Z",
       "bouts": 5,
-      "off_card_dropped": 33
+      "off_card_dropped": 38
     },
     "odds": {
       "source": "the-odds-api",
       "market": "h2h",
-      "fetched_at": "2026-08-24T03:08:27+00:00",
-      "fights_priced": 1
+      "fetched_at": "2026-08-25T02:03:36+00:00",
+      "fights_priced": 5
     }
   },
   "source": "MMA_Engine trust-weighted capper consensus",
   "totals": {
-    "picks": 6,
-    "strong": 0,
-    "lean": 6,
-    "pass": 0
+    "picks": 14,
+    "strong": 3,
+    "lean": 8,
+    "pass": 3
   },
   "picks": [
+    {
+      "fight_id": "humphrey|miranda",
+      "fight": "Ronald Humphrey vs Alexis Miranda",
+      "card_status": "on_card",
+      "market": "method_of_victory",
+      "market_label": "Method of Victory",
+      "selection": "Ronald Humphrey by TKO",
+      "consensus_pct": 100.0,
+      "weight": 21.28,
+      "pick_count": 5,
+      "avg_confidence": 7.0,
+      "strength": 10.0,
+      "tier": "strong",
+      "suggested_units": 2.0,
+      "quoted_odds": {
+        "american": -869,
+        "decimal": 1.115,
+        "count": 2
+      },
+      "value": 1.1,
+      "comments": [
+        {
+          "capper": "MMA Lock of the Night",
+          "comment": "Humphrey's nasty Muay Thai, poise and 100% finish rate versus a completely unremarkable Miranda who has no power and has been outstruck by low-level opposition; expects the knockout within two rounds. Notes -950 moneyline isn't parlayable.",
+          "confidence": 7
+        },
+        {
+          "capper": "The Wager Zone",
+          "comment": "Miranda is hittable, doesn't move his head, leaves his chin up and has poor takedown defense; Humphrey beats him everywhere and should land big shots early.",
+          "confidence": 7
+        },
+        {
+          "capper": "We Want Picks (Jacob)",
+          "comment": "Humphrey is 4-0 with all KOs and throws with huge power, while Miranda gets backed up, has no finishing ability or jiu-jitsu to threaten him.",
+          "confidence": 7
+        },
+        {
+          "capper": "Livid Larry MMA",
+          "comment": "Calls it a night-and-day athletic gap: Humphrey is far more explosive, powerful and faster, and should either chin Miranda on the feet or ground-and-pound him out early.",
+          "confidence": 7
+        },
+        {
+          "capper": "Axel MMA",
+          "comment": "Says Humphrey walks him down, lands something big and finishes early; suggests propping him by TKO.",
+          "confidence": 7
+        }
+      ]
+    },
+    {
+      "fight_id": "apodaca|mir",
+      "fight": "Alex Apodaca vs Bella Mir",
+      "card_status": "on_card",
+      "market": "method_of_victory",
+      "market_label": "Method of Victory",
+      "selection": "Bella Mir by submission",
+      "consensus_pct": 100.0,
+      "weight": 20.3,
+      "pick_count": 5,
+      "avg_confidence": 6.8,
+      "strength": 10.0,
+      "tier": "strong",
+      "suggested_units": 2.0,
+      "quoted_odds": {
+        "american": -500,
+        "decimal": 1.2,
+        "count": 1
+      },
+      "value": 2.0,
+      "comments": [
+        {
+          "capper": "MMA Lock of the Night",
+          "comment": "He expects Mir to take the fight down, get whatever position she wants and eventually find a submission; interested in the submission prop if the price is bettable.",
+          "confidence": 5
+        },
+        {
+          "capper": "The Wager Zone",
+          "comment": "Very confident in her wrestling to get it to the floor and finish with a first-round submission.",
+          "confidence": 7
+        },
+        {
+          "capper": "We Want Picks (Jacob)",
+          "comment": "National champion wrestler who dominates once on top and finds submissions; Apodaca walks into the clinch and can't hurt her on the feet.",
+          "confidence": 8
+        },
+        {
+          "capper": "Artem MMA",
+          "comment": "Apodaca runs into the pocket with hands down and chin up, which lets Mir duck under to the hips; Mir is very good once she gets the takedown, having taken a Kimura off her last opponent.",
+          "confidence": 7
+        },
+        {
+          "capper": "Axel MMA",
+          "comment": "He expects her to get the takedown and find an early submission; recommends the Mir-by-sub prop.",
+          "confidence": 7
+        }
+      ]
+    },
     {
       "fight_id": "apodaca|mir",
       "fight": "Alex Apodaca vs Bella Mir",
@@ -35,17 +131,65 @@
       "market_label": "Moneyline",
       "selection": "Bella Mir",
       "consensus_pct": 100.0,
-      "weight": 5.49,
-      "pick_count": 1,
-      "avg_confidence": 9.0,
-      "strength": 6.4,
-      "tier": "lean",
-      "suggested_units": 1.0,
+      "weight": 18.06,
+      "pick_count": 4,
+      "avg_confidence": 7.5,
+      "strength": 9.5,
+      "tier": "strong",
+      "suggested_units": 2.0,
+      "quoted_odds": {
+        "american": -2667,
+        "decimal": 1.038,
+        "count": 2
+      },
+      "value": 0.4,
       "comments": [
+        {
+          "capper": "MMA Lock of the Night",
+          "comment": "Mir is clearly the better wrestler and grappler with more explosiveness and power, though he notes -4000 isn't parlayable and there's little to bet.",
+          "confidence": 3
+        },
+        {
+          "capper": "The Wager Zone",
+          "comment": "Mir is elite grappler - national champion wrestler, IBJJF no-gi and Pan-American champion - with improving striking, and he thinks she was given a favorable matchup.",
+          "confidence": 9
+        },
         {
           "capper": "Artem MMA",
           "comment": "Mir should be one of the biggest favorites of the season - national champion wrestler with UFC BJJ grappling experience - facing an opponent on three weeks' notice whose striking he doesn't rate.",
           "confidence": 9
+        },
+        {
+          "capper": "Axel MMA",
+          "comment": "Mir's grappling and jiu-jitsu are far superior and Apodaca's takedown defense won't hold up; listed as a most confident pick.",
+          "confidence": 9
+        }
+      ]
+    },
+    {
+      "fight_id": "balletto|clancy",
+      "fight": "Gary Balletto vs Sean Clancy Jr.",
+      "card_status": "on_card",
+      "market": "method_of_victory",
+      "market_label": "Method of Victory",
+      "selection": "Sean Clancy Jr. by TKO (body shot), likely round 2",
+      "consensus_pct": 100.0,
+      "weight": 6.96,
+      "pick_count": 2,
+      "avg_confidence": 6.0,
+      "strength": 6.7,
+      "tier": "lean",
+      "suggested_units": 1.0,
+      "comments": [
+        {
+          "capper": "We Want Picks (Jacob)",
+          "comment": "Clancy's boxing and body work have evolved and Balletto leaves himself open to counters in MMA; a submission is also possible but he lands on the KO.",
+          "confidence": 6
+        },
+        {
+          "capper": "Livid Larry MMA",
+          "comment": "Clancy is the better prospect and more talented everywhere; since Balletto is durable and hard to finish to the head, he expects Clancy to soften him up with kicks to the body and finish with a body-shot TKO in the second.",
+          "confidence": 6
         }
       ]
     },
@@ -75,43 +219,77 @@
       "fight_id": "humphrey|miranda",
       "fight": "Ronald Humphrey vs Alexis Miranda",
       "card_status": "on_card",
-      "market": "method_of_victory",
-      "market_label": "Method of Victory",
-      "selection": "Ronald Humphrey by KO/TKO",
+      "market": "moneyline",
+      "market_label": "Moneyline",
+      "selection": "Ronald Humphrey",
       "consensus_pct": 100.0,
-      "weight": 4.41,
+      "weight": 4.86,
       "pick_count": 1,
-      "avg_confidence": 7.0,
-      "strength": 6.1,
+      "avg_confidence": 9.0,
+      "strength": 6.2,
       "tier": "lean",
       "suggested_units": 1.0,
+      "quoted_odds": {
+        "american": -750,
+        "decimal": 1.133,
+        "count": 1
+      },
+      "value": 0.8,
       "comments": [
         {
-          "capper": "The Wager Zone",
-          "comment": "Miranda is very hittable, doesn't move his head and leaves his chin up, plus poor takedown defense; Humphrey beats him everywhere and should land big shots early in round one.",
-          "confidence": 7
+          "capper": "Axel MMA",
+          "comment": "Humphrey is a pressure striker with solid wrestling against an awkward, unimpressive Miranda; called a lock and one of his most confident picks.",
+          "confidence": 9
         }
       ]
     },
     {
-      "fight_id": "apodaca|mir",
-      "fight": "Alex Apodaca vs Bella Mir",
+      "fight_id": "balletto|clancy",
+      "fight": "Gary Balletto vs Sean Clancy Jr.",
+      "card_status": "on_card",
+      "market": "over_under",
+      "market_label": "Over / Under",
+      "selection": "Under 1.5 rounds",
+      "consensus_pct": 100.0,
+      "weight": 4.26,
+      "pick_count": 1,
+      "avg_confidence": 6.0,
+      "strength": 6.1,
+      "tier": "lean",
+      "suggested_units": 1.0,
+      "quoted_odds": {
+        "american": -300,
+        "decimal": 1.333,
+        "count": 1
+      },
+      "value": 2.0,
+      "comments": [
+        {
+          "capper": "MMA Lock of the Night",
+          "comment": "Clancy Jr. is a far superior, much bigger well-rounded grappler who should get Balletto down almost immediately and finish quickly; he'd take the under 1.5 at anything better than -300.",
+          "confidence": 6
+        }
+      ]
+    },
+    {
+      "fight_id": "piazon|uriel",
+      "fight": "Mario Piazzon vs Guilherme Uriel",
       "card_status": "on_card",
       "market": "method_of_victory",
       "market_label": "Method of Victory",
-      "selection": "Bella Mir by submission",
+      "selection": "Mario Piazzon by TKO in round 2 or 3",
       "consensus_pct": 100.0,
-      "weight": 3.92,
+      "weight": 4.15,
       "pick_count": 1,
-      "avg_confidence": 7.0,
+      "avg_confidence": 5.0,
       "strength": 6.0,
       "tier": "lean",
       "suggested_units": 1.0,
       "comments": [
         {
-          "capper": "Artem MMA",
-          "comment": "Apodaca runs into the pocket with hands down and chin up, which lets Mir duck under to the hips; Mir is very good once she gets the takedown, having taken a Kimura off her last opponent.",
-          "confidence": 7
+          "capper": "MMA Lock of the Night",
+          "comment": "Expects Piazon to create a slugfest, wear Uriel down in the clinch and finish him by TKO once Uriel gasses in the later rounds.",
+          "confidence": 5
         }
       ]
     },
@@ -155,6 +333,111 @@
         {
           "capper": "Artem MMA",
           "comment": "He expects the pressure and body work to add up quickly against a fighter coming off a long MMA layoff, predicting a first-round knockout.",
+          "confidence": 6
+        }
+      ]
+    },
+    {
+      "fight_id": "galante|petrazella",
+      "fight": "Nick Galanti vs Carlos Petruzzella",
+      "card_status": "on_card",
+      "market": "round",
+      "market_label": "Round",
+      "selection": "Carlos Petrazella in round 1",
+      "consensus_pct": 100.0,
+      "weight": 2.8,
+      "pick_count": 1,
+      "avg_confidence": 5.0,
+      "strength": 5.7,
+      "tier": "lean",
+      "suggested_units": 1.0,
+      "comments": [
+        {
+          "capper": "Axel MMA",
+          "comment": "He expects it to end early with Galante getting caught cold in the first round.",
+          "confidence": 5
+        }
+      ]
+    },
+    {
+      "fight_id": "piazon|uriel",
+      "fight": "Mario Piazzon vs Guilherme Uriel",
+      "card_status": "on_card",
+      "market": "moneyline",
+      "market_label": "Moneyline",
+      "selection": "Mario Piazzon",
+      "consensus_pct": 61.0,
+      "weight": 4.92,
+      "pick_count": 1,
+      "avg_confidence": 6.0,
+      "strength": 3.8,
+      "tier": "pass",
+      "suggested_units": 0.0,
+      "quoted_odds": {
+        "american": 175,
+        "decimal": 2.75,
+        "count": 1
+      },
+      "value": 6.6,
+      "comments": [
+        {
+          "capper": "MMA Lock of the Night",
+          "comment": "Calls Piazon the best dog on the card, fading Uriel's poor gas tank and rudimentary overextending power striking, while Piazon has shown he can go into rounds two and three and grapple.",
+          "confidence": 6
+        }
+      ]
+    },
+    {
+      "fight_id": "galante|petrazella",
+      "fight": "Nick Galanti vs Carlos Petruzzella",
+      "card_status": "on_card",
+      "market": "moneyline",
+      "market_label": "Moneyline",
+      "selection": "Carlos Petruzzella",
+      "consensus_pct": 62.2,
+      "weight": 4.48,
+      "pick_count": 1,
+      "avg_confidence": 8.0,
+      "strength": 3.8,
+      "tier": "pass",
+      "suggested_units": 0.0,
+      "quoted_odds": {
+        "american": 195,
+        "decimal": 2.95,
+        "count": 1
+      },
+      "value": 7.4,
+      "comments": [
+        {
+          "capper": "Axel MMA",
+          "comment": "Petrazella is an explosive, wild combination striker while Galante's striking is hittable, and Petrazella's jiu-jitsu should stop or survive Galante's takedown attempts. Named as his 'savage underdog lock'.",
+          "confidence": 8
+        }
+      ]
+    },
+    {
+      "fight_id": "galante|petrazella",
+      "fight": "Nick Galanti vs Carlos Petruzzella",
+      "card_status": "on_card",
+      "market": "method_of_victory",
+      "market_label": "Method of Victory",
+      "selection": "Carlos Petrazella by KO/TKO",
+      "consensus_pct": 45.9,
+      "weight": 6.3,
+      "pick_count": 2,
+      "avg_confidence": 6.0,
+      "strength": 3.0,
+      "tier": "pass",
+      "suggested_units": 0.0,
+      "comments": [
+        {
+          "capper": "The Wager Zone",
+          "comment": "Galante needs takedowns to win and Petrazella has decent takedown defense and sprawls well; if the takedowns are stopped, Galante is hittable and gets caught with big shots.",
+          "confidence": 6
+        },
+        {
+          "capper": "Axel MMA",
+          "comment": "He believes Petrazella lands one big shot and gets a highlight-reel knockout on Galante.",
           "confidence": 6
         }
       ]
