@@ -6,6 +6,8 @@ session is stubbed. Run with:  PYTHONPATH=src python -m pytest -q
 
 from __future__ import annotations
 
+import json
+
 from datetime import datetime, timedelta, timezone
 
 import pytest
@@ -13,6 +15,8 @@ import requests
 
 from mma_engine.config import Capper
 from mma_engine.discover import (
+    parse_duration,
+    parse_search_results,
     ChannelDiscovery,
     parse_channel_id,
     parse_channel_id_from_page,
@@ -719,3 +723,195 @@ def test_successful_match_does_not_report_recent_titles():
     )
     _, report = discovery.discover([capper()])
     assert "recent_titles" not in report[0]
+
+
+# -- open search across YouTube --------------------------------------------
+
+
+def search_payload(items: list[tuple[str, str, str, str, float]]) -> str:
+    """A search.list response: (video_id, title, channel_id, channel_title, age)."""
+    import json as _json
+
+    return _json.dumps(
+        {
+            "items": [
+                {
+                    "id": {"videoId": video_id},
+                    "snippet": {
+                        "title": title,
+                        "channelId": channel_id,
+                        "channelTitle": channel_title,
+                        "publishedAt": iso(age),
+                    },
+                }
+                for video_id, title, channel_id, channel_title, age in items
+            ]
+        }
+    )
+
+
+def durations_payload(pairs: list[tuple[str, str]]) -> str:
+    import json as _json
+
+    return _json.dumps(
+        {"items": [{"id": vid, "contentDetails": {"duration": d}} for vid, d in pairs]}
+    )
+
+
+@pytest.mark.parametrize(
+    "iso_text,seconds",
+    [("PT12M30S", 750), ("PT1H2M3S", 3723), ("PT45S", 45), ("P1DT2H", 93600), ("", 0), ("nonsense", 0)],
+)
+def test_parse_duration(iso_text, seconds):
+    assert parse_duration(iso_text) == seconds
+
+
+def test_parse_search_results_carries_the_channel():
+    videos = parse_search_results(
+        json.loads(search_payload([("vid00000001", "UFC picks", "UC1", "Some MMA", 1)]))
+    )
+    assert len(videos) == 1
+    assert videos[0].channel_id == "UC1"
+    assert videos[0].channel_title == "Some MMA"
+    # Who that channel is in this project's terms is the pipeline's business.
+    assert videos[0].capper_id == ""
+
+
+def search_discovery(items, durations, **kwargs):
+    routes = {
+        "/search?": StubResponse(search_payload(items)),
+        "/videos?": StubResponse(durations_payload(durations)),
+    }
+    kwargs.setdefault("api_key", "test-key")
+    kwargs.setdefault("lookback_days", 14)
+    kwargs.setdefault("title_contains", ["nurmagomedov"])
+    return make_discovery(routes, **kwargs)
+
+
+def test_search_keeps_prediction_videos_about_this_event():
+    discovery = search_discovery(
+        [
+            ("vid00000001", "Nurmagomedov vs Song PREDICTIONS", "UC1", "A MMA", 1),
+            ("vid00000002", "Nurmagomedov weigh-in live stream", "UC2", "B MMA", 1),
+            ("vid00000003", "UFC 999 picks and parlays", "UC3", "C MMA", 1),
+        ],
+        [("vid00000001", "PT15M"), ("vid00000002", "PT2H"), ("vid00000003", "PT20M")],
+    )
+    videos, report = discovery.search(["nurmagomedov predictions"])
+
+    # The weigh-in mentions the event but isn't a pick; the other picks video
+    # isn't this event.
+    assert [v.video_id for v in videos] == ["vid00000001"]
+    assert report[0]["returned"] == 3 and report[0]["kept"] == 1
+
+
+def test_search_drops_shorts_and_clips():
+    discovery = search_discovery(
+        [
+            ("vid00000001", "Nurmagomedov predictions", "UC1", "A MMA", 1),
+            ("vid00000002", "Nurmagomedov pick #shorts", "UC2", "B MMA", 1),
+        ],
+        [("vid00000001", "PT11M"), ("vid00000002", "PT47S")],
+    )
+    videos, _ = discovery.search(["q"], min_duration_seconds=180)
+    assert [v.video_id for v in videos] == ["vid00000001"]
+
+
+def test_search_caps_per_channel_and_overall():
+    items = [
+        (f"vid0000000{i}", "Nurmagomedov predictions", f"UC{i // 2}", f"Chan {i // 2}", i * 0.1)
+        for i in range(1, 7)
+    ]
+    discovery = search_discovery(items, [(v, "PT10M") for v, *_ in items])
+    videos, _ = discovery.search(["q"], max_per_channel=1, max_results=2)
+    assert len(videos) == 2
+    assert len({v.channel_id for v in videos}) == 2
+
+
+def test_search_without_a_key_is_skipped_not_fatal():
+    discovery = search_discovery([], [], api_key="")
+    videos, report = discovery.search(["q"])
+    assert videos == []
+    assert report[0]["status"] == "skipped"
+
+
+def test_a_failing_query_does_not_stop_the_others():
+    routes = {
+        "q=bad": requests.exceptions.ConnectionError("boom"),
+        "/search?": StubResponse(
+            search_payload([("vid00000001", "Nurmagomedov predictions", "UC1", "A", 1)])
+        ),
+        "/videos?": StubResponse(durations_payload([("vid00000001", "PT10M")])),
+    }
+    discovery = make_discovery(
+        routes, api_key="k", lookback_days=14, title_contains=["nurmagomedov"]
+    )
+    videos, report = discovery.search(["bad", "good"])
+    assert [v.video_id for v in videos] == ["vid00000001"]
+    assert [entry["status"] for entry in report if "query" in entry][:2] == ["failed", "ok"]
+
+
+# -- who a searched-up video belongs to ------------------------------------
+
+
+def searched(channel_id="UC_NEW", channel_title="Fresh MMA Picks"):
+    from mma_engine.discover import DiscoveredVideo
+
+    return DiscoveredVideo(
+        video_id="vid00000001",
+        capper_id="",
+        url="https://www.youtube.com/watch?v=vid00000001",
+        title="Nurmagomedov vs Song predictions",
+        published=datetime.now(timezone.utc),
+        channel_id=channel_id,
+        channel_title=channel_title,
+    )
+
+
+def config_with(cappers, tmp_path):
+    from mma_engine.config import load_config
+
+    path = tmp_path / "config.json"
+    path.write_text(
+        json.dumps({"event": {"name": "X"}, "cappers": cappers}), encoding="utf-8"
+    )
+    return load_config(path)
+
+
+def test_a_searched_video_matches_its_configured_capper_by_channel_id(tmp_path):
+    from mma_engine.pipeline import capper_for_channel
+
+    config = config_with(
+        [{"id": "artem_mma", "name": "Artem MMA", "channel_id": "UC_ARTEM",
+          "trust": {"overall": 6.2}}],
+        tmp_path,
+    )
+    capper = capper_for_channel(config, searched(channel_id="UC_ARTEM", channel_title="Renamed Channel"))
+    # Matched on the id, so a renamed channel keeps its earned trust.
+    assert (capper.id, capper.trust_for("overall")) == ("artem_mma", 6.2)
+
+
+def test_a_searched_video_matches_by_name_when_the_id_is_unknown(tmp_path):
+    from mma_engine.pipeline import capper_for_channel
+
+    config = config_with(
+        [{"id": "funky_picks", "name": "Funky Picks", "trust": {"overall": 7.1}}], tmp_path
+    )
+    capper = capper_for_channel(config, searched(channel_id="UC_OTHER", channel_title="funky picks"))
+    assert capper.id == "funky_picks"
+
+
+def test_an_unknown_channel_is_minted_at_neutral_trust(tmp_path):
+    from mma_engine.pipeline import capper_for_channel
+
+    config = config_with([{"id": "a", "name": "A"}], tmp_path)
+    capper = capper_for_channel(config, searched())
+
+    assert capper.id == "yt_fresh_mma_picks"
+    assert capper.name == "Fresh MMA Picks"
+    assert capper.trust_for("overall") == 5.0
+    # Not swept weekly off the back of one video — that stays a person's call.
+    assert capper.discover is False
+    # And it is in the config for the rest of the run, so the pipeline can
+    # look it up by id when the pick is attributed.
+    assert config.cappers["yt_fresh_mma_picks"] is capper

@@ -85,3 +85,44 @@ def test_transcript_cookies_enabled_env_can_disable(tmp_path, monkeypatch):
     monkeypatch.setenv("MMA_TRANSCRIPT_COOKIES_ENABLED", "false")
     config = load_config(write_config(tmp_path, data))
     assert config.settings["transcript_cookies"]["enabled"] is False
+
+
+# -- more than one card in a run -------------------------------------------
+
+
+def test_event_specs_lists_the_primary_card_then_the_extras(tmp_path):
+    from mma_engine.config import load_config
+
+    path = tmp_path / "config.json"
+    path.write_text(
+        json.dumps(
+            {
+                "event": {"name": "Nurmagomedov vs. Song", "league": "UFC"},
+                "events": [
+                    {"name": "PFL 9", "league": "pfl", "label": "PFL 9: Playoffs"},
+                    {"name": ""},  # unnamed entries are ignored
+                ],
+                "cappers": [{"id": "a", "name": "A"}],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    specs = load_config(path).event_specs
+    assert specs == [
+        {"name": "Nurmagomedov vs. Song", "league": "ufc", "label": ""},
+        {"name": "PFL 9", "league": "pfl", "label": "PFL 9: Playoffs"},
+    ]
+
+
+def test_a_config_with_one_event_still_yields_one_spec(tmp_path):
+    from mma_engine.config import load_config
+
+    path = tmp_path / "config.json"
+    path.write_text(
+        json.dumps({"event": {"name": "UFC 300"}, "cappers": [{"id": "a", "name": "A"}]}),
+        encoding="utf-8",
+    )
+    assert load_config(path).event_specs == [
+        {"name": "UFC 300", "league": "", "label": ""}
+    ]
