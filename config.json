@@ -1,8 +1,9 @@
 {
   "event": {
-    "name": "Contender Series: Season 10, Week 3",
+    "name": "Nurmagomedov vs. Song",
+    "league": "ufc",
     "date": "",
-    "notes": "\"name\" is matched as a substring against ESPN's own event name (punctuation and case are ignored, but spelling is NOT — no typo tolerance here, unlike fighter-name matching elsewhere), and the FIRST match inside the 45-day scoreboard window wins. That last part is why a weekly series must carry its season and week: ESPN names this card \"Dana White's Contender Series: Season 10, Week 3\", and \"Contender Series\" alone would match whichever week sits earliest in the window rather than this one. A one-off card (\"UFC 330\", \"Hernandez vs. Rodrigues\") is unique in that window and needs no qualifier. If the run logs \"No ESPN card found matching ...\", the name is wrong: nothing is filtered that run and off-card fights come back."
+    "notes": "\"name\" is matched as a substring against ESPN's own event name (punctuation and case are ignored, spelling is NOT), and the FIRST match inside the 45-day scoreboard window wins — so a weekly series must carry its season and week (\"Contender Series: Season 10, Week 3\") while a one-off like this is unique on its own. \"league\" pins which scoreboard is searched (ufc / pfl); leave it empty to try UFC then PFL. Add more cards to the top-level \"events\" array to cover them in the same run — a PFL event the same weekend, say — and the dashboard puts a card selector at the top. If a run logs \"No ESPN card found\", the name is wrong: nothing is filtered and off-card fights come back."
   },
   "tracker": {
     "channel_url": "https://www.youtube.com/@UFCPredictionsTracker",
@@ -31,13 +32,26 @@
     "use_cache": true,
     "discovery": {
       "enabled": true,
-      "lookback_days": 7,
+      "lookback_days": 14,
       "max_videos_per_channel": 3,
       "title_contains": [
-        "contender series",
-        "dwcs",
-        "dana white"
-      ]
+        "nurmagomedov",
+        "umar",
+        "yadong",
+        "song yadong"
+      ],
+      "search": {
+        "enabled": true,
+        "queries": [
+          "UFC Fight Night Nurmagomedov vs Song predictions",
+          "Umar Nurmagomedov Song Yadong picks",
+          "UFC Nurmagomedov Song betting breakdown"
+        ],
+        "max_results": 40,
+        "max_per_channel": 1,
+        "min_duration_seconds": 180,
+        "require_prediction_terms": true
+      }
     },
     "live_odds": {
       "enabled": true,
@@ -2037,5 +2051,7 @@
       }
     }
   ],
-  "videos": []
+  "videos": [],
+  "events": [],
+  "events_notes": "Extra cards to cover alongside \"event\", e.g. {\"name\": \"PFL 9\", \"league\": \"pfl\", \"label\": \"PFL 9: Playoffs\"}. Fights are tagged with the card they belong to and the dashboard shows a selector; anything on neither card is still dropped."
 }

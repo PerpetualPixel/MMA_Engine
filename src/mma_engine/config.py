@@ -47,6 +47,32 @@ DEFAULT_SETTINGS: dict[str, Any] = {
         # Optional substring the video title must contain, e.g. "UFC 300".
         # Useful when a channel posts non-betting content in the same window.
         "title_contains": "",
+        "search": {
+            # Look for the event across YouTube rather than only in the
+            # configured channels, so anyone who posted a prediction can be
+            # found (see mma_engine.discover). Channels with no entry here are
+            # minted at neutral trust, like roundup channels.
+            #
+            # Two costs to keep in view: a search is 100 quota units of the
+            # 10,000/day allowance (a channel's uploads are 1), and every
+            # video it finds is a Claude extraction that gets paid for — which
+            # is what max_results is really bounding.
+            "enabled": False,
+            # What to ask YouTube. Two or three phrasings of the event is
+            # plenty; each is a separate 100-unit call.
+            "queries": [],
+            "max_results": 40,
+            # One video per channel by default: a channel that posts three
+            # previews of the same card still gets one vote.
+            "max_per_channel": 1,
+            # Shorts and clips are not card breakdowns. 3 minutes cuts them
+            # without touching a real preview.
+            "min_duration_seconds": 180,
+            # Require a picks-ish word in the title as well as the event name
+            # (see discover.PREDICTION_TERMS). Turning this off widens the net
+            # to every video that mentions the event.
+            "require_prediction_terms": True,
+        },
     },
     "pasted_picks": {
         # Cards pasted by hand into `pasted/`, for cappers who now put their
@@ -201,6 +227,32 @@ class Config:
     # The `tracker` block: the results channel the trust scores come from, plus
     # any pre-event roundup videos to ingest picks from.
     tracker: dict[str, Any] = field(default_factory=dict)
+    # Additional cards to cover in the same run, from the top-level "events"
+    # array — a PFL event the same weekend as the UFC one, say. The dashboard
+    # shows them as separate cards behind a selector.
+    extra_events: list[dict[str, Any]] = field(default_factory=list)
+
+    @property
+    def event_specs(self) -> list[dict[str, Any]]:
+        """Every card this run covers: the primary event, then any extras.
+
+        Each spec is {name, league, label}. `league` pins which ESPN
+        scoreboard is searched ("ufc", "pfl") and matters when a name could
+        match on either; leaving it empty tries UFC first, then PFL.
+        """
+        specs: list[dict[str, Any]] = []
+        for raw in [self.event or {}, *self.extra_events]:
+            name = (raw.get("name") or "").strip()
+            if not name:
+                continue
+            specs.append(
+                {
+                    "name": name,
+                    "league": (raw.get("league") or "").strip().lower(),
+                    "label": (raw.get("label") or "").strip(),
+                }
+            )
+        return specs
 
     @property
     def tracker_picks_videos(self) -> list[str]:
@@ -241,6 +293,10 @@ def load_config(path: str | Path = "config.json") -> Config:
     settings["discovery"] = {
         **DEFAULT_SETTINGS["discovery"],
         **(raw_settings.get("discovery") or {}),
+    }
+    settings["discovery"]["search"] = {
+        **DEFAULT_SETTINGS["discovery"]["search"],
+        **((raw_settings.get("discovery") or {}).get("search") or {}),
     }
     settings["proxy"] = {
         **DEFAULT_SETTINGS["proxy"],
@@ -345,4 +401,5 @@ def load_config(path: str | Path = "config.json") -> Config:
         videos=videos,
         path=config_path,
         tracker=dict(raw.get("tracker") or {}),
+        extra_events=[dict(entry) for entry in (raw.get("events") or []) if entry],
     )

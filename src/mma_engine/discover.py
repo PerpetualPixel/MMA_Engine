@@ -27,6 +27,22 @@ its flakiness was already handled: 404s are retried with backoff, and the
 `playlist_id=UU...` form of the same endpoint is tried when the `channel_id`
 form fails.
 
+**Open search (optional — `settings.discovery.search`).** The two paths above
+only ever find channels already listed in `config.json`. Search asks YouTube
+for the event itself, so anyone who posted a prediction can be found, roster
+or not: `search.list` for each configured query inside the lookback window,
+then `videos.list` to get durations. What comes back is filtered hard, because
+an open query returns a great deal that is not a prediction video — the title
+must match the event, the title should read like a picks video, and anything
+shorter than a few minutes is a Short or a clip rather than a card breakdown.
+Channels with no config entry are minted at neutral trust by the pipeline,
+exactly as roundup channels are.
+
+Quota: a search costs 100 units of the 10,000/day allowance against 1 for a
+channel's uploads, so the queries are few and the results capped. The caps are
+also what bound the cost of the run itself — every video found is a Claude
+extraction that has to be paid for.
+
 Discovery is a convenience, not a requirement: anything listed explicitly in
 `config.json`'s `videos` array is always used, and explicit entries win over
 discovered ones for the same video.
@@ -42,6 +58,7 @@ import xml.etree.ElementTree as ET
 from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
+from urllib.parse import quote_plus
 
 import requests
 
@@ -58,6 +75,29 @@ API_CHANNELS_URL = (
 API_PLAYLIST_ITEMS_URL = (
     "https://www.googleapis.com/youtube/v3/playlistItems"
     "?part=snippet,contentDetails&playlistId={playlist_id}&maxResults=15&key={key}"
+)
+# Open search across YouTube, not just the configured channels. 100 quota
+# units a call (a channel's uploads cost 1), so queries stay few.
+API_SEARCH_URL = (
+    "https://www.googleapis.com/youtube/v3/search"
+    "?part=snippet&type=video&order=date&maxResults={max_results}"
+    "&q={query}&publishedAfter={published_after}&relevanceLanguage=en&key={key}"
+)
+# Durations, to tell a card breakdown from a Short or a clip.
+API_VIDEOS_URL = (
+    "https://www.googleapis.com/youtube/v3/videos"
+    "?part=contentDetails&id={ids}&key={key}"
+)
+
+# A title that mentions the event still isn't necessarily a prediction video —
+# it could be a weigh-in stream, a highlight reel, a post-fight reaction. One
+# of these words has to appear too.
+PREDICTION_TERMS = (
+    "predict", "pick", "bet", "parlay", "breakdown", "preview", "odds",
+    "card", "dfs", "best bet", "play", "wager", "lock",
+)
+_ISO_DURATION_RE = re.compile(
+    r"^P(?:(?P<days>\d+)D)?T(?:(?P<hours>\d+)H)?(?:(?P<minutes>\d+)M)?(?:(?P<seconds>\d+)S)?$"
 )
 
 # An @handle as it appears in a channel URL: youtube.com/@SomeName
@@ -117,6 +157,56 @@ class DiscoveredVideo:
     url: str
     title: str
     published: datetime
+    # Set by open search, where the channel is whatever YouTube returned and
+    # may have no `config.json` entry at all. Empty for roster discovery,
+    # which already knows whose channel it read.
+    channel_id: str = ""
+    channel_title: str = ""
+
+
+def parse_duration(iso: str) -> int:
+    """ISO 8601 duration ("PT12M30S") to seconds. 0 when unparseable."""
+    match = _ISO_DURATION_RE.match((iso or "").strip())
+    if not match:
+        return 0
+    parts = {key: int(value or 0) for key, value in match.groupdict().items()}
+    return (
+        parts["days"] * 86400
+        + parts["hours"] * 3600
+        + parts["minutes"] * 60
+        + parts["seconds"]
+    )
+
+
+def parse_search_results(payload: dict) -> list[DiscoveredVideo]:
+    """A Data API search.list response into videos, channel attached.
+
+    capper_id is deliberately empty: search finds whoever posted, and who that
+    is in this project's terms is the pipeline's business, not discovery's.
+    """
+    videos: list[DiscoveredVideo] = []
+    for item in payload.get("items") or []:
+        video_id = ((item.get("id") or {}).get("videoId") or "").strip()
+        snippet = item.get("snippet") or {}
+        published = snippet.get("publishedAt") or ""
+        if not video_id or not published:
+            continue
+        try:
+            when = datetime.fromisoformat(published.replace("Z", "+00:00"))
+        except ValueError:
+            continue
+        videos.append(
+            DiscoveredVideo(
+                video_id=video_id,
+                capper_id="",
+                url=f"https://www.youtube.com/watch?v={video_id}",
+                title=(snippet.get("title") or "").strip(),
+                published=when,
+                channel_id=(snippet.get("channelId") or "").strip(),
+                channel_title=(snippet.get("channelTitle") or "").strip(),
+            )
+        )
+    return videos
 
 
 def parse_channel_id(text: str) -> str | None:
@@ -405,6 +495,143 @@ class ChannelDiscovery:
                 if any(pattern in v.title.lower() for pattern in self.title_contains)
             ]
         return selected[: self.max_per_channel]
+
+    # -- open search -------------------------------------------------------
+
+    def _looks_like_a_prediction(self, title: str) -> bool:
+        lowered = (title or "").lower()
+        if self.title_contains and not any(p in lowered for p in self.title_contains):
+            return False
+        return any(term in lowered for term in PREDICTION_TERMS)
+
+    def fetch_durations(self, video_ids: list[str]) -> dict[str, int]:
+        """Seconds per video, in batches of 50 (1 quota unit each)."""
+        durations: dict[str, int] = {}
+        for start in range(0, len(video_ids), 50):
+            batch = video_ids[start : start + 50]
+            try:
+                response = self._get_with_retry(
+                    API_VIDEOS_URL.format(ids=",".join(batch), key=self.api_key)
+                )
+                payload = response.json()
+            except (requests.exceptions.RequestException, ValueError) as exc:
+                log.warning("  duration lookup failed: %s", redact_key(str(exc)))
+                continue
+            for item in payload.get("items") or []:
+                durations[item.get("id", "")] = parse_duration(
+                    ((item.get("contentDetails") or {}).get("duration") or "")
+                )
+        return durations
+
+    def search(
+        self,
+        queries: list[str],
+        max_results: int = 40,
+        max_per_channel: int = 1,
+        min_duration_seconds: int = 180,
+        require_prediction_terms: bool = True,
+    ) -> tuple[list[DiscoveredVideo], list[dict]]:
+        """Find prediction videos for the event from anyone on YouTube.
+
+        Returns (videos, per-query report). Fails soft everywhere: a query that
+        errors is reported and the rest still run. The filters matter more than
+        usual here — an open query returns weigh-in streams, highlight reels
+        and post-fight reactions alongside the picks videos, and every video
+        kept is a Claude extraction that gets paid for.
+        """
+        report: list[dict] = []
+        if not queries:
+            return [], report
+        if not self.api_key:
+            log.warning(
+                "  open search needs YOUTUBE_API_KEY — skipping (roster channels "
+                "are unaffected)"
+            )
+            return [], [{"query": q, "status": "skipped", "error": "no API key"} for q in queries]
+
+        cutoff = datetime.now(timezone.utc) - timedelta(days=self.lookback_days)
+        published_after = cutoff.strftime("%Y-%m-%dT%H:%M:%SZ")
+        candidates: dict[str, DiscoveredVideo] = {}
+
+        for query in queries:
+            entry: dict = {"query": query, "status": "ok"}
+            try:
+                response = self._get_with_retry(
+                    API_SEARCH_URL.format(
+                        max_results=50,
+                        query=quote_plus(query),
+                        published_after=published_after,
+                        key=self.api_key,
+                    )
+                )
+                found = parse_search_results(response.json())
+            except (requests.exceptions.RequestException, ValueError) as exc:
+                error_text = redact_key(f"{type(exc).__name__}: {exc}")
+                entry.update(status="failed", error=error_text)
+                log.warning("  search failed for %r: %s", query, error_text)
+                report.append(entry)
+                continue
+
+            kept = [
+                video
+                for video in found
+                if video.published >= cutoff
+                and (
+                    self._looks_like_a_prediction(video.title)
+                    if require_prediction_terms
+                    else not self.title_contains
+                    or any(p in video.title.lower() for p in self.title_contains)
+                )
+            ]
+            for video in kept:
+                candidates.setdefault(video.video_id, video)
+            entry.update(returned=len(found), kept=len(kept))
+            log.info("  search %r: %d result(s), %d look like predictions", query, len(found), len(kept))
+            report.append(entry)
+
+        if not candidates:
+            return [], report
+
+        # Shorts and clips are not card breakdowns, and paying to extract one
+        # is pure waste.
+        durations = self.fetch_durations(list(candidates))
+        long_enough = [
+            video
+            for video in candidates.values()
+            if durations.get(video.video_id, 0) >= min_duration_seconds
+        ]
+        dropped_short = len(candidates) - len(long_enough)
+
+        # Newest first, then capped per channel and overall, so one prolific
+        # channel can't fill the whole allowance.
+        long_enough.sort(key=lambda v: v.published, reverse=True)
+        per_channel: dict[str, int] = {}
+        selected: list[DiscoveredVideo] = []
+        for video in long_enough:
+            seen = per_channel.get(video.channel_id, 0)
+            if seen >= max_per_channel:
+                continue
+            per_channel[video.channel_id] = seen + 1
+            selected.append(video)
+            if len(selected) >= max_results:
+                break
+
+        log.info(
+            "  search kept %d video(s) from %d channel(s) (%d too short, %d over the cap)",
+            len(selected), len(per_channel), dropped_short,
+            max(0, len(long_enough) - len(selected)),
+        )
+        report.append(
+            {
+                "query": "(totals)",
+                "status": "ok",
+                "candidates": len(candidates),
+                "too_short": dropped_short,
+                "selected": len(selected),
+                "channels": len(per_channel),
+            }
+        )
+        return selected, report
 
     def discover(self, cappers: list) -> tuple[list[DiscoveredVideo], list[dict]]:
         """Find recent videos for every capper. Returns (videos, per-channel report).

@@ -347,3 +347,79 @@ def test_a_cancellation_from_this_card_still_persists():
     assert kept["card_status"] == "cancelled"
     # And it keeps its stamp, so it survives the run after this one too.
     assert kept["cancelled_from_card"] == card["name"]
+
+
+# -- more than one card in a run -------------------------------------------
+
+
+def two_cards():
+    ufc = parse_card(espn_event(
+        name="UFC Fight Night: Nurmagomedov vs. Song",
+        fights=[("Umar Nurmagomedov", "Song Yadong", "STATUS_SCHEDULED")],
+    ))
+    pfl = parse_card(espn_event(
+        name="PFL 9: Playoffs",
+        fights=[("Impa Kasanganay", "Josh Silveira", "STATUS_SCHEDULED")],
+    ))
+    ufc.update(id="ufc_fight_night_nurmagomedov_vs_song", league="ufc", label="UFC Fight Night")
+    pfl.update(id="pfl_9_playoffs", league="pfl", label="PFL 9")
+    return ufc, pfl
+
+
+def test_each_fight_is_tagged_with_the_card_it_belongs_to():
+    ufc, pfl = two_cards()
+    payload = {
+        "event": {},
+        "fights": [
+            consensus_fight("Umar Nurmagomedov", "Song Yadong"),
+            consensus_fight("Impa Kasanganay", "Josh Silveira"),
+            consensus_fight("Somebody Else", "Another Guy"),
+        ],
+    }
+
+    annotate_consensus(payload, [ufc, pfl])
+
+    tagged = {f["display"]: f.get("event_id") for f in payload["fights"]}
+    assert tagged["Umar Nurmagomedov vs Song Yadong"] == "ufc_fight_night_nurmagomedov_vs_song"
+    assert tagged["Impa Kasanganay vs Josh Silveira"] == "pfl_9_playoffs"
+    # A fight on neither card is still dropped — two cards, not open season.
+    assert "Somebody Else vs Another Guy" not in tagged
+
+
+def test_the_payload_lists_every_card_for_the_selector():
+    ufc, pfl = two_cards()
+    payload = {"event": {}, "fights": []}
+
+    annotate_consensus(payload, [ufc, pfl])
+
+    assert [(e["id"], e["league"], e["label"]) for e in payload["events"]] == [
+        ("ufc_fight_night_nurmagomedov_vs_song", "UFC", "UFC Fight Night"),
+        ("pfl_9_playoffs", "PFL", "PFL 9"),
+    ]
+    # Both cards' bouts are listed, each tagged, even with nobody picking them.
+    assert {f["event_id"] for f in payload["fights"]} == {
+        "ufc_fight_night_nurmagomedov_vs_song",
+        "pfl_9_playoffs",
+    }
+    # And the primary card stays where single-card consumers look for it.
+    assert payload["event"]["card"]["name"] == "UFC Fight Night: Nurmagomedov vs. Song"
+
+
+def test_a_cancellation_belongs_to_its_own_card():
+    """With two cards in play, a carried-over cancellation must not drift onto
+    the other one."""
+    ufc, pfl = two_cards()
+    gone = consensus_fight("Retired Guy", "Withdrew Guy")
+    payload = {"event": {}, "fights": [gone]}
+    previous = [
+        dict(
+            consensus_fight("Retired Guy", "Withdrew Guy", card_status="cancelled"),
+            cancelled_from_card="PFL 9: Playoffs",
+        )
+    ]
+
+    annotate_consensus(payload, [ufc, pfl], previous_fights=previous)
+
+    kept = next(f for f in payload["fights"] if "Retired Guy" in f["display"])
+    assert kept["card_status"] == "cancelled"
+    assert kept["event_id"] == "pfl_9_playoffs"

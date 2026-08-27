@@ -78,6 +78,7 @@ python -m http.server -d docs 8000                    # open http://localhost:80
 | `--discover-only` | Dry run: print the videos discovery finds, then exit. No transcripts, no API calls. |
 | `--skip-extraction` | Fetch and cache transcripts only. No Claude API calls, no cost. |
 | `--discover` / `--no-discover` | Force channel discovery on or off, overriding the config. |
+| `--no-search` | Skip the open YouTube search for this run — configured channels only. The cheap run. |
 | `--no-cache` | Ignore cached transcripts/extractions and redo everything. |
 | `--config` / `--output` | Point at a different config or output path. |
 | `--picks-from-text CAPPER_ID=FILE` | Extract picks from a text file you pasted yourself. Repeatable. See **Paywalled cards** below. |
@@ -294,6 +295,71 @@ The ESPN card filter runs afterwards as always, so a roundup that also covers
 next week's card contributes nothing off-event. Flags: `--no-tracker-picks`
 skips the configured roundups for one run; `settings.tracker_picks.enabled`
 turns them off permanently.
+
+### Scouring YouTube for anyone who covered the event
+
+Channel discovery only ever finds channels already listed in `config.json`.
+Open search asks YouTube for the **event**, so anyone who posted a prediction
+can be found, roster or not:
+
+```jsonc
+"discovery": {
+  "search": {
+    "enabled": true,
+    "queries": [
+      "UFC Fight Night Nurmagomedov vs Song predictions",
+      "Umar Nurmagomedov Song Yadong picks"
+    ],
+    "max_results": 40
+  }
+}
+```
+
+Channels with no entry here are minted at neutral trust (5.0) and count as one
+unweighted voice each — the same treatment a channel first seen in a roundup
+gets. A channel that *is* configured keeps its earned trust, matched on its
+channel id first (immune to a rename) and then on its name or aliases.
+
+An open query returns a great deal that is not a prediction video, so what
+comes back is filtered hard:
+
+| Filter | Why |
+| --- | --- |
+| Title matches `title_contains` | It has to be *this* event. |
+| Title reads like a picks video | A weigh-in stream and a highlight reel both mention the event. Off with `require_prediction_terms: false`. |
+| `min_duration_seconds` (180) | Shorts and clips are not card breakdowns. |
+| `max_per_channel` (1) | A channel posting three previews still gets one vote. |
+| `max_results` (40) | **The cost lever** — see below. |
+
+**Two costs.** A search is 100 quota units of the free 10,000/day (a channel's
+uploads are 1), so a few queries is nothing. The real one is that every video
+found is a Claude extraction that gets paid for — `max_results` is what bounds
+it, and `--no-search` skips the whole thing for a run.
+
+---
+
+## More than one card in a run
+
+A run can cover several cards — a UFC Fight Night and the PFL event the same
+weekend. The primary card is `event`; anything else goes in a top-level
+`events` array:
+
+```jsonc
+"event":  { "name": "Nurmagomedov vs. Song", "league": "ufc" },
+"events": [ { "name": "PFL 9", "league": "pfl", "label": "PFL 9: Playoffs" } ]
+```
+
+`league` pins which ESPN scoreboard is searched, which matters when a name
+could match on either; leave it empty to try UFC then PFL.
+
+Every fight is tagged with the card it belongs to, and the dashboard puts a
+**card selector** at the top — the tabs, counts, and parlay builder all follow
+the selected card, and the choice is remembered between visits. With a single
+card the selector stays hidden, since the event name in the header already
+answers the question.
+
+Fights on *neither* card are still dropped. Adding a card widens what counts as
+on-card; it does not turn the filter off.
 
 ---
 
@@ -990,6 +1056,12 @@ accounts at 5.0 and adjust once you have a sample of their results.
 | `discovery.lookback_days` | `14` | Only consider uploads this recent. |
 | `discovery.max_videos_per_channel` | `3` | Cap per channel, newest first. |
 | `discovery.title_contains` | `[]` | Title must contain any of these (case-insensitive). |
+| `discovery.search.enabled` | `false` | Search YouTube for the event, not just the configured channels. |
+| `discovery.search.queries` | `[]` | What to ask YouTube. Each is one 100-unit call. |
+| `discovery.search.max_results` | `40` | Ceiling on videos taken from search — the cost lever, since each is a paid extraction. |
+| `discovery.search.max_per_channel` | `1` | One video per channel, so a prolific channel gets one vote. |
+| `discovery.search.min_duration_seconds` | `180` | Skip Shorts and clips. |
+| `discovery.search.require_prediction_terms` | `true` | Title must read like a picks video, not just mention the event. |
 | `pasted_picks.enabled` | `true` | Read hand-pasted cards from `pasted/`. With an empty folder this is a no-op. |
 | `pasted_picks.dir` | `pasted` | Where those files live. |
 | `pasted_picks.max_age_days` | `14` | Skip (and report) files untouched for longer than this. `0` disables the guard. |

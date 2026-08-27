@@ -19,9 +19,16 @@ from typing import Any
 from dotenv import load_dotenv
 
 from .aggregate import SourcedPick, build_consensus
-from .config import Config, ConfigError, VideoRef, extract_video_id, load_config
-from .discover import ChannelDiscovery
-from .event_card import annotate_consensus, fetch_event_card
+from .config import (
+    Capper,
+    Config,
+    ConfigError,
+    VideoRef,
+    extract_video_id,
+    load_config,
+)
+from .discover import ChannelDiscovery, DiscoveredVideo
+from .event_card import annotate_consensus, fetch_event_cards
 from .normalize import fight_key
 from .odds import annotate_odds, fetch_live_odds
 from .pasted_picks import (
@@ -34,7 +41,14 @@ from .pasted_picks import (
 )
 from .extract import PickExtractor
 from .proxy import ProxyConfigError, build_proxy_config, build_requests_proxies
-from .roster import RosterExtractor, build_capper_entry, merge_into_config
+from .roster import (
+    NEUTRAL_TRUST,
+    RosterExtractor,
+    build_capper_entry,
+    merge_into_config,
+    name_key,
+    slugify,
+)
 from .roundup_slides import (
     SlideReader,
     SlideReport,
@@ -98,6 +112,41 @@ def resolve_videos(config: Config) -> tuple[list[VideoRef], list[dict]]:
     )
     discovered, report = discovery.discover(cappers)
 
+    # Then anyone else on YouTube who covered this event.
+    search_settings = discovery_settings["search"]
+    if search_settings["enabled"] and search_settings["queries"]:
+        log.info(
+            "Searching YouTube for this event's predictions (%d quer%s)",
+            len(search_settings["queries"]),
+            "y" if len(search_settings["queries"]) == 1 else "ies",
+        )
+        searched, search_report = discovery.search(
+            list(search_settings["queries"]),
+            max_results=int(search_settings["max_results"]),
+            max_per_channel=int(search_settings["max_per_channel"]),
+            min_duration_seconds=int(search_settings["min_duration_seconds"]),
+            require_prediction_terms=bool(search_settings["require_prediction_terms"]),
+        )
+        report.extend(search_report)
+        known = {v.capper_id for v in discovered}
+        for video in searched:
+            capper = capper_for_channel(config, video)
+            discovered.append(
+                DiscoveredVideo(
+                    video_id=video.video_id,
+                    capper_id=capper.id,
+                    url=video.url,
+                    title=video.title,
+                    published=video.published,
+                    channel_id=video.channel_id,
+                    channel_title=video.channel_title,
+                )
+            )
+        minted = sum(1 for v in searched if v.channel_id and v.channel_id not in known)
+        log.info(
+            "  search added %d video(s) from channels not in config.json", minted
+        )
+
     seen = {video.video_id for video in videos}
     for item in discovered:
         if item.video_id in seen:
@@ -113,6 +162,47 @@ def resolve_videos(config: Config) -> tuple[list[VideoRef], list[dict]]:
         )
     log.info("Discovery added %d video(s); %d total to process", len(videos) - len(config.videos), len(videos))
     return videos, report
+
+
+def capper_for_channel(config: Config, video: DiscoveredVideo) -> Capper:
+    """The capper a searched-up video belongs to, minting one if need be.
+
+    Open search finds whoever posted, which is the point of it — most of them
+    have no `config.json` entry and no tracked record. Those are minted at
+    neutral trust and count as one unweighted voice each, the same treatment a
+    channel first seen in a roundup gets. A channel that *is* configured keeps
+    its earned trust, matched on its channel id first (exact, and immune to a
+    renamed channel) and then on its name or aliases.
+    """
+    channel_id = (video.channel_id or "").strip()
+    if channel_id:
+        for capper in config.cappers.values():
+            if capper.channel_id == channel_id or channel_id in (capper.channel_url or ""):
+                return capper
+
+    wanted = name_key(video.channel_title)
+    if wanted:
+        for capper in config.cappers.values():
+            for spelling in (capper.name, *capper.aliases):
+                if name_key(spelling) == wanted:
+                    return capper
+
+    base = f"yt_{slugify(video.channel_title or channel_id or 'channel')}"
+    capper_id, suffix = base, 2
+    while capper_id in config.cappers:
+        capper_id, suffix = f"{base}_{suffix}", suffix + 1
+    minted = Capper(
+        id=capper_id,
+        name=video.channel_title or channel_id or "Unknown channel",
+        channel_url=f"https://www.youtube.com/channel/{channel_id}" if channel_id else "",
+        channel_id=channel_id,
+        # Found by search this once; sweeping their uploads every week is a
+        # decision for a person to make, not a side effect of one video.
+        discover=False,
+        trust={"overall": NEUTRAL_TRUST},
+    )
+    config.cappers[capper_id] = minted
+    return minted
 
 
 def ingest_pasted_picks(
@@ -623,10 +713,17 @@ def run_pipeline(
             previous = json.loads(output_path.read_text(encoding="utf-8"))
         except (json.JSONDecodeError, OSError):
             pass
-    card = fetch_event_card(event.get("name") or "")
+    specs = config.event_specs or [{"name": event.get("name") or "", "league": "", "label": ""}]
+    cards = fetch_event_cards(specs)
+    if not cards:
+        log.warning(
+            "No ESPN card found for %s — consensus left un-annotated, so nothing "
+            "is filtered this run",
+            " / ".join(spec["name"] for spec in specs) or "(unnamed event)",
+        )
     annotate_consensus(
         payload,
-        card,
+        cards,
         previous_fights=previous.get("fights") or [],
         # Which card that payload was built for — the carry-over is only valid
         # inside one event, and this is what says so.
@@ -747,12 +844,24 @@ def _summarize_discovery(
     for video in videos:
         capper = config.capper(video.capper_id)
         lines.append(f"  {capper.name:<24} {video.video_id}  {video.title}")
+    searches = [entry for entry in report if "query" in entry]
+    if searches:
+        lines.append("")
+        lines.append("YouTube search:")
+        for entry in searches:
+            detail = ", ".join(
+                f"{key} {value}"
+                for key, value in entry.items()
+                if key not in ("query", "status")
+            )
+            lines.append(f"  {entry['query']}: {entry['status']}{' — ' + detail if detail else ''}")
     failures = [entry for entry in report if entry["status"] != "ok"]
     if failures:
         lines.append("")
-        lines.append(f"{len(failures)} channel(s) could not be read:")
+        lines.append(f"{len(failures)} source(s) could not be read:")
         for entry in failures:
-            lines.append(f"  - {entry['capper']}: {entry.get('error', entry['status'])}")
+            label = entry.get("capper") or entry.get("query") or "(unknown)"
+            lines.append(f"  - {label}: {entry.get('error', entry['status'])}")
     filtered_out = [entry for entry in report if entry.get("recent_titles")]
     if filtered_out:
         lines.append("")
@@ -856,6 +965,15 @@ def main(argv: list[str] | None = None) -> int:
         "--no-discover",
         action="store_true",
         help="Force channel discovery off; use only the videos listed in config.json.",
+    )
+    parser.add_argument(
+        "--no-search",
+        action="store_true",
+        help=(
+            "Skip the open YouTube search for this run — the configured capper "
+            "channels only. Every video search finds is a paid extraction, so "
+            "this is the cheap run."
+        ),
     )
     parser.add_argument(
         "--discover-only",
@@ -985,6 +1103,8 @@ def main(argv: list[str] | None = None) -> int:
             config.settings["discovery"]["enabled"] = True
         if args.no_discover:
             config.settings["discovery"]["enabled"] = False
+        if args.no_search:
+            config.settings["discovery"]["search"]["enabled"] = False
 
         videos, discovery_report = resolve_videos(config)
     except ProxyConfigError as exc:

@@ -113,6 +113,11 @@ def parse_card(event: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def card_id(name: str) -> str:
+    """A stable id for a card, derived from ESPN's name for it."""
+    return "_".join(_normalize_event_name(name).split())[:60] or "card"
+
+
 def find_event(scoreboard: dict[str, Any], event_name: str) -> dict[str, Any] | None:
     """The scoreboard event whose name contains the configured event name."""
     wanted = _normalize_event_name(event_name)
@@ -128,15 +133,20 @@ def fetch_event_card(
     event_name: str,
     session: requests.Session | None = None,
     timeout: float = 20.0,
+    leagues: tuple[str, ...] | None = None,
 ) -> dict[str, Any] | None:
     """The official card for the named event, or None when it can't be found.
+
+    `leagues` restricts which scoreboards are searched — pass ("pfl",) for a
+    PFL card so a same-named UFC event can't win the race, and leave it unset
+    to try UFC then PFL as before.
 
     Never raises for network or shape problems — the caller treats None as
     "annotate nothing this run".
     """
     session = session or requests.Session()
     dates = _dates_param()
-    for league in LEAGUES:
+    for league in leagues or LEAGUES:
         url = ESPN_SCOREBOARD.format(league=league, dates=dates)
         try:
             response = session.get(url, timeout=timeout)
@@ -146,12 +156,47 @@ def fetch_event_card(
             log.warning("Card fetch failed for %s: %s: %s", league, type(exc).__name__, exc)
             continue
         if card and card["fights"]:
+            card["league"] = league
+            card["id"] = card_id(card["name"])
             log.info(
-                "Official card: %s — %d bouts", card["name"], len(card["fights"])
+                "Official card: %s — %d bouts (%s)",
+                card["name"], len(card["fights"]), league.upper(),
             )
             return card
     log.warning("No ESPN card found matching %r; consensus left un-annotated", event_name)
     return None
+
+
+def fetch_event_cards(
+    specs: list[dict[str, Any]],
+    session: requests.Session | None = None,
+    timeout: float = 20.0,
+) -> list[dict[str, Any]]:
+    """Every configured event's official card, in configured order.
+
+    One run can cover more than one card — a UFC Fight Night and the PFL event
+    the same weekend — so the dashboard can offer them side by side rather than
+    forcing a choice at config time. A spec that can't be found is logged and
+    skipped; the cards that were found still filter the consensus.
+    """
+    session = session or requests.Session()
+    cards: list[dict[str, Any]] = []
+    for spec in specs:
+        name = (spec.get("name") or "").strip()
+        if not name:
+            continue
+        league = (spec.get("league") or "").strip().lower()
+        card = fetch_event_card(
+            name,
+            session=session,
+            timeout=timeout,
+            leagues=(league,) if league else None,
+        )
+        if card:
+            # What the config called it, for the dashboard's selector.
+            card["label"] = (spec.get("label") or "").strip() or card["name"]
+            cards.append(card)
+    return cards
 
 
 def _card_key(fight: dict[str, Any]) -> tuple[str, str]:
@@ -328,78 +373,91 @@ def _refresh_totals(payload: dict[str, Any]) -> None:
 
 def annotate_consensus(
     payload: dict[str, Any],
-    card: dict[str, Any] | None,
+    cards: list[dict[str, Any]] | dict[str, Any] | None,
     previous_fights: list[dict[str, Any]] | None = None,
     previous_card_name: str = "",
 ) -> None:
-    """Reduce the consensus to this event's card, in place.
+    """Reduce the consensus to this run's official card(s), in place.
 
-    Fights matching a bout on the card are stamped with card_status /
-    card_order and kept; everything else is dropped. `previous_fights` is the
-    prior run's payload["fights"], used to catch the quiet cancellation: a
-    bout ESPN simply removes from the card (rather than marking canceled) was
-    on_card last run and unmatched now — that is a cancellation the user
-    should see, so it is kept and flagged rather than dropped with the rest.
+    Fights matching a bout are stamped with event_id / card_status /
+    card_order and kept; everything else is dropped. More than one card can be
+    passed — a UFC Fight Night and the PFL event the same weekend — and each
+    fight is tagged with the card it belongs to so the dashboard can show them
+    separately.
 
-    A cancellation carries a stamp of the card it was called on
-    (`cancelled_from_card`). Without it the carry-over feeds itself: a fight
-    flagged cancelled is in the previous payload as cancelled, so the next run
-    flags it again, and the next — three Contender Series bouts rode that loop
-    into a Fight Night card and could not be evicted by anything short of
-    editing the payload by hand. Only fights this event actually put on its
-    card are carried, and the stamp is what proves it.
+    `previous_fights` is the prior run's payload["fights"], used to catch the
+    quiet cancellation: a bout ESPN simply removes from the card (rather than
+    marking canceled) was on_card last run and unmatched now — a cancellation
+    the reader should see, so it is kept and flagged rather than dropped.
 
-    That carry-over only makes sense within one event. `previous_card_name` is
-    the card the prior payload was built for, and the bouts are carried over
-    only when it is the same card as this run's. Retargeting the engine to the
-    next event used to resurrect the whole previous card as "cancelled" —
-    every bout was on_card last run and unmatched now, so a Contender Series
-    card sat on the Fight Night dashboard indefinitely, immune to the off-card
-    filter that exists to prevent exactly that. An unnamed previous card is
-    treated as a different one: without proof it is the same event, dropping
-    an unmatched fight is the safe direction.
+    Two things bound that carry-over, both learned the hard way. It only
+    applies within one event: retargeting the engine used to resurrect the
+    whole previous card as "cancelled", since every bout was on_card last run
+    and unmatched now. And a cancellation carries a stamp of the card it was
+    called on (`cancelled_from_card`), because without one the carry-over feeds
+    itself — a flagged fight is in the next run's previous payload as
+    cancelled, which was enough to flag it again, for ever.
     """
-    if not card:
+    cards = [cards] if isinstance(cards, dict) else list(cards or [])
+    if not cards:
         return
 
-    previously_on_card: set[tuple[str, str]] = set()
-    same_card = bool(previous_card_name) and _normalize_event_name(
-        previous_card_name
-    ) == _normalize_event_name(card["name"])
-    if same_card:
-        for fight in previous_fights or []:
-            status = fight.get("card_status")
-            was_on_this_card = status == "on_card" or (
-                status == "cancelled"
-                and _normalize_event_name(fight.get("cancelled_from_card", ""))
-                == _normalize_event_name(card["name"])
+    # key -> the card it was on, taken from the PREVIOUS payload's copy: this
+    # run's fight has no stamp of its own yet.
+    previously_on_card: dict[tuple[str, str], dict[str, Any]] = {}
+    by_id = {card.get("id") or card_id(card["name"]): card for card in cards}
+    by_name = {_normalize_event_name(card["name"]): card for card in cards}
+    for fight in previous_fights or []:
+        status = fight.get("card_status")
+        if status not in ("on_card", "cancelled"):
+            continue
+        # Which card that fight was on: its own stamp when it has one, the
+        # caller's word for it on payloads written before cards were tagged.
+        event_id = fight.get("event_id")
+        if status == "cancelled":
+            # The stamp is what proves it was ever on this card, and what
+            # stops the flag re-deriving itself run after run.
+            home = by_name.get(
+                _normalize_event_name(fight.get("cancelled_from_card", ""))
             )
-            if was_on_this_card:
-                previously_on_card.add(_card_key(fight))
-    elif previous_fights:
-        log.info(
-            "Previous payload was for %r, not %r — its bouts are a different "
-            "event's and are not carried over",
-            previous_card_name or "(un-annotated)", card["name"],
-        )
+        elif event_id:
+            home = by_id.get(event_id)
+        else:
+            # A payload written before cards were tagged: the caller's word
+            # for which card it was built against is all there is.
+            home = by_name.get(_normalize_event_name(previous_card_name))
+        if home is not None:
+            previously_on_card[_card_key(fight)] = home
 
-    matched_orders: dict[int, dict[str, Any]] = {}
+    matched: dict[tuple[str, int], dict[str, Any]] = {}
     kept: list[dict[str, Any]] = []
     dropped = 0
     merged = 0
+
     for fight in payload.get("fights") or []:
-        bout = _match_card_fight(fight, card["fights"])
+        bout = card = None
+        for candidate in cards:
+            bout = _match_card_fight(fight, candidate["fights"])
+            if bout is not None:
+                card = candidate
+                break
+
         if bout is None:
-            if _card_key(fight) in previously_on_card:
+            home = previously_on_card.get(_card_key(fight))
+            if home is not None:
                 fight["card_status"] = "cancelled"
-                fight["cancelled_from_card"] = card["name"]
+                fight["cancelled_from_card"] = home["name"]
+                fight["event_id"] = home.get("id") or card_id(home["name"])
                 kept.append(fight)
             else:
                 dropped += 1
             continue
+
+        this_id = card.get("id") or card_id(card["name"])
         fight["card_status"] = "cancelled" if bout["cancelled"] else "on_card"
         fight["card_order"] = bout["order"]
         fight["card_date"] = bout.get("date")
+        fight["event_id"] = this_id
         # Adopt ESPN's clean spellings — the consensus display is built from
         # auto-captions and keeps whatever garble was most common.
         aligned = _surnames_match(
@@ -420,9 +478,10 @@ def annotate_consensus(
         # enough to survive the surname canonicalizer ("Schultz" / "Schiltz"),
         # and the card was rendering the bout twice — once with 22 picks and
         # once with 2. Fold the second into the first.
-        existing = matched_orders.get(bout["order"])
+        slot = (this_id, bout["order"])
+        existing = matched.get(slot)
         if existing is None:
-            matched_orders[bout["order"]] = fight
+            matched[slot] = fight
             kept.append(fight)
         else:
             _merge_fight(existing, fight)
@@ -435,37 +494,56 @@ def annotate_consensus(
         )
     payload["fights"] = kept
 
-    # The rest of the card, so the dashboard shows every bout — a fight
+    # The rest of each card, so the dashboard shows every bout — a fight
     # nobody picked is still a fight the reader wants to see listed.
-    for bout in card["fights"]:
-        if bout["order"] in matched_orders:
-            continue
-        kept.append(
-            {
-                "fight_id": "|".join(_card_key(bout)),
-                "display": f"{bout['fighter_a']} vs {bout['fighter_b']}",
-                "fighter_a": bout["fighter_a"],
-                "fighter_b": bout["fighter_b"],
-                "pick_count": 0,
-                "capper_count": 0,
-                "markets": [],
-                "card_status": "cancelled" if bout["cancelled"] else "on_card",
-                "card_order": bout["order"],
-                "card_date": bout.get("date"),
-            }
-        )
+    for card in cards:
+        this_id = card.get("id") or card_id(card["name"])
+        for bout in card["fights"]:
+            if (this_id, bout["order"]) in matched:
+                continue
+            kept.append(
+                {
+                    "fight_id": "|".join(_card_key(bout)),
+                    "display": f"{bout['fighter_a']} vs {bout['fighter_b']}",
+                    "fighter_a": bout["fighter_a"],
+                    "fighter_b": bout["fighter_b"],
+                    "pick_count": 0,
+                    "capper_count": 0,
+                    "markets": [],
+                    "card_status": "cancelled" if bout["cancelled"] else "on_card",
+                    "card_order": bout["order"],
+                    "card_date": bout.get("date"),
+                    "event_id": this_id,
+                }
+            )
 
     if dropped:
         log.info(
             "Dropped %d fight(s) not on %s — picks for other events and "
-            "transcript garbles", dropped, card["name"],
+            "transcript garbles",
+            dropped,
+            " / ".join(card["name"] for card in cards),
         )
     _refresh_totals(payload)
 
+    payload["events"] = [
+        {
+            "id": card.get("id") or card_id(card["name"]),
+            "name": card["name"],
+            "label": card.get("label") or card["name"],
+            "league": (card.get("league") or "").upper(),
+            "date": card.get("date"),
+            "bouts": len(card["fights"]),
+        }
+        for card in cards
+    ]
+    # The primary card stays where it has always been, so anything reading
+    # docs/data.json for a single event keeps working.
+    primary = cards[0]
     payload.setdefault("event", {})["card"] = {
         "source": "espn",
-        "name": card["name"],
-        "date": card.get("date"),
-        "bouts": len(card["fights"]),
+        "name": primary["name"],
+        "date": primary.get("date"),
+        "bouts": len(primary["fights"]),
         "off_card_dropped": dropped,
     }

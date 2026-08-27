@@ -182,6 +182,25 @@
     font-weight: 700; margin: 8px 0 2px;
   }
 
+  /* A run can cover more than one card — a UFC Fight Night and the PFL event
+     the same weekend. The picker only appears when there is a choice to make;
+     with one card its name in the header already answers "what am I looking
+     at?". */
+  .card-picker {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12.5px; color: var(--muted); text-transform: uppercase;
+    letter-spacing: .04em; font-weight: 700;
+  }
+  .card-picker select {
+    background: var(--card); color: var(--text);
+    border: 1px solid var(--line); border-radius: 8px;
+    padding: 5px 9px; font: inherit; font-size: 13px;
+    text-transform: none; letter-spacing: 0; font-weight: 600;
+  }
+  .card-picker select:hover { border-color: var(--accent); }
+  /* An explicit display beats the browser's [hidden] { display: none }. */
+  .card-picker[hidden] { display: none; }
+
   /* -- cappers tab -- */
   .capper-row {
     display: grid; grid-template-columns: auto 1fr auto auto; gap: 12px; align-items: center;
@@ -346,7 +365,11 @@
 <div class="wrap">
   <header>
     <h1>MMA <span>Consensus</span> Engine</h1>
-    <div class="event-line"><div class="event" id="event-name"></div><div class="meta" id="event-meta"></div>
+    <div class="event-line"><div class="event" id="event-name"></div>
+      <label class="card-picker" id="card-picker" hidden>Card
+        <select id="event-select"></select>
+      </label>
+      <div class="meta" id="event-meta"></div>
       <button class="about-btn" id="about-btn">? About the numbers</button></div>
   </header>
 
@@ -413,6 +436,9 @@ const isCounted = (opt) => !!opt && opt.stated_pick_count === 0 && opt.pick_coun
 const state = {
   data: null,
   model: null,
+  // Every card in the payload, and which one is on screen.
+  events: [],
+  eventId: "",
   tab: "ml",
   search: "",
   ml:  { sort: "card", hidePickems: false, locksOnly: false, hideNoPicks: false },
@@ -428,15 +454,15 @@ const state = {
 const UI_STORE_KEY = "mma-consensus-ui-v1";
 function persistUi() {
   try {
-    const { tab, search, ml, mov, dc, dog, straights, parlay } = state;
-    localStorage.setItem(UI_STORE_KEY, JSON.stringify({ tab, search, ml, mov, dc, dog, straights, parlay }));
+    const { tab, search, eventId, ml, mov, dc, dog, straights, parlay } = state;
+    localStorage.setItem(UI_STORE_KEY, JSON.stringify({ tab, search, eventId, ml, mov, dc, dog, straights, parlay }));
   } catch { /* private mode etc. — purely a convenience */ }
 }
 (function restoreUi() {
   try {
     const saved = JSON.parse(localStorage.getItem(UI_STORE_KEY) || "null");
     if (!saved) return;
-    for (const key of ["tab", "search"]) if (typeof saved[key] === "string") state[key] = saved[key];
+    for (const key of ["tab", "search", "eventId"]) if (typeof saved[key] === "string") state[key] = saved[key];
     for (const key of ["ml", "mov", "dc", "dog", "straights", "parlay"]) {
       if (saved[key] && typeof saved[key] === "object") Object.assign(state[key], saved[key]);
     }
@@ -480,7 +506,14 @@ function methodShort(selection) {
 }
 
 function buildModel(data) {
-  const fights = (data.fights || []).map((f, index) => {
+  // One card at a time: a fight carries the id of the card it is on, and
+  // everything downstream — tabs, parlay builder, counts — sees only the
+  // selected one. A payload with a single card tags nothing, and then every
+  // fight passes.
+  const forCard = (data.fights || []).filter(
+    (f) => !state.eventId || !f.event_id || f.event_id === state.eventId
+  );
+  const fights = forCard.map((f, index) => {
     const markets = {};
     for (const m of f.markets || []) markets[m.bet_type] = m;
 
@@ -1710,12 +1743,76 @@ fetch(`data.json?t=${Date.now()}`)
   .then((data) => {
     normalizeConfidence(data);
     state.data = data;
+    // Every card this run covers. A payload from before multi-card runs has
+    // no `events`, so its single event stands in for one.
+    state.events = (data.events || []).length
+      ? data.events
+      : [
+          {
+            id: "",
+            name: (data.event || {}).name || "Unnamed event",
+            label: (data.event || {}).name || "Unnamed event",
+            league: "",
+            date: ((data.event || {}).card || {}).date || null,
+            bouts: ((data.event || {}).card || {}).bouts ?? null,
+          },
+        ];
+    const remembered = state.events.some((e) => e.id === state.eventId);
+    if (!remembered) state.eventId = state.events[0].id;
+    renderCardPicker();
+    renderHeader();
     state.model = buildModel(data);
-    const event = data.event || {};
-    const generated = data.generated_at ? new Date(data.generated_at).toLocaleString() : "unknown";
-    const totals = data.totals || {};
+    $("#footer").innerHTML = renderSources(data.sources || []) + renderDiscovery(data.discovery || []);
+    render();
+  })
+  .catch((error) => {
+    $("#main").innerHTML = `<p class="notice">Could not load <code>data.json</code>
+      (${esc(error.message)}). Run the pipeline to generate it, and serve this
+      directory over HTTP (<code>python -m http.server -d docs</code>) rather than
+      opening the file directly.</p>`;
+  });
+
+/* ---------- which card am I looking at ---------- */
+function renderCardPicker() {
+  const picker = $("#card-picker"), select = $("#event-select");
+  // With one card there is no choice to make, and its name is already in the
+  // header — a one-option dropdown would only be furniture.
+  picker.hidden = state.events.length < 2;
+  if (picker.hidden) return;
+  select.innerHTML = state.events
+    .map((e) => {
+      const league = e.league ? `${e.league} — ` : "";
+      return `<option value="${esc(e.id)}"${e.id === state.eventId ? " selected" : ""}>${esc(league + (e.label || e.name))}</option>`;
+    })
+    .join("");
+}
+$("#event-select").addEventListener("change", (e) => {
+  state.eventId = e.target.value;
+  persistUi();
+  renderHeader();
+  state.model = buildModel(state.data);
+  render();
+  window.scrollTo({ top: 0 });
+});
+
+function renderHeader() {
+  const data = state.data;
+  const event = state.events.find((e) => e.id === state.eventId) || state.events[0] || {};
+  const generated = data.generated_at ? new Date(data.generated_at).toLocaleString() : "unknown";
+  // Counts describe the card on screen, not the run: with two cards in one
+  // payload, the run's totals would overstate whichever one you are reading.
+  const shown = (data.fights || []).filter((f) => !event.id || !f.event_id || f.event_id === event.id);
+  const totals = state.events.length > 1
+    ? {
+        fights: shown.length,
+        picks: shown.reduce((n, f) => n + (f.pick_count || 0), 0),
+        cappers: new Set(
+          shown.flatMap((f) => (f.markets || []).flatMap((m) => (m.options || []).flatMap((o) => (o.cappers || []).map((c) => c.id))))
+        ).size,
+      }
+    : data.totals || {};
     $("#event-name").textContent = event.name || "Unnamed event";
-    const card = event.card || null;
+    const card = { date: event.date, bouts: event.bouts };
     // "Sat, Aug 15 · in 3 days" from the official card's start time — the
     // countdown flips to "today" on fight day and disappears once past.
     let whenHtml = "";
@@ -1728,26 +1825,20 @@ fetch(`data.json?t=${Date.now()}`)
     }
     // Where the prices came from, when there are any — a live line is only
     // worth reading if you know how old it is.
-    const odds = event.odds || null;
+    const odds = (data.event || {}).odds || null;
     const oddsHtml = odds && odds.fights_priced
       ? ` &middot; live odds on ${esc(odds.fights_priced)} bout${odds.fights_priced === 1 ? "" : "s"}` +
         (odds.fetched_at ? ` (${esc(new Date(odds.fetched_at).toLocaleString())})` : "")
       : "";
     $("#event-meta").innerHTML =
       whenHtml +
-      (card ? `official card: ${esc(card.bouts ?? 0)} bouts &middot; ` : `${esc(totals.fights ?? 0)} fights &middot; `) +
+      (card && card.bouts != null
+        ? `official card: ${esc(card.bouts)} bout${card.bouts === 1 ? "" : "s"} &middot; `
+        : `${esc(totals.fights ?? 0)} fights &middot; `) +
       `${esc(totals.picks ?? 0)} picks &middot; ` +
       `${esc(totals.cappers ?? 0)} cappers &middot; generated ${esc(generated)}` +
       oddsHtml;
-    $("#footer").innerHTML = renderSources(data.sources || []) + renderDiscovery(data.discovery || []);
-    render();
-  })
-  .catch((error) => {
-    $("#main").innerHTML = `<p class="notice">Could not load <code>data.json</code>
-      (${esc(error.message)}). Run the pipeline to generate it, and serve this
-      directory over HTTP (<code>python -m http.server -d docs</code>) rather than
-      opening the file directly.</p>`;
-  });
+}
 </script>
 </body>
 </html>

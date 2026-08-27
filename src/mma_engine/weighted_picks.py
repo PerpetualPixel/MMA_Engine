@@ -121,6 +121,11 @@ def build_picks(consensus: dict[str, Any]) -> dict[str, Any]:
         # reach the feed — the card annotation drops them upstream.
         # Additive — schema_version stays 1.
         card_status = fight.get("card_status")
+        # Which card this fight is on, when a run covers more than one (a UFC
+        # Fight Night and the PFL event the same weekend). Absent on
+        # single-card runs, so nothing downstream has to care. Additive —
+        # schema_version stays 1.
+        event_id = fight.get("event_id")
         for market in fight.get("markets", []):
             options = market.get("options", [])
             if not options:
@@ -139,6 +144,7 @@ def build_picks(consensus: dict[str, Any]) -> dict[str, Any]:
                     "fight_id": fight["fight_id"],
                     "fight": fight["display"],
                     **({"card_status": card_status} if card_status else {}),
+                    **({"event_id": event_id} if event_id else {}),
                     "market": market["bet_type"],
                     "market_label": market["label"],
                     "selection": top["selection"],
@@ -169,6 +175,7 @@ def build_picks(consensus: dict[str, Any]) -> dict[str, Any]:
         "schema_version": 1,
         "generated_at": consensus.get("generated_at"),
         "event": consensus.get("event", {}),
+        **({"events": consensus["events"]} if consensus.get("events") else {}),
         "source": "MMA_Engine trust-weighted capper consensus",
         "totals": {
             "picks": len(picks),
