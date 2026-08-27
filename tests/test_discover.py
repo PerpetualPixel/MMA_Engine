@@ -915,3 +915,33 @@ def test_an_unknown_channel_is_minted_at_neutral_trust(tmp_path):
     # And it is in the config for the rest of the run, so the pipeline can
     # look it up by id when the pick is attributed.
     assert config.cappers["yt_fresh_mma_picks"] is capper
+
+
+def test_a_legacy_c_url_resolves_by_scraping_the_channel_page():
+    """/c/Name URLs carry neither an id nor a handle, so forHandle can't be
+    asked about them — but the page itself names the channel id."""
+    from mma_engine.discover import uploads_playlist_id
+
+    channel_id = "UC" + "x" * 22
+    routes = {"/c/MMAParlayKing": StubResponse(f'"channelId":"{channel_id}"')}
+    discovery = make_discovery(routes, api_key="k")
+    capper = type("C", (), {
+        "id": "p", "name": "P", "channel_id": "",
+        "channel_url": "https://www.youtube.com/c/MMAParlayKing",
+    })()
+
+    assert discovery.resolve_uploads_playlist(capper) == uploads_playlist_id(channel_id)
+    # Resolved once, then cached against the URL.
+    assert discovery._channel_ids["https://www.youtube.com/c/MMAParlayKing"] == channel_id
+
+
+def test_an_unreachable_legacy_url_says_what_to_do():
+    routes = {"/c/Gone": requests.exceptions.ConnectionError("boom")}
+    discovery = make_discovery(routes, api_key="k")
+    capper = type("C", (), {
+        "id": "g", "name": "G", "channel_id": "",
+        "channel_url": "https://www.youtube.com/c/Gone",
+    })()
+
+    with pytest.raises(ValueError, match="channel_id"):
+        discovery.resolve_uploads_playlist(capper)

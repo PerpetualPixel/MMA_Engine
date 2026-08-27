@@ -47,7 +47,7 @@
           "Umar Nurmagomedov Song Yadong picks",
           "UFC Nurmagomedov Song betting breakdown"
         ],
-        "max_results": 40,
+        "max_results": 80,
         "max_per_channel": 1,
         "min_duration_seconds": 180,
         "require_prediction_terms": true
