@@ -46,6 +46,13 @@ Optionally, a third:
 builds the consensus, and pushes the updated dashboard. Everything below is
 the manual/step-by-step equivalent.
 
+**`preview.bat`** is the free dry run of the same thing: it lists every video
+the build would process — roster uploads and, with open search on, whatever
+else YouTube turns up — and stops there. Nothing is fetched, nothing is
+extracted, nothing is billed. Worth a double-click before any run that has
+search enabled, since every video it lists is an extraction `weekly.bat` pays
+for.
+
 Point it at the event in `config.json` (discovery finds the videos itself):
 
 ```json
@@ -1100,6 +1107,7 @@ To force a clean run: `--no-cache`, or `rm -rf cache/`.
 ```
 config.json                  # the only file you edit weekly
 weekly.bat / weekly.ps1      # Windows one-button run: pull, build, push
+preview.bat / preview.ps1    # the same run's dry run: what it would pull, free
 src/mma_engine/
   config.py                  # config loading, validation, URL → video ID
   discover.py                # upload discovery: Data API primary, RSS fallback
