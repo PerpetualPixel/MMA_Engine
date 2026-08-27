@@ -433,10 +433,30 @@ class ChannelDiscovery:
         if not channel_id:
             handle = parse_handle(capper.channel_url)
             if not handle:
-                raise ValueError(
-                    f"Could not parse a channel ID or @handle from "
-                    f"{capper.channel_url!r}. Use a /channel/UC... or @handle URL."
-                )
+                # A legacy /c/Name or /user/Name URL carries neither an id nor
+                # a handle, and forHandle can't be asked about it. The page
+                # itself names the channel id, which is how the RSS path has
+                # always resolved these — so scrape it rather than making the
+                # channel unreadable for the sake of its URL shape.
+                log.info("Resolving %s from the channel page", capper.channel_url)
+                try:
+                    page = self._get_with_retry(capper.channel_url)
+                    scraped = parse_channel_id_from_page(page.text)
+                except requests.exceptions.RequestException as exc:
+                    raise ValueError(
+                        f"Could not open {capper.channel_url!r} to find its channel "
+                        f"ID ({type(exc).__name__}). Set \"channel_id\" in "
+                        f"config.json, or use a /channel/UC... or @handle URL."
+                    ) from None
+                if not scraped:
+                    raise ValueError(
+                        f"No channel ID on the page at {capper.channel_url!r}. Open "
+                        f"the channel, copy its /channel/UC... URL, and set "
+                        f"\"channel_id\" in config.json."
+                    )
+                self._channel_ids[capper.channel_url] = scraped
+                self._save_cache()
+                return uploads_playlist_id(scraped)
             log.info("Resolving @%s via the YouTube Data API", handle)
             response = self._get_with_retry(
                 API_CHANNELS_URL.format(handle=handle, key=self.api_key)
