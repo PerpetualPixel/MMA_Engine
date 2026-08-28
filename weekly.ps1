@@ -24,8 +24,41 @@ Set-Location -Path $PSScriptRoot
 function Fail([string]$message) {
     Write-Host ""
     Write-Host $message -ForegroundColor Red
+    Restore-Sleep
     Read-Host "Press Enter to close"
     exit 1
+}
+
+# With open search on, a run can cover 80+ videos and run 20-30+ minutes of
+# transcript fetches and extraction calls unattended. Windows suspending the
+# machine mid-run freezes the whole process — every timer, every open
+# connection — for however long the machine is asleep; on wake it looks
+# exactly like a hang, because for that stretch it was one. SetThreadExecutionState
+# is the standard way to tell Windows "don't sleep while I hold this" without
+# needing admin rights or touching the user's power plan; ES_CONTINUOUS keeps
+# the request in effect until cleared, ES_SYSTEM_REQUIRED is system sleep only
+# (the display is free to turn off). Every exit path below — success, the
+# no-op "nothing changed" branch, and every Fail() — restores normal sleep
+# behaviour before the script ends, since `exit` doesn't reliably run a
+# try/finally in PowerShell and this needs to work on every path regardless.
+$stayAwake = $false
+try {
+    Add-Type -Name Power -Namespace Win32 -MemberDefinition @'
+[DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+public static extern uint SetThreadExecutionState(uint esFlags);
+'@
+    $ES_CONTINUOUS = [uint32]"0x80000000"
+    $ES_SYSTEM_REQUIRED = [uint32]"0x00000001"
+    [Win32.Power]::SetThreadExecutionState($ES_CONTINUOUS -bor $ES_SYSTEM_REQUIRED) | Out-Null
+    $stayAwake = $true
+} catch {
+    Write-Host "Could not disable sleep for this run - if the machine sleeps, the run freezes until it wakes." -ForegroundColor Yellow
+}
+
+function Restore-Sleep {
+    if ($script:stayAwake) {
+        [Win32.Power]::SetThreadExecutionState([uint32]"0x80000000") | Out-Null
+    }
 }
 
 if (-not (Test-Path ".env")) {
@@ -93,4 +126,5 @@ if ($LASTEXITCODE -ne 0) {
     Write-Host ""
     Write-Host "Done - no changes since the last run, nothing to publish." -ForegroundColor Green
 }
+Restore-Sleep
 Read-Host "Press Enter to close"
