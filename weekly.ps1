@@ -17,15 +17,37 @@
 # Optionally, for live moneylines on the dashboard and parlay pricing:
 #   ODDS_API_KEY=...
 # See README.md "Quick start" for where each key comes from.
+#
+# -Unattended: for Windows Task Scheduler (see schedule_weekly.ps1). Skips the
+# "Press Enter to close" pauses, which would otherwise hang forever with no
+# one there to press Enter, and writes a transcript to logs\ so a run nobody
+# watched still leaves something to check afterward.
+
+param(
+    [switch]$Unattended
+)
 
 $ErrorActionPreference = "Continue"
 Set-Location -Path $PSScriptRoot
+
+if ($Unattended) {
+    New-Item -ItemType Directory -Force -Path "logs" | Out-Null
+    $logPath = "logs\weekly_{0}.log" -f (Get-Date -Format "yyyyMMdd_HHmmss")
+    Start-Transcript -Path $logPath -Append | Out-Null
+}
+
+function Pause-UnlessUnattended {
+    if (-not $Unattended) {
+        Read-Host "Press Enter to close"
+    }
+}
 
 function Fail([string]$message) {
     Write-Host ""
     Write-Host $message -ForegroundColor Red
     Restore-Sleep
-    Read-Host "Press Enter to close"
+    Pause-UnlessUnattended
+    if ($Unattended) { Stop-Transcript | Out-Null }
     exit 1
 }
 
@@ -95,7 +117,11 @@ if ($LASTEXITCODE -ne 0) {
 }
 
 Write-Host "== Publishing ==" -ForegroundColor Cyan
-git add docs/data.json docs/picks.json
+# config.json is included because "event": {"mode": "auto"} lets the pipeline
+# retarget it in place (new event name, discovery keywords, cleared roundup
+# URL) before it even runs — that retarget needs to be committed too, or next
+# week's run starts from a config the last run already moved past.
+git add docs/data.json docs/picks.json config.json
 git diff --cached --quiet
 if ($LASTEXITCODE -ne 0) {
     git commit -m "chore: weekly consensus refresh"
@@ -127,4 +153,5 @@ if ($LASTEXITCODE -ne 0) {
     Write-Host "Done - no changes since the last run, nothing to publish." -ForegroundColor Green
 }
 Restore-Sleep
-Read-Host "Press Enter to close"
+Pause-UnlessUnattended
+if ($Unattended) { Stop-Transcript | Out-Null }

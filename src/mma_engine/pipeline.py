@@ -19,6 +19,7 @@ from typing import Any
 from dotenv import load_dotenv
 
 from .aggregate import SourcedPick, build_consensus
+from .auto_event import resolve_auto_event
 from .config import (
     Capper,
     Config,
@@ -1081,6 +1082,8 @@ def main(argv: list[str] | None = None) -> int:
     load_dotenv()
 
     try:
+        if resolve_auto_event(args.config):
+            log.info("Retargeted config.json to the next event (event.mode = \"auto\").")
         config = load_config(args.config)
     except ConfigError as exc:
         log.error("%s", exc)

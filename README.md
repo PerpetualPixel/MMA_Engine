@@ -604,9 +604,26 @@ PerpetualPicks.com), and commits + pushes both — the live site updates
 itself a minute later. If anything fails, it stops and shows the error
 instead of pushing.
 
-The only thing the button doesn't do is retarget the event. When a new card
-is coming up, edit two lines in `config.json` first (`event.name` and
-`settings.discovery.title_contains`), then press the button.
+**It can retarget itself, too.** Set `"event": {"mode": "auto"}` in
+`config.json` and every run asks ESPN for the soonest upcoming UFC card
+itself — no manual edit needed. When that differs from what `config.json`
+currently names, it rewrites `event.name`/`league`/`date`,
+regenerates `settings.discovery.title_contains` and
+`settings.discovery.search.queries` from the new main event's fighters, and
+clears `tracker.picks_videos` (a stale roundup URL would just spend a video
+download and a vision pass on the old event's deck) — the same housekeeping
+a manual retarget already did by hand. Once one event's date has passed, the
+next run rolls to whatever's next on its own. Leave `event.mode` unset (just
+a plain `event.name`) to keep picking cards by hand instead — useful for a
+Contender Series week or anything else you want to pin deliberately.
+
+**And it can run itself, too.** `schedule_weekly.bat` is a one-time setup
+that registers `weekly.bat` with Windows Task Scheduler, so it fires on its
+own every week — combined with `event.mode: "auto"` above, that's the whole
+loop with nobody touching a button. See the comments in `schedule_weekly.ps1`
+for the schedule it sets up and how to change or remove it; each unattended
+run's output lands in `logs\weekly_<timestamp>.log` so you can still check
+on it after the fact.
 
 The manual equivalent, on any OS:
 
@@ -1051,8 +1068,8 @@ accounts at 5.0 and adjust once you have a sample of their results.
 
 | Key | Default | Meaning |
 | --- | --- | --- |
-| `model` | `claude-opus-5` | Claude model used for extraction. |
-| `effort` | `high` | Reasoning effort. `medium` is cheaper and usually fine. |
+| `model` | `claude-sonnet-5` | Claude model used for extraction. Raise to `claude-opus-5` for harder reads where the accuracy is worth paying for. |
+| `effort` | `medium` | Reasoning effort. Raise to `high` for harder reads. |
 | `max_tokens` | `20000` | Output cap per extraction call. |
 | `transcript_languages` | `["en"]` | Preferred transcript languages, in order. |
 | `min_delay_seconds` / `max_delay_seconds` | `4` / `12` | Randomized pause between YouTube requests. |
@@ -1099,6 +1116,45 @@ breakpoint, so repeated extractions in one run read it from the prompt cache
 instead of re-billing it.
 
 To force a clean run: `--no-cache`, or `rm -rf cache/`.
+
+### Model and effort
+
+`settings.model` / `settings.effort` default to `claude-sonnet-5` at
+`"medium"` effort. Pick extraction is reading off what a capper explicitly
+said and fitting it into a fixed schema — straightforward structured parsing,
+not the kind of task that needs Opus-tier reasoning or high effort, and
+Sonnet is a fraction of the cost (Opus 5 is $5/$25 per million input/output
+tokens vs. Sonnet 5's $2/$10; medium effort also spends far less on thinking
+tokens than high). With open search on and `discovery.search.max_results`
+turned up, a run can mean dozens of extraction calls, so this is the setting
+that decides whether a week costs a few dollars or a lot more — raise
+`"model"` back to `"claude-opus-5"` and/or `"effort"` to `"high"` if you're
+seeing picks it should catch and isn't (a dense multi-pick recap, heavy
+crosstalk between cappers in one video) and the extra accuracy is worth
+paying for. `settings.tracker_picks.slide_model` (roundup slide-reading) is
+separately pinned to Sonnet already, since that's closer to OCR than to
+judgment.
+
+### Keeping a run's spend predictable
+
+Every video open search finds gets a paid extraction call — that's what
+`discovery.search.max_results` in `config.json` actually bounds (see
+"Scouring YouTube for anyone who covered the event" above). If a run needs to
+cost less than the model/effort change above already buys:
+
+- `--no-search` runs discovery against only the channels listed in
+  `config.json`, skipping open search's paid extractions entirely — the
+  cheapest run that still covers your configured roster.
+- Lower `settings.discovery.search.max_results` (and `max_per_channel`) to
+  cap how many outside videos one run will pay to read.
+- `--discover-only` lists what a run *would* process — no transcripts
+  fetched, no Claude calls made — so you can sanity-check the video count
+  before spending anything.
+- The Claude API's [Batch API](https://docs.claude.com/en/docs/build-with-claude/batch-processing)
+  runs the same extraction calls asynchronously at half price. This pipeline
+  doesn't use it yet (it would change the run from "call, get an answer,
+  move on" to "submit everything, then poll"), but it's the next lever if
+  volume grows past what caching and model/effort tuning cover.
 
 ---
 
