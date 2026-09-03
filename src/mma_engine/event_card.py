@@ -167,6 +167,63 @@ def fetch_event_card(
     return None
 
 
+def find_next_event(
+    leagues: tuple[str, ...] | None = None,
+    session: requests.Session | None = None,
+    timeout: float = 20.0,
+    now: datetime | None = None,
+) -> dict[str, Any] | None:
+    """The soonest upcoming card across the given leagues (default UFC, PFL).
+
+    Backs `"event": {"mode": "auto"}` (see mma_engine.auto_event) — instead of
+    naming an event by hand, the config just says "whatever's next", and this
+    is what answers that. An event already more than 12 hours old is treated
+    as past, so the resolver rolls over to the following week's card on its
+    own once one event has come and gone — no retarget needed.
+
+    Same fail-open contract as fetch_event_card: a network problem on one
+    league is logged and the other is still tried; nothing is raised.
+    """
+    session = session or requests.Session()
+    now = now or datetime.now(timezone.utc)
+    dates = _dates_param(now)
+    candidates: list[tuple[datetime, dict[str, Any]]] = []
+    for league in leagues or LEAGUES:
+        url = ESPN_SCOREBOARD.format(league=league, dates=dates)
+        try:
+            response = session.get(url, timeout=timeout)
+            response.raise_for_status()
+            events = response.json().get("events") or []
+        except (requests.exceptions.RequestException, ValueError) as exc:
+            log.warning("Scoreboard fetch failed for %s: %s: %s", league, type(exc).__name__, exc)
+            continue
+        for event in events:
+            try:
+                event_date = datetime.fromisoformat(
+                    (event.get("date") or "").replace("Z", "+00:00")
+                )
+            except ValueError:
+                continue
+            if event_date < now - timedelta(hours=12):
+                continue  # already happened
+            card = parse_card(event)
+            if not card["fights"]:
+                continue
+            card["league"] = league
+            card["id"] = card_id(card["name"])
+            candidates.append((event_date, card))
+
+    if not candidates:
+        log.warning(
+            "No upcoming event found on %s", " / ".join(leagues or LEAGUES).upper()
+        )
+        return None
+    candidates.sort(key=lambda pair: pair[0])
+    _, card = candidates[0]
+    log.info("Auto-resolved next event: %s (%s)", card["name"], card["league"].upper())
+    return card
+
+
 def fetch_event_cards(
     specs: list[dict[str, Any]],
     session: requests.Session | None = None,

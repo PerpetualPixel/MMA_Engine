@@ -5,16 +5,19 @@ All pure-logic — the ESPN payload is a fixture, never a network call.
 
 from __future__ import annotations
 
+from datetime import datetime, timedelta, timezone
+
 import pytest
 
 from mma_engine.event_card import (
     annotate_consensus,
     find_event,
+    find_next_event,
     parse_card,
 )
 
 
-def espn_event(name="UFC 330: Makhachev vs. Garry", fights=None):
+def espn_event(name="UFC 330: Makhachev vs. Garry", fights=None, date="2026-08-15T22:00Z"):
     """A scoreboard event shaped like ESPN's MMA payload — listed
     chronologically with the main event LAST, the way ESPN lists a card
     (confirmed live with UFC 330)."""
@@ -25,10 +28,10 @@ def espn_event(name="UFC 330: Makhachev vs. Garry", fights=None):
     ]
     return {
         "name": name,
-        "date": "2026-08-15T22:00Z",
+        "date": date,
         "competitions": [
             {
-                "date": "2026-08-15T22:00Z",
+                "date": date,
                 "status": {"type": {"name": status}},
                 "competitors": [
                     {"athlete": {"displayName": a}},
@@ -38,6 +41,32 @@ def espn_event(name="UFC 330: Makhachev vs. Garry", fights=None):
             for a, b, status in fights
         ],
     }
+
+
+class _StubResponse:
+    def __init__(self, payload: dict):
+        self._payload = payload
+
+    def raise_for_status(self):
+        pass
+
+    def json(self):
+        return self._payload
+
+
+class _StubSession:
+    """Maps a league's scoreboard URL to a canned scoreboard payload."""
+
+    def __init__(self, by_league: dict[str, dict]):
+        self.by_league = by_league
+        self.requested: list[str] = []
+
+    def get(self, url: str, timeout: float = 0):
+        self.requested.append(url)
+        for league, payload in self.by_league.items():
+            if f"/{league}/scoreboard" in url:
+                return _StubResponse(payload)
+        raise AssertionError(f"no stub scoreboard for {url}")
 
 
 def consensus_fight(fighter_a, fighter_b, **extra):
@@ -423,3 +452,59 @@ def test_a_cancellation_belongs_to_its_own_card():
     kept = next(f for f in payload["fights"] if "Retired Guy" in f["display"])
     assert kept["card_status"] == "cancelled"
     assert kept["event_id"] == "pfl_9_playoffs"
+
+
+# -- find_next_event ---------------------------------------------------------
+
+
+def _iso(days_from_now: float) -> str:
+    return (datetime.now(timezone.utc) + timedelta(days=days_from_now)).strftime(
+        "%Y-%m-%dT%H:%MZ"
+    )
+
+
+def test_find_next_event_picks_the_soonest_across_leagues():
+    session = _StubSession(
+        {
+            "ufc": {"events": [espn_event("UFC Fight Night: Later Card", date=_iso(10))]},
+            "pfl": {"events": [espn_event("PFL 9: Playoffs", date=_iso(3))]},
+        }
+    )
+    card = find_next_event(session=session)
+    assert card is not None
+    assert card["name"] == "PFL 9: Playoffs"
+    assert card["league"] == "pfl"
+
+
+def test_find_next_event_skips_events_that_already_happened():
+    session = _StubSession(
+        {
+            "ufc": {
+                "events": [
+                    espn_event("UFC Already Happened", date=_iso(-2)),
+                    espn_event("UFC Fight Night: Upcoming", date=_iso(5)),
+                ]
+            },
+        }
+    )
+    card = find_next_event(leagues=("ufc",), session=session)
+    assert card is not None
+    assert card["name"] == "UFC Fight Night: Upcoming"
+
+
+def test_find_next_event_returns_none_when_nothing_upcoming():
+    session = _StubSession({"ufc": {"events": [espn_event("UFC Long Gone", date=_iso(-30))]}})
+    assert find_next_event(leagues=("ufc",), session=session) is None
+
+
+def test_find_next_event_respects_the_leagues_argument():
+    session = _StubSession(
+        {
+            "ufc": {"events": [espn_event("UFC Fight Night: Ignored", date=_iso(1))]},
+            "pfl": {"events": [espn_event("PFL 9: Playoffs", date=_iso(2))]},
+        }
+    )
+    card = find_next_event(leagues=("pfl",), session=session)
+    assert card is not None
+    assert card["name"] == "PFL 9: Playoffs"
+    assert all("/ufc/" not in url for url in session.requested)

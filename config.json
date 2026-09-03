@@ -1,9 +1,10 @@
 {
   "event": {
-    "name": "Nurmagomedov vs. Song",
+    "mode": "auto",
+    "name": "Hooker vs. Parnasse",
     "league": "ufc",
     "date": "",
-    "notes": "\"name\" is matched as a substring against ESPN's own event name (punctuation and case are ignored, spelling is NOT), and the FIRST match inside the 45-day scoreboard window wins — so a weekly series must carry its season and week (\"Contender Series: Season 10, Week 3\") while a one-off like this is unique on its own. \"league\" pins which scoreboard is searched (ufc / pfl); leave it empty to try UFC then PFL. Add more cards to the top-level \"events\" array to cover them in the same run — a PFL event the same weekend, say — and the dashboard puts a card selector at the top. If a run logs \"No ESPN card found\", the name is wrong: nothing is filtered and off-card fights come back."
+    "notes": "\"mode\": \"auto\" means every run resolves this itself — before config.json is even loaded, it asks ESPN for the soonest upcoming card, and if that differs from \"name\" below it rewrites \"name\"/\"league\"/\"date\", regenerates discovery.title_contains and discovery.search.queries from the new main event's fighters, and clears tracker.picks_videos (a stale roundup URL would just burn a download and a vision pass on the old event's deck). Once this week's card has happened, the next run rolls to whatever's next on its own — no manual retarget. \"name\"/\"league\"/\"date\" below are simply the last-resolved event; edit them by hand only if you delete \"mode\" and want to pin a specific card again (e.g. a Contender Series week, matched as a substring against ESPN's own event name — punctuation and case ignored, spelling not). \"league\" pins which scoreboard is searched (ufc / pfl); leave it empty to try UFC then PFL. Add more cards to the top-level \"events\" array to cover them in the same run — a PFL event the same weekend, say — and the dashboard puts a card selector at the top. If a run logs \"No ESPN card found\" (or, in auto mode, \"No upcoming event found\"), something's off with the league or the scoreboard is unreachable — nothing is filtered and off-card fights come back."
   },
   "tracker": {
     "channel_url": "https://www.youtube.com/@UFCPredictionsTracker",
@@ -19,8 +20,8 @@
     ]
   },
   "settings": {
-    "model": "claude-opus-5",
-    "effort": "high",
+    "model": "claude-sonnet-5",
+    "effort": "medium",
     "max_tokens": 20000,
     "transcript_languages": [
       "en"
@@ -35,17 +36,15 @@
       "lookback_days": 14,
       "max_videos_per_channel": 3,
       "title_contains": [
-        "nurmagomedov",
-        "umar",
-        "yadong",
-        "song yadong"
+        "hooker",
+        "parnasse"
       ],
       "search": {
         "enabled": true,
         "queries": [
-          "UFC Fight Night Nurmagomedov vs Song predictions",
-          "Umar Nurmagomedov Song Yadong picks",
-          "UFC Nurmagomedov Song betting breakdown"
+          "UFC Fight Night Hooker vs Parnasse predictions",
+          "Dan Hooker Parnasse picks",
+          "UFC Hooker Parnasse betting breakdown"
         ],
         "max_results": 80,
         "max_per_channel": 1,

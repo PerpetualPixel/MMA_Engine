@@ -29,8 +29,16 @@ _URL_PATTERNS = [
 ]
 
 DEFAULT_SETTINGS: dict[str, Any] = {
-    "model": "claude-opus-5",
-    "effort": "high",
+    # Pick extraction is structured parsing of what a capper explicitly said —
+    # not the kind of task that benefits from Opus-tier reasoning or high
+    # effort. Sonnet at medium effort reads the same picks off the same
+    # transcripts for a fraction of the cost (Opus 5 is $5/$25 per MTok vs.
+    # Sonnet 5's $2/$10, and medium effort spends far less on thinking tokens
+    # than high). Raise "model" back to "claude-opus-5" for a harder read (a
+    # dense multi-pick recap where accuracy is worth paying for), and "effort"
+    # for tougher transcripts specifically.
+    "model": "claude-sonnet-5",
+    "effort": "medium",
     "max_tokens": 20000,
     "transcript_languages": ["en"],
     "min_delay_seconds": 4.0,
