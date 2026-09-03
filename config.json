@@ -26,8 +26,8 @@
     "transcript_languages": [
       "en"
     ],
-    "min_delay_seconds": 4,
-    "max_delay_seconds": 12,
+    "min_delay_seconds": 6,
+    "max_delay_seconds": 16,
     "max_transcript_chars": 60000,
     "min_confidence": 1,
     "use_cache": true,
