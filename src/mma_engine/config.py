@@ -41,8 +41,15 @@ DEFAULT_SETTINGS: dict[str, Any] = {
     "effort": "medium",
     "max_tokens": 20000,
     "transcript_languages": ["en"],
-    "min_delay_seconds": 4.0,
-    "max_delay_seconds": 12.0,
+    # A run with open search on can mean 70-80+ transcript fetches from one
+    # IP in a single sitting. 4-12s wasn't enough headroom — a real run at
+    # that volume got IpBlocked by YouTube almost immediately. Wider spacing
+    # trades a few extra minutes of wall-clock for a lot less exposure to
+    # that block; it clears on its own after a few hours if it happens
+    # anyway, and cached transcripts mean a retry doesn't re-pay for videos
+    # that were already fetched.
+    "min_delay_seconds": 6.0,
+    "max_delay_seconds": 16.0,
     "max_transcript_chars": 60000,
     "min_confidence": 1,
     "use_cache": True,
