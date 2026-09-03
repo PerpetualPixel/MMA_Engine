@@ -16,8 +16,10 @@ match rather than "whatever's soonest") keeps working exactly as before.
 
 from __future__ import annotations
 
+import argparse
 import json
 import logging
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -102,3 +104,37 @@ def resolve_auto_event(config_path: str | Path) -> bool:
         json.dumps(raw, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
     )
     return True
+
+
+def main(argv: list[str] | None = None) -> int:
+    """Standalone entry point: `python -m mma_engine.auto_event --config config.json`.
+
+    Exists so weekly.ps1 can retarget and commit+push config.json as its own
+    small, fast step BEFORE the video-processing loop — which can run 20-30+
+    minutes and is the part that actually fails (a spent API balance, a
+    YouTube IP block). Bundling the retarget into that same run's one big
+    commit-at-the-end meant an interruption anywhere in the loop left the
+    retarget sitting uncommitted, which then blocked the *next* run's
+    `git pull --ff-only` with a local-changes conflict. Retargeting (and
+    committing) first means an interrupted run downstream never leaves
+    config.json in a state the next run can't cleanly pull past.
+
+    Always exits 0 — like resolve_auto_event itself, a problem here should
+    cost the run its auto-retarget, never the run.
+    """
+    logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
+    parser = argparse.ArgumentParser(
+        description="Retarget config.json to the next event, if event.mode is \"auto\"."
+    )
+    parser.add_argument("--config", default="config.json", help="Path to config.json")
+    args = parser.parse_args(argv)
+
+    if resolve_auto_event(args.config):
+        print("retargeted")
+    else:
+        print("unchanged")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

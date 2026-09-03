@@ -103,8 +103,56 @@ Write-Host "== Installing dependencies ==" -ForegroundColor Cyan
 & ".venv\Scripts\python.exe" -m pip install --quiet -r requirements.txt
 if ($LASTEXITCODE -ne 0) { Fail "pip install failed - see the error above." }
 
-Write-Host "== Building the consensus ==" -ForegroundColor Cyan
 $env:PYTHONPATH = "src"
+
+# Commits (and pushes) a set of paths under one message, if anything actually
+# changed. Same push-rejected-by-a-moved-remote recovery either caller needs:
+# rebase onto whatever landed, keeping THIS run's files ("-X theirs" — always
+# safe here, since both commits this script makes are pure regenerated
+# output/config, never something worth a manual merge), and retry once.
+function Commit-And-Push([string[]]$paths, [string]$message, [string]$doneMessage) {
+    git add $paths
+    git diff --cached --quiet
+    if ($LASTEXITCODE -eq 0) { return $false }
+
+    git commit -m $message
+    if ($LASTEXITCODE -ne 0) {
+        Fail ("git commit failed - see the error above. If it says 'Author identity unknown', run:`n" +
+              '  git config --global user.name "Your Name"' + "`n" +
+              '  git config --global user.email "you@example.com"' + "`n" +
+              "then rerun weekly.bat.")
+    }
+    git push
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "Push rejected - the remote moved. Rebasing onto it and retrying." -ForegroundColor Yellow
+        git pull --rebase -X theirs origin main
+        if ($LASTEXITCODE -ne 0) {
+            Fail ("Rebase failed - run 'git status' and resolve it by hand. " +
+                  "This run's commit is local, so nothing is lost.")
+        }
+        git push
+        if ($LASTEXITCODE -ne 0) { Fail "git push failed again - see the error above." }
+    }
+    Write-Host $doneMessage -ForegroundColor Green
+    return $true
+}
+
+# Retarget FIRST and commit immediately — before the video-processing loop,
+# which can run 20-30+ minutes and is the part that actually fails (a spent
+# API balance, a YouTube IP block, Ctrl+C). Bundling the retarget into the
+# one big commit at the very end meant an interrupted run left config.json's
+# rewrite sitting uncommitted, which then blocked the *next* run's
+# `git pull --ff-only` with a local-changes conflict — exactly the failure
+# this ordering prevents. A no-op ("event.mode" isn't "auto", or nothing
+# upcoming changed) costs nothing here; mma_engine's own pipeline checks
+# again at its own start regardless, so this is pure insurance, not a
+# duplicate of work that mattered.
+Write-Host "== Checking for a new event ==" -ForegroundColor Cyan
+& ".venv\Scripts\python.exe" -m mma_engine.auto_event --config config.json
+Commit-And-Push -paths @("config.json") -message "chore: auto-retarget to next event" `
+    -doneMessage "Retargeted and pushed - the next step builds against it." | Out-Null
+
+Write-Host "== Building the consensus ==" -ForegroundColor Cyan
 & ".venv\Scripts\python.exe" -m mma_engine --config config.json --output docs\data.json
 if ($LASTEXITCODE -ne 0) {
     Fail "The pipeline failed (see errors above). Nothing was pushed."
@@ -117,38 +165,10 @@ if ($LASTEXITCODE -ne 0) {
 }
 
 Write-Host "== Publishing ==" -ForegroundColor Cyan
-# config.json is included because "event": {"mode": "auto"} lets the pipeline
-# retarget it in place (new event name, discovery keywords, cleared roundup
-# URL) before it even runs — that retarget needs to be committed too, or next
-# week's run starts from a config the last run already moved past.
-git add docs/data.json docs/picks.json config.json
-git diff --cached --quiet
-if ($LASTEXITCODE -ne 0) {
-    git commit -m "chore: weekly consensus refresh"
-    if ($LASTEXITCODE -ne 0) {
-        Fail ("git commit failed - see the error above. If it says 'Author identity unknown', run:`n" +
-              '  git config --global user.name "Your Name"' + "`n" +
-              '  git config --global user.email "you@example.com"' + "`n" +
-              "then rerun weekly.bat.")
-    }
-    git push
-    if ($LASTEXITCODE -ne 0) {
-        # The remote moved while this run was working (a merged PR, another
-        # machine). Replay this commit on top of it and push again. -X theirs
-        # settles docs/data.json and docs/picks.json in favour of the payload
-        # this run just built, which is the newer of the two by definition.
-        Write-Host "Push rejected - the remote moved. Rebasing onto it and retrying." -ForegroundColor Yellow
-        git pull --rebase -X theirs origin main
-        if ($LASTEXITCODE -ne 0) {
-            Fail ("Rebase failed - run 'git status' and resolve it by hand. " +
-                  "Your consensus is committed locally, so nothing is lost.")
-        }
-        git push
-        if ($LASTEXITCODE -ne 0) { Fail "git push failed again - see the error above." }
-    }
-    Write-Host ""
-    Write-Host "Done - the dashboard updates in about a minute." -ForegroundColor Green
-} else {
+$published = Commit-And-Push -paths @("docs/data.json", "docs/picks.json", "config.json") `
+    -message "chore: weekly consensus refresh" `
+    -doneMessage "Done - the dashboard updates in about a minute."
+if (-not $published) {
     Write-Host ""
     Write-Host "Done - no changes since the last run, nothing to publish." -ForegroundColor Green
 }
