@@ -32,7 +32,22 @@
     --gold-rgb: 255, 209, 102;
     --danger: #ff3860;
     --danger-rgb: 255, 56, 96;
+    --strong-rgb: 47, 230, 166;
   }
+  /* Calm mode — button top right turns off the magenta/purple neon chrome
+     (header, tab underline, top-of-card stripe, Generate button, links)
+     while leaving the functional confidence-grading colors alone: favorite
+     green, underdog orange, split/lock gold, cancelled red still mean
+     exactly what they meant with it on. Everything downstream already reads
+     these two variables instead of a hardcoded hex, so redefining them here
+     is the whole toggle. */
+  body.calm-mode {
+    --accent: #9c92b8;
+    --accent-2: #6f5f92;
+    --accent-rgb: 156, 146, 184;
+    --accent-2-rgb: 111, 95, 146;
+  }
+  body.calm-mode .role-banner.comain { color: var(--muted); }
   * { box-sizing: border-box; }
   html { scrollbar-gutter: stable; }
   body {
@@ -48,6 +63,7 @@
   .wrap { max-width: 1060px; margin: 0 auto; padding: 24px 18px 80px; }
 
   header { padding-bottom: 6px; }
+  .header-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
   h1 {
     margin: 0 0 2px; font-size: 24px; font-weight: 800; letter-spacing: -0.02em;
     display: flex; align-items: center; gap: 8px;
@@ -55,6 +71,16 @@
   h1 span {
     background: linear-gradient(90deg, var(--accent), var(--accent-2));
     -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  button.calm-toggle {
+    background: var(--panel-2); border: 1px solid var(--border); color: var(--muted);
+    font: inherit; font-size: 12px; font-weight: 700; border-radius: 999px;
+    padding: 5px 14px; cursor: pointer; white-space: nowrap; margin-top: 2px;
+  }
+  button.calm-toggle:hover { border-color: var(--accent); color: var(--accent); }
+  button.calm-toggle.on {
+    border-color: var(--strong); color: var(--strong);
+    background: rgba(var(--strong-rgb), .12);
   }
   .event-line { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; margin-top: 8px; }
   .event { font-size: 18px; font-weight: 700; }
@@ -400,7 +426,10 @@
 <body>
 <div class="wrap">
   <header>
-    <h1>🥊 MMA <span>Consensus</span> Engine</h1>
+    <div class="header-top">
+      <h1>🥊 MMA <span>Consensus</span> Engine</h1>
+      <button class="calm-toggle" id="calm-toggle" type="button" aria-pressed="false">🎨 Calm mode</button>
+    </div>
     <div class="event-line"><div class="event" id="event-name"></div>
       <label class="card-picker" id="card-picker" hidden>Card
         <select id="event-select"></select>
@@ -477,6 +506,7 @@ const state = {
   eventId: "",
   tab: "ml",
   search: "",
+  calm: false,
   ml:  { sort: "card", hidePickems: false, locksOnly: false, hideNoPicks: false },
   mov: { sort: "card", hidePickems: false, locksOnly: false },
   dc:  { sort: "card", hidePickems: false, locksOnly: false },
@@ -490,8 +520,8 @@ const state = {
 const UI_STORE_KEY = "mma-consensus-ui-v1";
 function persistUi() {
   try {
-    const { tab, search, eventId, ml, mov, dc, dog, straights, parlay } = state;
-    localStorage.setItem(UI_STORE_KEY, JSON.stringify({ tab, search, eventId, ml, mov, dc, dog, straights, parlay }));
+    const { tab, search, eventId, calm, ml, mov, dc, dog, straights, parlay } = state;
+    localStorage.setItem(UI_STORE_KEY, JSON.stringify({ tab, search, eventId, calm, ml, mov, dc, dog, straights, parlay }));
   } catch { /* private mode etc. — purely a convenience */ }
 }
 (function restoreUi() {
@@ -499,11 +529,30 @@ function persistUi() {
     const saved = JSON.parse(localStorage.getItem(UI_STORE_KEY) || "null");
     if (!saved) return;
     for (const key of ["tab", "search", "eventId"]) if (typeof saved[key] === "string") state[key] = saved[key];
+    if (typeof saved.calm === "boolean") state.calm = saved.calm;
     for (const key of ["ml", "mov", "dc", "dog", "straights", "parlay"]) {
       if (saved[key] && typeof saved[key] === "object") Object.assign(state[key], saved[key]);
     }
   } catch { /* corrupt store — defaults are fine */ }
 })();
+
+/* Toggled top right of the header — swaps the neon accent chrome for a
+ * muted version of the same palette while leaving the confidence-grading
+ * colors (favorite/underdog/split/lock/cancelled) untouched. See the
+ * body.calm-mode CSS rule for what actually changes. */
+function applyCalmMode() {
+  document.body.classList.toggle("calm-mode", state.calm);
+  const btn = $("#calm-toggle");
+  btn.classList.toggle("on", state.calm);
+  btn.setAttribute("aria-pressed", String(state.calm));
+  btn.textContent = state.calm ? "🎨 Calm mode: on" : "🎨 Calm mode";
+}
+applyCalmMode();
+$("#calm-toggle").addEventListener("click", () => {
+  state.calm = !state.calm;
+  applyCalmMode();
+  persistUi();
+});
 
 /* ---------- model building ---------- */
 const lastToken = (name) =>
