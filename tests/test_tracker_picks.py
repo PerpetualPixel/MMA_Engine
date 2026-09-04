@@ -15,11 +15,13 @@ import json
 import pytest
 
 from mma_engine.config import Capper, load_config
+from mma_engine.discover import ChannelDiscovery
 from mma_engine.normalize import fight_key
 from mma_engine.tracker_picks import (
     CapperDirectory,
     TrackerFightPicks,
     TrackerRoundup,
+    find_tracker_roundup,
     merge_new_cappers,
     merge_roundups,
     to_sourced_picks,
@@ -369,3 +371,84 @@ def test_config_exposes_aliases_and_roundup_videos(tmp_path):
     assert config.cappers["funky_picks"].aliases == ("Funk Picks",)
     assert config.tracker_picks_videos == ["https://youtu.be/VIDEOIDXX11"]
     assert config.settings["tracker_picks"]["confidence"] == 5
+
+
+# -- find_tracker_roundup ----------------------------------------------------
+
+
+class _StubResponse:
+    def __init__(self, payload: dict):
+        self._payload = payload
+
+    def raise_for_status(self):
+        pass
+
+    def json(self):
+        return self._payload
+
+
+class _StubSession:
+    def __init__(self, items: list[dict]):
+        self._items = items
+        self.requested: list[str] = []
+        self.headers: dict[str, str] = {}
+
+    def get(self, url: str, timeout: float = 0):
+        self.requested.append(url)
+        return _StubResponse({"items": self._items})
+
+
+def _playlist_item(video_id: str, title: str, published: str) -> dict:
+    return {
+        "contentDetails": {"videoId": video_id, "videoPublishedAt": published},
+        "snippet": {"title": title, "publishedAt": published},
+    }
+
+
+def test_find_tracker_roundup_returns_the_matching_upload():
+    session = _StubSession(
+        [
+            _playlist_item("aaaaaaaaaaa", "UFC 331 predictions roundup", "2026-09-01T00:00:00Z"),
+            _playlist_item(
+                "bbbbbbbbbbb",
+                "Overview of ALL PREDICTIONS for UFC Fight Night: Hooker vs. Parnasse",
+                "2026-09-02T00:00:00Z",
+            ),
+        ]
+    )
+    discovery = ChannelDiscovery(
+        lookback_days=21, max_per_channel=1, title_contains=["hooker", "parnasse"],
+        api_key="fake-key", session=session, use_cache=False,
+    )
+    video = find_tracker_roundup(
+        channel_url="https://www.youtube.com/@UFCPredictionsTracker",
+        channel_id="UCabcdefghijklmnopqrstuv",
+        title_contains=["hooker", "parnasse"],
+        api_key="fake-key",
+        discovery=discovery,
+    )
+    assert video is not None
+    assert video.video_id == "bbbbbbbbbbb"
+
+
+def test_find_tracker_roundup_returns_none_when_nothing_matches():
+    session = _StubSession(
+        [_playlist_item("aaaaaaaaaaa", "UFC 331 predictions roundup", "2026-09-01T00:00:00Z")]
+    )
+    discovery = ChannelDiscovery(
+        lookback_days=21, max_per_channel=1, title_contains=["hooker", "parnasse"],
+        api_key="fake-key", session=session, use_cache=False,
+    )
+    video = find_tracker_roundup(
+        channel_url="https://www.youtube.com/@UFCPredictionsTracker",
+        channel_id="UCabcdefghijklmnopqrstuv",
+        title_contains=["hooker", "parnasse"],
+        api_key="fake-key",
+        discovery=discovery,
+    )
+    assert video is None
+
+
+def test_find_tracker_roundup_short_circuits_with_no_channel_or_keywords():
+    assert find_tracker_roundup("", "", ["hooker"], "fake-key") is None
+    assert find_tracker_roundup("https://www.youtube.com/@X", "", [], "fake-key") is None

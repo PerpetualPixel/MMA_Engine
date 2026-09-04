@@ -9,7 +9,9 @@
   "tracker": {
     "channel_url": "https://www.youtube.com/@UFCPredictionsTracker",
     "notes": "Source for capper trust scores. Feed a period recap with --roster-from ... --roster-mode replace to reset the baseline, then each post-event review with the default accumulate mode.",
-    "picks_notes": "\"picks_videos\" is the tracker's PRE-event roundup — the slide deck naming which channels picked which fighter (see src/mma_engine/roundup_slides.py). Replace it with this event's roundup each week and clear it when retargeting: a stale URL costs a video download and a vision pass to read a board whose fights are all off this card. A deck already read is kept in roundups/<video_id>.json and reused for free.",
+    "auto_discover": true,
+    "auto_discover_notes": "When true, every run scans channel_url's recent uploads for a title matching this week's settings.discovery.title_contains (the fighters' surnames) and, if picks_videos is empty, sets it automatically — no more finding and pasting the roundup URL by hand. Only runs when picks_videos is empty, so it never overwrites a URL you (or an earlier run this week) already set, and it fails open exactly like everything else here: no YOUTUBE_API_KEY, no match, or a network problem just leaves picks_videos empty for you to fill in by hand. Once found, the pipeline's own vision reader (src/mma_engine/roundup_slides.py) downloads the video and reads its slides automatically too — no screenshots needed unless that download fails (blocked IP, age-gate, etc.), in which case --roundup-slides DIR still works as the manual fallback.",
+    "picks_notes": "\"picks_videos\" is the tracker's PRE-event roundup — the slide deck naming which channels picked which fighter (see src/mma_engine/roundup_slides.py). With auto_discover on this fills itself in; set by hand here only to override it. Cleared automatically when the event retargets: a stale URL costs a video download and a vision pass to read a board whose fights are all off this card. A deck already read is kept in roundups/<video_id>.json and reused for free.",
     "picks_videos": [
       "https://www.youtube.com/watch?v=MgD40FZsow0"
     ],

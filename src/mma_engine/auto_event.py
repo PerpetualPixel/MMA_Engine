@@ -1,4 +1,4 @@
-"""Self-retargeting: resolve config.json's event automatically each run.
+"""Self-retargeting: resolve config.json's event (and tracker roundup) automatically.
 
 Every retarget so far in this project's life has been the same manual chore:
 find the next card's name, edit "event", rewrite discovery.title_contains and
@@ -12,6 +12,12 @@ one event's date has passed.
 A name typed by hand (no "mode") is left completely alone: auto mode is
 opt-in, so a Contender Series week (or any card that wants a hand-picked
 match rather than "whatever's soonest") keeps working exactly as before.
+
+Once the event is settled, `resolve_tracker_roundup` does the same for
+`tracker.picks_videos` — finding this week's pre-event roundup on the
+tracker's own channel (see tracker_picks.find_tracker_roundup) instead of
+someone pasting a screenshot-read URL in by hand. Also opt-in, via
+`tracker.auto_discover: true`.
 """
 
 from __future__ import annotations
@@ -19,12 +25,14 @@ from __future__ import annotations
 import argparse
 import json
 import logging
+import os
 import sys
 from pathlib import Path
 from typing import Any
 
 from .event_card import LEAGUES, find_next_event
 from .normalize import surname
+from .tracker_picks import find_tracker_roundup
 
 log = logging.getLogger(__name__)
 
@@ -106,6 +114,66 @@ def resolve_auto_event(config_path: str | Path) -> bool:
     return True
 
 
+def resolve_tracker_roundup(config_path: str | Path) -> bool:
+    """Auto-discover this week's tracker roundup, if enabled and none is set.
+
+    Opt-in via `tracker.auto_discover: true` — the same "off unless you ask
+    for it" contract as `event.mode: auto`. Only runs when
+    `tracker.picks_videos` is empty: a URL already there, whether typed by
+    hand or found by an earlier run this week, is left alone rather than
+    silently replaced. Reuses `discovery.title_contains` (the current
+    event's fighter surnames, kept fresh by `resolve_auto_event` above) as
+    the filter, so it costs nothing beyond the `YOUTUBE_API_KEY` capper
+    discovery already needs.
+
+    Returns True when a video was found and written. False covers
+    everything else — auto-discovery off, a URL already set, no API key, no
+    keywords yet, or nothing matched — and never raises: a problem here
+    costs this week's auto-discovery, never the run.
+    """
+    config_path = Path(config_path)
+    try:
+        raw = json.loads(config_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return False
+
+    tracker = raw.get("tracker") or {}
+    if not tracker.get("auto_discover"):
+        return False
+    if tracker.get("picks_videos"):
+        return False
+
+    api_key = os.environ.get("YOUTUBE_API_KEY", "").strip()
+    if not api_key:
+        return False
+
+    title_contains = (raw.get("settings") or {}).get("discovery", {}).get("title_contains") or []
+    if isinstance(title_contains, str):
+        title_contains = [title_contains]
+    if not title_contains:
+        return False
+
+    try:
+        video = find_tracker_roundup(
+            channel_url=tracker.get("channel_url", ""),
+            channel_id=tracker.get("channel_id", ""),
+            title_contains=list(title_contains),
+            api_key=api_key,
+        )
+    except Exception:
+        log.exception("Tracker roundup discovery failed — leaving tracker.picks_videos empty.")
+        return False
+    if video is None:
+        return False
+
+    log.info("Auto-discovered this week's tracker roundup: %s (%s)", video.title, video.url)
+    raw.setdefault("tracker", {})["picks_videos"] = [video.url]
+    config_path.write_text(
+        json.dumps(raw, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+    )
+    return True
+
+
 def main(argv: list[str] | None = None) -> int:
     """Standalone entry point: `python -m mma_engine.auto_event --config config.json`.
 
@@ -119,8 +187,12 @@ def main(argv: list[str] | None = None) -> int:
     committing) first means an interrupted run downstream never leaves
     config.json in a state the next run can't cleanly pull past.
 
-    Always exits 0 — like resolve_auto_event itself, a problem here should
-    cost the run its auto-retarget, never the run.
+    Also runs `resolve_tracker_roundup`, for the same reason and at the same
+    low cost: finding this week's tracker roundup is one more small API call,
+    not another 20-minute pass through the video queue.
+
+    Always exits 0 — like both resolve functions, a problem here should cost
+    the run its auto-retarget or auto-discovery, never the run.
     """
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
     parser = argparse.ArgumentParser(
@@ -129,10 +201,15 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--config", default="config.json", help="Path to config.json")
     args = parser.parse_args(argv)
 
-    if resolve_auto_event(args.config):
-        print("retargeted")
-    else:
+    retargeted = resolve_auto_event(args.config)
+    found_roundup = resolve_tracker_roundup(args.config)
+    if not retargeted and not found_roundup:
         print("unchanged")
+    else:
+        if retargeted:
+            print("retargeted")
+        if found_roundup:
+            print("found_roundup")
     return 0
 
 
