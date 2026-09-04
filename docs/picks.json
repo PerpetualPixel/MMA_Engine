@@ -1,1471 +1,276 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-02T23:07:18+00:00",
+  "generated_at": "2026-09-04T04:41:59+00:00",
   "event": {
-    "name": "Nurmagomedov vs. Song",
+    "mode": "auto",
+    "name": "UFC Fight Night: Hooker vs. Parnasse",
     "league": "ufc",
-    "date": "",
-    "notes": "\"name\" is matched as a substring against ESPN's own event name (punctuation and case are ignored, spelling is NOT), and the FIRST match inside the 45-day scoreboard window wins — so a weekly series must carry its season and week (\"Contender Series: Season 10, Week 3\") while a one-off like this is unique on its own. \"league\" pins which scoreboard is searched (ufc / pfl); leave it empty to try UFC then PFL. Add more cards to the top-level \"events\" array to cover them in the same run — a PFL event the same weekend, say — and the dashboard puts a card selector at the top. If a run logs \"No ESPN card found\", the name is wrong: nothing is filtered and off-card fights come back.",
+    "date": "2026-09-05T16:00Z",
+    "notes": "\"mode\": \"auto\" means every run resolves this itself — before config.json is even loaded, it asks ESPN for the soonest upcoming card, and if that differs from \"name\" below it rewrites \"name\"/\"league\"/\"date\", regenerates discovery.title_contains and discovery.search.queries from the new main event's fighters, and clears tracker.picks_videos (a stale roundup URL would just burn a download and a vision pass on the old event's deck). Once this week's card has happened, the next run rolls to whatever's next on its own — no manual retarget. \"name\"/\"league\"/\"date\" below are simply the last-resolved event; edit them by hand only if you delete \"mode\" and want to pin a specific card again (e.g. a Contender Series week, matched as a substring against ESPN's own event name — punctuation and case ignored, spelling not). \"league\" pins which scoreboard is searched (ufc / pfl); leave it empty to try UFC then PFL. Add more cards to the top-level \"events\" array to cover them in the same run — a PFL event the same weekend, say — and the dashboard puts a card selector at the top. If a run logs \"No ESPN card found\" (or, in auto mode, \"No upcoming event found\"), something's off with the league or the scoreboard is unreachable — nothing is filtered and off-card fights come back.",
     "card": {
       "source": "espn",
-      "name": "UFC Fight Night: Nurmagomedov vs. Song",
-      "date": "2026-08-29T07:00Z",
-      "bouts": 13,
-      "off_card_dropped": 80
+      "name": "UFC Fight Night: Hooker vs. Parnasse",
+      "date": "2026-09-05T16:00Z",
+      "bouts": 14,
+      "off_card_dropped": 11
     },
     "odds": {
       "source": "the-odds-api",
       "market": "h2h",
-      "fetched_at": "2026-09-02T23:07:19+00:00",
-      "fights_priced": 0
+      "fetched_at": "2026-09-04T04:41:59+00:00",
+      "fights_priced": 14
     }
   },
   "events": [
     {
-      "id": "ufc_fight_night_nurmagomedov_vs_song",
-      "name": "UFC Fight Night: Nurmagomedov vs. Song",
-      "label": "UFC Fight Night: Nurmagomedov vs. Song",
+      "id": "ufc_fight_night_hooker_vs_parnasse",
+      "name": "UFC Fight Night: Hooker vs. Parnasse",
+      "label": "UFC Fight Night: Hooker vs. Parnasse",
       "league": "UFC",
-      "date": "2026-08-29T07:00Z",
-      "bouts": 13
+      "date": "2026-09-05T16:00Z",
+      "bouts": 14
     }
   ],
   "source": "MMA_Engine trust-weighted capper consensus",
   "totals": {
-    "picks": 33,
-    "strong": 8,
-    "lean": 18,
-    "pass": 7
+    "picks": 13,
+    "strong": 4,
+    "lean": 9,
+    "pass": 0
   },
   "picks": [
     {
-      "fight_id": "borjas|tsuruya",
-      "fight": "Kevin Borjas vs Rei Tsuruya",
+      "fight_id": "keita|naimov",
+      "fight": "Losene Keita vs Muhammad Naimov",
       "card_status": "on_card",
-      "event_id": "ufc_fight_night_nurmagomedov_vs_song",
+      "event_id": "ufc_fight_night_hooker_vs_parnasse",
       "market": "moneyline",
       "market_label": "Moneyline",
-      "selection": "Rei Tsuruya",
-      "consensus_pct": 100.0,
-      "weight": 34.43,
-      "pick_count": 9,
-      "avg_confidence": 6.6,
-      "strength": 10.0,
+      "selection": "Losene Keita",
+      "consensus_pct": 96.3,
+      "weight": 194.35,
+      "pick_count": 75,
+      "avg_confidence": 5.0,
+      "strength": 9.6,
       "tier": "strong",
       "suggested_units": 2.0,
-      "quoted_odds": {
-        "american": -724,
-        "decimal": 1.138,
-        "count": 6
-      },
-      "value": 1.4,
-      "comments": [
-        {
-          "capper": "We Want Picks (Jacob)",
-          "comment": "Tsuruya's unique takedowns and throws are hard to defend, so he takes him even though Borjas is a legit striker.",
-          "confidence": 5
-        },
-        {
-          "capper": "Locked Door MMA",
-          "comment": "Borjas's downfall is grappling and Tsuruya's strength is wrestling; strong, fast, only 24 and training with Henry Cejudo.",
-          "confidence": 8
-        },
-        {
-          "capper": "Bedtime MMA",
-          "comment": "Thinks the odds are terrible but still takes Tsuruya: he's tenacious, has elite grappling and a proven chin, and Borjas gets overwhelmed by guys who walk him down and grapple with him after the early rush.",
-          "confidence": 6
-        },
-        {
-          "capper": "Pure Picks MMA",
-          "comment": "Massive grappling gap; once it hits the ground or Tsuruya takes the back it's over. Recommended as a safe parlay leg.",
-          "confidence": 8
-        },
-        {
-          "capper": "The Wager Zone",
-          "comment": "Great parlay piece — one of his confident picks with a massive grappling advantage.",
-          "confidence": 8
-        },
-        {
-          "capper": "THE MMA GURU",
-          "comment": "Tsuruya's relentless grappling should smother Borjas and drain his fast-twitch striking, though the guru thinks -750 is insane and Tsuruya should only be a 2-1 favorite.",
-          "confidence": 5
-        },
-        {
-          "capper": "Axel MMA",
-          "comment": "Terrible stylistic matchup for the striker Borjas; Tsuruya will find takedowns easily.",
-          "confidence": 7
-        },
-        {
-          "capper": "BotmfeederMMA",
-          "comment": "Borjas is only a boxer/kickboxer with questionable grappling and no ground game, while Tsuruya will maul him, ground and pound and possibly get a late submission; -600 is wild but fine as a parlay leg with the bet365 boost.",
-          "confidence": 7
-        },
-        {
-          "capper": "The MMA War Room Podcast",
-          "comment": "Chris calls it a classic striker vs wrestler fight where Tsuruya takes it down early and suffocates the fading Borjas, though he won't lay the chalk.",
-          "confidence": 5
-        }
-      ]
+      "comments": []
     },
     {
-      "fight_id": "perez|sumudaerji",
-      "fight": "Alex Perez vs Sumudaerji",
+      "fight_id": "pinto|spann",
+      "fight": "Mario Pinto vs Ryan Spann",
       "card_status": "on_card",
-      "event_id": "ufc_fight_night_nurmagomedov_vs_song",
+      "event_id": "ufc_fight_night_hooker_vs_parnasse",
       "market": "moneyline",
       "market_label": "Moneyline",
-      "selection": "Sumudaerji",
-      "consensus_pct": 100.0,
-      "weight": 32.83,
-      "pick_count": 8,
-      "avg_confidence": 7.0,
-      "strength": 10.0,
+      "selection": "Mario Pinto",
+      "consensus_pct": 95.7,
+      "weight": 188.3,
+      "pick_count": 73,
+      "avg_confidence": 5.0,
+      "strength": 9.6,
       "tier": "strong",
       "suggested_units": 2.0,
-      "quoted_odds": {
-        "american": -225,
-        "decimal": 1.444,
-        "count": 1
-      },
-      "value": 4.4,
-      "comments": [
-        {
-          "capper": "BetSlam with Sam",
-          "comment": "Sumudaerji was beating Perez badly in their prior meeting before Perez quit, and he fights much better in China; Sam says anything above -125 on him is phenomenal.",
-          "confidence": 7
-        },
-        {
-          "capper": "We Want Picks (Jacob)",
-          "comment": "Sumudaerji was making adjustments and landing clean before Perez took the way out in the first fight; parlayed with the Gomes/Yan over 2.5 at basically even money.",
-          "confidence": 6
-        },
-        {
-          "capper": "Locked Door MMA",
-          "comment": "Sumudaerji was winning the first fight before the groin shot, his takedown defense has improved a lot, and he has the reach, jab and power; Perez may fight hesitant after being clipped.",
-          "confidence": 7
-        },
-        {
-          "capper": "MMA Prediction Guru",
-          "comment": "In the first fight Sumudaerji found his range, dropped Perez and defended the takedowns; in a kickboxing fight the long southpaw beats Perez, and he expects a dominant decision or a KO/TKO.",
-          "confidence": 6
-        },
-        {
-          "capper": "TonyHasDiedMMA",
-          "comment": "Sumudaerji was beating Perez badly before the no contest, has a big reach advantage, and Perez is at the tail end of his career.",
-          "confidence": 8
-        },
-        {
-          "capper": "Axel MMA",
-          "comment": "Sumudaerji already dropped Perez in their prior fight and is too good from range; Perez folded last time.",
-          "confidence": 6
-        },
-        {
-          "capper": "We BET Parlays",
-          "comment": "He believes Sumudaerji is the better fighter and had unlocked Perez in the first fight (which he thinks Perez quit out of); rates it an eight, only capped because Perez isn't a chump.",
-          "confidence": 8
-        },
-        {
-          "capper": "BotmfeederMMA",
-          "comment": "Sumudaerji's 72-inch reach at 125, high-caliber boxing, takedown defense and improved cardio against an injury-riddled Perez who has lost many fights in a row.",
-          "confidence": 8
-        }
-      ]
+      "comments": []
     },
     {
-      "fight_id": "nurmagomedov|yadong",
-      "fight": "Umar Nurmagomedov vs Song Yadong",
+      "fight_id": "hooker|parnasse",
+      "fight": "Dan Hooker vs Salahdine Parnasse",
       "card_status": "on_card",
-      "event_id": "ufc_fight_night_nurmagomedov_vs_song",
-      "market": "method_of_victory",
-      "market_label": "Method of Victory",
-      "selection": "Umar Nurmagomedov by decision",
-      "consensus_pct": 94.6,
-      "weight": 52.81,
-      "pick_count": 14,
-      "avg_confidence": 6.2,
-      "strength": 9.5,
-      "tier": "strong",
-      "suggested_units": 2.0,
-      "quoted_odds": {
-        "american": -500,
-        "decimal": 1.2,
-        "count": 5
-      },
-      "value": 1.9,
-      "comments": [
-        {
-          "capper": "MMA Lock of the Night",
-          "comment": "Umar's well-rounded game — long-range striking, countering Song's aggression, and timely takedowns — wins him the scorecards.",
-          "confidence": 6
-        },
-        {
-          "capper": "MMA Prediction Guru",
-          "comment": "Umar is the better striker and grappler, can kick at range and time takedowns, and will hold Song down and make it boring for a dominant decision.",
-          "confidence": 6
-        },
-        {
-          "capper": "BetSlam with Sam",
-          "comment": "Umar could find a finish but as fights get later he tends to just win rounds rather than hunt finishes.",
-          "confidence": 6
-        },
-        {
-          "capper": "MMA Husky Hustler",
-          "comment": "Over 25 minutes Umar should dictate where exchanges happen with takedowns, clinch and fence pressure, banking rounds with control while durable Song survives.",
-          "confidence": 6
-        },
-        {
-          "capper": "The Wager Zone",
-          "comment": "Value play to bring the giant moneyline down; he expects a full five rounds and doesn't think Umar finishes Song.",
-          "confidence": 7
-        },
-        {
-          "capper": "KennyOkoyeMMA",
-          "comment": "After his 100+ hour film study he thinks Umar is actually the superior striker, will frustrate Yadong with stick-and-move, mix in wrestling to take the back, and out-strike him fairly comfortably over five rounds, though his finishing ability isn't high so it goes to the scorecards.",
-          "confidence": 7
-        },
-        {
-          "capper": "MMA OddsBreaker (Adam)",
-          "comment": "He views the main event as a mismatch made for a Chinese headliner and sees Umar by decision as the easy pick.",
-          "confidence": 5
-        },
-        {
-          "capper": "TheWeasle",
-          "comment": "Song has never faced wrestling at Umar's level and can't stuff takedowns for 25 minutes; Umar's control-based style wins a decision, though the capper thinks it's closer than the odds show.",
-          "confidence": 6
-        },
-        {
-          "capper": "Artem MMA",
-          "comment": "Expects Umar to take Song down and grind him out for five boring rounds, as Song has faltered in these title-eliminator fights.",
-          "confidence": 6
-        },
-        {
-          "capper": "TonyHasDiedMMA",
-          "comment": "Song won't outgrapple Umar and his takedown defense has only held up against non-grapplers; Umar wins a boring 48-47 grinding decision on the fence.",
-          "confidence": 7
-        },
-        {
-          "capper": "Pure Picks MMA",
-          "comment": "Both cappers lean unanimous decision since Song is durable and tough to finish, though a submission is possible.",
-          "confidence": 6
-        },
-        {
-          "capper": "The MMA War Room Podcast",
-          "comment": "Umar is a highly technical kickboxer out of both stances with an ever-present takedown threat that freezes Song; expect kicks, timed entries and fence control for a clear team-Khabib style unanimous decision.",
-          "confidence": 7
-        },
-        {
-          "capper": "Bedtime MMA",
-          "comment": "Song poses problems but nobody beats him clean; expects a boring control-time masterclass with Umar's side kicks, question mark kicks and reactive takedowns into back control for a 49-46/48-47 decision.",
-          "confidence": 7
-        },
-        {
-          "capper": "Axel MMA",
-          "comment": "He leans to a grinded, boring decision win for Umar.",
-          "confidence": 5
-        }
-      ]
-    },
-    {
-      "fight_id": "lui|santiago",
-      "fight": "Lawrence Lui vs Hector Santiago",
-      "card_status": "on_card",
-      "event_id": "ufc_fight_night_nurmagomedov_vs_song",
+      "event_id": "ufc_fight_night_hooker_vs_parnasse",
       "market": "moneyline",
       "market_label": "Moneyline",
-      "selection": "Lawrence Lui",
-      "consensus_pct": 94.3,
-      "weight": 17.88,
-      "pick_count": 5,
-      "avg_confidence": 6.6,
-      "strength": 8.9,
+      "selection": "Salahdine Parnasse",
+      "consensus_pct": 88.2,
+      "weight": 191.2,
+      "pick_count": 74,
+      "avg_confidence": 5.0,
+      "strength": 8.8,
       "tier": "strong",
       "suggested_units": 2.0,
-      "quoted_odds": {
-        "american": -339,
-        "decimal": 1.295,
-        "count": 2
-      },
-      "value": 2.6,
-      "comments": [
-        {
-          "capper": "MMA Prediction Guru",
-          "comment": "Says Lui is the rightful favorite, much more well-rounded striker with grappling advantages over Santiago, who has submission losses.",
-          "confidence": 6
-        },
-        {
-          "capper": "The Wager Zone",
-          "comment": "Lui can win any way if he wrestles instead of kickboxing; Santiago has poor takedown defense and grappling, making Lui a strong parlay piece.",
-          "confidence": 8
-        },
-        {
-          "capper": "BotmfeederMMA",
-          "comment": "City Kickboxing striker with big height, reach and frame advantages at 135 and excellent technique/elbows against an opponent who has fought bums; the line should be -350 or higher, so -300 is a discount.",
-          "confidence": 8
-        },
-        {
-          "capper": "THE MMA GURU",
-          "comment": "Likes Lui's striking out of CKB and that he mixed in lots of takedowns in his debut win, while Santiago hasn't fought anyone of note.",
-          "confidence": 6
-        },
-        {
-          "capper": "Bedtime MMA",
-          "comment": "Santiago is a dangerous kickboxer with no grappling, and Lui is more well-rounded with CKB game planning; if he spams takedowns and mixes in wrestling he can win a close decision or get to the back for a rear naked choke, though the capper admits he's nervous.",
-          "confidence": 5
-        }
-      ]
+      "comments": []
     },
     {
-      "fight_id": "gomes|xiaonan",
-      "fight": "Denise Gomes vs Yan Xiaonan",
+      "fight_id": "andrusca|wood",
+      "fight": "Pavel Andrusca vs Nathaniel Wood",
       "card_status": "on_card",
-      "event_id": "ufc_fight_night_nurmagomedov_vs_song",
-      "market": "method_of_victory",
-      "market_label": "Method of Victory",
-      "selection": "Yan Xiaonan by decision",
-      "consensus_pct": 85.7,
-      "weight": 32.23,
-      "pick_count": 9,
-      "avg_confidence": 5.9,
-      "strength": 8.6,
-      "tier": "strong",
-      "suggested_units": 2.0,
-      "quoted_odds": {
-        "american": -124,
-        "decimal": 1.81,
-        "count": 2
-      },
-      "value": 7.0,
-      "comments": [
-        {
-          "capper": "MMA Lock of the Night",
-          "comment": "Yan stuffs Gomes's takedowns and uses technically superior striking to out-strike her on the scorecards.",
-          "confidence": 6
-        },
-        {
-          "capper": "MMA Husky Hustler",
-          "comment": "Yan's experience and composure should let her manage the phases of the fight and land the cleaner work without chasing a finish.",
-          "confidence": 6
-        },
-        {
-          "capper": "The Wager Zone",
-          "comment": "Value play at basically even money since he expects Yan to win striking minutes over three rounds.",
-          "confidence": 7
-        },
-        {
-          "capper": "MMA OddsBreaker (Adam)",
-          "comment": "Gomes has been a popular dog but Adam thinks Yan is hard to finish, isn't declining, and gets the home-crowd decision winning two of three rounds.",
-          "confidence": 6
-        },
-        {
-          "capper": "TheWeasle",
-          "comment": "Tough fight to pick, but Yan's experience against the likes of Andrade and Zhang Weili, her kicks and distance management should outpoint the powerful Gomes.",
-          "confidence": 5
-        },
-        {
-          "capper": "Artem MMA",
-          "comment": "Yan is faster and should land more from range with kicks and knees, and her takedown defense should hold up against Gomes' newer wrestling.",
-          "confidence": 6
-        },
-        {
-          "capper": "Pure Picks MMA",
-          "comment": "Gerard leans Yan on experience, ring IQ, counter striking and fighting at home in China; possibly a close or split decision.",
-          "confidence": 5
-        },
-        {
-          "capper": "Bedtime MMA",
-          "comment": "Studied the tape: Gomes throws one shot at a time and won't wrestle, which is Yan's only weakness, so Yan should use side kicks, leg kicks and movement for a clear 29-28.",
-          "confidence": 7
-        },
-        {
-          "capper": "THE MMA GURU",
-          "comment": "Predicts a 29-28 decision win with Yan outboxing her on distance.",
-          "confidence": 5
-        }
-      ]
-    },
-    {
-      "fight_id": "nurmagomedov|yadong",
-      "fight": "Umar Nurmagomedov vs Song Yadong",
-      "card_status": "on_card",
-      "event_id": "ufc_fight_night_nurmagomedov_vs_song",
+      "event_id": "ufc_fight_night_hooker_vs_parnasse",
       "market": "moneyline",
       "market_label": "Moneyline",
-      "selection": "Umar Nurmagomedov",
-      "consensus_pct": 84.9,
-      "weight": 36.54,
-      "pick_count": 8,
-      "avg_confidence": 7.6,
-      "strength": 8.5,
+      "selection": "Nathaniel Wood",
+      "consensus_pct": 88.2,
+      "weight": 74.85,
+      "pick_count": 29,
+      "avg_confidence": 5.0,
+      "strength": 8.8,
       "tier": "strong",
       "suggested_units": 2.0,
-      "quoted_odds": {
-        "american": -600,
-        "decimal": 1.167,
-        "count": 4
-      },
-      "value": 1.4,
-      "comments": [
-        {
-          "capper": "We Want Picks (Jacob)",
-          "comment": "Umar has the best striking in the division and can dictate both the striking and wrestling; Song will be overly focused on takedown defense and hesitant, plus he overcommits on punches and is slow to react to takedown attempts.",
-          "confidence": 7
-        },
-        {
-          "capper": "Locked Door MMA",
-          "comment": "Lock of the night: Umar brings IQ, elite grappling, a sharp striking game that opens his takedowns, and recovers well when clipped; there are levels and he should take over as the fight goes.",
-          "confidence": 10
-        },
-        {
-          "capper": "BetSlam with Sam",
-          "comment": "Near-flawless run with only the Dvalishvili hiccup; despite rooting for Song as a fan, the pick has to be Umar who positions himself for a title shot.",
-          "confidence": 7
-        },
-        {
-          "capper": "Young Pastey",
-          "comment": "Leg 2 of the 3-unit parlay at -133; believes Umar's relentless takedowns and top control smother Song Yadong for a likely boring five-round decision or late submission, and he won't doubt a Khabib-trained fighter.",
-          "confidence": 9
-        },
-        {
-          "capper": "Pure Picks MMA",
-          "comment": "Umar is the complete fighter with striking, grappling, footwork and speed advantages; Song is athletic but not elite in any single area and falls short against top-level competition. Comfortable using Umar as a parlay leg despite the steep price.",
-          "confidence": 8
-        },
-        {
-          "capper": "The Wager Zone",
-          "comment": "Loves him as a parlay piece — chain wrestling, back control and scrambles will be too much for Song over 25 minutes.",
-          "confidence": 7
-        },
-        {
-          "capper": "Axel MMA",
-          "comment": "Umar can find takedowns and also outstrike Song, who will be hesitant to let his hands go fearing the shot.",
-          "confidence": 7
-        },
-        {
-          "capper": "BotmfeederMMA",
-          "comment": "Umar will chain wrestle and ragdoll Song to a late submission or wide decision; sees no path for Song, but says the main event is too sketchy for a best bet.",
-          "confidence": 6
-        }
-      ]
+      "comments": []
     },
     {
-      "fight_id": "aoriqileng|asakura",
-      "fight": "Aoriqileng vs Kai Asakura",
+      "fight_id": "donchenko|soriano",
+      "fight": "Daniil Donchenko vs Punahele Soriano",
       "card_status": "on_card",
-      "event_id": "ufc_fight_night_nurmagomedov_vs_song",
-      "market": "method_of_victory",
-      "market_label": "Method of Victory",
-      "selection": "Kai Asakura by KO/TKO in round 1",
-      "consensus_pct": 100.0,
-      "weight": 11.54,
-      "pick_count": 3,
-      "avg_confidence": 7.0,
-      "strength": 7.9,
-      "tier": "strong",
-      "suggested_units": 2.0,
-      "comments": [
-        {
-          "capper": "TheWeasle",
-          "comment": "Aoriqileng keeps his hands low with poor head movement and has never faced someone this fast and explosive, so Asakura should speed blitz and knock him out.",
-          "confidence": 6
-        },
-        {
-          "capper": "TonyHasDiedMMA",
-          "comment": "Beating Asakura requires takedowns and Aoriqileng is not a grappler — he's a hittable striker who loves wars, and Asakura will chin him cold. 'Easy work.'",
-          "confidence": 8
-        },
-        {
-          "capper": "Bedtime MMA",
-          "comment": "Called it a layup: huge speed and striking advantage, Aoriqileng won't pressure him with grappling and isn't durable, so Asakura blitzes in with a left hook and finishes with ground and pound early.",
-          "confidence": 7
-        }
-      ]
-    },
-    {
-      "fight_id": "batbayar|lima",
-      "fight": "Namsrai Batbayar vs Andre Lima",
-      "card_status": "on_card",
-      "event_id": "ufc_fight_night_nurmagomedov_vs_song",
+      "event_id": "ufc_fight_night_hooker_vs_parnasse",
       "market": "moneyline",
       "market_label": "Moneyline",
-      "selection": "Andre Lima",
-      "consensus_pct": 79.8,
-      "weight": 17.47,
-      "pick_count": 5,
-      "avg_confidence": 5.8,
-      "strength": 7.5,
-      "tier": "strong",
-      "suggested_units": 2.0,
-      "quoted_odds": {
-        "american": -264,
-        "decimal": 1.379,
-        "count": 2
-      },
-      "value": 2.8,
-      "comments": [
-        {
-          "capper": "BetSlam with Sam",
-          "comment": "Batbayar will come forward and be there to be hit, which plays perfectly into Lima's jab and low kicks; his last loss was more a lesson caused by an opponent kiting away.",
-          "confidence": 6
-        },
-        {
-          "capper": "We Want Picks (Jacob)",
-          "comment": "Jacob says he likes Lima, attributing the Borjas loss to a specific issue rather than a lack of ability.",
-          "confidence": 5
-        },
-        {
-          "capper": "THE MMA GURU",
-          "comment": "Lima is a crafty striker with the frame advantage who can move on the outside; he doesn't believe Batbayar can finish him and doubts he can win a decision.",
-          "confidence": 6
-        },
-        {
-          "capper": "The Wager Zone",
-          "comment": "He picks Lima to win on striking volume and Muay Thai, though he notes it could be more competitive than the odds imply.",
-          "confidence": 5
-        },
-        {
-          "capper": "BotmfeederMMA",
-          "comment": "UFC talent over a Road to UFC finisher: Lima has never been finished, has strong knockout power and exceptional counterboxing, while his opponent hasn't faced high-level competition and will have UFC jitters.",
-          "confidence": 7
-        }
-      ]
-    },
-    {
-      "fight_id": "jenkins|woodson",
-      "fight": "Jack Jenkins vs Sean Woodson",
-      "card_status": "on_card",
-      "event_id": "ufc_fight_night_nurmagomedov_vs_song",
-      "market": "moneyline",
-      "market_label": "Moneyline",
-      "selection": "Jack Jenkins",
-      "consensus_pct": 71.6,
-      "weight": 40.3,
-      "pick_count": 11,
-      "avg_confidence": 6.5,
-      "strength": 7.2,
+      "selection": "Daniil Donchenko",
+      "consensus_pct": 73.3,
+      "weight": 136.1,
+      "pick_count": 53,
+      "avg_confidence": 5.0,
+      "strength": 7.3,
       "tier": "lean",
       "suggested_units": 1.0,
-      "quoted_odds": {
-        "american": 128,
-        "decimal": 2.28,
-        "count": 5
-      },
-      "value": 9.2,
-      "comments": [
-        {
-          "capper": "BetSlam with Sam",
-          "comment": "Believes Jenkins deals with Woodson's jab despite a 10-inch reach deficit and gets the better of exchanges with low kicks and grappling.",
-          "confidence": 6
-        },
-        {
-          "capper": "Artem MMA",
-          "comment": "Woodson is skinny and weak to leg kicks, lacks the power to earn Jenkins' respect, so Jenkins should close the distance and chop the legs all fight.",
-          "confidence": 6
-        },
-        {
-          "capper": "MMA OddsBreaker (Adam)",
-          "comment": "Adam wanted to take a dog shot: he thinks Woodson is a bit chinny with a weird build and that Jenkins can chop down his skinny legs and win a competitive fight.",
-          "confidence": 6
-        },
-        {
-          "capper": "MMA AL DENTE",
-          "comment": "Jenkins' strong kicks negate Woodson's reach, he hits harder and has the grappling edge, and he can chop down Woodson's skinny legs; decision is the predicted path.",
-          "confidence": 7
-        },
-        {
-          "capper": "The Wager Zone",
-          "comment": "Jenkins' monstrous leg kicks target Woodson's heavy lead leg and he can mix in wrestling; he takes the dog price even though it's a hard fight to call.",
-          "confidence": 6
-        },
-        {
-          "capper": "TonyHasDiedMMA",
-          "comment": "Woodson is 'height maxing' and struggles when pressured, as Dan Ige and Charles Jourdain showed; Jenkins is a smart pressure boxer who can get inside and make it dirty.",
-          "confidence": 6
-        },
-        {
-          "capper": "Pure Picks MMA",
-          "comment": "Host sees a clear path via hard leg kicks on Woodson's thin legs, questions Woodson's weight cut at 34 and his long layoff, and prefers the plus money in a coin-flip matchup.",
-          "confidence": 6
-        },
-        {
-          "capper": "The MMA War Room Podcast",
-          "comment": "Jenkins is the type of gritty pressure fighter who eats rangy strikers alive with heavy leg kicks and body work; Woodson doesn't check kicks, has 16 months of rust and was finished last time out. Both hosts bet the moneyline at +120 and noted sharp money on Jenkins.",
-          "confidence": 8
-        },
-        {
-          "capper": "BotmfeederMMA",
-          "comment": "Woodson's thin legs can be chopped up by leg kicks, Jenkins is stronger, powerful, has more ways to win including clinch and takedowns, and doesn't get TKO'd; the -150 line on the 34-year-old Woodson looks like a trap.",
-          "confidence": 8
-        },
-        {
-          "capper": "Bedtime MMA",
-          "comment": "Jenkins' leg kicks and body work are the perfect blueprint against Woodson (as Dan Ige showed), he's faster, durable and wins leg-kick battles; expects a very clear decision or a third-round TKO.",
-          "confidence": 7
-        },
-        {
-          "capper": "THE MMA GURU",
-          "comment": "Jenkins has good boxing defense, gets to the inside, doesn't have to fear Woodson's grappling, and Woodson's legs are prone to Jenkins' calf kicks; Woodson is coming off a KO loss.",
-          "confidence": 6
-        }
-      ]
+      "comments": []
     },
     {
-      "fight_id": "borjas|tsuruya",
-      "fight": "Kevin Borjas vs Rei Tsuruya",
+      "fight_id": "charriere|lima",
+      "fight": "Morgan Charrière vs Felipe Lima",
       "card_status": "on_card",
-      "event_id": "ufc_fight_night_nurmagomedov_vs_song",
-      "market": "round",
-      "market_label": "Round",
-      "selection": "Rei Tsuruya by submission in round 1",
-      "consensus_pct": 100.0,
-      "weight": 7.58,
-      "pick_count": 2,
-      "avg_confidence": 6.5,
+      "event_id": "ufc_fight_night_hooker_vs_parnasse",
+      "market": "moneyline",
+      "market_label": "Moneyline",
+      "selection": "Felipe Lima",
+      "consensus_pct": 69.5,
+      "weight": 116.23,
+      "pick_count": 44,
+      "avg_confidence": 5.0,
       "strength": 6.9,
-      "tier": "lean",
-      "suggested_units": 1.0,
-      "quoted_odds": {
-        "american": 350,
-        "decimal": 4.5,
-        "count": 1
-      },
-      "value": 24.2,
-      "comments": [
-        {
-          "capper": "BetSlam with Sam",
-          "comment": "They call +350 'unreal' for a world-champion-level wrestler against a Peruvian boxer and say they'll throw big numbers at it.",
-          "confidence": 8
-        },
-        {
-          "capper": "Axel MMA",
-          "comment": "He says Borjas isn't getting out of the first round and Tsuruya finds a fast submission.",
-          "confidence": 5
-        }
-      ]
-    },
-    {
-      "fight_id": "polastri|xiong",
-      "fight": "Julia Polastri vs Jingnan Xiong",
-      "card_status": "on_card",
-      "event_id": "ufc_fight_night_nurmagomedov_vs_song",
-      "market": "moneyline",
-      "market_label": "Moneyline",
-      "selection": "Julia Polastri",
-      "consensus_pct": 100.0,
-      "weight": 6.64,
-      "pick_count": 2,
-      "avg_confidence": 5.5,
-      "strength": 6.7,
-      "tier": "lean",
-      "suggested_units": 1.0,
-      "quoted_odds": {
-        "american": -231,
-        "decimal": 1.432,
-        "count": 2
-      },
-      "value": 2.9,
-      "comments": [
-        {
-          "capper": "We Want Picks (Jacob)",
-          "comment": "Both like Polastri's forward pressure as the blueprint Angela Hill used to beat Xiong, though Jacob says she's hard to trust at -230 and Angelo calls the odds insane.",
-          "confidence": 5
-        },
-        {
-          "capper": "Axel MMA",
-          "comment": "Polastri is looser and better on the feet, finds her jab against Xiong's tight square stance, and is also better on the ground.",
-          "confidence": 6
-        }
-      ]
-    },
-    {
-      "fight_id": "borjas|tsuruya",
-      "fight": "Kevin Borjas vs Rei Tsuruya",
-      "card_status": "on_card",
-      "event_id": "ufc_fight_night_nurmagomedov_vs_song",
-      "market": "method_of_victory",
-      "market_label": "Method of Victory",
-      "selection": "Rei Tsuruya by submission",
-      "consensus_pct": 65.3,
-      "weight": 39.82,
-      "pick_count": 10,
-      "avg_confidence": 6.4,
-      "strength": 6.5,
-      "tier": "lean",
-      "suggested_units": 1.0,
-      "quoted_odds": {
-        "american": 110,
-        "decimal": 2.1,
-        "count": 5
-      },
-      "value": 7.2,
-      "comments": [
-        {
-          "capper": "MMA Prediction Guru",
-          "comment": "Worst possible matchup for Borjas, who fades late; Tsuruya has length, footwork and creative dynamic grappling to expose him on the mat in round one or two.",
-          "confidence": 7
-        },
-        {
-          "capper": "BetSlam with Sam",
-          "comment": "He grabbed it earlier at +180 and is still playing it at +110 since the market is heavily implying the submission; Borjas has also repeatedly struggled making weight.",
-          "confidence": 8
-        },
-        {
-          "capper": "MMA Husky Hustler",
-          "comment": "Tsuruya should get the clinch and takedowns, and his persistence with grappling should create submission opportunities Borjas can't handle.",
-          "confidence": 6
-        },
-        {
-          "capper": "Locked Door MMA",
-          "comment": "If you want to get degenerate, there's a very good chance he submits Borjas after taking his back.",
-          "confidence": 4
-        },
-        {
-          "capper": "The Wager Zone",
-          "comment": "Stated best bet with plus money — huge grappling edge, back takes and scrambles against Borjas' weak defensive wrestling; expects an early rear naked choke.",
-          "confidence": 9
-        },
-        {
-          "capper": "TheWeasle",
-          "comment": "Borjas has never faced offensive grappling like this; once he respects the takedown and starts moving backward, Tsuruya can chain wrestle, take the back and choke him out.",
-          "confidence": 6
-        },
-        {
-          "capper": "We Want Picks (Jacob)",
-          "comment": "He's a -700 favorite who will get takedowns while Borjas tires from swinging, making a neck or arm-triangle finish one of the likeliest outcomes at +110. Didn't place it.",
-          "confidence": 4
-        },
-        {
-          "capper": "Artem MMA",
-          "comment": "Tsuruya is an international-level Japanese freestyle wrestler with proven submission grappling, and Borjas has shown nothing to suggest he can avoid it; will bet it if the price is big plus money.",
-          "confidence": 6
-        },
-        {
-          "capper": "Pure Picks MMA",
-          "comment": "Gerard leans the plus-money submission prop, possibly in round one, given Tsuruya's deep grappling arsenal.",
-          "confidence": 6
-        },
-        {
-          "capper": "The MMA War Room Podcast",
-          "comment": "Tsuruya's takedowns, back takes and finishing instincts should overwhelm Borjas, who fades when pressured; Shrekar already put it in a parlay and says it's fine as a straight bet at +120, expecting a round-two rear naked choke.",
-          "confidence": 8
-        }
-      ]
-    },
-    {
-      "fight_id": "perez|sumudaerji",
-      "fight": "Alex Perez vs Sumudaerji",
-      "card_status": "on_card",
-      "event_id": "ufc_fight_night_nurmagomedov_vs_song",
-      "market": "method_of_victory",
-      "market_label": "Method of Victory",
-      "selection": "Sumudaerji by decision",
-      "consensus_pct": 64.8,
-      "weight": 20.53,
-      "pick_count": 6,
-      "avg_confidence": 5.8,
-      "strength": 6.5,
-      "tier": "lean",
-      "suggested_units": 1.0,
-      "quoted_odds": {
-        "american": 113,
-        "decimal": 2.129,
-        "count": 4
-      },
-      "value": 7.3,
-      "comments": [
-        {
-          "capper": "BetSlam with Sam",
-          "comment": "Stated premium play; Sumudaerji is pillow-fisted with one of the worst finishing rates in the UFC, so a decision win is the likely path.",
-          "confidence": 7
-        },
-        {
-          "capper": "MMA OddsBreaker (Adam)",
-          "comment": "His pick stays the same as the first fight, though he admits the +200 on Perez is tempting given how close the line was last time.",
-          "confidence": 5
-        },
-        {
-          "capper": "We Want Picks (Jacob)",
-          "comment": "Takes a considerable favorite in one of the more likely outcomes at plus money, since Perez is tough and scrappy and may have made adjustments.",
-          "confidence": 5
-        },
-        {
-          "capper": "Artem MMA",
-          "comment": "Sumudaerji looked good in the first fight and should keep it at range kicking legs and body, but he has one of the worst finishing rates in the UFC so decision is the play.",
-          "confidence": 6
-        },
-        {
-          "capper": "The MMA War Room Podcast",
-          "comment": "Sumudaerji was picking Perez apart and dropped him before the accidental low blow; his reach and timing plus growing confidence as fights go on should win a clear decision, with a KO in play.",
-          "confidence": 6
-        },
-        {
-          "capper": "Bedtime MMA",
-          "comment": "Picked Perez the first time and he looked terrible; expects a boring three rounds of Sumudaerji jabbing, leg kicking and stuffing takedowns while Perez is low-output and jittery.",
-          "confidence": 6
-        }
-      ]
-    },
-    {
-      "fight_id": "batbayar|lima",
-      "fight": "Namsrai Batbayar vs Andre Lima",
-      "card_status": "on_card",
-      "event_id": "ufc_fight_night_nurmagomedov_vs_song",
-      "market": "over_under",
-      "market_label": "Over / Under",
-      "selection": "Over 1.5 rounds",
-      "consensus_pct": 100.0,
-      "weight": 4.41,
-      "pick_count": 1,
-      "avg_confidence": 7.0,
-      "strength": 6.1,
-      "tier": "lean",
-      "suggested_units": 1.0,
-      "quoted_odds": {
-        "american": -165,
-        "decimal": 1.606,
-        "count": 1
-      },
-      "value": 3.7,
-      "comments": [
-        {
-          "capper": "The Wager Zone",
-          "comment": "Stated best bet — he believes this fight goes all three rounds to a decision.",
-          "confidence": 7
-        }
-      ]
-    },
-    {
-      "fight_id": "gomes|xiaonan",
-      "fight": "Denise Gomes vs Yan Xiaonan",
-      "card_status": "on_card",
-      "event_id": "ufc_fight_night_nurmagomedov_vs_song",
-      "market": "prop",
-      "market_label": "Prop",
-      "selection": "Denise Gomes to win inside the distance (decision no action)",
-      "consensus_pct": 100.0,
-      "weight": 4.38,
-      "pick_count": 1,
-      "avg_confidence": 6.0,
-      "strength": 6.1,
-      "tier": "lean",
-      "suggested_units": 1.0,
-      "quoted_odds": {
-        "american": -170,
-        "decimal": 1.588,
-        "count": 1
-      },
-      "value": 3.6,
-      "comments": [
-        {
-          "capper": "BetSlam with Sam",
-          "comment": "He doesn't see Yan finishing Gomes at all, so the decision-no-action version of the Gomes finish is the play even at -170.",
-          "confidence": 6
-        }
-      ]
-    },
-    {
-      "fight_id": "gomes|xiaonan",
-      "fight": "Denise Gomes vs Yan Xiaonan",
-      "card_status": "on_card",
-      "event_id": "ufc_fight_night_nurmagomedov_vs_song",
-      "market": "moneyline",
-      "market_label": "Moneyline",
-      "selection": "Yan Xiaonan",
-      "consensus_pct": 59.1,
-      "weight": 29.5,
-      "pick_count": 8,
-      "avg_confidence": 6.4,
-      "strength": 5.9,
-      "tier": "lean",
-      "suggested_units": 1.0,
-      "quoted_odds": {
-        "american": -150,
-        "decimal": 1.667,
-        "count": 1
-      },
-      "value": 3.9,
-      "comments": [
-        {
-          "capper": "We Want Picks (Jacob)",
-          "comment": "Yan is the better, more technical fighter and boxer, but she's 37, a year inactive and hard to trust as a favorite after the Jandiroba loss — admits Denise probably wins.",
-          "confidence": 3
-        },
-        {
-          "capper": "Locked Door MMA",
-          "comment": "Gomes's win streak came against weak competition while Yan has faced the who's who, is a fast, strong counter striker and hasn't lost a step; lines are close so it may be a hammer spot.",
-          "confidence": 9
-        },
-        {
-          "capper": "MMA Prediction Guru",
-          "comment": "Parlay-of-the-week leg; a tailor-made matchup as Yan is 11-0 in China, much slicker with footwork and volume, and Gomes is too slow and not a high-level wrestler to threaten takedowns.",
-          "confidence": 8
-        },
-        {
-          "capper": "MMA AL DENTE",
-          "comment": "Yan should outstrike Gomes from the outside with better footwork and cleaner striking, and Gomes can't beat her the way Yan has been beaten (on the ground); layoff and age temper confidence.",
-          "confidence": 4
-        },
-        {
-          "capper": "The Wager Zone",
-          "comment": "Best bet at a great price — Yan's jab, volume, distance management and far higher level of competition, doubting Gomes can wrestle consistently.",
-          "confidence": 8
-        },
-        {
-          "capper": "TonyHasDiedMMA",
-          "comment": "Huge gap in competition level — Yan has only lost to elite fighters and is a tactician/point striker, while brawler Gomes' best win is Tecia Pennington and she got masterclassed by Angela Hill.",
-          "confidence": 7
-        },
-        {
-          "capper": "We BET Parlays",
-          "comment": "Second parlay leg on Yan's moneyline: she's faced far better competition (wins over Mackenzie Dern and Jessica Andrade, losses only to Zhang Weili and top contenders), has fast hands and more power than Gomes. Capper gave a 'hot seven' on her winning.",
-          "confidence": 7
-        },
-        {
-          "capper": "THE MMA GURU",
-          "comment": "Calls it a bit of a 50/50 but Yan has the frame advantage, has only lost to good names, and should outbox Gomes at distance.",
-          "confidence": 5
-        }
-      ]
-    },
-    {
-      "fight_id": "ce|rodriguez",
-      "fight": "Liu Ce vs Levi Rodrigues Jr.",
-      "card_status": "on_card",
-      "event_id": "ufc_fight_night_nurmagomedov_vs_song",
-      "market": "round",
-      "market_label": "Round",
-      "selection": "Liu Ce by KO/TKO in round 1",
-      "consensus_pct": 100.0,
-      "weight": 3.78,
-      "pick_count": 1,
-      "avg_confidence": 6.0,
-      "strength": 5.9,
-      "tier": "lean",
-      "suggested_units": 1.0,
-      "comments": [
-        {
-          "capper": "The Wager Zone",
-          "comment": "Expects the fight to stay standing where Ce's kickboxing background leads to a big shot; Rodrigues is only live if he can get takedowns.",
-          "confidence": 6
-        }
-      ]
-    },
-    {
-      "fight_id": "perez|sumudaerji",
-      "fight": "Alex Perez vs Sumudaerji",
-      "card_status": "on_card",
-      "event_id": "ufc_fight_night_nurmagomedov_vs_song",
-      "market": "over_under",
-      "market_label": "Over / Under",
-      "selection": "Over 2.5 rounds",
-      "consensus_pct": 100.0,
-      "weight": 3.5,
-      "pick_count": 1,
-      "avg_confidence": 7.0,
-      "strength": 5.9,
-      "tier": "lean",
-      "suggested_units": 1.0,
-      "quoted_odds": {
-        "american": 100,
-        "decimal": 2.0,
-        "count": 1
-      },
-      "value": 5.9,
-      "comments": [
-        {
-          "capper": "We BET Parlays",
-          "comment": "Parlay leg: Sumudaerji is a nasty boxer without one-shot power and rarely finishes people, plus Perez gets a rematch and film to make adjustments after winning round one last time, so it should reach a decision.",
-          "confidence": 7
-        }
-      ]
-    },
-    {
-      "fight_id": "long|nuzzi",
-      "fight": "Xiao Long vs Francesco Nuzzi",
-      "card_status": "on_card",
-      "event_id": "ufc_fight_night_nurmagomedov_vs_song",
-      "market": "moneyline",
-      "market_label": "Moneyline",
-      "selection": "Xiao Long",
-      "consensus_pct": 58.0,
-      "weight": 20.41,
-      "pick_count": 6,
-      "avg_confidence": 6.2,
-      "strength": 5.8,
       "tier": "lean",
       "suggested_units": 1.0,
       "quoted_odds": {
         "american": -180,
         "decimal": 1.556,
-        "count": 3
+        "count": 1
       },
-      "value": 3.2,
+      "value": 3.8,
       "comments": [
         {
-          "capper": "MMA Prediction Guru",
-          "comment": "Xiao Long is the high-volume, ugly pressure fighter; Nunzi is an explosive can-crusher who breaks when opponents extend the fight and make it a dogfight. Predicts a late finish or decision.",
-          "confidence": 5
-        },
-        {
-          "capper": "MMA AL DENTE",
-          "comment": "Xiao Long has ~40 fights and UFC/MMA experience, is well-rounded, durable and strong in round three, and is the more trustworthy fighter over 15 minutes against a debutant who has been finished in both his losses.",
-          "confidence": 5
-        },
-        {
-          "capper": "The Wager Zone",
-          "comment": "Stated best bet — Long's pressure, power, experience and possible wrestling edge, and he can win by KO or decision.",
-          "confidence": 7
-        },
-        {
-          "capper": "TonyHasDiedMMA",
-          "comment": "Nuzzi is a low-level signing brought in to lose, while Xiao Long has decent, technical boxing and arguably beat Cody Garbrandt even after two point deductions.",
-          "confidence": 7
-        },
-        {
-          "capper": "BotmfeederMMA",
-          "comment": "Xiao Long is aggressive with power punching and loves to bank early rounds, while Nunzi is in the spotlight for the first time and may give up rounds; loves the line near even money.",
-          "confidence": 8
-        },
-        {
-          "capper": "We BET Parlays",
-          "comment": "Low-level bantamweight fight but the UFC is in China trying to feature Chinese fighters with favorable matchmaking, and Long has the speed and slight reach advantage. Only a five because of the low level and risk of a low-IQ knockout loss.",
-          "confidence": 5
+          "capper": "MMA Lock of the Night",
+          "comment": "He believes Lima, now fully healthy at 145 with better cardio and a slicker skill set, will dictate pace and beat Charriere, whose game relies more on explosive power.",
+          "confidence": 6
         }
       ]
     },
     {
-      "fight_id": "jenkins|woodson",
-      "fight": "Jack Jenkins vs Sean Woodson",
+      "fight_id": "bukauskas|sy",
+      "fight": "Modestas Bukauskas vs Oumar Sy",
       "card_status": "on_card",
-      "event_id": "ufc_fight_night_nurmagomedov_vs_song",
-      "market": "over_under",
-      "market_label": "Over / Under",
-      "selection": "Fight goes the distance",
-      "consensus_pct": 100.0,
-      "weight": 3.0,
-      "pick_count": 1,
-      "avg_confidence": 6.0,
+      "event_id": "ufc_fight_night_hooker_vs_parnasse",
+      "market": "moneyline",
+      "market_label": "Moneyline",
+      "selection": "Modestas Bukauskas",
+      "consensus_pct": 63.8,
+      "weight": 126.8,
+      "pick_count": 49,
+      "avg_confidence": 5.0,
+      "strength": 6.4,
+      "tier": "lean",
+      "suggested_units": 1.0,
+      "comments": []
+    },
+    {
+      "fight_id": "page|ruziboev",
+      "fight": "Michael Page vs Nursulton Ruziboev",
+      "card_status": "on_card",
+      "event_id": "ufc_fight_night_hooker_vs_parnasse",
+      "market": "moneyline",
+      "market_label": "Moneyline",
+      "selection": "Michael Page",
+      "consensus_pct": 57.9,
+      "weight": 116.6,
+      "pick_count": 45,
+      "avg_confidence": 5.0,
       "strength": 5.8,
       "tier": "lean",
       "suggested_units": 1.0,
-      "comments": [
-        {
-          "capper": "We BET Parlays",
-          "comment": "Second leg of the show parlay; Woodson is not a knockout artist so the fight is expected to reach a decision.",
-          "confidence": 6
-        }
-      ]
+      "comments": []
     },
     {
-      "fight_id": "hasain|rojas",
-      "fight": "Bilal Hasan vs Nilson Rojas",
+      "fight_id": "benouaich|montenegro",
+      "fight": "Delphine Benouaich vs Sofia Montenegro",
       "card_status": "on_card",
-      "event_id": "ufc_fight_night_nurmagomedov_vs_song",
-      "market": "method_of_victory",
-      "market_label": "Method of Victory",
-      "selection": "Bilal Hasan by KO/TKO in round 1",
-      "consensus_pct": 100.0,
-      "weight": 2.52,
-      "pick_count": 1,
-      "avg_confidence": 4.0,
-      "strength": 5.6,
+      "event_id": "ufc_fight_night_hooker_vs_parnasse",
+      "market": "moneyline",
+      "market_label": "Moneyline",
+      "selection": "Sofia Montenegro",
+      "consensus_pct": 57.5,
+      "weight": 111.4,
+      "pick_count": 43,
+      "avg_confidence": 5.0,
+      "strength": 5.8,
       "tier": "lean",
       "suggested_units": 1.0,
-      "quoted_odds": {
-        "american": -625,
-        "decimal": 1.16,
-        "count": 1
-      },
-      "value": 0.9,
-      "comments": [
-        {
-          "capper": "MMA OddsBreaker (Adam)",
-          "comment": "He calls the fight a pointless mismatch, basically a second Contender Series bout, and thinks Hasain runs through Rojas early.",
-          "confidence": 4
-        }
-      ]
+      "comments": []
     },
     {
-      "fight_id": "meng|nelson",
-      "fight": "Ding Meng vs Cam Nelson",
+      "fight_id": "dias|duclos",
+      "fight": "Luis Felipe Dias vs Matthieu Letho Duclos",
       "card_status": "on_card",
-      "event_id": "ufc_fight_night_nurmagomedov_vs_song",
-      "market": "round",
-      "market_label": "Round",
-      "selection": "Ding Meng by KO in round 1",
-      "consensus_pct": 100.0,
-      "weight": 2.44,
-      "pick_count": 1,
-      "avg_confidence": 4.0,
-      "strength": 5.6,
+      "event_id": "ufc_fight_night_hooker_vs_parnasse",
+      "market": "moneyline",
+      "market_label": "Moneyline",
+      "selection": "Luis Felipe Dias",
+      "consensus_pct": 58.4,
+      "weight": 110.65,
+      "pick_count": 43,
+      "avg_confidence": 5.0,
+      "strength": 5.8,
       "tier": "lean",
       "suggested_units": 1.0,
-      "quoted_odds": {
-        "american": 450,
-        "decimal": 5.5,
-        "count": 1
-      },
-      "value": 25.2,
-      "comments": [
-        {
-          "capper": "We Want Picks (Jacob)",
-          "comment": "Not his own prop but he calls it very reasonable: Ding Meng swings for a finish in every fight against a wrestler, so +450 for a first-round knockout has value.",
-          "confidence": 4
-        }
-      ]
+      "comments": []
     },
     {
-      "fight_id": "long|nuzzi",
-      "fight": "Xiao Long vs Francesco Nuzzi",
+      "fight_id": "sola|ziam",
+      "fight": "Axel Sola vs Farés Ziam",
       "card_status": "on_card",
-      "event_id": "ufc_fight_night_nurmagomedov_vs_song",
-      "market": "round",
-      "market_label": "Round",
-      "selection": "Francesco Nuzzi in round 2",
-      "consensus_pct": 100.0,
-      "weight": 2.24,
-      "pick_count": 1,
-      "avg_confidence": 4.0,
-      "strength": 5.6,
-      "tier": "lean",
-      "suggested_units": 1.0,
-      "comments": [
-        {
-          "capper": "Axel MMA",
-          "comment": "He takes Nuzzi by finish, predicting he lands a big shot on Xiao's chin in the second round.",
-          "confidence": 4
-        }
-      ]
-    },
-    {
-      "fight_id": "polastri|xiong",
-      "fight": "Julia Polastri vs Jingnan Xiong",
-      "card_status": "on_card",
-      "event_id": "ufc_fight_night_nurmagomedov_vs_song",
-      "market": "method_of_victory",
-      "market_label": "Method of Victory",
-      "selection": "Julia Polastri by decision",
-      "consensus_pct": 100.0,
-      "weight": 2.1,
-      "pick_count": 1,
+      "event_id": "ufc_fight_night_hooker_vs_parnasse",
+      "market": "moneyline",
+      "market_label": "Moneyline",
+      "selection": "Axel Sola",
+      "consensus_pct": 54.9,
+      "weight": 116.35,
+      "pick_count": 45,
       "avg_confidence": 5.0,
       "strength": 5.5,
       "tier": "lean",
       "suggested_units": 1.0,
-      "comments": [
-        {
-          "capper": "Axel MMA",
-          "comment": "He expects the fight to go the distance with Polastri controlling on top and winning on the cards.",
-          "confidence": 5
-        }
-      ]
+      "comments": []
     },
     {
-      "fight_id": "perez|sumudaerji",
-      "fight": "Alex Perez vs Sumudaerji",
+      "fight_id": "aljarouj|sintes",
+      "fight": "Michael Aljarouj vs Fabia Sintes",
       "card_status": "on_card",
-      "event_id": "ufc_fight_night_nurmagomedov_vs_song",
-      "market": "round",
-      "market_label": "Round",
-      "selection": "Sumudaerji by KO in round 3",
-      "consensus_pct": 100.0,
-      "weight": 2.04,
-      "pick_count": 1,
-      "avg_confidence": 3.0,
-      "strength": 5.5,
-      "tier": "lean",
-      "suggested_units": 1.0,
-      "quoted_odds": {
-        "american": 1200,
-        "decimal": 13.0,
-        "count": 1
-      },
-      "value": 66.0,
-      "comments": [
-        {
-          "capper": "BetSlam with Sam",
-          "comment": "A small fun 'banter' sprinkle on an accumulation-of-damage late stoppage to have something to sweat late in the night.",
-          "confidence": 3
-        }
-      ]
-    },
-    {
-      "fight_id": "long|nuzzi",
-      "fight": "Xiao Long vs Francesco Nuzzi",
-      "card_status": "on_card",
-      "event_id": "ufc_fight_night_nurmagomedov_vs_song",
-      "market": "over_under",
-      "market_label": "Over / Under",
-      "selection": "Over 1.5 rounds",
-      "consensus_pct": 100.0,
-      "weight": 2.0,
-      "pick_count": 1,
-      "avg_confidence": 4.0,
-      "strength": 5.5,
-      "tier": "lean",
-      "suggested_units": 1.0,
-      "comments": [
-        {
-          "capper": "BotmfeederMMA",
-          "comment": "Doesn't mind the over 1.5 rounds, though he admits Xiao Long could blitz Nunzi out quickly.",
-          "confidence": 4
-        }
-      ]
-    },
-    {
-      "fight_id": "jenkins|woodson",
-      "fight": "Jack Jenkins vs Sean Woodson",
-      "card_status": "on_card",
-      "event_id": "ufc_fight_night_nurmagomedov_vs_song",
-      "market": "method_of_victory",
-      "market_label": "Method of Victory",
-      "selection": "Sean Woodson by decision",
-      "consensus_pct": 46.5,
-      "weight": 22.16,
-      "pick_count": 6,
-      "avg_confidence": 5.8,
-      "strength": 4.7,
-      "tier": "pass",
-      "suggested_units": 0.0,
-      "comments": [
-        {
-          "capper": "MMA Lock of the Night",
-          "comment": "Woodson's boxing and 10-inch reach advantage keeps Jenkins at distance for a classic Woodson decision.",
-          "confidence": 6
-        },
-        {
-          "capper": "MMA Prediction Guru",
-          "comment": "Woodson's unique height, reach and awkward range game plus higher volume boxing should beat Jenkins, who has never faced anyone that long and whose grappling won't take Woodson down.",
-          "confidence": 6
-        },
-        {
-          "capper": "Locked Door MMA",
-          "comment": "There's a chance he could KO Jenkins, but a unanimous decision is what's speaking to them.",
-          "confidence": 5
-        },
-        {
-          "capper": "TheWeasle",
-          "comment": "Woodson's 7-inch height advantage, movement and volume are too much; he's skilled at everything while keeping range, so Jenkins' leg kicks likely won't be enough.",
-          "confidence": 6
-        },
-        {
-          "capper": "Pure Picks MMA",
-          "comment": "Gerard thinks Woodson's reach, boxing and knees keep Jenkins on the outside; Jenkins is durable so it likely goes to the cards.",
-          "confidence": 6
-        },
-        {
-          "capper": "Axel MMA",
-          "comment": "He expects Woodson to pick Jenkins apart from distance and coast to a decision.",
-          "confidence": 6
-        }
-      ]
-    },
-    {
-      "fight_id": "lui|santiago",
-      "fight": "Lawrence Lui vs Hector Santiago",
-      "card_status": "on_card",
-      "event_id": "ufc_fight_night_nurmagomedov_vs_song",
-      "market": "method_of_victory",
-      "market_label": "Method of Victory",
-      "selection": "Lawrence Lui by decision",
-      "consensus_pct": 52.0,
-      "weight": 11.23,
-      "pick_count": 4,
+      "event_id": "ufc_fight_night_hooker_vs_parnasse",
+      "market": "moneyline",
+      "market_label": "Moneyline",
+      "selection": "Fabia Sintes",
+      "consensus_pct": 54.6,
+      "weight": 104.05,
+      "pick_count": 40,
       "avg_confidence": 5.0,
-      "strength": 4.1,
-      "tier": "pass",
-      "suggested_units": 0.0,
-      "quoted_odds": {
-        "american": 175,
-        "decimal": 2.75,
-        "count": 1
-      },
-      "value": 7.2,
-      "comments": [
-        {
-          "capper": "The Wager Zone",
-          "comment": "Value play — he expects Lui to grind out three rounds of takedowns and control.",
-          "confidence": 7
-        },
-        {
-          "capper": "TonyHasDiedMMA",
-          "comment": "Santiago is a pure boxer who can't stuff takedowns or defend submissions, while Lui is well-rounded with good wrestling and low kicks.",
-          "confidence": 6
-        },
-        {
-          "capper": "Pure Picks MMA",
-          "comment": "Host admits he knows nothing about either fighter and is picking essentially at random.",
-          "confidence": 2
-        },
-        {
-          "capper": "THE MMA GURU",
-          "comment": "Expects a clear 30-27 style decision.",
-          "confidence": 5
-        }
-      ]
+      "strength": 5.5,
+      "tier": "lean",
+      "suggested_units": 1.0,
+      "comments": []
     },
     {
-      "fight_id": "borjas|tsuruya",
-      "fight": "Kevin Borjas vs Rei Tsuruya",
+      "fight_id": "campbell|peek",
+      "fight": "Kurtis Campbell vs Trevor Peek",
       "card_status": "on_card",
-      "event_id": "ufc_fight_night_nurmagomedov_vs_song",
-      "market": "over_under",
-      "market_label": "Over / Under",
-      "selection": "Under 2.5 rounds",
-      "consensus_pct": 61.5,
-      "weight": 6.39,
-      "pick_count": 1,
-      "avg_confidence": 9.0,
-      "strength": 4.1,
-      "tier": "pass",
-      "suggested_units": 0.0,
-      "quoted_odds": {
-        "american": -130,
-        "decimal": 1.769,
-        "count": 1
-      },
-      "value": 3.2,
-      "comments": [
-        {
-          "capper": "MMA Lock of the Night",
-          "comment": "His lock of the night: Tsuruya will chase Borjas, drag him to the ground and finish inside a round to a round and a half; he got it at -115 and thinks -130 is still a steal.",
-          "confidence": 9
-        }
-      ]
-    },
-    {
-      "fight_id": "batbayar|lima",
-      "fight": "Namsrai Batbayar vs Andre Lima",
-      "card_status": "on_card",
-      "event_id": "ufc_fight_night_nurmagomedov_vs_song",
-      "market": "method_of_victory",
-      "market_label": "Method of Victory",
-      "selection": "Andre Lima by decision",
-      "consensus_pct": 46.7,
-      "weight": 12.68,
-      "pick_count": 4,
-      "avg_confidence": 5.5,
-      "strength": 3.8,
-      "tier": "pass",
-      "suggested_units": 0.0,
-      "quoted_odds": {
-        "american": 275,
-        "decimal": 3.75,
-        "count": 1
-      },
-      "value": 10.4,
-      "comments": [
-        {
-          "capper": "MMA Husky Hustler",
-          "comment": "Competitive fight, but Lima's activity, pressure and clinch work should control the more important exchanges over three rounds.",
-          "confidence": 6
-        },
-        {
-          "capper": "The Wager Zone",
-          "comment": "Value play — Lima is the cleaner striker with better volume and should shrug off takedowns while pressuring forward.",
-          "confidence": 6
-        },
-        {
-          "capper": "THE MMA GURU",
-          "comment": "Expects a lackluster tit-for-tat 29-28 decision.",
-          "confidence": 5
-        },
-        {
-          "capper": "Bedtime MMA",
-          "comment": "Batbayar's straight-ahead style plays into what Lima does well; Lima gets hit early but starts chopping calf kicks, mixes in grappling and uses his size to take a decision. Not super confident given Batbayar's 100% finish rate.",
-          "confidence": 5
-        }
-      ]
-    },
-    {
-      "fight_id": "long|nuzzi",
-      "fight": "Xiao Long vs Francesco Nuzzi",
-      "card_status": "on_card",
-      "event_id": "ufc_fight_night_nurmagomedov_vs_song",
-      "market": "method_of_victory",
-      "market_label": "Method of Victory",
-      "selection": "Xiao Long by decision",
-      "consensus_pct": 43.7,
-      "weight": 8.91,
-      "pick_count": 3,
-      "avg_confidence": 5.3,
-      "strength": 3.2,
-      "tier": "pass",
-      "suggested_units": 0.0,
-      "quoted_odds": {
-        "american": 185,
-        "decimal": 2.85,
-        "count": 1
-      },
-      "value": 5.9,
-      "comments": [
-        {
-          "capper": "The Wager Zone",
-          "comment": "Big value play — he expects Long to pressure, clinch and take downs to a decision win.",
-          "confidence": 7
-        },
-        {
-          "capper": "The MMA War Room Podcast",
-          "comment": "Shrekar notes Nuzzi has essentially no grappling and has been submitted twice while Xiao Long has nine submission wins, is bigger and fights at home; expects him to mix in wrestling and grind a decision.",
-          "confidence": 5
-        },
-        {
-          "capper": "Bedtime MMA",
-          "comment": "Nuzzi is levels better on the feet but has literally zero grappling, and Xiao Long has seven or eight submissions outside the UFC and should get takedowns whenever he tries; called it a risky, close, hardcore pick.",
-          "confidence": 4
-        }
-      ]
-    },
-    {
-      "fight_id": "jenkins|woodson",
-      "fight": "Jack Jenkins vs Sean Woodson",
-      "card_status": "on_card",
-      "event_id": "ufc_fight_night_nurmagomedov_vs_song",
-      "market": "prop",
-      "market_label": "Prop",
-      "selection": "Fight goes the distance",
-      "consensus_pct": 51.2,
-      "weight": 4.41,
-      "pick_count": 1,
-      "avg_confidence": 7.0,
-      "strength": 3.1,
-      "tier": "pass",
-      "suggested_units": 0.0,
-      "quoted_odds": {
-        "american": -155,
-        "decimal": 1.645,
-        "count": 1
-      },
-      "value": 2.0,
-      "comments": [
-        {
-          "capper": "The Wager Zone",
-          "comment": "Stated best bet for the fight — he doesn't think either man finishes the other.",
-          "confidence": 7
-        }
-      ]
-    },
-    {
-      "fight_id": "gomes|xiaonan",
-      "fight": "Denise Gomes vs Yan Xiaonan",
-      "card_status": "on_card",
-      "event_id": "ufc_fight_night_nurmagomedov_vs_song",
-      "market": "over_under",
-      "market_label": "Over / Under",
-      "selection": "Fight goes the distance",
-      "consensus_pct": 52.2,
-      "weight": 4.0,
-      "pick_count": 1,
-      "avg_confidence": 8.0,
-      "strength": 3.1,
-      "tier": "pass",
-      "suggested_units": 0.0,
-      "comments": [
-        {
-          "capper": "We BET Parlays",
-          "comment": "Parlay leg: both women are tough and hit hard, Gomes won't get knocked out and has a full toolkit, and neither can finish the other — expects trading plus some grappling over 15 minutes. Confidence eight on the distance.",
-          "confidence": 8
-        }
-      ]
+      "event_id": "ufc_fight_night_hooker_vs_parnasse",
+      "market": "moneyline",
+      "market_label": "Moneyline",
+      "selection": "Kurtis Campbell",
+      "consensus_pct": 52.7,
+      "weight": 75.5,
+      "pick_count": 29,
+      "avg_confidence": 5.0,
+      "strength": 5.3,
+      "tier": "lean",
+      "suggested_units": 1.0,
+      "comments": []
     }
   ]
 }
