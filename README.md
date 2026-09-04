@@ -659,6 +659,17 @@ Skip this section unless you want the schedule to run itself with zero
 weekly effort from you. It costs money and isn't required — the section
 above is the default, free way to run this.
 
+**The same setup also fixes a blocked home IP.** Open search means 70-90+
+transcript fetches from one IP in a run, and that volume can get a
+perfectly normal residential connection temporarily `IpBlocked` too — not
+just cloud/datacenter IPs. If `weekly.bat` hits `IpBlocked` on nearly every
+video and waiting (or a router restart, for a dynamic-IP ISP) doesn't clear
+it, follow the setup below and set `settings.proxy.enabled` to `true` in
+`config.json` for **local** runs too (the two credentials below go in your
+own `.env`, not GitHub secrets, for that case) — every transcript request
+then exits through the proxy's residential IP instead of your ISP's, so the
+block stops mattering either way.
+
 To make GitHub's cloud runners look like a normal visitor instead of a
 blocked datacenter, the pipeline supports routing through a proxy
 (`settings.proxy` in `config.json`, credentials from env vars — see
@@ -693,12 +704,16 @@ what `youtube-transcript-api`'s own docs recommend for exactly this error.
    `HTTP/... 200` means the proxy exits through an IP YouTube serves
    normally; a 4xx/5xx or an error page means the plan still isn't giving
    you residential IPs.
-5. Uncomment a `schedule:` trigger in `.github/workflows/consensus.yml` (see
-   the comment left in its place) and set it to whenever you want the run to
-   fire — the `Build consensus` and `Extract roster from a tracker video`
-   steps already set `MMA_PROXY_ENABLED=true` and pass the secrets through;
-   `config.json`'s `settings.proxy.enabled` stays `false` so local runs are
-   still unaffected.
+5. **For GitHub Actions:** add the same two as repo secrets (step 3 above)
+   and uncomment a `schedule:` trigger in `.github/workflows/consensus.yml`
+   (see the comment left in its place) — the `Build consensus` and `Extract
+   roster from a tracker video` steps already set `MMA_PROXY_ENABLED=true`
+   and pass the secrets through regardless of what `config.json` says.
+   **For local runs** (a blocked home IP, not the unattended-CI case): put
+   `WEBSHARE_PROXY_USERNAME` / `WEBSHARE_PROXY_PASSWORD` in your local
+   `.env` instead, and set `config.json`'s `settings.proxy.enabled` to
+   `true`. Either path reads the same two variables — GitHub Actions from
+   its secrets, `weekly.bat` from `.env` — so nothing else changes.
 
 Using a different residential proxy provider instead of Webshare? Set
 `settings.proxy.provider` to `"generic"` in `config.json` and add one secret,

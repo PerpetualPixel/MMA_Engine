@@ -61,7 +61,7 @@
       "regions": "us"
     },
     "proxy": {
-      "enabled": false,
+      "enabled": true,
       "provider": "webshare"
     },
     "transcript_cookies": {
