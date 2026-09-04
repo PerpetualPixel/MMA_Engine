@@ -51,6 +51,7 @@ from pydantic import BaseModel, Field
 
 from .aggregate import SourcedPick
 from .config import Capper
+from .discover import ChannelDiscovery, DiscoveredVideo
 from .extract import Pick, chunk_transcript
 from .normalize import display_name, fight_key, surname, within_one_edit
 from .roster import NEUTRAL_TRUST, name_key, slugify
@@ -400,6 +401,56 @@ def _failed(
         )
         return RoundupResult(video_id=video_id, fights=partial, ok=True, error=error)
     return RoundupResult(video_id=video_id, fights=[], ok=False, error=error)
+
+
+# -- finding this week's roundup automatically ------------------------------
+
+# A dedicated id, distinct from any real capper — this "channel" only ever
+# exists for the duration of one discovery call and is never itself a source
+# of picks.
+TRACKER_SCAN_ID = "_tracker_roundup_scan"
+
+
+def find_tracker_roundup(
+    channel_url: str,
+    channel_id: str,
+    title_contains: list[str],
+    api_key: str,
+    lookback_days: int = 21,
+    discovery: ChannelDiscovery | None = None,
+) -> DiscoveredVideo | None:
+    """The tracker channel's most recent upload matching this week's event.
+
+    Reuses `ChannelDiscovery` exactly as capper discovery does — same API
+    call, same RSS fallback, same legacy `/c/Name` page-scrape — pointed at
+    one channel (the tracker's) instead of the whole roster, filtered by the
+    same `discovery.title_contains` keywords the main event search already
+    relies on. A roundup posts a little further ahead of the card than most
+    capper previews, hence the wider default lookback.
+
+    None on anything that doesn't resolve to a match: no channel configured,
+    no keywords to filter by, no API key, nothing found, or a network
+    problem — the caller treats that exactly like "nothing to auto-discover
+    this week" and leaves `tracker.picks_videos` for a person to fill in.
+    """
+    if not channel_url and not channel_id:
+        return None
+    if not title_contains:
+        return None
+
+    scan_target = Capper(
+        id=TRACKER_SCAN_ID, name="Tracker roundup", channel_url=channel_url, channel_id=channel_id
+    )
+    channel_discovery = discovery or ChannelDiscovery(
+        lookback_days=lookback_days,
+        max_per_channel=1,
+        title_contains=title_contains,
+        api_key=api_key,
+    )
+    found, _report = channel_discovery.discover([scan_target])
+    if not found:
+        return None
+    return max(found, key=lambda v: v.published)
 
 
 # -- boards read elsewhere -------------------------------------------------

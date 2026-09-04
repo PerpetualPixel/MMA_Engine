@@ -221,6 +221,15 @@ could read. `tracker.picks_videos` ingests it:
 }
 ```
 
+**Or skip finding the URL by hand entirely** — set `"auto_discover": true`
+next to it and every run scans `tracker.channel_url`'s recent uploads for a
+title matching this week's `discovery.title_contains` (the fighters'
+surnames, kept current by `event.mode: "auto"`), and fills `picks_videos` in
+for you the first time it's empty. It never overwrites a URL already set —
+by a person or an earlier run this week — and fails open exactly like
+everything else here: no `YOUTUBE_API_KEY`, no match, or a network hiccup
+just leaves `picks_videos` empty for you to fill in the old way.
+
 Every run then reads it alongside the per-capper videos. For a one-off, or to
 try a roundup without editing the config:
 

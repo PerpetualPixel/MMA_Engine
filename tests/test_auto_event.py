@@ -1,15 +1,18 @@
 """Tests for auto_event.py: self-retargeting config.json in "auto" mode.
 
-find_next_event itself is stubbed out — these tests are only about what
-resolve_auto_event does with what it's told the next event is.
+find_next_event and find_tracker_roundup are stubbed out throughout — these
+tests are only about what resolve_auto_event / resolve_tracker_roundup do
+with what they're told the next event / roundup is.
 """
 
 from __future__ import annotations
 
 import json
+from datetime import datetime, timezone
 from pathlib import Path
 
 from mma_engine import auto_event
+from mma_engine.discover import DiscoveredVideo
 
 
 def write_config(tmp_path: Path, event: dict, extra: dict | None = None) -> Path:
@@ -124,3 +127,114 @@ def test_league_pin_is_passed_through_to_find_next_event(tmp_path, monkeypatch):
     auto_event.resolve_auto_event(path)
 
     assert seen["leagues"] == ("pfl",)
+
+
+# -- resolve_tracker_roundup --------------------------------------------------
+
+
+def write_tracker_config(tmp_path: Path, tracker: dict, discovery_title_contains=("hooker", "parnasse")) -> Path:
+    payload = {
+        "event": {"name": "UFC Fight Night: Hooker vs. Parnasse"},
+        "settings": {"discovery": {"title_contains": list(discovery_title_contains)}},
+        "tracker": tracker,
+        "cappers": [],
+    }
+    path = tmp_path / "config.json"
+    path.write_text(json.dumps(payload), encoding="utf-8")
+    return path
+
+
+def fake_video(video_id="MgD40FZsow0", title="Overview of ALL PREDICTIONS"):
+    return DiscoveredVideo(
+        video_id=video_id,
+        capper_id="_tracker_roundup_scan",
+        url=f"https://www.youtube.com/watch?v={video_id}",
+        title=title,
+        published=datetime(2026, 9, 1, tzinfo=timezone.utc),
+    )
+
+
+def test_auto_discover_off_by_default_is_a_no_op(tmp_path, monkeypatch):
+    monkeypatch.setenv("YOUTUBE_API_KEY", "fake-key")
+    monkeypatch.setattr(auto_event, "find_tracker_roundup", lambda **kw: fake_video())
+    path = write_tracker_config(tmp_path, {"channel_url": "https://www.youtube.com/@X"})
+
+    assert auto_event.resolve_tracker_roundup(path) is False
+    raw = json.loads(path.read_text(encoding="utf-8"))
+    assert raw["tracker"].get("picks_videos") is None
+
+
+def test_auto_discover_finds_and_sets_picks_videos(tmp_path, monkeypatch):
+    monkeypatch.setenv("YOUTUBE_API_KEY", "fake-key")
+    monkeypatch.setattr(auto_event, "find_tracker_roundup", lambda **kw: fake_video())
+    path = write_tracker_config(
+        tmp_path, {"channel_url": "https://www.youtube.com/@X", "auto_discover": True}
+    )
+
+    assert auto_event.resolve_tracker_roundup(path) is True
+    raw = json.loads(path.read_text(encoding="utf-8"))
+    assert raw["tracker"]["picks_videos"] == ["https://www.youtube.com/watch?v=MgD40FZsow0"]
+
+
+def test_auto_discover_does_not_overwrite_an_existing_url(tmp_path, monkeypatch):
+    monkeypatch.setenv("YOUTUBE_API_KEY", "fake-key")
+    monkeypatch.setattr(auto_event, "find_tracker_roundup", lambda **kw: fake_video())
+    path = write_tracker_config(
+        tmp_path,
+        {
+            "channel_url": "https://www.youtube.com/@X",
+            "auto_discover": True,
+            "picks_videos": ["https://youtu.be/alreadySetXX"],
+        },
+    )
+
+    assert auto_event.resolve_tracker_roundup(path) is False
+    raw = json.loads(path.read_text(encoding="utf-8"))
+    assert raw["tracker"]["picks_videos"] == ["https://youtu.be/alreadySetXX"]
+
+
+def test_auto_discover_needs_a_youtube_api_key(tmp_path, monkeypatch):
+    monkeypatch.delenv("YOUTUBE_API_KEY", raising=False)
+    monkeypatch.setattr(auto_event, "find_tracker_roundup", lambda **kw: fake_video())
+    path = write_tracker_config(
+        tmp_path, {"channel_url": "https://www.youtube.com/@X", "auto_discover": True}
+    )
+
+    assert auto_event.resolve_tracker_roundup(path) is False
+
+
+def test_auto_discover_needs_discovery_keywords(tmp_path, monkeypatch):
+    monkeypatch.setenv("YOUTUBE_API_KEY", "fake-key")
+    monkeypatch.setattr(auto_event, "find_tracker_roundup", lambda **kw: fake_video())
+    path = write_tracker_config(
+        tmp_path,
+        {"channel_url": "https://www.youtube.com/@X", "auto_discover": True},
+        discovery_title_contains=(),
+    )
+
+    assert auto_event.resolve_tracker_roundup(path) is False
+
+
+def test_auto_discover_returns_false_when_nothing_matches(tmp_path, monkeypatch):
+    monkeypatch.setenv("YOUTUBE_API_KEY", "fake-key")
+    monkeypatch.setattr(auto_event, "find_tracker_roundup", lambda **kw: None)
+    path = write_tracker_config(
+        tmp_path, {"channel_url": "https://www.youtube.com/@X", "auto_discover": True}
+    )
+
+    assert auto_event.resolve_tracker_roundup(path) is False
+
+
+def test_auto_discover_fails_open_on_error(tmp_path, monkeypatch):
+    def boom(**kwargs):
+        raise RuntimeError("network exploded")
+
+    monkeypatch.setenv("YOUTUBE_API_KEY", "fake-key")
+    monkeypatch.setattr(auto_event, "find_tracker_roundup", boom)
+    path = write_tracker_config(
+        tmp_path, {"channel_url": "https://www.youtube.com/@X", "auto_discover": True}
+    )
+    before = path.read_text(encoding="utf-8")
+
+    assert auto_event.resolve_tracker_roundup(path) is False
+    assert path.read_text(encoding="utf-8") == before
