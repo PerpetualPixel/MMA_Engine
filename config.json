@@ -44,7 +44,7 @@
         "parnasse"
       ],
       "search": {
-        "enabled": true,
+        "enabled": false,
         "queries": [
           "UFC Fight Night: Hooker vs. Parnasse predictions",
           "Dan Hooker Salahdine Parnasse picks",
@@ -61,7 +61,7 @@
       "regions": "us"
     },
     "proxy": {
-      "enabled": true,
+      "enabled": false,
       "provider": "webshare"
     },
     "transcript_cookies": {

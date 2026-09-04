@@ -653,22 +653,45 @@ To publish the dashboard: *Settings → Pages → Source: Deploy from a branch �
 
 ---
 
+## Free option: fix a blocked home IP by cutting request volume
+
+`IpBlocked` almost always means volume, not that YouTube singled you out.
+Open search alone can mean 70-90+ transcript fetches from one IP in a
+single `weekly.bat` run — enough to trip a rate limit on a perfectly normal
+residential connection. Before paying for anything (the proxy section
+below), try this, free:
+
+1. **Turn off open search.** Set `settings.discovery.search.enabled` to
+   `false` in `config.json` (this is now the default) — it drops discovery
+   back to only the channels already listed under `cappers`, whose videos
+   are filtered by `settings.discovery.title_contains` *before* a
+   transcript is ever fetched, instead of paying to scan every channel
+   YouTube's search turns up. Open search's main job — finding cappers you
+   don't already track — matters much less now that the tracker's weekly
+   roundup video (`tracker.auto_discover`, see above) already hands you
+   every channel's pick on every fight from one video, at zero extra
+   transcript fetches.
+2. **Already blocked? Get a different IP for one run.** A proxy works by
+   giving you a different exit IP; a router restart (dynamic-IP ISPs) or
+   tethering to a phone hotspot for one run does the same thing for free,
+   instantly, instead of waiting hours for the block to clear on its own.
+3. **Still seeing occasional blocks with search off?** Raise
+   `settings.min_delay_seconds` / `max_delay_seconds` (default `6`/`16`) to
+   spread requests out further.
+
+This doesn't help if you specifically want fully unattended runs on
+GitHub's cloud runners — their IPs are known-bad datacenter ranges YouTube
+blocks outright regardless of volume — that case needs the paid proxy
+setup below.
+
+---
+
 ## Optional: fully unattended runs on GitHub Actions (needs a paid proxy)
 
 Skip this section unless you want the schedule to run itself with zero
-weekly effort from you. It costs money and isn't required — the section
-above is the default, free way to run this.
-
-**The same setup also fixes a blocked home IP.** Open search means 70-90+
-transcript fetches from one IP in a run, and that volume can get a
-perfectly normal residential connection temporarily `IpBlocked` too — not
-just cloud/datacenter IPs. If `weekly.bat` hits `IpBlocked` on nearly every
-video and waiting (or a router restart, for a dynamic-IP ISP) doesn't clear
-it, follow the setup below and set `settings.proxy.enabled` to `true` in
-`config.json` for **local** runs too (the two credentials below go in your
-own `.env`, not GitHub secrets, for that case) — every transcript request
-then exits through the proxy's residential IP instead of your ISP's, so the
-block stops mattering either way.
+weekly effort from you, or the free option above didn't clear a local
+block. It costs money and isn't required — everything above is the
+default, free way to run this.
 
 To make GitHub's cloud runners look like a normal visitor instead of a
 blocked datacenter, the pipeline supports routing through a proxy
