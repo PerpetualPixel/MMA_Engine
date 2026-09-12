@@ -1,15 +1,24 @@
-# One-button weekly consensus run.
+# One-button weekly consensus run, built from the predictions tracker.
 #
 # Double-click weekly.bat (or run this script directly) to:
 #   1. pull the latest code and config
-#   2. discover this week's capper videos (YouTube Data API)
-#   3. fetch transcripts and extract picks (Claude API), including every
-#      channel's pick from the tracker roundups listed in config.json
-#      ("tracker.picks_videos" — paste this week's roundup URL there), plus
-#      any cards you pasted into pasted\ for paywalled cappers
+#   2. retarget to the next card (ESPN) and find that card's tracker roundup
+#      on @UFCPredictionsTracker (YouTube Data API)
+#   3. read the roundup's slide deck — every tracked channel's pick for every
+#      fight, 80+ channels a card — plus any cards you pasted into pasted\
+#      for paywalled cappers
 #   4. build docs/data.json (the dashboard) and docs/picks.json (the
 #      weighted picks feed PerpetualPicks.com reads)
 #   5. push both, updating the live site in about a minute
+#
+# The roundup IS the consensus here. Scraping the cappers' own videos one by
+# one is off (--no-discover below, and settings.discovery.enabled in
+# config.json): the tracker already tallies far more channels than discovery
+# could find, in one video, without a transcript fetch per capper. To bring
+# per-capper videos back for a run — they carry conviction, stated odds and
+# reasoning, which a roundup tally never does — run:
+#   .venv\Scripts\python.exe -m mma_engine --config config.json --discover --output docs\data.json
+# or flip settings.discovery.enabled back to true for good.
 #
 # Needs a one-time .env file next to this script with:
 #   ANTHROPIC_API_KEY=sk-ant-...
@@ -152,10 +161,17 @@ Write-Host "== Checking for a new event ==" -ForegroundColor Cyan
 Commit-And-Push -paths @("config.json") -message "chore: auto-retarget to next event" `
     -doneMessage "Retargeted and pushed - the next step builds against it." | Out-Null
 
-Write-Host "== Building the consensus ==" -ForegroundColor Cyan
-& ".venv\Scripts\python.exe" -m mma_engine --config config.json --output docs\data.json
+Write-Host "== Building the consensus from the tracker roundup ==" -ForegroundColor Cyan
+& ".venv\Scripts\python.exe" -m mma_engine --config config.json --no-discover --output docs\data.json
 if ($LASTEXITCODE -ne 0) {
-    Fail "The pipeline failed (see errors above). Nothing was pushed."
+    # The pipeline writes docs/data.json before it can know the consensus came
+    # out empty, so a failed run leaves a half-built file in the tree. Left
+    # there it blocks the NEXT run at `git pull --ff-only` with a local-changes
+    # conflict. Throw it away: the published version is the good one, and this
+    # run published nothing.
+    git checkout -- docs/data.json docs/picks.json 2>$null
+    Fail ("The pipeline failed (see errors above). Nothing was pushed, and the " +
+          "live dashboard still shows the last good run.")
 }
 
 Write-Host "== Building the weighted picks feed ==" -ForegroundColor Cyan

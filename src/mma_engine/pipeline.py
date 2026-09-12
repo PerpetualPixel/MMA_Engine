@@ -1184,6 +1184,22 @@ def main(argv: list[str] | None = None) -> int:
     if payload["sources"] and all(s["status"] != "ok" for s in payload["sources"]):
         log.error("Every video failed — see the errors above.")
         return 1
+
+    # A consensus with no fights in it is not a thin week, it is a wiped
+    # dashboard: weekly.ps1 publishes whatever this writes, and with the
+    # tracker roundup as the only source there is no second source left to
+    # cover for it when the deck can't be found or read. Fail instead, so
+    # the last good docs/data.json stays live.
+    if not payload["fights"]:
+        log.error(
+            "The consensus came out empty — no fights survived. Nothing worth "
+            "publishing, so this is a failure rather than a result. Usually "
+            "this means the tracker roundup wasn't found or couldn't be read "
+            "(check tracker.picks_videos and the roundup log lines above), or "
+            "the ESPN card filter dropped everything because config.json names "
+            "a different event than the picks cover."
+        )
+        return 1
     return 0
 
 
