@@ -148,7 +148,19 @@
         "TonyHasDiedMMA",
         "Urban_mma",
         "Voice of MMA"
-      ]
+      ],
+      "odds_for_a": {
+        "moneyline": "+230",
+        "ko_tko": "+1040",
+        "submission": "+870",
+        "decision": "+275"
+      },
+      "odds_for_b": {
+        "moneyline": "-280",
+        "ko_tko": "+270",
+        "submission": "+560",
+        "decision": "-135"
+      }
     },
     {
       "fighter_a": "Sean King III",
@@ -286,7 +298,19 @@
         "The Golden Octagon (D.Rose)",
         "The Octagon Oracle",
         "The Sports Scientist"
-      ]
+      ],
+      "odds_for_a": {
+        "moneyline": "-195",
+        "ko_tko": "+210",
+        "submission": "+750",
+        "decision": "+240"
+      },
+      "odds_for_b": {
+        "moneyline": "+160",
+        "ko_tko": "+750",
+        "submission": "+550",
+        "decision": "+490"
+      }
     },
     {
       "fighter_a": "Rafa Garcia",
@@ -429,7 +453,19 @@
         "The Finz Chats",
         "Urban_mma",
         "Walk The Line MMA"
-      ]
+      ],
+      "odds_for_a": {
+        "moneyline": "+140",
+        "ko_tko": "+705",
+        "submission": "+380",
+        "decision": "+160"
+      },
+      "odds_for_b": {
+        "moneyline": "-170",
+        "ko_tko": "+235",
+        "submission": "+990",
+        "decision": "-110"
+      }
     },
     {
       "fighter_a": "Drakkar Klose",
@@ -578,7 +614,19 @@
         "The Sports Scientist",
         "Urban_mma",
         "Voice of MMA"
-      ]
+      ],
+      "odds_for_a": {
+        "moneyline": "+345",
+        "ko_tko": "+860",
+        "submission": "+2320",
+        "decision": "+570"
+      },
+      "odds_for_b": {
+        "moneyline": "-440",
+        "ko_tko": "+140",
+        "submission": "+185",
+        "decision": "+305"
+      }
     },
     {
       "fighter_a": "Yousri Belgaroui",
@@ -728,7 +776,19 @@
       ],
       "ko_tko_for_b": [],
       "submission_for_b": [],
-      "decision_for_b": []
+      "decision_for_b": [],
+      "odds_for_a": {
+        "moneyline": "-790",
+        "ko_tko": "-150",
+        "submission": "+1440",
+        "decision": "+165"
+      },
+      "odds_for_b": {
+        "moneyline": "+555",
+        "ko_tko": "+1235",
+        "submission": "+2135",
+        "decision": "+1025"
+      }
     },
     {
       "fighter_a": "Ignacio Bahamondes",
@@ -878,7 +938,19 @@
       ],
       "ko_tko_for_b": [],
       "submission_for_b": [],
-      "decision_for_b": []
+      "decision_for_b": [],
+      "odds_for_a": {
+        "moneyline": "-535",
+        "ko_tko": "-125",
+        "submission": "+420",
+        "decision": "+240"
+      },
+      "odds_for_b": {
+        "moneyline": "+400",
+        "ko_tko": "+630",
+        "submission": "+1945",
+        "decision": "+800"
+      }
     },
     {
       "fighter_a": "Tim Elliott",
@@ -1029,7 +1101,19 @@
         "TheWagerZone",
         "Urban_mma",
         "Walk The Line MMA"
-      ]
+      ],
+      "odds_for_a": {
+        "moneyline": "+175",
+        "ko_tko": "+1635",
+        "submission": "+460",
+        "decision": "+335"
+      },
+      "odds_for_b": {
+        "moneyline": "-215",
+        "ko_tko": "+520",
+        "submission": "+175",
+        "decision": "+205"
+      }
     },
     {
       "fighter_a": "David Martinez",
@@ -1180,7 +1264,19 @@
       ],
       "ko_tko_for_b": [],
       "submission_for_b": [],
-      "decision_for_b": []
+      "decision_for_b": [],
+      "odds_for_a": {
+        "moneyline": "-400",
+        "ko_tko": "+235",
+        "submission": "+1575",
+        "decision": "-130"
+      },
+      "odds_for_b": {
+        "moneyline": "+315",
+        "ko_tko": "+780",
+        "submission": "+1840",
+        "decision": "+560"
+      }
     },
     {
       "fighter_a": "Waldo Cortes-Acosta",
@@ -1333,7 +1429,19 @@
         "MMA AL DENTE",
         "MMA JAWN",
         "The Golden Octagon (D.Rose)"
-      ]
+      ],
+      "odds_for_a": {
+        "moneyline": "-200",
+        "ko_tko": "+145",
+        "submission": "+1640",
+        "decision": "+190"
+      },
+      "odds_for_b": {
+        "moneyline": "+165",
+        "ko_tko": "+525",
+        "submission": "+2560",
+        "decision": "+305"
+      }
     },
     {
       "fighter_a": "Manon Fiorot",
@@ -1487,7 +1595,19 @@
         "The Octagon Oracle",
         "The Sports Scientist",
         "Walk The Line MMA"
-      ]
+      ],
+      "odds_for_a": {
+        "moneyline": "-245",
+        "ko_tko": "+510",
+        "submission": "+2220",
+        "decision": "-155"
+      },
+      "odds_for_b": {
+        "moneyline": "+200",
+        "ko_tko": "+1555",
+        "submission": "+845",
+        "decision": "+310"
+      }
     },
     {
       "fighter_a": "Tommy McMillen",
@@ -1642,7 +1762,19 @@
         "Urban_mma"
       ],
       "submission_for_b": [],
-      "decision_for_b": []
+      "decision_for_b": [],
+      "odds_for_a": {
+        "moneyline": "-160",
+        "ko_tko": "+260",
+        "submission": "+380",
+        "decision": "+265"
+      },
+      "odds_for_b": {
+        "moneyline": "+135",
+        "ko_tko": "+225",
+        "submission": "+1675",
+        "decision": "+560"
+      }
     },
     {
       "fighter_a": "Brandon Moreno",
@@ -1797,7 +1929,19 @@
         "MCApicks (Gerardo)",
         "The Golden Octagon (D.Rose)",
         "Walk The Line MMA"
-      ]
+      ],
+      "odds_for_a": {
+        "moneyline": "+103",
+        "ko_tko": "+810",
+        "submission": "+1245",
+        "decision": "+130"
+      },
+      "odds_for_b": {
+        "moneyline": "-122",
+        "ko_tko": "+995",
+        "submission": "+535",
+        "decision": "+135"
+      }
     },
     {
       "fighter_a": "Jean Silva",
@@ -1956,7 +2100,19 @@
       "submission_for_b": [],
       "decision_for_b": [
         "MMA AL DENTE"
-      ]
+      ],
+      "odds_for_a": {
+        "moneyline": "-415",
+        "ko_tko": "-160",
+        "submission": "+705",
+        "decision": "+400"
+      },
+      "odds_for_b": {
+        "moneyline": "+320",
+        "ko_tko": "+595",
+        "submission": "+1385",
+        "decision": "+970"
+      }
     }
   ]
 }
