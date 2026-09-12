@@ -452,3 +452,130 @@ def test_find_tracker_roundup_returns_none_when_nothing_matches():
 def test_find_tracker_roundup_short_circuits_with_no_channel_or_keywords():
     assert find_tracker_roundup("", "", ["hooker"], "fake-key") is None
     assert find_tracker_roundup("https://www.youtube.com/@X", "", [], "fake-key") is None
+
+
+# -- method-of-victory boards ---------------------------------------------
+#
+# The moneyline board every roundup prints is followed by one board per
+# finish ("Win by KO/TKO or DQ", "Win by Submission", "Win by Decision").
+# Those carry the same channel names against a method, and the dashboard's
+# Method and Double Chance tabs are built from them.
+
+
+def test_method_boards_become_method_of_victory_picks():
+    fights = [
+        TrackerFightPicks(
+            fighter_a="Jean Silva",
+            fighter_b="Jose Delgado",
+            cappers_for_a=["Artem MMA", "BetSam"],
+            cappers_for_b=["Kunath"],
+            ko_tko_for_a=["Artem MMA"],
+            decision_for_a=["BetSam"],
+            submission_for_b=["Kunath"],
+        )
+    ]
+    directory = CapperDirectory(
+        [capper("artem_mma", "Artem MMA"), capper("betsam", "BetSam"), capper("kunath", "Kunath")]
+    )
+    picks, stats = to_sourced_picks(fights, directory, video_id="v", video_url="u")
+
+    by_type: dict[str, set[str]] = {}
+    for sourced in picks:
+        by_type.setdefault(sourced.pick.bet_type, set()).add(sourced.pick.selection)
+
+    assert by_type["moneyline"] == {"Jean Silva", "Jose Delgado"}
+    assert by_type["method_of_victory"] == {
+        "Jean Silva by KO/TKO",
+        "Jean Silva by Decision",
+        "Jose Delgado by Submission",
+    }
+    # Three moneyline votes plus three method votes.
+    assert stats.picks == 6
+    # A method pick names the fighter it is on, so the dashboard can group it.
+    method = next(s for s in picks if s.pick.bet_type == "method_of_victory")
+    assert method.pick.fighter in {"Jean Silva", "Jose Delgado"}
+    assert method.source_kind == "tracker"
+
+
+def test_method_picks_are_skipped_for_a_capper_already_covered():
+    """A capper's own video outranks the roundup for the whole fight."""
+    fights = [
+        TrackerFightPicks(
+            fighter_a="Jean Silva",
+            fighter_b="Jose Delgado",
+            cappers_for_a=["Artem MMA"],
+            cappers_for_b=[],
+            ko_tko_for_a=["Artem MMA"],
+        )
+    ]
+    directory = CapperDirectory([capper("artem_mma", "Artem MMA")])
+    covered = frozenset({("artem_mma", fight_key("Jean Silva", "Jose Delgado"))})
+    picks, stats = to_sourced_picks(
+        fights, directory, video_id="v", video_url="u", already_covered=covered
+    )
+    assert picks == []
+    assert stats.superseded == 2  # the moneyline board and the method board
+
+
+def test_merge_keeps_method_boards_and_drops_contradictions():
+    """Same merge contract as the moneyline: one side per channel, or nothing."""
+    merged = merge_roundups(
+        [
+            roundup(
+                TrackerFightPicks(
+                    fighter_a="Jean Silva",
+                    fighter_b="Jose Delgado",
+                    cappers_for_a=["Artem MMA", "BetSam"],
+                    cappers_for_b=[],
+                    ko_tko_for_a=["Artem MMA"],
+                    decision_for_a=["BetSam"],
+                )
+            ),
+            # A later chunk recaps the card and puts BetSam's decision call on
+            # the other fighter: contradictory, so it counts for neither.
+            roundup(
+                TrackerFightPicks(
+                    fighter_a="Jose Delgado",
+                    fighter_b="Jean Silva",
+                    cappers_for_a=[],
+                    cappers_for_b=["Kunath"],
+                    submission_for_a=["Kunath"],
+                    decision_for_a=["BetSam"],
+                )
+            ),
+        ]
+    )
+    assert len(merged) == 1
+    fight_out = merged[0]
+    assert fight_out.ko_tko_for_a == ["Artem MMA"]
+    assert fight_out.decision_for_a == []  # dropped: both sides claimed it
+    assert fight_out.decision_for_b == []
+    assert fight_out.submission_for_b == ["Kunath"]
+
+
+def test_a_roundup_file_without_method_boards_still_loads(tmp_path):
+    """Every roundup written before the method boards were read stays valid."""
+    from mma_engine.tracker_picks import load_readings
+
+    (tmp_path / "abc123.json").write_text(
+        json.dumps(
+            {
+                "video_id": "abc123",
+                "source_url": "https://youtu.be/abc123",
+                "event_name": "UFC 300",
+                "fights": [
+                    {
+                        "fighter_a": "Jean Silva",
+                        "fighter_b": "Jose Delgado",
+                        "cappers_for_a": ["Artem MMA"],
+                        "cappers_for_b": [],
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    _url, parsed = load_readings(tmp_path)["abc123"]
+    assert parsed.fights[0].cappers_for_a == ["Artem MMA"]
+    assert parsed.fights[0].ko_tko_for_a == []
+    assert parsed.fights[0].method_names("decision", "b") == []
