@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-12T15:44:38+00:00",
+  "generated_at": "2026-09-12T16:01:30+00:00",
   "event": {
     "mode": "auto",
     "name": "Noche UFC: Silva vs. Delgado",
@@ -17,7 +17,7 @@
     "odds": {
       "source": "the-odds-api",
       "market": "h2h",
-      "fetched_at": "2026-09-12T15:44:38+00:00",
+      "fetched_at": "2026-09-12T16:01:30+00:00",
       "fights_priced": 12
     }
   },
@@ -1834,7 +1834,7 @@
       "event_id": "noche_ufc_silva_vs_delgado",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-09-12T15:44:38+00:00",
+        "fetched_at": "2026-09-12T16:01:30+00:00",
         "commence_time": "2026-09-12T23:45:00Z",
         "a": {
           "american": 330,
@@ -3590,7 +3590,7 @@
       "event_id": "noche_ufc_silva_vs_delgado",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-09-12T15:44:38+00:00",
+        "fetched_at": "2026-09-12T16:01:30+00:00",
         "commence_time": "2026-09-12T23:15:00Z",
         "a": {
           "american": -115,
@@ -5347,7 +5347,7 @@
       "event_id": "noche_ufc_silva_vs_delgado",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-09-12T15:44:38+00:00",
+        "fetched_at": "2026-09-12T16:01:30+00:00",
         "commence_time": "2026-09-12T22:45:00Z",
         "a": {
           "american": -155,
@@ -7058,7 +7058,7 @@
       "event_id": "noche_ufc_silva_vs_delgado",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-09-12T15:44:38+00:00",
+        "fetched_at": "2026-09-12T16:01:30+00:00",
         "commence_time": "2026-09-12T21:15:00Z",
         "a": {
           "american": 330,
@@ -8791,7 +8791,7 @@
       "event_id": "noche_ufc_silva_vs_delgado",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-09-12T15:44:38+00:00",
+        "fetched_at": "2026-09-12T16:01:30+00:00",
         "commence_time": "2026-09-12T21:45:00Z",
         "a": {
           "american": -194,
@@ -10535,7 +10535,7 @@
       "event_id": "noche_ufc_silva_vs_delgado",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-09-12T15:44:38+00:00",
+        "fetched_at": "2026-09-12T16:01:30+00:00",
         "commence_time": "2026-09-12T22:15:00Z",
         "a": {
           "american": -280,
@@ -12234,7 +12234,7 @@
       "event_id": "noche_ufc_silva_vs_delgado",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-09-12T15:44:38+00:00",
+        "fetched_at": "2026-09-12T16:01:30+00:00",
         "commence_time": "2026-09-12T20:30:00Z",
         "a": {
           "american": -550,
@@ -13943,7 +13943,7 @@
       "event_id": "noche_ufc_silva_vs_delgado",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-09-12T15:44:38+00:00",
+        "fetched_at": "2026-09-12T16:01:30+00:00",
         "commence_time": "2026-09-12T20:45:00Z",
         "a": {
           "american": -205,
@@ -15643,19 +15643,19 @@
       "event_id": "noche_ufc_silva_vs_delgado",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-09-12T15:44:38+00:00",
+        "fetched_at": "2026-09-12T16:01:30+00:00",
         "commence_time": "2026-09-12T20:15:00Z",
         "a": {
-          "american": -874,
-          "decimal": 1.1144,
+          "american": -900,
+          "decimal": 1.1111,
           "books": 8,
           "best_american": -825
         },
         "b": {
-          "american": 595,
-          "decimal": 6.95,
+          "american": 600,
+          "decimal": 7.0,
           "books": 8,
-          "best_american": 600
+          "best_american": 610
         }
       }
     },
@@ -17327,7 +17327,7 @@
       "event_id": "noche_ufc_silva_vs_delgado",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-09-12T15:44:38+00:00",
+        "fetched_at": "2026-09-12T16:01:30+00:00",
         "commence_time": "2026-09-12T19:25:00Z",
         "a": {
           "american": -415,
@@ -18988,7 +18988,7 @@
       "event_id": "noche_ufc_silva_vs_delgado",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-09-12T15:44:38+00:00",
+        "fetched_at": "2026-09-12T16:01:30+00:00",
         "commence_time": "2026-09-12T18:10:00Z",
         "a": {
           "american": 235,
@@ -22136,7 +22136,7 @@
       "event_id": "noche_ufc_silva_vs_delgado",
       "live_odds": {
         "source": "the-odds-api",
-        "fetched_at": "2026-09-12T15:44:38+00:00",
+        "fetched_at": "2026-09-12T16:01:30+00:00",
         "commence_time": "2026-09-12T18:30:00Z",
         "a": {
           "american": -216,

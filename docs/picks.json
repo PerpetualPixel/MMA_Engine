@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-12T15:44:38+00:00",
+  "generated_at": "2026-09-12T16:01:30+00:00",
   "event": {
     "mode": "auto",
     "name": "Noche UFC: Silva vs. Delgado",
@@ -17,7 +17,7 @@
     "odds": {
       "source": "the-odds-api",
       "market": "h2h",
-      "fetched_at": "2026-09-12T15:44:38+00:00",
+      "fetched_at": "2026-09-12T16:01:30+00:00",
       "fights_priced": 12
     }
   },
