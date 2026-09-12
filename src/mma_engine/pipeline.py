@@ -30,7 +30,7 @@ from .config import (
 )
 from .discover import ChannelDiscovery, DiscoveredVideo
 from .event_card import annotate_consensus, fetch_event_cards
-from .normalize import fight_key
+from .normalize import fight_key, surname, surnames_match as _surnames_match
 from .odds import annotate_odds, fetch_live_odds
 from .pasted_picks import (
     PastedNote,
@@ -406,6 +406,7 @@ def ingest_tracker_roundups(
     apply_cappers: bool = False,
     skip_extraction: bool = False,
     slides_dir: Path | None = None,
+    board_odds: dict[str, dict[str, Any]] | None = None,
 ) -> str:
     """Add every channel's pick from the tracker's roundup video(s), in place.
 
@@ -553,6 +554,25 @@ def ingest_tracker_roundups(
             already_covered=covered,
         )
         sourced_picks.extend(picks)
+        # The boards print prices as well as names, and for method bets they
+        # are the only prices the engine has — the live feed is moneyline
+        # only. Collected per fight so run_pipeline can stamp them on the
+        # payload the same way live odds are stamped on.
+        if board_odds is not None:
+            for board in result.fights:
+                printed = {
+                    side: board.odds(side).model_dump(exclude_defaults=True)
+                    for side in ("a", "b")
+                }
+                if not any(printed.values()):
+                    continue
+                board_odds[fight_key(board.fighter_a, board.fighter_b)] = {
+                    "fighter_a": board.fighter_a,
+                    "fighter_b": board.fighter_b,
+                    **printed,
+                    "source": "tracker board",
+                    "video_id": video_id,
+                }
         event_name = event_name or result.event_name
         record.update(
             pick_count=stats.picks,
@@ -680,6 +700,7 @@ def run_pipeline(
     # including the many channels this pipeline can't read a video for. Runs
     # last so a capper's own picks are already in hand and their roundup entry
     # for the same fight can defer to them.
+    board_odds: dict[str, dict[str, Any]] = {}
     roundup_event = ingest_tracker_roundups(
         config,
         config.tracker_picks_videos if roundup_urls is None else roundup_urls,
@@ -689,6 +710,7 @@ def run_pipeline(
         apply_cappers=apply_tracker_cappers,
         skip_extraction=skip_extraction,
         slides_dir=slides_dir,
+        board_odds=board_odds,
     )
     event_name = event_name or roundup_event
 
@@ -748,6 +770,28 @@ def run_pipeline(
         )
         if priced:
             log.info("Live moneylines attached to %d bouts", priced)
+
+    # The board's own prices, per fight. Kept separate from live_odds rather
+    # than merged into it: these are the tracker's snapshot from whenever the
+    # deck was built, and the dashboard labels them as such. They are the only
+    # prices the engine has for method bets, which the live feed doesn't carry.
+    if board_odds:
+        stamped = 0
+        for fight in payload.get("fights") or []:
+            board = board_odds.get(fight_key(fight["fighter_a"], fight["fighter_b"]))
+            if not board:
+                continue
+            # The card annotation may have corrected a spelling, and with it
+            # which fighter is "a"; match on surname rather than position.
+            flip = not _surnames_match(surname(fight["fighter_a"]), surname(board["fighter_a"]))
+            fight["board_odds"] = {
+                "source": board["source"],
+                "video_id": board["video_id"],
+                "a": board["b" if flip else "a"],
+                "b": board["a" if flip else "b"],
+            }
+            stamped += 1
+        log.info("Board prices attached to %d bout(s)", stamped)
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(

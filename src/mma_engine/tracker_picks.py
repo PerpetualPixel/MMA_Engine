@@ -78,6 +78,26 @@ METHOD_LABELS = {
 }
 
 
+class BoardOdds(BaseModel):
+    """The prices printed on one fighter's side of the roundup boards.
+
+    American odds as the board writes them ("+270", "-135"), empty where the
+    board doesn't show one. These are the tracker's own snapshot — it labels
+    them average odds via OddsJam, taken whenever the deck was built — so they
+    are a starting price, not a live one, and the dashboard says so wherever
+    it uses them. They matter because they are the only prices the engine has
+    for method bets at all: the live feed carries moneylines and nothing else.
+    """
+
+    moneyline: str = Field(default="", description='e.g. "+230" or "-280".')
+    ko_tko: str = Field(default="", description="Price to win by KO/TKO or DQ.")
+    submission: str = Field(default="", description="Price to win by submission.")
+    decision: str = Field(default="", description="Price to win by decision.")
+
+    def for_method(self, method: str) -> str:
+        return getattr(self, method, "")
+
+
 class TrackerFightPicks(BaseModel):
     """One fight from the roundup: the channels on each side, and on each method.
 
@@ -128,9 +148,21 @@ class TrackerFightPicks(BaseModel):
         description="Channels predicting fighter_b to win by decision.",
     )
 
+    odds_for_a: BoardOdds = Field(
+        default_factory=BoardOdds,
+        description="Prices the board prints for fighter_a, if it prints any.",
+    )
+    odds_for_b: BoardOdds = Field(
+        default_factory=BoardOdds,
+        description="Prices the board prints for fighter_b, if it prints any.",
+    )
+
     def method_names(self, method: str, side: str) -> list[str]:
         """The channels on one method for one side ('a' or 'b')."""
         return getattr(self, f"{method}_for_{side}")
+
+    def odds(self, side: str) -> BoardOdds:
+        return getattr(self, f"odds_for_{side}")
 
 
 class TrackerRoundup(BaseModel):
@@ -231,6 +263,8 @@ def merge_roundups(parsed: Iterable[TrackerRoundup]) -> list[TrackerFightPicks]:
                     # exactly like the moneyline votes above.
                     "method_votes": {},
                     "method_dropped": set(),
+                    # Board prices per side, first non-empty read wins.
+                    "odds": {},
                     # Whichever fighter the first chunk named first stays
                     # fighter_a, so the merged fight reads the way the video
                     # said it rather than in surname-alphabetical order.
@@ -256,6 +290,9 @@ def merge_roundups(parsed: Iterable[TrackerRoundup]) -> list[TrackerFightPicks]:
 
             for side, _spelling, _cappers in sides:
                 letter = "a" if side == surname_a else "b"
+                printed = getattr(fight, f"odds_for_{letter}", None)
+                if printed is not None and printed.model_dump(exclude_defaults=True):
+                    entry["odds"].setdefault(side, printed)
                 for method in METHODS:
                     # getattr, not the model's own accessor: the slide reader
                     # feeds this its own board type, which carries moneyline
@@ -293,6 +330,8 @@ def merge_roundups(parsed: Iterable[TrackerRoundup]) -> list[TrackerFightPicks]:
             method_buckets[(method, side)].append(entry["labels"][key_c])
         merged.append(
             TrackerFightPicks(
+                odds_for_a=entry["odds"].get(sides[0]) or BoardOdds(),
+                odds_for_b=entry["odds"].get(sides[1]) or BoardOdds(),
                 fighter_a=display_name(entry["names"][sides[0]]),
                 fighter_b=display_name(entry["names"][sides[1]]),
                 cappers_for_a=sorted(buckets[sides[0]]),
