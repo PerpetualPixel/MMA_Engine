@@ -67,8 +67,26 @@ DEFAULT_CONFIDENCE = 5
 DEFAULT_CHUNK_CHARS = 12000
 
 
+# The three ways a roundup board splits a finish, and how each reads in a
+# pick's `selection` ("Jean Silva by KO/TKO"). The boards print exactly these
+# three and nothing else — no round betting, no totals.
+METHODS = ("ko_tko", "submission", "decision")
+METHOD_LABELS = {
+    "ko_tko": "KO/TKO",
+    "submission": "Submission",
+    "decision": "Decision",
+}
+
+
 class TrackerFightPicks(BaseModel):
-    """One fight from the roundup and the channels on each side."""
+    """One fight from the roundup: the channels on each side, and on each method.
+
+    The moneyline lists are the board every roundup has. The method lists come
+    from the boards that follow it — "Win by KO/TKO or DQ", "Win by
+    Submission", "Win by Decision" — and are empty whenever those boards
+    weren't read, which keeps every roundup written before they were
+    understood loading exactly as it did.
+    """
 
     fighter_a: str = Field(description="First fighter in the matchup, full name.")
     fighter_b: str = Field(description="Second fighter in the matchup, full name.")
@@ -81,6 +99,38 @@ class TrackerFightPicks(BaseModel):
     cappers_for_b: list[str] = Field(
         description="Names of the prediction channels the video says picked fighter_b."
     )
+    ko_tko_for_a: list[str] = Field(
+        default_factory=list,
+        description=(
+            "Channels the video says predicted fighter_a to win by KO/TKO (or "
+            "DQ, which the boards group with it). Empty unless the video "
+            "attributes methods by channel name."
+        ),
+    )
+    ko_tko_for_b: list[str] = Field(
+        default_factory=list,
+        description="The same for fighter_b winning by KO/TKO.",
+    )
+    submission_for_a: list[str] = Field(
+        default_factory=list,
+        description="Channels predicting fighter_a to win by submission.",
+    )
+    submission_for_b: list[str] = Field(
+        default_factory=list,
+        description="Channels predicting fighter_b to win by submission.",
+    )
+    decision_for_a: list[str] = Field(
+        default_factory=list,
+        description="Channels predicting fighter_a to win by decision.",
+    )
+    decision_for_b: list[str] = Field(
+        default_factory=list,
+        description="Channels predicting fighter_b to win by decision.",
+    )
+
+    def method_names(self, method: str, side: str) -> list[str]:
+        """The channels on one method for one side ('a' or 'b')."""
+        return getattr(self, f"{method}_for_{side}")
 
 
 class TrackerRoundup(BaseModel):
@@ -177,6 +227,10 @@ def merge_roundups(parsed: Iterable[TrackerRoundup]) -> list[TrackerFightPicks]:
                     "votes": {},
                     "labels": {},
                     "dropped": set(),
+                    # (method, capper) -> side, merged and conflict-dropped
+                    # exactly like the moneyline votes above.
+                    "method_votes": {},
+                    "method_dropped": set(),
                     # Whichever fighter the first chunk named first stays
                     # fighter_a, so the merged fight reads the way the video
                     # said it rather than in surname-alphabetical order.
@@ -200,6 +254,25 @@ def merge_roundups(parsed: Iterable[TrackerRoundup]) -> list[TrackerFightPicks]:
                     elif previous != side:
                         entry["dropped"].add(key_c)
 
+            for side, _spelling, _cappers in sides:
+                letter = "a" if side == surname_a else "b"
+                for method in METHODS:
+                    # getattr, not the model's own accessor: the slide reader
+                    # feeds this its own board type, which carries moneyline
+                    # names and no method fields at all. Those boards simply
+                    # contribute no method votes.
+                    for capper in getattr(fight, f"{method}_for_{letter}", None) or []:
+                        key_c = name_key(capper)
+                        if not key_c:
+                            continue
+                        slot = (method, key_c)
+                        previous = entry["method_votes"].get(slot)
+                        if previous is None:
+                            entry["method_votes"][slot] = side
+                            entry["labels"].setdefault(key_c, capper.strip())
+                        elif previous != side:
+                            entry["method_dropped"].add(slot)
+
     merged: list[TrackerFightPicks] = []
     for key, entry in fights.items():
         sides = sorted(entry["names"], key=lambda s: (s != entry["primary"], s))
@@ -211,12 +284,24 @@ def merge_roundups(parsed: Iterable[TrackerRoundup]) -> list[TrackerFightPicks]:
             if key_c in entry["dropped"]:
                 continue
             buckets[side].append(entry["labels"][key_c])
+        method_buckets: dict[tuple[str, str], list[str]] = {
+            (method, side): [] for method in METHODS for side in sides
+        }
+        for (method, key_c), side in entry["method_votes"].items():
+            if (method, key_c) in entry["method_dropped"]:
+                continue
+            method_buckets[(method, side)].append(entry["labels"][key_c])
         merged.append(
             TrackerFightPicks(
                 fighter_a=display_name(entry["names"][sides[0]]),
                 fighter_b=display_name(entry["names"][sides[1]]),
                 cappers_for_a=sorted(buckets[sides[0]]),
                 cappers_for_b=sorted(buckets[sides[1]]),
+                **{
+                    f"{method}_for_{letter}": sorted(method_buckets[(method, side)])
+                    for method in METHODS
+                    for letter, side in (("a", sides[0]), ("b", sides[1]))
+                },
             )
         )
 
@@ -650,11 +735,27 @@ def to_sourced_picks(
 
     for fight in fights:
         key = fight_key(fight.fighter_a, fight.fighter_b)
-        sides = (
-            (fight.fighter_a, fight.cappers_for_a),
-            (fight.fighter_b, fight.cappers_for_b),
-        )
-        for fighter, names in sides:
+        # (bet_type, selection, names) for every board this fight has: the
+        # moneyline one every roundup prints, then a method board per finish
+        # per fighter where those were read.
+        entries: list[tuple[str, str, str, list[str]]] = [
+            ("moneyline", fight.fighter_a, fight.fighter_a, fight.cappers_for_a),
+            ("moneyline", fight.fighter_b, fight.fighter_b, fight.cappers_for_b),
+        ]
+        for method in METHODS:
+            for letter, fighter in (("a", fight.fighter_a), ("b", fight.fighter_b)):
+                names = fight.method_names(method, letter)
+                if names:
+                    entries.append(
+                        (
+                            "method_of_victory",
+                            f"{fighter} by {METHOD_LABELS[method]}",
+                            fighter,
+                            names,
+                        )
+                    )
+
+        for bet_type, selection, fighter, names in entries:
             for name in names:
                 resolved = directory.resolve(name)
                 if resolved is None:
@@ -670,12 +771,13 @@ def to_sourced_picks(
                         pick=Pick(
                             fighter_a=fight.fighter_a,
                             fighter_b=fight.fighter_b,
-                            bet_type="moneyline",
-                            selection=fighter,
+                            bet_type=bet_type,
+                            selection=selection,
                             fighter=fighter,
                             confidence=confidence,
                             # A tally says who, never dog-or-chalk, so these
-                            # weight by the capper's overall score.
+                            # weight by the capper's overall score — or, for a
+                            # method, by their method score (see aggregate.py).
                             role="unknown",
                             odds_american="",
                             stake_units="",
