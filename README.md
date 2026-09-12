@@ -606,12 +606,37 @@ runs. Your own computer isn't on a blocked range, so the free path is to run
 it there.
 
 **On Windows, the whole weekly run is one double-click: `weekly.bat`.** It
-pulls the latest code, installs anything missing, discovers this week's
-videos, fetches transcripts, extracts picks, builds `docs/data.json` (the
-dashboard) and `docs/picks.json` (the weighted picks feed for
-PerpetualPicks.com), and commits + pushes both — the live site updates
-itself a minute later. If anything fails, it stops and shows the error
-instead of pushing.
+pulls the latest code, installs anything missing, retargets to the next card,
+finds that card's tracker roundup, reads its slide deck, builds
+`docs/data.json` (the dashboard) and `docs/picks.json` (the weighted picks
+feed for PerpetualPicks.com), and commits + pushes both — the live site
+updates itself a minute later. If anything fails, it stops and shows the
+error instead of pushing.
+
+**The roundup is the source.** Per-capper discovery is off
+(`settings.discovery.enabled: false`, and `weekly.ps1` passes
+`--no-discover`): one roundup already tallies 80+ channels for every fight on
+the card, which is more than discovery ever found, and it costs one video
+instead of a transcript fetch and an extraction call per capper. What it
+gives up is depth — a roundup line is *who*, never *how sure*, at what price,
+or why — so a run is now a wide, flat count rather than a mix of weighted
+opinions. `pasted/` still works for paywalled cappers, and their cards still
+beat the roundup for any fight they cover.
+
+To bring the per-capper videos back for one run:
+
+```powershell
+.venv\Scripts\python.exe -m mma_engine --config config.json --discover --output docs\data.json
+```
+
+or flip `settings.discovery.enabled` back to `true` for good. Everything
+about discovery below still works; it is switched off, not removed.
+
+**An empty consensus is a failure, not a result.** With one source, a roundup
+that can't be found or read would otherwise publish a dashboard with nothing
+on it, over a good one. The pipeline now exits non-zero when no fights
+survive, and `weekly.ps1` restores `docs/` and publishes nothing — the last
+good run stays live.
 
 **It can retarget itself, too.** Set `"event": {"mode": "auto"}` in
 `config.json` and every run asks ESPN for the soonest upcoming UFC card

@@ -36,7 +36,7 @@
     "min_confidence": 1,
     "use_cache": true,
     "discovery": {
-      "enabled": true,
+      "enabled": false,
       "lookback_days": 14,
       "max_videos_per_channel": 3,
       "title_contains": [
