@@ -369,6 +369,30 @@
   .tag.underdog { color: var(--dog); border-color: var(--dog); }
   .tag.favorite { color: var(--strong); border-color: var(--strong); }
   .table-wrap { overflow-x: auto; }
+
+  /* -- card table -- */
+  table.card-table { font-size: 14px; }
+  table.card-table th[scope="row"] {
+    font-weight: 600; min-width: 210px;
+    /* `th` is uppercased globally for column labels; these carry fighter
+       names, which have to read as written. */
+    text-transform: none; letter-spacing: 0; font-size: 14px; color: var(--text);
+  }
+  table.card-table thead th { color: var(--muted); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; white-space: nowrap; }
+  table.card-table td { white-space: nowrap; }
+  .row-fight { display: block; }
+  .row-time { color: var(--weak); font-size: 12px; font-weight: 400; }
+  .row-cancelled { opacity: .55; text-decoration: line-through; }
+  .lock-cell { font-weight: 800; color: var(--strong); }
+  .cell-pct { color: var(--weak); font-size: 12px; font-weight: 400; margin-left: 4px; }
+  .none-cell { color: var(--weak); }
+  .controls.export-row { align-items: center; }
+  button.export-btn {
+    background: var(--panel-2); border: 1px solid var(--border); color: var(--text);
+    font: inherit; font-size: 13px; font-weight: 700; border-radius: 8px;
+    padding: 7px 14px; cursor: pointer; white-space: nowrap;
+  }
+  button.export-btn:hover { border-color: var(--accent); color: var(--accent); }
   a { color: var(--accent); }
 
   .pick-group { margin-bottom: 14px; }
@@ -488,6 +512,7 @@ const state = {
   eventId: "",
   tab: "ml",
   search: "",
+  table: { sort: "card", hidePickems: false, locksOnly: false },
   ml:  { sort: "card", hidePickems: false, locksOnly: false, hideNoPicks: false },
   mov: { sort: "card", hidePickems: false, locksOnly: false },
   dc:  { sort: "card", hidePickems: false, locksOnly: false },
@@ -501,8 +526,8 @@ const state = {
 const UI_STORE_KEY = "mma-consensus-ui-v1";
 function persistUi() {
   try {
-    const { tab, search, eventId, ml, mov, dc, dog, straights, parlay } = state;
-    localStorage.setItem(UI_STORE_KEY, JSON.stringify({ tab, search, eventId, ml, mov, dc, dog, straights, parlay }));
+    const { tab, search, eventId, table, ml, mov, dc, dog, straights, parlay } = state;
+    localStorage.setItem(UI_STORE_KEY, JSON.stringify({ tab, search, eventId, table, ml, mov, dc, dog, straights, parlay }));
   } catch { /* private mode etc. — purely a convenience */ }
 }
 (function restoreUi() {
@@ -510,7 +535,7 @@ function persistUi() {
     const saved = JSON.parse(localStorage.getItem(UI_STORE_KEY) || "null");
     if (!saved) return;
     for (const key of ["tab", "search", "eventId"]) if (typeof saved[key] === "string") state[key] = saved[key];
-    for (const key of ["ml", "mov", "dc", "dog", "straights", "parlay"]) {
+    for (const key of ["table", "ml", "mov", "dc", "dog", "straights", "parlay"]) {
       if (saved[key] && typeof saved[key] === "object") Object.assign(state[key], saved[key]);
     }
   } catch { /* corrupt store — defaults are fine */ }
@@ -918,7 +943,15 @@ function doubleChance(fight, side) {
   const methods = top.map((o) => methodShort(o.selection) || o.selection);
   const name = side === "a" ? fight.fighter_a : fight.fighter_b;
   const label = methods.length === 2 ? `${methods[0]} or ${methods[1]}` : `${methods[0]} <span class="hint">(only method picked)</span>`;
-  return { name, label, share: Math.round(share * 10) / 10, weight: Math.round(weight * 100) / 100, conf: Math.round(conf * 10) / 10, picks, cappers };
+  const stated = top.reduce((n, o) => n + (o.stated_pick_count || 0), 0);
+  return {
+    name, label, share: Math.round(share * 10) / 10,
+    weight: Math.round(weight * 100) / 100, conf: Math.round(conf * 10) / 10,
+    picks, cappers,
+    // The pooled pair as one option, so isLock() can judge it the same way
+    // it judges a moneyline or a single method.
+    opt: { pick_count: picks, stated_pick_count: stated, avg_confidence: conf },
+  };
 }
 function dcSideHtml(fight, side) {
   const dc = doubleChance(fight, side);
@@ -959,6 +992,207 @@ function renderDC() {
 }
 
 /* ---------- tab: underdogs ---------- */
+/* ---------- tab: card table ---------- */
+/* The whole card as one row per fight, the way it reads on paper: in bout
+ * order, one column per market, and exportable. Every other tab is built for
+ * reading one fight closely; this one is built for taking away.
+ *
+ * Bold is not decoration — it marks a Lock by exactly the rule the rest of
+ * the page uses (isLock), so scanning a column finds the calls the field is
+ * surest of. The percentage beside each call is that option's consensus
+ * share, and the method columns always describe whichever fighter the
+ * moneyline is on. */
+const METHOD_WORDS = { "KO/TKO": "KO/TKO", SUB: "Submission", DEC: "Decision" };
+function methodWords(selection) {
+  const short = methodShort(selection);
+  if (short) return METHOD_WORDS[short] || short;
+  // An option the shortener doesn't recognise still reads fine as whatever
+  // followed "by" in the selection.
+  return String(selection || "").replace(/^.*?\bby\s+/i, "").trim();
+}
+/** The name a method reads best under ("Silva by KO/TKO"): the last real
+ *  name word, stepping back over a generational suffix so "Sean King III"
+ *  gives King rather than III. A mononym is simply itself. */
+const NAME_SUFFIXES = new Set(["jr", "jr.", "sr", "sr.", "ii", "iii", "iv", "v"]);
+function surnameOf(name) {
+  const parts = String(name || "").trim().split(/\s+/).filter(Boolean);
+  while (parts.length > 1 && NAME_SUFFIXES.has(parts[parts.length - 1].toLowerCase())) parts.pop();
+  return parts[parts.length - 1] || String(name || "");
+}
+/** The card-heading shorthand ("KO/TKO or SUB") spelled out for a column
+ *  that has room for it, with any markup dropped. */
+const longMethods = (label) => String(label || "")
+  .replace(/<[^>]*>/g, "")
+  .replace(/\bSUB\b/g, "Submission")
+  .replace(/\bDEC\b/g, "Decision")
+  .trim();
+
+/** A bout's start time on the reader's own clock.
+ *
+ * The odds feed carries a real per-bout commence time; ESPN's card_date is
+ * only the block the bout sits in (prelims or main card), the same value for
+ * every fight in it. So the block time is shown marked as approximate rather
+ * than passed off as the bell. */
+function fightTime(f) {
+  const exact = (f.live_odds || {}).commence_time;
+  const stamp = exact || f.card_date;
+  if (!stamp) return { text: "", exact: false };
+  const when = new Date(stamp);
+  if (Number.isNaN(when.getTime())) return { text: "", exact: false };
+  return {
+    text: when.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }),
+    exact: !!exact,
+  };
+}
+
+/** One fight reduced to the row both the table and the exports are built
+ * from — so what downloads is always exactly what is on screen. */
+function tableRow(f) {
+  const lead = mlLead(f);
+  // The method columns follow the moneyline. With no moneyline market at
+  // all, the side actually carrying method picks stands in.
+  const side = lead ? lead.side : (f.mov.a.length >= f.mov.b.length ? "a" : "b");
+  const name = side === "a" ? f.fighter_a : f.fighter_b;
+  const surname = surnameOf(name);
+
+  const ml = lead ? { text: name, pct: lead.share, lock: isLock(lead.share, lead.opt) } : null;
+
+  const dcRaw = doubleChance(f, side);
+  const dc = dcRaw ? {
+    text: `${surname} by ${longMethods(dcRaw.label)}`,
+    pct: dcRaw.share,
+    lock: isLock(dcRaw.share, dcRaw.opt),
+  } : null;
+
+  const top = [...f.mov[side]].sort((x, y) => y.consensus_pct - x.consensus_pct)[0];
+  const mov = top ? {
+    text: `${surname} by ${methodWords(top.selection)}`,
+    pct: top.consensus_pct,
+    lock: isLock(top.consensus_pct, top),
+  } : null;
+
+  return {
+    fight: f,
+    display: f.display,
+    time: fightTime(f),
+    cancelled: isCancelled(f),
+    ml, dc, mov,
+    anyLock: !!(ml && ml.lock) || !!(dc && dc.lock) || !!(mov && mov.lock),
+  };
+}
+
+/* -- the exports. Both read the rows the table is rendering, so they carry
+ * the current sort, search and filters and nothing else. TSV goes to the
+ * clipboard because that is what pastes into Sheets or Excel as columns;
+ * CSV downloads for everything else. Percentages get their own columns in
+ * the export, where a spreadsheet can sort on them. */
+const EXPORT_HEADERS = [
+  "Fight", "Start", "Consensus ML", "ML %",
+  "Double Chance Method", "DC %", "Method of Victory", "MoV %",
+];
+function exportCells(row) {
+  const pct = (v) => (v == null ? "" : String(v));
+  return [
+    row.display + (row.cancelled ? " (cancelled)" : ""),
+    row.time.text ? row.time.text + (row.time.exact ? "" : " (approx)") : "",
+    row.ml ? row.ml.text : "",
+    pct(row.ml && row.ml.pct),
+    row.dc ? row.dc.text : "",
+    pct(row.dc && row.dc.pct),
+    row.mov ? row.mov.text : "",
+    pct(row.mov && row.mov.pct),
+  ];
+}
+const csvField = (v) => `"${String(v).replace(/"/g, '""')}"`;
+function exportText(rows, kind) {
+  const table = [EXPORT_HEADERS, ...rows.map(exportCells)];
+  return kind === "csv"
+    ? table.map((r) => r.map(csvField).join(",")).join("\r\n")
+    // A tab-separated grid pastes into a spreadsheet as columns; any tab or
+    // newline inside a cell would break that, so they are flattened first.
+    : table.map((r) => r.map((v) => String(v).replace(/[\t\r\n]+/g, " ")).join("\t")).join("\n");
+}
+function exportName(ext) {
+  const event = ((state.data || {}).event || {}).name || "consensus";
+  const slug = event.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  return `${slug || "consensus"}-table.${ext}`;
+}
+let exportRows = [];
+document.addEventListener("click", async (e) => {
+  const btn = e.target.closest("[data-export]");
+  if (!btn) return;
+  const kind = btn.dataset.export;
+  const text = exportText(exportRows, kind);
+  if (kind === "csv") {
+    const url = URL.createObjectURL(new Blob([text], { type: "text/csv;charset=utf-8" }));
+    const link = Object.assign(document.createElement("a"), { href: url, download: exportName("csv") });
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    // Revoked on the next tick rather than immediately: Safari reads the
+    // blob after the click returns.
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    return;
+  }
+  const done = (ok) => {
+    btn.textContent = ok ? "Copied ✓" : "Press Ctrl+C";
+    setTimeout(() => { btn.textContent = "Copy for Sheets"; }, 1800);
+  };
+  try {
+    await navigator.clipboard.writeText(text);
+    done(true);
+  } catch {
+    // No clipboard permission (or an insecure origin): leave it selected so
+    // the reader's own copy shortcut finishes the job.
+    const area = Object.assign(document.createElement("textarea"), { value: text });
+    area.style.cssText = "position:fixed;top:0;left:0;opacity:0";
+    document.body.appendChild(area);
+    area.select();
+    let ok = false;
+    try { ok = document.execCommand("copy"); } catch { ok = false; }
+    area.remove();
+    done(ok);
+  }
+});
+
+function cellHtml(cell) {
+  if (!cell) return `<td class="none-cell">—</td>`;
+  return `<td${cell.lock ? ' class="lock-cell"' : ""}>${esc(cell.text)}
+    <span class="cell-pct">${esc(cell.pct)}%</span></td>`;
+}
+function renderTable() {
+  const s = state.table;
+  let fights = state.model.fights.filter((f) => f.ml.a || f.ml.b || f.mov.a.length || f.mov.b.length);
+  fights = fights.filter(matchesSearch);
+  if (s.hidePickems) fights = fights.filter((f) => !isPickem(f));
+  fights = sortFights(fights, s.sort, (f) => (mlLead(f) || {}).share || 0);
+  let rows = fights.map(tableRow);
+  if (s.locksOnly) rows = rows.filter((r) => r.anyLock);
+  exportRows = rows;
+
+  const approx = rows.some((r) => r.time.text && !r.time.exact);
+  const body = rows.map((r) => `<tr${r.cancelled ? ' class="row-cancelled"' : ""}>
+    <th scope="row">
+      <span class="row-fight">${esc(r.display)}</span>
+      ${r.time.text ? `<span class="row-time">${esc(r.time.text)}${r.time.exact ? "" : "*"}</span>` : ""}
+      ${r.cancelled ? `<span class="badge cancelled">cancelled</span>` : ""}
+    </th>
+    ${cellHtml(r.ml)}${cellHtml(r.dc)}${cellHtml(r.mov)}
+  </tr>`).join("");
+
+  return controlsHtml("table", { filters: true })
+    + `<div class="controls export-row">
+        <button type="button" class="export-btn" data-export="tsv">Copy for Sheets</button>
+        <button type="button" class="export-btn" data-export="csv">Download CSV</button>
+        <span class="hint">Exports these ${rows.length} row${rows.length === 1 ? "" : "s"} — the current sort, search and filters, with the percentages in their own columns.</span>
+      </div>`
+    + `<div class="count-note">${rows.length} fight${rows.length === 1 ? "" : "s"} &middot; <b>bold</b> marks a Lock &middot; method columns follow the moneyline${approx ? " &middot; * block start time, not the bout's own" : ""}</div>`
+    + (rows.length ? `<div class="table-wrap"><table class="card-table">
+        <thead><tr><th>Fight</th><th>Consensus ML</th><th>Double Chance Method</th><th>Method of Victory</th></tr></thead>
+        <tbody>${body}</tbody></table></div>`
+      : `<p class="notice">Nothing matches the current filters.</p>`);
+}
+
 function renderDogs() {
   const s = state.dog;
   let fights = state.model.fights.filter((f) => f.dogSide).filter(matchesSearch);
@@ -1770,6 +2004,7 @@ const TABS = [
   { id: "straights", label: "Straights", render: renderStraights },
   { id: "cappers", label: "Cappers", render: renderCappersTab },
   { id: "parlay", label: "Parlay Builder", render: renderParlay },
+  { id: "table", label: "Card Table", render: renderTable },
 ];
 
 function render() {
