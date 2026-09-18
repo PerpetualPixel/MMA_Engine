@@ -2055,5 +2055,9 @@
   "videos": [],
   "events": [],
   "events_notes": "Extra cards to cover alongside \"event\", e.g. {\"name\": \"PFL 9\", \"league\": \"pfl\", \"label\": \"PFL 9: Playoffs\"}. Fights are tagged with the card they belong to and the dashboard shows a selector; anything on neither card is still dropped.",
-  "screen_videos": []
+  "screen_videos": [
+    {
+      "video_file": "C:\\Users\\mgbou\\MMA_Engine\\MMA_Engine\\UFC 331 Predictions.mp4"
+    }
+  ]
 }
