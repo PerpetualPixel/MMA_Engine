@@ -1,9 +1,9 @@
 {
   "event": {
     "mode": "auto",
-    "name": "Noche UFC: Silva vs. Delgado",
+    "name": "UFC 331: Van vs. Pantoja 2",
     "league": "ufc",
-    "date": "2026-09-12T18:00Z",
+    "date": "2026-09-19T21:00Z",
     "notes": "\"mode\": \"auto\" means every run resolves this itself — before config.json is even loaded, it asks ESPN for the soonest upcoming card, and if that differs from \"name\" below it rewrites \"name\"/\"league\"/\"date\", regenerates discovery.title_contains and discovery.search.queries from the new main event's fighters, and clears tracker.picks_videos (a stale roundup URL would just burn a download and a vision pass on the old event's deck). Once this week's card has happened, the next run rolls to whatever's next on its own — no manual retarget. \"name\"/\"league\"/\"date\" below are simply the last-resolved event; edit them by hand only if you delete \"mode\" and want to pin a specific card again (e.g. a Contender Series week, matched as a substring against ESPN's own event name — punctuation and case ignored, spelling not). \"league\" pins which scoreboard is searched (ufc / pfl); leave it empty to try UFC then PFL. Add more cards to the top-level \"events\" array to cover them in the same run — a PFL event the same weekend, say — and the dashboard puts a card selector at the top. If a run logs \"No ESPN card found\" (or, in auto mode, \"No upcoming event found\"), something's off with the league or the scoreboard is unreachable — nothing is filtered and off-card fights come back."
   },
   "tracker": {
@@ -12,9 +12,7 @@
     "auto_discover": true,
     "auto_discover_notes": "When true, every run scans channel_url's recent uploads for a title matching this week's settings.discovery.title_contains (the fighters' surnames) and, if picks_videos is empty, sets it automatically — no more finding and pasting the roundup URL by hand. Only runs when picks_videos is empty, so it never overwrites a URL you (or an earlier run this week) already set, and it fails open exactly like everything else here: no YOUTUBE_API_KEY, no match, or a network problem just leaves picks_videos empty for you to fill in by hand. Once found, the pipeline's own vision reader (src/mma_engine/roundup_slides.py) downloads the video and reads its slides automatically too — no screenshots needed unless that download fails (blocked IP, age-gate, etc.), in which case --roundup-slides DIR still works as the manual fallback.",
     "picks_notes": "\"picks_videos\" is the tracker's PRE-event roundup — the slide deck naming which channels picked which fighter (see src/mma_engine/roundup_slides.py). With auto_discover on this fills itself in; set by hand here only to override it. Cleared automatically when the event retargets: a stale URL costs a video download and a vision pass to read a board whose fights are all off this card. A deck already read is kept in roundups/<video_id>.json and reused for free.",
-    "picks_videos": [
-      "https://www.youtube.com/watch?v=X8h8G_3by-M"
-    ],
+    "picks_videos": [],
     "period_recaps": [
       "https://www.youtube.com/watch?v=rLxl9yy3Tbc"
     ],
@@ -40,15 +38,15 @@
       "lookback_days": 14,
       "max_videos_per_channel": 3,
       "title_contains": [
-        "delgado",
-        "silva"
+        "pantoja",
+        "van"
       ],
       "search": {
         "enabled": false,
         "queries": [
-          "Noche UFC: Silva vs. Delgado predictions",
-          "Jean Silva Jose Miguel Delgado picks",
-          "Noche UFC: Silva vs. Delgado betting breakdown"
+          "UFC 331: Van vs. Pantoja 2 predictions",
+          "Alexandre Pantoja Joshua Van picks",
+          "UFC 331: Van vs. Pantoja 2 betting breakdown"
         ],
         "max_results": 80,
         "max_per_channel": 1,
@@ -2056,5 +2054,6 @@
   ],
   "videos": [],
   "events": [],
-  "events_notes": "Extra cards to cover alongside \"event\", e.g. {\"name\": \"PFL 9\", \"league\": \"pfl\", \"label\": \"PFL 9: Playoffs\"}. Fights are tagged with the card they belong to and the dashboard shows a selector; anything on neither card is still dropped."
+  "events_notes": "Extra cards to cover alongside \"event\", e.g. {\"name\": \"PFL 9\", \"league\": \"pfl\", \"label\": \"PFL 9: Playoffs\"}. Fights are tagged with the card they belong to and the dashboard shows a selector; anything on neither card is still dropped.",
+  "screen_videos": []
 }
