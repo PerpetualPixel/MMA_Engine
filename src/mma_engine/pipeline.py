@@ -29,6 +29,7 @@ from .config import (
     VideoRef,
     extract_video_id,
     load_config,
+    local_video_id,
 )
 from .discover import ChannelDiscovery, DiscoveredVideo
 from .event_card import annotate_consensus, fetch_event_cards
@@ -219,6 +220,26 @@ def capper_for_channel(config: Config, video: DiscoveredVideo) -> Capper:
     return minted
 
 
+def ytdlp_extra_args(config: Config) -> list[str]:
+    """The yt-dlp flags every video download here should carry: your cookies.
+
+    The same `settings.transcript_cookies` the age-restricted caption
+    fallback uses. Signed in, YouTube serves the download through the
+    clients it gives a real viewer, which is the difference between a 403
+    and a video on more days than not. Empty when unconfigured or when the
+    cookie file is missing, in which case the download simply goes
+    anonymous as before.
+    """
+    cookies = build_cookie_config(config.settings)
+    if cookies is None:
+        return []
+    missing = cookies.missing_file()
+    if missing:
+        log.warning("  cookie file %s not found — downloading without cookies", missing)
+        return []
+    return cookies.ytdlp_args()
+
+
 def read_video_screens(
     config: Config,
     url: str,
@@ -226,13 +247,14 @@ def read_video_screens(
     title: str = "",
     channel: str = "",
     frames_dir: Path | None = None,
+    video_file: Path | None = None,
 ) -> ScreenReport:
     """Every unique frame of a video, read for the picks printed on it.
 
-    Frames come from the video itself — downloaded, cut at every scene
-    change and at least every few seconds, then de-duplicated by perceptual
-    hash so each screenshot is read once — or from a folder of screenshots
-    captured by hand when the download won't work.
+    Frames come from the video itself — downloaded, or a file already on
+    disk — cut at every scene change and at least every few seconds, then
+    de-duplicated by perceptual hash so each screenshot is read once; or
+    from a folder of screenshots captured by hand when neither will do.
     """
     settings = config.settings["screen_picks"]
     cache_root = Path("cache")
@@ -244,16 +266,24 @@ def read_video_screens(
             return ScreenReport(error=f"no images in {frames_dir}")
         log.info("  %d screenshot(s) from %s", len(frames), frames_dir)
     else:
-        proxies = build_requests_proxies(config.settings)
-        video = download_video(
-            url,
-            cache_root / "screen_video",
-            video_id=video_id,
-            height=int(settings["video_height"]),
-            proxy=proxies.get("https", "") if proxies else "",
-        )
-        if video is None:
-            return ScreenReport(error="video download failed")
+        if video_file is not None:
+            if not video_file.is_file():
+                log.warning("  no such video file: %s", video_file)
+                return ScreenReport(error=f"no such file {video_file}")
+            log.info("  using the video file %s", video_file)
+            video = video_file
+        else:
+            proxies = build_requests_proxies(config.settings)
+            video = download_video(
+                url,
+                cache_root / "screen_video",
+                video_id=video_id,
+                height=int(settings["video_height"]),
+                proxy=proxies.get("https", "") if proxies else "",
+                extra_args=ytdlp_extra_args(config),
+            )
+            if video is None:
+                return ScreenReport(error="video download failed")
         frames = extract_frames(
             video,
             cache_root / "screens" / "frames" / video_id,
@@ -261,7 +291,9 @@ def read_video_screens(
             sample_seconds=float(settings["sample_seconds"]),
             max_frames=int(settings["max_frames"]),
         )
-        if not bool(settings["keep_video"]):
+        # Only a download of ours is disposable; a file the user handed over
+        # is theirs.
+        if video_file is None and not bool(settings["keep_video"]):
             video.unlink(missing_ok=True)
         if not frames:
             return ScreenReport(error="no frames extracted")
@@ -287,7 +319,7 @@ def read_video_screens(
 
 
 def capper_for_screen_video(
-    config: Config, video_id: str, channel_id: str, channel_title: str
+    config: Config, video_id: str, channel_id: str, channel_title: str, title: str = ""
 ) -> Capper:
     """Whose picks a screen-read video carries: the channel that posted it.
 
@@ -315,7 +347,7 @@ def capper_for_screen_video(
         return config.cappers[capper_id]
     minted = Capper(
         id=capper_id,
-        name=f"YouTube video {video_id}",
+        name=f"Video: {title}" if title else f"YouTube video {video_id}",
         discover=False,
         trust={"overall": NEUTRAL_TRUST},
     )
@@ -351,6 +383,7 @@ def ingest_screen_videos(
     for ref in videos:
         video_id = ref.video_id
         frames_dir = Path(ref.frames_dir) if ref.frames_dir else None
+        video_file = Path(ref.video_file) if ref.video_file else None
         log.info("Screen picks — %s", video_id)
         record: dict[str, Any] = {
             "video_id": video_id,
@@ -372,14 +405,19 @@ def ingest_screen_videos(
                 record["status"] = "extraction_skipped"
                 sources.append(record)
                 continue
-            info = fetch_video_info(ref.url, proxy=proxy) if ref.url else None
-            title = info.title if info else ""
+            info = (
+                fetch_video_info(ref.url, proxy=proxy, extra_args=ytdlp_extra_args(config))
+                if ref.url
+                else None
+            )
+            title = info.title if info else (video_file.stem if video_file else "")
             channel = info.channel if info else ""
             channel_id = info.channel_id if info else ""
             if info is None and ref.url:
                 log.warning("  could not read the video's title/channel — attributing by id")
             report = read_video_screens(
-                config, ref.url, video_id, title=title, channel=channel, frames_dir=frames_dir
+                config, ref.url, video_id, title=title, channel=channel,
+                frames_dir=frames_dir, video_file=video_file,
             )
             record.update(
                 frames=report.frames, frames_read=report.read + report.cached
@@ -412,7 +450,9 @@ def ingest_screen_videos(
         capper = (
             config.capper(ref.capper_id)
             if ref.capper_id
-            else capper_for_screen_video(config, video_id, reading.channel_id, reading.channel)
+            else capper_for_screen_video(
+                config, video_id, reading.channel_id, reading.channel, title=reading.title
+            )
         )
         record.update(capper_id=capper.id, capper=capper.name, title=reading.title)
         for pick in reading.picks:
@@ -472,15 +512,24 @@ def remember_screen_videos(config_path: Path, videos: list[ScreenVideoRef]) -> l
     known: set[str] = set()
     for entry in existing:
         source = entry if isinstance(entry, str) else (entry.get("url") or entry.get("video_id") or "")
+        if not source and isinstance(entry, dict) and entry.get("video_file"):
+            known.add(local_video_id(entry["video_file"]))
+            continue
         try:
             known.add(extract_video_id(source))
         except ConfigError:
             continue
     added: list[str] = []
     for ref in videos:
-        if ref.video_id in known or not ref.url:
+        if ref.video_id in known or not (ref.url or ref.video_file):
             continue
-        entry: dict[str, Any] = {"url": ref.url}
+        entry: dict[str, Any] = {}
+        if ref.url:
+            entry["url"] = ref.url
+        if ref.video_file:
+            # The file stays where it is; once read, screens/<id>.json is
+            # what later runs actually use, so the path only matters until then.
+            entry["video_file"] = ref.video_file
         if ref.capper_id:
             entry["capper_id"] = ref.capper_id
         existing.append(entry)
@@ -655,6 +704,7 @@ def read_roundup_slides(
             video_id=video_id,
             height=int(settings["video_height"]),
             proxy=proxies.get("https", "") if proxies else "",
+            extra_args=ytdlp_extra_args(config),
         )
         if video is None:
             return SlideReport(error="video download failed")
@@ -1421,6 +1471,16 @@ def main(argv: list[str] | None = None) -> int:
         ),
     )
     screen_group.add_argument(
+        "--video-file",
+        metavar="PATH",
+        default=None,
+        help=(
+            "Read a video you downloaded yourself instead of fetching it: the "
+            "frames are cut straight from this file (never deleted). Pair with "
+            "--picks-from-video URL to say whose video it is, or use it alone."
+        ),
+    )
+    screen_group.add_argument(
         "--video-frames",
         metavar="DIR",
         default=None,
@@ -1559,30 +1619,36 @@ def main(argv: list[str] | None = None) -> int:
         pasted_videos.append(
             ScreenVideoRef(video_id=video_id, url=url, capper_id=args.video_capper)
         )
-    if args.video_frames:
-        # Hand-captured screenshots stand in for one video's download: the
-        # URL says whose video (and keys the reading), the folder is the frames.
+    if args.video_file and args.video_frames:
+        log.error("--video-file and --video-frames are two ways in; use one")
+        return 2
+    local = args.video_file or args.video_frames
+    if local:
+        # A file or a folder of screenshots stands in for one video's
+        # download. A URL alongside says whose video it is (and keys the
+        # reading); without one the reading is keyed on the file's name and
+        # attributed to --video-capper, or minted from the name.
         if len(pasted_videos) > 1:
-            log.error("--video-frames reads one video's screenshots; give it one --picks-from-video")
+            log.error("--video-file / --video-frames read one video; give them one --picks-from-video")
+            return 2
+        if args.video_file and not Path(args.video_file).is_file():
+            log.error("No such video file: %s", args.video_file)
+            return 2
+        if args.video_frames and not Path(args.video_frames).is_dir():
+            log.error("No such screenshots folder: %s", args.video_frames)
             return 2
         if pasted_videos:
             ref = pasted_videos[0]
-            pasted_videos = [
-                ScreenVideoRef(
-                    video_id=ref.video_id, url=ref.url, capper_id=ref.capper_id,
-                    frames_dir=args.video_frames,
-                )
-            ]
-        elif args.video_capper:
-            pasted_videos = [
-                ScreenVideoRef(
-                    video_id="captured_frames", url="", capper_id=args.video_capper,
-                    frames_dir=args.video_frames,
-                )
-            ]
+            video_id, url = ref.video_id, ref.url
         else:
-            log.error("--video-frames needs --picks-from-video URL (whose video it is) or --video-capper")
-            return 2
+            video_id = local_video_id(local) if args.video_file else "captured_frames"
+            url = ""
+        pasted_videos = [
+            ScreenVideoRef(
+                video_id=video_id, url=url, capper_id=args.video_capper,
+                frames_dir=args.video_frames or "", video_file=args.video_file or "",
+            )
+        ]
     # A URL pasted on the command line replaces its config.json entry for
     # this run, so a --video-frames folder or --video-capper override wins.
     pasted_ids = {ref.video_id for ref in pasted_videos}

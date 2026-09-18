@@ -186,6 +186,18 @@ def test_fetch_video_info_parses_yt_dlp_json(monkeypatch):
     )
 
 
+def test_fetch_video_info_passes_cookies_through(monkeypatch):
+    seen = {}
+
+    def fake_run(command, **kwargs):
+        seen["command"] = command
+        return subprocess.CompletedProcess(command, 0, stdout=json.dumps({"id": "0Iggszq1z9M"}), stderr="")
+
+    monkeypatch.setattr("mma_engine.screen_picks.subprocess.run", fake_run)
+    fetch_video_info("https://youtu.be/0Iggszq1z9M", extra_args=["--cookies", "cookies.txt"])
+    assert "--cookies" in seen["command"] and "cookies.txt" in seen["command"]
+
+
 def test_fetch_video_info_fails_open(monkeypatch):
     def fake_run(command, **kwargs):
         return subprocess.CompletedProcess(command, 1, stdout="", stderr="ERROR: blocked")
@@ -397,9 +409,11 @@ def test_a_pasted_card_supersedes_screen_picks_too():
 
 def _install_fakes(monkeypatch, pipeline, *, info, reads):
     """Stub the network edges: yt-dlp metadata, download+frames, vision."""
-    monkeypatch.setattr(pipeline, "fetch_video_info", lambda url, proxy="": info)
+    monkeypatch.setattr(pipeline, "fetch_video_info", lambda url, proxy="", extra_args=None: info)
 
-    def fake_read_video_screens(config, url, video_id, title="", channel="", frames_dir=None):
+    def fake_read_video_screens(
+        config, url, video_id, title="", channel="", frames_dir=None, video_file=None
+    ):
         from mma_engine.screen_picks import ScreenReport
         report = ScreenReport(frames=len(reads), read=len(reads))
         raw_picks = []
@@ -626,7 +640,7 @@ def test_cli_rejects_a_bad_url_or_unknown_capper(tmp_path, monkeypatch):
         "--config", str(path), "--picks-from-video", "https://youtu.be/0Iggszq1z9M",
         "--video-capper", "nobody",
     ]) == 2
-    assert pipeline.main(["--config", str(path), "--video-frames", str(tmp_path)]) == 2
+    assert pipeline.main(["--config", str(path), "--video-frames", str(tmp_path / "nope")]) == 2
 
 
 def test_cli_video_frames_attach_to_the_pasted_url(tmp_path, monkeypatch):
@@ -651,3 +665,140 @@ def test_cli_video_frames_attach_to_the_pasted_url(tmp_path, monkeypatch):
     ]) == 0
     (ref,) = seen["screen_videos"]
     assert ref.video_id == "0Iggszq1z9M" and ref.frames_dir == str(shots)
+
+
+def test_cli_video_file_alone_is_keyed_on_the_filename(tmp_path, monkeypatch):
+    """A video downloaded by hand needs no URL and no capper: the reading is
+    named after the file and its poster is minted from the name."""
+    from mma_engine import pipeline
+
+    monkeypatch.chdir(tmp_path)
+    path = write_config(tmp_path, BASE_CONFIG)
+    seen = {}
+
+    def fake_run_pipeline(config, output_path, **kwargs):
+        seen.update(kwargs)
+        return {"event": {"name": "x"}, "totals": {"videos": 1, "cappers": 1, "picks": 1, "fights": 1},
+                "sources": [{"status": "ok", "capper": "c", "video_id": "v", "pick_count": 1}],
+                "fights": [{"display": "a vs b", "markets": []}]}
+
+    monkeypatch.setattr(pipeline, "run_pipeline", fake_run_pipeline)
+    clip = tmp_path / "UFC 331 Picks (1).mp4"
+    clip.write_bytes(b"not really a video")
+    assert pipeline.main([
+        "--config", str(path), "--no-discover", "--video-file", str(clip), "--remember-videos",
+    ]) == 0
+    (ref,) = seen["screen_videos"]
+    assert ref.video_id == "local_ufc_331_picks_1" and ref.video_file == str(clip) and ref.url == ""
+    raw = json.loads(path.read_text(encoding="utf-8"))
+    assert raw["screen_videos"] == [{"video_file": str(clip)}]
+    # ...and that entry loads back as the same ref next run.
+    assert load_config(path).screen_videos == [ref]
+
+    assert pipeline.main(["--config", str(path), "--video-file", str(tmp_path / "missing.mp4")]) == 2
+    assert pipeline.main([
+        "--config", str(path), "--video-file", str(clip), "--video-frames", str(tmp_path),
+    ]) == 2
+
+
+@needs_ffmpeg
+def test_read_video_screens_cuts_a_local_file_and_leaves_it_alone(tmp_path, monkeypatch):
+    from mma_engine import pipeline
+
+    monkeypatch.chdir(tmp_path)
+    config = load_config(write_config(tmp_path, BASE_CONFIG))
+    clip = tmp_path / "picks.mp4"
+    subprocess.run(
+        [FFMPEG, "-hide_banner", "-loglevel", "error", "-y", "-f", "lavfi",
+         "-i", "smptebars=s=320x180:d=6:r=8", "-pix_fmt", "yuv420p", str(clip)],
+        check=True,
+    )
+    monkeypatch.setattr(pipeline, "download_video", lambda *a, **k: (_ for _ in ()).throw(AssertionError("downloaded")))
+
+    class FakeReader:
+        def __init__(self, **kwargs):
+            pass
+
+        def read(self, frames, title="", channel=""):
+            from mma_engine.screen_picks import ScreenReport
+            return ScreenReport(frames=len(list(frames)), picks=[pick()])
+
+    monkeypatch.setattr(pipeline, "ScreenReader", FakeReader)
+    report = pipeline.read_video_screens(config, "", "local_picks", title="picks", video_file=clip)
+    assert report.frames >= 1 and len(report.picks) == 1
+    assert clip.is_file()  # the user's file is not the run's to delete
+
+
+def test_pipeline_attributes_a_local_file_by_its_name(tmp_path, monkeypatch):
+    from mma_engine import pipeline
+
+    monkeypatch.chdir(tmp_path)
+    config = load_config(write_config(tmp_path, BASE_CONFIG))
+    clip = tmp_path / "UFC 331 picks.mp4"
+    clip.write_bytes(b"x")
+    _install_fakes(monkeypatch, pipeline, info=None, reads=[ScreenRead(event_name="", picks=[pick()], boards=[])])
+    picks, sources = [], []
+    pipeline.ingest_screen_videos(
+        config,
+        [ScreenVideoRef(video_id="local_ufc_331_picks", url="", video_file=str(clip))],
+        sourced_picks=picks, sources=sources,
+    )
+    assert picks[0].capper.name == "Video: UFC 331 picks"
+    assert sources[0]["title"] == "UFC 331 picks"
+
+
+# -- the download ----------------------------------------------------------
+
+
+def test_download_video_retries_once_with_cookies_and_a_different_client(tmp_path, monkeypatch):
+    """A refused first attempt (YouTube's 403 on the adaptive streams) is
+    retried with a progressive format and another player client; the cookie
+    flags ride along on both."""
+    from mma_engine.roundup_slides import RETRY_EXTRACTOR_ARGS, download_video
+
+    calls = []
+
+    def fake_run(command, **kwargs):
+        calls.append(command)
+        if len(calls) == 1:
+            return subprocess.CompletedProcess(command, 1, stdout="", stderr="ERROR: unable to download video data: HTTP Error 403: Forbidden")
+        (tmp_path / "vid" / "0Iggszq1z9M.mp4").write_bytes(b"ok")
+        return subprocess.CompletedProcess(command, 0, stdout="", stderr="")
+
+    monkeypatch.setattr("mma_engine.roundup_slides.subprocess.run", fake_run)
+    got = download_video(
+        "https://youtu.be/0Iggszq1z9M", tmp_path / "vid", "0Iggszq1z9M",
+        extra_args=["--cookies", "cookies.txt"],
+    )
+    assert got is not None and got.name == "0Iggszq1z9M.mp4"
+    assert len(calls) == 2
+    assert all("--cookies" in c for c in calls)
+    assert RETRY_EXTRACTOR_ARGS[1] in calls[1] and RETRY_EXTRACTOR_ARGS[1] not in calls[0]
+    assert calls[1][calls[1].index("-f") + 1].startswith("b[height<=")
+
+
+def test_download_video_gives_up_after_the_retry(tmp_path, monkeypatch, caplog):
+    from mma_engine.roundup_slides import download_video
+
+    def fake_run(command, **kwargs):
+        return subprocess.CompletedProcess(command, 1, stdout="", stderr="HTTP Error 403: Forbidden")
+
+    monkeypatch.setattr("mma_engine.roundup_slides.subprocess.run", fake_run)
+    with caplog.at_level("WARNING"):
+        assert download_video("https://youtu.be/0Iggszq1z9M", tmp_path / "vid", "0Iggszq1z9M") is None
+    assert "pip install -U yt-dlp" in caplog.text
+
+
+def test_ytdlp_extra_args_are_the_configured_cookies(tmp_path, monkeypatch):
+    from mma_engine.pipeline import ytdlp_extra_args
+
+    monkeypatch.chdir(tmp_path)
+    config = load_config(write_config(tmp_path, {
+        **BASE_CONFIG,
+        "settings": {"transcript_cookies": {"enabled": True, "file": "cookies.txt"}},
+    }))
+    assert ytdlp_extra_args(config) == []  # configured, but the export never landed
+    (tmp_path / "cookies.txt").write_text("# Netscape HTTP Cookie File\n")
+    assert ytdlp_extra_args(config) == ["--cookies", "cookies.txt"]
+    config.settings["transcript_cookies"]["enabled"] = False
+    assert ytdlp_extra_args(config) == []

@@ -99,6 +99,7 @@ python -m http.server -d docs 8000                    # open http://localhost:80
 | `--no-roundup-slides` | Skip the visual pass; transcript only (cheap, and usually finds nothing). |
 | `--picks-from-video URL` | Paste any picks video: screenshot every unique frame, read the picks printed on them, ingest them for the channel that posted it. Repeatable. See **Ingest any picks video from its screenshots**. |
 | `--video-capper CAPPER_ID` | Attribute those picks to this capper instead of the video's own channel. |
+| `--video-file PATH` | Read a video you downloaded yourself: frames are cut straight from the file. Alone, or with `--picks-from-video URL` to say whose video it is. |
 | `--video-frames DIR` | Read screenshots you captured yourself from DIR instead of downloading the video. |
 | `--remember-videos` | Write the `--picks-from-video` URLs into `config.json` so every later run keeps their picks. |
 | `--no-screen-videos` | Skip the `screen_videos` listed in `config.json` for this run. |
@@ -490,6 +491,20 @@ URL, runs the line above with `--remember-videos`, rebuilds `docs/data.json`
 and `docs/picks.json`, and pushes them — the live dashboard updates a minute
 later. (Or drag a URL onto it / run `ingest_video.bat "https://youtu.be/…"`.)
 
+**Or hand it a file.** Type the path to a video you downloaded yourself
+instead of a URL, drag the file onto `ingest_video.bat`, or press Enter with
+nothing typed and pick it in a file dialog. It then asks for the video's
+YouTube URL (optional — it is only how the picks get attributed to the right
+channel; skip it and they are attributed to the file's name at neutral
+trust, which is fine for a tracker roundup, where every board names its own
+channels). Nothing is uploaded anywhere: only the individual frames are
+read, so the size of the video never matters. On the command line:
+
+```bash
+PYTHONPATH=src python -m mma_engine --video-file ~/Downloads/ufc-331-picks.mp4 \
+  --picks-from-video https://youtu.be/VIDEO_ID     # optional: whose video it is
+```
+
 What happens to the video:
 
 1. **Whose video it is** — yt-dlp reads the title and channel. The channel is
@@ -533,9 +548,16 @@ cleared along with `tracker.picks_videos`. List videos there by hand too:
 ]
 ```
 
-**If the download fails** (a blocked IP, an age gate), screenshot the picks
-by hand and point the reader at the folder — the URL still says whose video
-it is:
+**If the download fails.** YouTube answering `HTTP Error 403` on the video
+data almost always means yt-dlp is out of date — it tracks YouTube's player
+changes release by release, so `ingest_video.bat` and `weekly.bat` now
+upgrade it every run (`pip install -U yt-dlp` by hand does the same). The
+download also uses your configured cookies (`settings.transcript_cookies`,
+the same `cookies.txt` the age-restricted caption fallback reads) and retries
+once with a different format and player client. Still stuck? Download the
+video with anything else and use `--video-file` as above, or screenshot the
+picks by hand and point the reader at the folder — the URL still says whose
+video it is:
 
 ```bash
 PYTHONPATH=src python -m mma_engine \
