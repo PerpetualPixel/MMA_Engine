@@ -11,6 +11,10 @@ on:
         description: "Fetch transcripts only (no Claude API calls)"
         type: boolean
         default: false
+      video_url:
+        description: "Optional: a YouTube URL to read off its screen (--picks-from-video) alongside the normal build. Needs the residential proxy — GitHub's runners can't download from YouTube otherwise."
+        type: string
+        default: ""
       roster_video_url:
         description: "Optional: run --roster-from on this video URL instead of the normal pipeline (diagnostic / one-off roster update)"
         type: string
@@ -86,7 +90,8 @@ jobs:
             --config config.json \
             --output docs/data.json \
             ${{ inputs.discover_only && '--discover-only' || '' }} \
-            ${{ inputs.skip_extraction && '--skip-extraction' || '' }}
+            ${{ inputs.skip_extraction && '--skip-extraction' || '' }} \
+            ${{ inputs.video_url != '' && format('--picks-from-video "{0}" --remember-videos', inputs.video_url) || '' }}
 
       - name: Upload roster proposal
         if: ${{ inputs.roster_video_url != '' }}
@@ -101,10 +106,10 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          if git diff --quiet -- docs/data.json; then
+          git add docs/data.json config.json screens
+          if git diff --cached --quiet; then
             echo "No consensus changes to commit."
             exit 0
           fi
-          git add docs/data.json
           git commit -m "chore: refresh consensus data"
           git push

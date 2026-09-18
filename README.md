@@ -46,6 +46,11 @@ Optionally, a third:
 builds the consensus, and pushes the updated dashboard. Everything below is
 the manual/step-by-step equivalent.
 
+**`ingest_video.bat`** is the paste-a-URL button: it asks for a YouTube link,
+screenshots every unique frame of that video, reads the picks printed on
+them, and pushes the dashboard with those picks folded in — see **Ingest any
+picks video from its screenshots** below.
+
 **`preview.bat`** is the free dry run of the same thing: it lists every video
 the build would process — roster uploads and, with open search on, whatever
 else YouTube turns up — and stops there. Nothing is fetched, nothing is
@@ -92,6 +97,11 @@ python -m http.server -d docs 8000                    # open http://localhost:80
 | `--no-pasted-picks` | Skip the `pasted/` folder for this run. |
 | `--roundup-slides DIR` | Read roundup boards from screenshots in DIR instead of downloading the video. |
 | `--no-roundup-slides` | Skip the visual pass; transcript only (cheap, and usually finds nothing). |
+| `--picks-from-video URL` | Paste any picks video: screenshot every unique frame, read the picks printed on them, ingest them for the channel that posted it. Repeatable. See **Ingest any picks video from its screenshots**. |
+| `--video-capper CAPPER_ID` | Attribute those picks to this capper instead of the video's own channel. |
+| `--video-frames DIR` | Read screenshots you captured yourself from DIR instead of downloading the video. |
+| `--remember-videos` | Write the `--picks-from-video` URLs into `config.json` so every later run keeps their picks. |
+| `--no-screen-videos` | Skip the `screen_videos` listed in `config.json` for this run. |
 | `--picks-from-tracker URL` | Ingest a tracker roundup — one video carrying every channel's pick. Repeatable. See below. |
 | `--no-tracker-picks` | Skip the roundups listed in `config.json` for this run. |
 | `--apply-tracker-cappers` | Write channels first seen in a roundup into `config.json` at neutral trust. |
@@ -459,6 +469,84 @@ their overall score rather than getting an invented specialty rating.
 Extracted records are stored under each capper's `tracked` key in
 `config.json`, including which videos have been applied — that's what makes
 re-runs idempotent and the scores auditable.
+
+
+---
+
+## Ingest any picks video from its screenshots
+
+Most of what a capper commits to is printed on screen, not said: a pick
+card at the end of the video, a best-bets slide, a bet slip screenshot, a
+lower third reading "Silva ML -180, 2u". Captions miss all of it, and plenty
+of videos have no usable captions at all. So this path reads the pixels
+instead — paste a URL, get its picks on the dashboard:
+
+```bash
+PYTHONPATH=src python -m mma_engine --picks-from-video https://youtu.be/VIDEO_ID
+```
+
+**On Windows it is one double-click: `ingest_video.bat`.** It asks for the
+URL, runs the line above with `--remember-videos`, rebuilds `docs/data.json`
+and `docs/picks.json`, and pushes them — the live dashboard updates a minute
+later. (Or drag a URL onto it / run `ingest_video.bat "https://youtu.be/…"`.)
+
+What happens to the video:
+
+1. **Whose video it is** — yt-dlp reads the title and channel. The channel is
+   matched against `config.json` by channel id, then by name or alias, so a
+   roster capper keeps their earned trust; anyone else is minted at neutral
+   trust (5.0) and counts as one unweighted voice, like a channel first seen
+   in a roundup. `--video-capper CAPPER_ID` pins it by hand.
+2. **Every unique screenshot** — the video is downloaded (video only, 720p)
+   and ffmpeg cuts a frame at every real cut in the picture *and* at least
+   every 8 seconds, so a graphic that fades in over a talking head is caught
+   too. Near-identical frames are then dropped by perceptual hash (the same
+   pick card across a zoom, the presenter blinking) so each screenshot is
+   read exactly once.
+3. **The picks on each one** — every surviving frame goes to a vision call
+   that reports the picks printed on it, in the same schema the transcript
+   extractor produces: matchup, market, side, the price quoted, the stake,
+   and a confidence read from those signals only (a "lean" or small play
+   3–5, a plain pick 5, a sized play 6–8, a stated best bet, lock or 3+ unit
+   play 9–10). A talking head, an odds board with nothing marked, a poster —
+   nothing. The same pick shown on ten frames is folded into one.
+4. **Ingested** — the picks enter as that capper's own (tagged `on-screen`
+   on the dashboard), a pasted card supersedes them like a video, and the
+   tracker roundup defers to them. If a frame turns out to be a
+   tracker-style board — two fighters with channel names on each side — it is
+   counted as a roundup instead: one neutral vote per channel, `via
+   tracker`. So the tracker's own roundup URL works here too.
+
+**Read once.** Every frame is cached against its own bytes, so a run that
+dies part-way (a spent balance) resumes for free, and a finished reading is
+written to `screens/<video_id>.json` — plain, reviewable data that every
+later run reuses with no download and no API call, and where a misread
+name can be fixed by hand. `--remember-videos` (which `ingest_video.bat`
+passes) also lists the URL under `screen_videos` in `config.json`, so the
+weekly run keeps the picks until the event retargets, when the list is
+cleared along with `tracker.picks_videos`. List videos there by hand too:
+
+```jsonc
+"screen_videos": [
+  "https://youtu.be/VIDEO_ID",
+  { "url": "https://youtu.be/OTHER_ID", "capper_id": "funky_picks" }
+]
+```
+
+**If the download fails** (a blocked IP, an age gate), screenshot the picks
+by hand and point the reader at the folder — the URL still says whose video
+it is:
+
+```bash
+PYTHONPATH=src python -m mma_engine \
+  --picks-from-video https://youtu.be/VIDEO_ID --video-frames ~/Desktop/shots
+```
+
+Cost: one vision call per unique screenshot, on the cheaper slide-reading
+model (`settings.screen_picks.model`, Sonnet by default). A 20-minute
+preview usually comes to 40–80 unique frames after de-duplication;
+`max_frames` caps it. The ESPN card filter runs afterwards as always, so a
+video covering next week's card contributes nothing off-event.
 
 ---
 
@@ -1172,6 +1260,15 @@ accounts at 5.0 and adjust once you have a sample of their results.
 | `tracker_picks.video_height` | `720` | Download resolution — enough to read the smallest name. |
 | `tracker_picks.keep_video` | `false` | Keep the downloaded video after the frames are cut. |
 | `tracker_picks.readings_dir` | `roundups` | Where boards already read are stored and reused. |
+| `screen_picks.enabled` | `true` | Read the videos listed in `screen_videos` off their screen. With none listed this is a no-op. |
+| `screen_picks.model` / `effort` | `claude-sonnet-5` / `medium` | Model and effort for reading frames — closer to OCR than judgement. |
+| `screen_picks.scene_threshold` | `0.3` | How much the picture must change to count as a cut. Higher than the roundup's, because a talking head cuts constantly. |
+| `screen_picks.sample_seconds` | `8` | Also take a frame at least this often, so a graphic that fades in without a cut is caught. |
+| `screen_picks.max_frames` | `150` | Ceiling on frames cut from one video, before de-duplication. |
+| `screen_picks.max_distance` | `10` | Frames within this many bits on a 64-bit perceptual hash are the same screenshot, read once. |
+| `screen_picks.video_height` | `720` | Download resolution — enough to read a lower third. |
+| `screen_picks.keep_video` | `false` | Keep the downloaded video after the frames are cut. |
+| `screen_picks.readings_dir` | `screens` | Where finished readings are kept and reused. |
 | `live_odds.enabled` | `true` | Fetch live moneylines when `ODDS_API_KEY` is set. With no key this is a no-op, so leaving it on is safe. |
 | `live_odds.regions` | `us` | Bookmaker regions to median over: `us`, `us2`, `uk`, `eu`, `au` (comma-joined). |
 | `proxy.enabled` | `false` | Route YouTube requests through a proxy. Only used for the optional unattended path — see **Optional: fully unattended runs on GitHub Actions**. |
@@ -1181,8 +1278,9 @@ accounts at 5.0 and adjust once you have a sample of their results.
 
 ## Caching and cost
 
-`cache/transcripts/`, `cache/extractions/`, and `cache/tracker_picks/` are
-keyed by video ID and gitignored. A re-run after a partial failure re-fetches and re-bills only the
+`cache/transcripts/`, `cache/extractions/`, `cache/tracker_picks/`, and the
+per-frame `cache/slides/` and `cache/screens/` are keyed by video ID (or
+frame hash) and gitignored. A re-run after a partial failure re-fetches and re-bills only the
 videos that are actually new. The static system prompt carries a cache
 breakpoint, so repeated extractions in one run read it from the prompt cache
 instead of re-billing it.

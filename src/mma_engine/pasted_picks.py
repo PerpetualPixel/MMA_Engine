@@ -191,10 +191,12 @@ def supersede_video_picks(
     covered = {
         (s.capper.id, fight_key(s.pick.fighter_a, s.pick.fighter_b)) for s in pasted
     }
+    # "screens" is the capper's own video too, read off its frames rather
+    # than its captions — the same teaser, the same supersession.
     kept = [
         s
         for s in existing
-        if s.source_kind != "video"
+        if s.source_kind not in ("video", "screens")
         or (s.capper.id, fight_key(s.pick.fighter_a, s.pick.fighter_b)) not in covered
     ]
     return kept, len(existing) - len(kept)

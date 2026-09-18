@@ -13,6 +13,7 @@ import json
 import logging
 import os
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -24,6 +25,7 @@ from .config import (
     Capper,
     Config,
     ConfigError,
+    ScreenVideoRef,
     VideoRef,
     extract_video_id,
     load_config,
@@ -56,6 +58,17 @@ from .roundup_slides import (
     download_video,
     extract_slides,
     read_directory,
+)
+from .screen_picks import (
+    ScreenReader,
+    ScreenReading,
+    ScreenReport,
+    boards_as_roundup,
+    extract_frames,
+    fetch_video_info,
+    load_reading as load_screen_reading,
+    save_reading as save_screen_reading,
+    unique_frames,
 )
 from .tracker_picks import (
     CapperDirectory,
@@ -204,6 +217,280 @@ def capper_for_channel(config: Config, video: DiscoveredVideo) -> Capper:
     )
     config.cappers[capper_id] = minted
     return minted
+
+
+def read_video_screens(
+    config: Config,
+    url: str,
+    video_id: str,
+    title: str = "",
+    channel: str = "",
+    frames_dir: Path | None = None,
+) -> ScreenReport:
+    """Every unique frame of a video, read for the picks printed on it.
+
+    Frames come from the video itself — downloaded, cut at every scene
+    change and at least every few seconds, then de-duplicated by perceptual
+    hash so each screenshot is read once — or from a folder of screenshots
+    captured by hand when the download won't work.
+    """
+    settings = config.settings["screen_picks"]
+    cache_root = Path("cache")
+
+    if frames_dir is not None:
+        frames = read_directory(frames_dir)
+        if not frames:
+            log.warning("  no screenshots found in %s", frames_dir)
+            return ScreenReport(error=f"no images in {frames_dir}")
+        log.info("  %d screenshot(s) from %s", len(frames), frames_dir)
+    else:
+        proxies = build_requests_proxies(config.settings)
+        video = download_video(
+            url,
+            cache_root / "screen_video",
+            video_id=video_id,
+            height=int(settings["video_height"]),
+            proxy=proxies.get("https", "") if proxies else "",
+        )
+        if video is None:
+            return ScreenReport(error="video download failed")
+        frames = extract_frames(
+            video,
+            cache_root / "screens" / "frames" / video_id,
+            scene_threshold=float(settings["scene_threshold"]),
+            sample_seconds=float(settings["sample_seconds"]),
+            max_frames=int(settings["max_frames"]),
+        )
+        if not bool(settings["keep_video"]):
+            video.unlink(missing_ok=True)
+        if not frames:
+            return ScreenReport(error="no frames extracted")
+        log.info("  %d frame(s) cut from the video", len(frames))
+
+    total = len(frames)
+    frames = unique_frames(frames, max_distance=int(settings["max_distance"]))
+    log.info("  %d unique screenshot(s) after dropping %d near-duplicate(s)", len(frames), total - len(frames))
+
+    reader = ScreenReader(
+        model=str(settings["model"]),
+        effort=str(settings["effort"]),
+        cache_dir=cache_root / "screens",
+        use_cache=bool(config.settings["use_cache"]),
+    )
+    report = reader.read(frames, title=title, channel=channel)
+    log.info(
+        "  read %d screenshot(s) (%d from cache, %d failed): %d pick(s), %d board(s)",
+        report.read + report.cached, report.cached, report.failed,
+        len(report.picks), len(report.boards),
+    )
+    return report
+
+
+def capper_for_screen_video(
+    config: Config, video_id: str, channel_id: str, channel_title: str
+) -> Capper:
+    """Whose picks a screen-read video carries: the channel that posted it.
+
+    Same matching as open search — channel id first, then name or alias,
+    else minted at neutral trust. A video whose metadata could not be read
+    at all gets a capper named for the video, so its picks still count as
+    one unweighted voice rather than vanishing; pin it with --video-capper
+    or a capper_id in config.json's screen_videos to do better.
+    """
+    if channel_id or channel_title:
+        return capper_for_channel(
+            config,
+            DiscoveredVideo(
+                video_id=video_id,
+                capper_id="",
+                url="",
+                title="",
+                published=datetime.now(timezone.utc),
+                channel_id=channel_id,
+                channel_title=channel_title,
+            ),
+        )
+    capper_id = f"yt_video_{slugify(video_id)}"
+    if capper_id in config.cappers:
+        return config.cappers[capper_id]
+    minted = Capper(
+        id=capper_id,
+        name=f"YouTube video {video_id}",
+        discover=False,
+        trust={"overall": NEUTRAL_TRUST},
+    )
+    config.cappers[capper_id] = minted
+    return minted
+
+
+def ingest_screen_videos(
+    config: Config,
+    videos: list[ScreenVideoRef],
+    sourced_picks: list[SourcedPick],
+    sources: list[dict[str, Any]],
+    skip_extraction: bool = False,
+) -> str:
+    """Add the picks printed on each listed video's screen, in place.
+
+    A capper's on-screen picks are their own picks — full confidence where
+    the graphic states one, real odds, tagged `screens` so the dashboard can
+    say where they came from. A tracker-style board found on screen is
+    counted as a roundup instead: one neutral vote per channel. Returns the
+    event name a reading states, if any. Fails open throughout.
+    """
+    settings = config.settings["screen_picks"]
+    if not settings["enabled"] or not videos:
+        return ""
+
+    readings_dir = Path(settings["readings_dir"])
+    proxies = build_requests_proxies(config.settings)
+    proxy = proxies.get("https", "") if proxies else ""
+    directory = CapperDirectory(config.cappers.values())
+    event_name = ""
+
+    for ref in videos:
+        video_id = ref.video_id
+        frames_dir = Path(ref.frames_dir) if ref.frames_dir else None
+        log.info("Screen picks — %s", video_id)
+        record: dict[str, Any] = {
+            "video_id": video_id,
+            "url": ref.url,
+            "capper_id": ref.capper_id,
+            "capper": "",
+            "title": "",
+            "kind": "screens",
+            "status": "ok",
+            "pick_count": 0,
+        }
+
+        reading = load_screen_reading(readings_dir, video_id)
+        if reading is not None:
+            log.info("  reading from %s/%s.json — no download, no API call", readings_dir, video_id)
+            record["from_reading"] = True
+        else:
+            if skip_extraction:
+                record["status"] = "extraction_skipped"
+                sources.append(record)
+                continue
+            info = fetch_video_info(ref.url, proxy=proxy) if ref.url else None
+            title = info.title if info else ""
+            channel = info.channel if info else ""
+            channel_id = info.channel_id if info else ""
+            if info is None and ref.url:
+                log.warning("  could not read the video's title/channel — attributing by id")
+            report = read_video_screens(
+                config, ref.url, video_id, title=title, channel=channel, frames_dir=frames_dir
+            )
+            record.update(
+                frames=report.frames, frames_read=report.read + report.cached
+            )
+            if report.error:
+                record["error"] = report.error
+            if not report.picks and not report.boards:
+                record["status"] = "no_picks_on_screen" if report.frames else "no_frames"
+                record["capper"] = channel or f"YouTube video {video_id}"
+                record["title"] = title
+                sources.append(record)
+                log.warning("  nothing readable came off the screen (%s)", report.error or "no picks printed")
+                continue
+            reading = ScreenReading(
+                video_id=video_id,
+                source_url=ref.url,
+                title=title,
+                channel=channel,
+                channel_id=channel_id,
+                event_name=report.event_name,
+                picks=report.picks,
+                boards=report.boards,
+            )
+            if not report.error:
+                # Only a complete reading is worth keeping: a partial one
+                # (the API stopped part-way) should be finished next run.
+                save_screen_reading(readings_dir, reading)
+
+        # The capper's own picks, attributed to whoever posted the video.
+        capper = (
+            config.capper(ref.capper_id)
+            if ref.capper_id
+            else capper_for_screen_video(config, video_id, reading.channel_id, reading.channel)
+        )
+        record.update(capper_id=capper.id, capper=capper.name, title=reading.title)
+        for pick in reading.picks:
+            sourced_picks.append(
+                SourcedPick(
+                    pick=pick,
+                    capper=capper,
+                    video_id=video_id,
+                    video_url=ref.url,
+                    source_kind="screens",
+                )
+            )
+        record["pick_count"] = len(reading.picks)
+        event_name = event_name or reading.event_name
+
+        # Boards on screen are a roundup, counted as one: one neutral vote
+        # per channel, deferring to any capper already covered this run.
+        if reading.boards:
+            covered = frozenset(
+                (s.capper.id, fight_key(s.pick.fighter_a, s.pick.fighter_b))
+                for s in sourced_picks
+            )
+            fights = merge_roundups([boards_as_roundup(reading.boards, reading.event_name)])
+            picks, stats = to_sourced_picks(
+                fights,
+                directory,
+                video_id=video_id,
+                video_url=ref.url,
+                confidence=int(config.settings["tracker_picks"]["confidence"]),
+                already_covered=covered,
+            )
+            sourced_picks.extend(picks)
+            record.update(
+                board_fights=len(fights),
+                board_picks=stats.picks,
+                capper_count=stats.cappers,
+                new_cappers=stats.minted,
+                superseded=stats.superseded,
+            )
+            record["pick_count"] += stats.picks
+
+        sources.append(record)
+        log.info(
+            "  %d pick(s) for %s%s",
+            len(reading.picks), capper.name,
+            f", plus {record.get('board_picks', 0)} roundup vote(s) from {record.get('board_fights', 0)} board(s)"
+            if reading.boards else "",
+        )
+    return event_name
+
+
+def remember_screen_videos(config_path: Path, videos: list[ScreenVideoRef]) -> list[str]:
+    """Append videos to `config.json`'s screen_videos so every later run reads
+    them too (free, from `screens/`). Returns the ids actually added."""
+    raw = json.loads(config_path.read_text(encoding="utf-8"))
+    existing = raw.setdefault("screen_videos", [])
+    known: set[str] = set()
+    for entry in existing:
+        source = entry if isinstance(entry, str) else (entry.get("url") or entry.get("video_id") or "")
+        try:
+            known.add(extract_video_id(source))
+        except ConfigError:
+            continue
+    added: list[str] = []
+    for ref in videos:
+        if ref.video_id in known or not ref.url:
+            continue
+        entry: dict[str, Any] = {"url": ref.url}
+        if ref.capper_id:
+            entry["capper_id"] = ref.capper_id
+        existing.append(entry)
+        known.add(ref.video_id)
+        added.append(ref.video_id)
+    if added:
+        config_path.write_text(
+            json.dumps(raw, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+        )
+    return added
 
 
 def ingest_pasted_picks(
@@ -584,6 +871,7 @@ def run_pipeline(
     apply_tracker_cappers: bool = False,
     pasted_notes: list[tuple[str, Path]] | None = None,
     slides_dir: Path | None = None,
+    screen_videos: list[ScreenVideoRef] | None = None,
 ) -> dict[str, Any]:
     """Fetch transcripts, extract picks, aggregate, and write the payload."""
     settings = config.settings
@@ -665,6 +953,19 @@ def run_pipeline(
                     video_url=video.url,
                 )
             )
+
+    # Videos read off their screen — a URL pasted in, every unique frame
+    # read for the picks printed on it. These are the capper's own picks,
+    # so they land before the pasted cards (which supersede them) and the
+    # roundup (which defers to them).
+    screen_event = ingest_screen_videos(
+        config,
+        config.screen_videos if screen_videos is None else screen_videos,
+        sourced_picks=sourced_picks,
+        sources=sources,
+        skip_extraction=skip_extraction,
+    )
+    event_name = event_name or screen_event
 
     # Cards pasted by hand from paywalled posts, for cappers whose YouTube
     # upload is only a teaser these days.
@@ -901,6 +1202,16 @@ def _summarize(payload: dict[str, Any]) -> str:
             f"Pasted:  {sum(p.get('pick_count', 0) for p in pasted)} picks hand-fed "
             f"from {len(pasted)} card(s): {', '.join(p['capper'] for p in pasted)}"
         )
+    screens = [
+        s
+        for s in payload["sources"]
+        if s.get("kind") == "screens" and s["status"] == "ok"
+    ]
+    if screens:
+        lines.append(
+            f"Screens: {sum(p.get('pick_count', 0) for p in screens)} picks read off "
+            f"{len(screens)} video(s): {', '.join(p['capper'] for p in screens)}"
+        )
     roundups = [
         s
         for s in payload["sources"]
@@ -1043,6 +1354,51 @@ def main(argv: list[str] | None = None) -> int:
             "trust, so their ids stay stable across runs."
         ),
     )
+    screen_group = parser.add_argument_group("screen picks (any video, read off its frames)")
+    screen_group.add_argument(
+        "--picks-from-video",
+        metavar="VIDEO_URL",
+        action="append",
+        default=None,
+        help=(
+            "Paste a YouTube URL: the video is downloaded, every unique frame "
+            "is screenshotted and read for the picks printed on it, and they "
+            "are ingested for the channel that posted it. Repeatable; adds to "
+            "screen_videos in config.json for this run."
+        ),
+    )
+    screen_group.add_argument(
+        "--video-capper",
+        metavar="CAPPER_ID",
+        default="",
+        help=(
+            "Attribute the --picks-from-video / --video-frames picks to this "
+            "capper instead of the video's own channel."
+        ),
+    )
+    screen_group.add_argument(
+        "--video-frames",
+        metavar="DIR",
+        default=None,
+        help=(
+            "Read screenshots you captured yourself from DIR instead of "
+            "downloading the video. Pair with one --picks-from-video for the "
+            "attribution, or with --video-capper on its own."
+        ),
+    )
+    screen_group.add_argument(
+        "--remember-videos",
+        action="store_true",
+        help=(
+            "Write the --picks-from-video URLs into config.json's screen_videos "
+            "so every later run keeps their picks (read for free from screens/)."
+        ),
+    )
+    screen_group.add_argument(
+        "--no-screen-videos",
+        action="store_true",
+        help="Skip the screen_videos listed in config.json for this run.",
+    )
     roster_group = parser.add_argument_group("capper roster (tracker videos)")
     roster_group.add_argument(
         "--roster-from",
@@ -1143,6 +1499,57 @@ def main(argv: list[str] | None = None) -> int:
         config.settings["tracker_picks"]["read_slides"] = False
     slides_dir = Path(args.roundup_slides) if args.roundup_slides else None
 
+    # Videos to read off their screen: config.json's list, plus whatever was
+    # pasted on the command line for this run.
+    screen_videos: list[ScreenVideoRef] = [] if args.no_screen_videos else list(config.screen_videos)
+    pasted_videos: list[ScreenVideoRef] = []
+    if args.video_capper and args.video_capper not in config.cappers:
+        log.error("--video-capper %r is not a capper id in %s", args.video_capper, config.path)
+        return 2
+    for url in args.picks_from_video or []:
+        try:
+            video_id = extract_video_id(url)
+        except ConfigError as exc:
+            log.error("%s", exc)
+            return 2
+        pasted_videos.append(
+            ScreenVideoRef(video_id=video_id, url=url, capper_id=args.video_capper)
+        )
+    if args.video_frames:
+        # Hand-captured screenshots stand in for one video's download: the
+        # URL says whose video (and keys the reading), the folder is the frames.
+        if len(pasted_videos) > 1:
+            log.error("--video-frames reads one video's screenshots; give it one --picks-from-video")
+            return 2
+        if pasted_videos:
+            ref = pasted_videos[0]
+            pasted_videos = [
+                ScreenVideoRef(
+                    video_id=ref.video_id, url=ref.url, capper_id=ref.capper_id,
+                    frames_dir=args.video_frames,
+                )
+            ]
+        elif args.video_capper:
+            pasted_videos = [
+                ScreenVideoRef(
+                    video_id="captured_frames", url="", capper_id=args.video_capper,
+                    frames_dir=args.video_frames,
+                )
+            ]
+        else:
+            log.error("--video-frames needs --picks-from-video URL (whose video it is) or --video-capper")
+            return 2
+    # A URL pasted on the command line replaces its config.json entry for
+    # this run, so a --video-frames folder or --video-capper override wins.
+    pasted_ids = {ref.video_id for ref in pasted_videos}
+    screen_videos = [ref for ref in screen_videos if ref.video_id not in pasted_ids] + pasted_videos
+    if not config.settings["screen_picks"]["enabled"] and pasted_videos:
+        config.settings["screen_picks"]["enabled"] = True
+    if args.remember_videos and pasted_videos:
+        added = remember_screen_videos(config.path, pasted_videos)
+        if added:
+            log.info("Remembered %d video(s) in %s screen_videos", len(added), config.path)
+
     pasted_settings = config.settings["pasted_picks"]
     has_pasted = bool(pasted_notes) or (
         pasted_settings["enabled"] and has_notes(Path(pasted_settings["dir"]))
@@ -1151,14 +1558,16 @@ def main(argv: list[str] | None = None) -> int:
     # A roundup on its own is a perfectly good run: it carries every channel's
     # pick without needing a single per-capper video. So is a folder of pasted
     # cards.
-    if not videos and not effective_roundups and not has_pasted and slides_dir is None:
+    has_screens = bool(screen_videos) and config.settings["screen_picks"]["enabled"]
+    if not videos and not effective_roundups and not has_pasted and slides_dir is None and not has_screens:
         log.error(
             "No videos to process. Either add entries to the \"videos\" array in %s "
             "(e.g. {\"capper_id\": \"artem_mma\", \"url\": \"https://youtu.be/...\"}), "
             "or enable settings.discovery to pull them from the capper channels. "
             "A predictions-tracker roundup works on its own too "
             "(--picks-from-tracker https://youtu.be/...), as does a pasted "
-            "card in pasted/.",
+            "card in pasted/, or any picks video read off its screen "
+            "(--picks-from-video https://youtu.be/...).",
             config.path,
         )
         return 2
@@ -1174,6 +1583,7 @@ def main(argv: list[str] | None = None) -> int:
             apply_tracker_cappers=args.apply_tracker_cappers,
             pasted_notes=pasted_notes,
             slides_dir=slides_dir,
+            screen_videos=screen_videos,
         )
     except ProxyConfigError as exc:
         log.error("%s", exc)

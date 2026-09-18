@@ -107,6 +107,9 @@ def resolve_auto_event(config_path: str | Path) -> bool:
     if tracker.get("picks_videos"):
         log.info("Clearing tracker.picks_videos — that roundup was for the old event.")
     tracker["picks_videos"] = []
+    if raw.get("screen_videos"):
+        log.info("Clearing screen_videos — those videos were for the old event.")
+    raw["screen_videos"] = []
 
     config_path.write_text(
         json.dumps(raw, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"

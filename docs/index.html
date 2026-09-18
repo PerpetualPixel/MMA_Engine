@@ -695,8 +695,13 @@ function capperTable(cappers) {
     // than showing its placeholder confidence as if they had voiced it. A
     // pasted card is the opposite — the capper's own words, just not from a
     // video — so it keeps its confidence and only gets a provenance tag.
+    // "screens" is the capper's own video read off its frames (a pick card,
+    // a bet slip) rather than its captions — their own pick, provenance
+    // tagged like a paste.
     const viaTracker = c.source === "tracker";
-    const tag = viaTracker ? "via tracker" : c.source === "pasted" ? "pasted" : "";
+    const tag = viaTracker ? "via tracker"
+      : c.source === "pasted" ? "pasted"
+      : c.source === "screens" ? "on-screen" : "";
     return `
     <tr>
       <td>${esc(c.name)}${tag ? ` <span class="tag">${esc(tag)}</span>` : ""}</td>
@@ -1923,6 +1928,13 @@ document.getElementById("about-btn").addEventListener("click", () => openOverlay
     own words, so they carry real confidence and reasoning and count exactly
     as a pick from a video does. A pasted card supersedes that capper's video
     for any fight it covers.</dd>
+    <dt>&ldquo;on-screen&rdquo; tag</dt>
+    <dd>That capper's pick was read off the screen of their video &mdash; a
+    pick card, a best-bets slide, a bet slip &mdash; by pasting the video's
+    URL into the engine (<code>--picks-from-video</code>), rather than from
+    its captions. It is the capper's own pick and carries whatever the graphic
+    stated: a stake, a &ldquo;best bet&rdquo; label, a price. A pick with no
+    such signal enters at 5/10.</dd>
     <dt>&ldquo;via tracker&rdquo; tag</dt>
     <dd>That capper's pick was read off the @PredictionsTracker roundup &mdash;
     the pre-event video reporting which of 150+ channels is on which fighter
