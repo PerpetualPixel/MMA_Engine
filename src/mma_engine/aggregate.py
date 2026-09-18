@@ -192,6 +192,7 @@ def _option_payload(option: _Option, market_weight: float) -> dict[str, Any]:
                 "reasoning": s.pick.reasoning,
                 "source": s.source_kind,
                 "video_url": s.video_url,
+                "video_id": s.video_id,
             }
             for s in supporters
         ],

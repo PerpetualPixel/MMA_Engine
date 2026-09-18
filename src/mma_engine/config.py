@@ -158,7 +158,9 @@ DEFAULT_SETTINGS: dict[str, Any] = {
         # 64-bit perceptual hash are the same picture, read once.
         "scene_threshold": 0.3,
         "sample_seconds": 8,
-        "max_frames": 150,
+        # The ceiling on unique screenshots actually read (the paid step);
+        # the video itself is always cut in full. The run warns when it bites.
+        "max_frames": 200,
         "max_distance": 10,
         # 720p reads a lower-third; more is wasted tokens.
         "video_height": 720,

@@ -412,7 +412,8 @@ def _install_fakes(monkeypatch, pipeline, *, info, reads):
     monkeypatch.setattr(pipeline, "fetch_video_info", lambda url, proxy="", extra_args=None: info)
 
     def fake_read_video_screens(
-        config, url, video_id, title="", channel="", frames_dir=None, video_file=None
+        config, url, video_id, title="", channel="", frames_dir=None, video_file=None,
+        fighters=None,
     ):
         from mma_engine.screen_picks import ScreenReport
         report = ScreenReport(frames=len(reads), read=len(reads))
@@ -719,7 +720,7 @@ def test_read_video_screens_cuts_a_local_file_and_leaves_it_alone(tmp_path, monk
         def __init__(self, **kwargs):
             pass
 
-        def read(self, frames, title="", channel=""):
+        def read(self, frames, title="", channel="", fighters=None):
             from mma_engine.screen_picks import ScreenReport
             return ScreenReport(frames=len(list(frames)), picks=[pick()])
 
@@ -802,3 +803,137 @@ def test_ytdlp_extra_args_are_the_configured_cookies(tmp_path, monkeypatch):
     assert ytdlp_extra_args(config) == ["--cookies", "cookies.txt"]
     config.settings["transcript_cookies"]["enabled"] = False
     assert ytdlp_extra_args(config) == []
+
+
+# -- method boards, card hints, the paid ceiling ---------------------------
+
+
+def test_a_method_board_becomes_method_votes_not_moneyline_ones():
+    from mma_engine.roundup_slides import slide_fight_to_picks
+
+    board = SlideFight(
+        fighter_a="Jean Silva", fighter_b="Jose Miguel Delgado",
+        cappers_for_a=["MMA Guru"], cappers_for_b=["Funky Picks"],
+        stated_count_a=1, stated_count_b=1, market="ko_tko",
+    )
+    fight = slide_fight_to_picks(board)
+    assert fight.cappers_for_a == [] and fight.cappers_for_b == []
+    assert fight.ko_tko_for_a == ["MMA Guru"] and fight.ko_tko_for_b == ["Funky Picks"]
+    assert fight.submission_for_a == [] and fight.decision_for_b == []
+    # The default is still the moneyline, so every cached read without the
+    # field loads as it always did.
+    plain = SlideFight.model_validate({
+        "fighter_a": "A B", "fighter_b": "C D", "cappers_for_a": ["x"], "cappers_for_b": [],
+        "stated_count_a": 0, "stated_count_b": 0,
+    })
+    assert plain.market == "moneyline" and slide_fight_to_picks(plain).cappers_for_a == ["x"]
+
+
+def test_pipeline_turns_on_screen_method_boards_into_method_picks(tmp_path, monkeypatch):
+    from mma_engine import pipeline
+
+    monkeypatch.chdir(tmp_path)
+    config = load_config(write_config(tmp_path, BASE_CONFIG))
+    moneyline = SlideFight(
+        fighter_a="Jean Silva", fighter_b="Jose Miguel Delgado",
+        cappers_for_a=["MMA Guru", "Funky Picks"], cappers_for_b=[],
+        stated_count_a=2, stated_count_b=0,
+    )
+    by_ko = SlideFight(
+        fighter_a="Jean Silva", fighter_b="Jose Miguel Delgado",
+        cappers_for_a=["MMA Guru"], cappers_for_b=[],
+        stated_count_a=1, stated_count_b=0, market="ko_tko",
+    )
+    _install_fakes(
+        monkeypatch, pipeline,
+        info=VideoInfo(video_id="X8h8G_3by-M", url="u", channel="Tracker", channel_id="UCt"),
+        reads=[ScreenRead(event_name="", picks=[], boards=[moneyline]),
+               ScreenRead(event_name="", picks=[], boards=[by_ko])],
+    )
+    picks, sources = [], []
+    pipeline.ingest_screen_videos(
+        config, [ScreenVideoRef(video_id="X8h8G_3by-M", url="u")], sourced_picks=picks, sources=sources,
+    )
+    by_type = {}
+    for p in picks:
+        by_type.setdefault(p.pick.bet_type, []).append((p.capper.id, p.pick.selection))
+    assert sorted(by_type["moneyline"]) == [("funky_picks", "Jean Silva"), ("mma_guru", "Jean Silva")]
+    assert by_type["method_of_victory"] == [("mma_guru", "Jean Silva by KO/TKO")]
+
+
+def test_reader_passes_the_card_as_a_hint_and_keys_the_cache_on_it(tmp_path):
+    from mma_engine.screen_picks import READER_VERSION, card_hint, read_key
+
+    frames = [frame(tmp_path, "f.jpg", b"same")]
+    client = FakeClient([
+        ScreenRead(event_name="", picks=[], boards=[]),
+        ScreenRead(event_name="", picks=[], boards=[]),
+    ])
+    reader = ScreenReader(client=client, cache_dir=tmp_path / "cache")
+    reader.read(frames, fighters=["Michael Aswell", "JooSang Yoo"])
+    text = client.calls[0]["messages"][0]["content"][1]["text"]
+    assert "Fighters on this card: Michael Aswell, JooSang Yoo" in text
+    # Same frame, no hint: a different read, not the cached one.
+    reader.read(frames)
+    assert len(client.calls) == 2
+    assert "Fighters on this card" not in client.calls[1]["messages"][0]["content"][1]["text"]
+    # And the same hint again is served from the cache.
+    reader.read(frames, fighters=["Michael Aswell", "JooSang Yoo"])
+    assert len(client.calls) == 2
+    assert card_hint(None) == "" and card_hint(["", " "]) == ""
+    assert READER_VERSION in read_key(frames[0]) and read_key(frames[0]) != read_key(frames[0], "x")
+
+
+def test_card_fighter_names_flattens_the_fetched_cards():
+    from mma_engine.pipeline import card_fighter_names
+
+    cards = [{"name": "UFC 331", "fights": [
+        {"fighter_a": "Joshua Van", "fighter_b": "Alexandre Pantoja"},
+        {"fighter_a": "Joshua Van", "fighter_b": ""},
+    ]}]
+    assert card_fighter_names(cards) == ["Joshua Van", "Alexandre Pantoja"]
+    assert card_fighter_names([]) == []
+
+
+def test_read_video_screens_caps_the_paid_step_not_the_cut(tmp_path, monkeypatch, caplog):
+    from mma_engine import pipeline
+    from mma_engine.screen_picks import ScreenReport
+
+    monkeypatch.chdir(tmp_path)
+    config = load_config(write_config(tmp_path, {
+        **BASE_CONFIG, "settings": {"screen_picks": {"max_frames": 3}},
+    }))
+    many = [tmp_path / f"f{i}.jpg" for i in range(10)]
+    for path in many:
+        path.write_bytes(b"x")
+    monkeypatch.setattr(pipeline, "extract_frames", lambda *a, **k: many)
+    monkeypatch.setattr(pipeline, "unique_frames", lambda frames, max_distance=10: list(frames))
+    seen = {}
+
+    class FakeReader:
+        def __init__(self, **kwargs):
+            pass
+
+        def read(self, frames, title="", channel="", fighters=None):
+            seen["frames"] = list(frames)
+            seen["fighters"] = fighters
+            return ScreenReport(frames=len(seen["frames"]))
+
+    monkeypatch.setattr(pipeline, "ScreenReader", FakeReader)
+    clip = tmp_path / "clip.mp4"
+    clip.write_bytes(b"x")
+    with caplog.at_level("WARNING"):
+        pipeline.read_video_screens(config, "", "local_clip", video_file=clip, fighters=["A B"])
+    assert seen["frames"] == many[:3] and seen["fighters"] == ["A B"]
+    assert "first 3 of 10" in caplog.text and "max_frames" in caplog.text
+
+
+def test_totals_count_a_local_video_as_a_video():
+    from mma_engine.event_card import _refresh_totals
+
+    payload = {"fights": [{"markets": [{"options": [{"cappers": [
+        {"id": "a", "video_url": "", "video_id": "local_clip"},
+        {"id": "b", "video_url": "https://youtu.be/x", "video_id": "x"},
+    ]}]}]}]}
+    _refresh_totals(payload)
+    assert payload["totals"] == {"fights": 1, "picks": 2, "cappers": 2, "videos": 2}
