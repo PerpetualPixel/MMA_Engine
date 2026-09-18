@@ -255,7 +255,7 @@ def download_video(
         return None
     if result.returncode != 0:
         log.warning(
-            "  yt-dlp could not download the roundup video: %s",
+            "  yt-dlp could not download the video: %s",
             (result.stderr or result.stdout or "").strip()[:300],
         )
         return None

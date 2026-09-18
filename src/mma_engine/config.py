@@ -138,6 +138,35 @@ DEFAULT_SETTINGS: dict[str, Any] = {
         # corrected by hand — see mma_engine.tracker_picks.load_readings.
         "readings_dir": "roundups",
     },
+    "screen_picks": {
+        # Read picks videos off their screen: every unique frame of the video
+        # goes to a vision call that reports the picks printed on it (a pick
+        # card, a bet slip, a best-bets slide — or a tracker-style board).
+        # See mma_engine.screen_picks. The URLs come from the top-level
+        # "screen_videos" list or --picks-from-video; this block only says
+        # how they are read. Enabled here means "use them if any are listed".
+        "enabled": True,
+        # Frame reading is closer to OCR than to judgement, and a video can
+        # run to a hundred frames, so it gets its own, cheaper model.
+        "model": "claude-sonnet-5",
+        "effort": "medium",
+        # A frame is cut at every real cut in the picture (scene_threshold,
+        # higher than the roundup's because a talking head cuts constantly)
+        # AND at least every sample_seconds, so a graphic that fades in
+        # without a cut is still caught. Near-identical frames are then
+        # dropped: two frames within max_distance bits of each other on a
+        # 64-bit perceptual hash are the same picture, read once.
+        "scene_threshold": 0.3,
+        "sample_seconds": 8,
+        "max_frames": 150,
+        "max_distance": 10,
+        # 720p reads a lower-third; more is wasted tokens.
+        "video_height": 720,
+        # Keep the downloaded video after the frames are cut (it is large).
+        "keep_video": False,
+        # Where finished readings are kept and reused, one JSON per video.
+        "readings_dir": "screens",
+    },
     "live_odds": {
         # Current moneyline prices from The Odds API, stamped onto each bout so
         # the dashboard can price a parlay instead of just ranking it. Costs
@@ -233,6 +262,22 @@ class VideoRef:
 
 
 @dataclass(frozen=True)
+class ScreenVideoRef:
+    """A video to read off its screen (see `mma_engine.screen_picks`).
+
+    `capper_id` is optional: left empty, the video's own channel decides
+    whose picks these are. Set it to pin the attribution by hand.
+    """
+
+    video_id: str
+    url: str
+    capper_id: str = ""
+    # A folder of screenshots captured by hand, read instead of downloading
+    # the video (--video-frames). Empty means download it.
+    frames_dir: str = ""
+
+
+@dataclass(frozen=True)
 class Config:
     event: dict[str, Any]
     settings: dict[str, Any]
@@ -242,6 +287,9 @@ class Config:
     # The `tracker` block: the results channel the trust scores come from, plus
     # any pre-event roundup videos to ingest picks from.
     tracker: dict[str, Any] = field(default_factory=dict)
+    # Videos to read off their screen every run, from the top-level
+    # "screen_videos" array — a URL, or {"url": ..., "capper_id": ...}.
+    screen_videos: list[ScreenVideoRef] = field(default_factory=list)
     # Additional cards to cover in the same run, from the top-level "events"
     # array — a PFL event the same weekend as the UFC one, say. The dashboard
     # shows them as separate cards behind a selector.
@@ -333,6 +381,10 @@ def load_config(path: str | Path = "config.json") -> Config:
         **DEFAULT_SETTINGS["tracker_picks"],
         **(raw_settings.get("tracker_picks") or {}),
     }
+    settings["screen_picks"] = {
+        **DEFAULT_SETTINGS["screen_picks"],
+        **(raw_settings.get("screen_picks") or {}),
+    }
     # Environment wins over the file so CI can override without a commit.
     if os.environ.get("MMA_MODEL"):
         settings["model"] = os.environ["MMA_MODEL"]
@@ -409,6 +461,33 @@ def load_config(path: str | Path = "config.json") -> Config:
             )
         )
 
+    screen_videos: list[ScreenVideoRef] = []
+    seen_screens: set[str] = set()
+    for entry in raw.get("screen_videos") or []:
+        if isinstance(entry, str):
+            entry = {"url": entry}
+        if not isinstance(entry, dict):
+            raise ConfigError(f"screen_videos entries must be a URL or an object: {entry!r}")
+        source = entry.get("url") or entry.get("video_id") or ""
+        if not source:
+            continue
+        video_id = extract_video_id(source)
+        capper_id = entry.get("capper_id") or ""
+        if capper_id and capper_id not in cappers:
+            raise ConfigError(
+                f"Screen video {source!r} references unknown capper_id {capper_id!r}"
+            )
+        if video_id in seen_screens:
+            continue
+        seen_screens.add(video_id)
+        screen_videos.append(
+            ScreenVideoRef(
+                video_id=video_id,
+                url=entry.get("url") or f"https://youtu.be/{video_id}",
+                capper_id=capper_id,
+            )
+        )
+
     return Config(
         event=dict(raw.get("event") or {}),
         settings=settings,
@@ -417,4 +496,5 @@ def load_config(path: str | Path = "config.json") -> Config:
         path=config_path,
         tracker=dict(raw.get("tracker") or {}),
         extra_events=[dict(entry) for entry in (raw.get("events") or []) if entry],
+        screen_videos=screen_videos,
     )
