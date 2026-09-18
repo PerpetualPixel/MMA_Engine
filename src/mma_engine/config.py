@@ -222,6 +222,17 @@ def extract_video_id(url_or_id: str) -> str:
     raise ConfigError(f"Could not parse a YouTube video ID from {url_or_id!r}")
 
 
+def local_video_id(path: str | Path) -> str:
+    """A stable id for a video that lives on disk rather than on YouTube.
+
+    Named after the file, so `screens/local_ufc_331_picks.json` is
+    recognisable, and so the same file read twice is read once.
+    """
+    stem = Path(str(path)).stem
+    slug = re.sub(r"[^a-z0-9]+", "_", stem.lower()).strip("_")[:40]
+    return f"local_{slug or 'video'}"
+
+
 @dataclass(frozen=True)
 class Capper:
     id: str
@@ -275,6 +286,9 @@ class ScreenVideoRef:
     # A folder of screenshots captured by hand, read instead of downloading
     # the video (--video-frames). Empty means download it.
     frames_dir: str = ""
+    # A video file already on disk (--video-file), cut into frames directly
+    # instead of downloading. The file is never deleted. Empty means download.
+    video_file: str = ""
 
 
 @dataclass(frozen=True)
@@ -469,9 +483,10 @@ def load_config(path: str | Path = "config.json") -> Config:
         if not isinstance(entry, dict):
             raise ConfigError(f"screen_videos entries must be a URL or an object: {entry!r}")
         source = entry.get("url") or entry.get("video_id") or ""
-        if not source:
+        video_file = str(entry.get("video_file") or "").strip()
+        if not source and not video_file:
             continue
-        video_id = extract_video_id(source)
+        video_id = extract_video_id(source) if source else local_video_id(video_file)
         capper_id = entry.get("capper_id") or ""
         if capper_id and capper_id not in cappers:
             raise ConfigError(
@@ -483,8 +498,9 @@ def load_config(path: str | Path = "config.json") -> Config:
         screen_videos.append(
             ScreenVideoRef(
                 video_id=video_id,
-                url=entry.get("url") or f"https://youtu.be/{video_id}",
+                url=(entry.get("url") or f"https://youtu.be/{video_id}") if source else "",
                 capper_id=capper_id,
+                video_file=video_file,
             )
         )
 

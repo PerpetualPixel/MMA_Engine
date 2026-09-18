@@ -111,6 +111,11 @@ if (-not (Test-Path ".venv")) {
 Write-Host "== Installing dependencies ==" -ForegroundColor Cyan
 & ".venv\Scripts\python.exe" -m pip install --quiet -r requirements.txt
 if ($LASTEXITCODE -ne 0) { Fail "pip install failed - see the error above." }
+# yt-dlp specifically is upgraded every run: YouTube changes its player
+# every few weeks and an older yt-dlp answers with "HTTP Error 403" on the
+# video download, which is the one dependency here that rots on a schedule.
+& ".venv\Scripts\python.exe" -m pip install --quiet --upgrade yt-dlp
+if ($LASTEXITCODE -ne 0) { Write-Host "Could not upgrade yt-dlp - continuing with the installed version." -ForegroundColor Yellow }
 
 $env:PYTHONPATH = "src"
 

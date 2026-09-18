@@ -219,8 +219,13 @@ class ScreenReport:
 # -- what the video is -----------------------------------------------------
 
 
-def fetch_video_info(url: str, proxy: str = "", timeout: float = 120.0) -> VideoInfo | None:
-    """Title and channel for a URL, from yt-dlp's metadata call. None on failure."""
+def fetch_video_info(
+    url: str, proxy: str = "", timeout: float = 120.0, extra_args: list[str] | None = None
+) -> VideoInfo | None:
+    """Title and channel for a URL, from yt-dlp's metadata call. None on failure.
+
+    `extra_args` (the configured cookies) go straight to yt-dlp.
+    """
     try:
         video_id = extract_video_id(url)
     except Exception:
@@ -232,6 +237,7 @@ def fetch_video_info(url: str, proxy: str = "", timeout: float = 120.0) -> Video
         "--quiet",
         "--no-warnings",
         "--no-playlist",
+        *(extra_args or []),
         "--skip-download",
         "--dump-single-json",
         url,

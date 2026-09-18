@@ -211,6 +211,16 @@ def ffmpeg_path() -> str | None:
         return shutil.which("ffmpeg")
 
 
+# What a second attempt changes when the first download is refused. YouTube
+# answers 403 on the adaptive (video-only) streams from time to time — a
+# player change yt-dlp hasn't caught up with, or a client that now wants a
+# proof-of-origin token — while the older progressive formats, fetched
+# through a different client, still come down. Best-effort: the real fix is
+# a current yt-dlp, which the run scripts now upgrade every time.
+RETRY_FORMAT = "b[height<={height}]/b"
+RETRY_EXTRACTOR_ARGS = ["--extractor-args", "youtube:player_client=android_vr,web_safari,web"]
+
+
 def download_video(
     url: str,
     dest_dir: Path,
@@ -218,8 +228,16 @@ def download_video(
     height: int = DEFAULT_HEIGHT,
     proxy: str = "",
     timeout: float = 900.0,
+    extra_args: list[str] | None = None,
 ) -> Path | None:
-    """Fetch the roundup video itself, video-only and no larger than needed."""
+    """Fetch the video itself, video-only and no larger than needed.
+
+    `extra_args` is passed straight to yt-dlp — the configured cookies, in
+    practice, which authenticate the request as you and route it through
+    the clients YouTube serves a signed-in viewer. A refused first attempt
+    is retried once with a progressive format and a different player client
+    before giving up.
+    """
     dest_dir.mkdir(parents=True, exist_ok=True)
     existing = sorted(dest_dir.glob(f"{video_id}.*"))
     if existing:
@@ -227,7 +245,7 @@ def download_video(
         return existing[0]
 
     template = str(dest_dir / f"{video_id}.%(ext)s")
-    command = [
+    base = [
         # This interpreter, not whatever "python" happens to mean on PATH:
         # the run is inside a venv and yt-dlp is installed there, not
         # necessarily in the system Python.
@@ -237,31 +255,44 @@ def download_video(
         "--quiet",
         "--no-warnings",
         "--no-playlist",
-        # Video only: the audio is what the transcript path already read.
-        "-f",
-        f"bv*[height<={height}]/b[height<={height}]/bv*/b",
+        *(extra_args or []),
         "-o",
         template,
-        url,
     ]
     if proxy:
-        command[-1:-1] = ["--proxy", proxy]
-    try:
-        result = subprocess.run(
-            command, capture_output=True, text=True, timeout=timeout, check=False
-        )
-    except (OSError, subprocess.SubprocessError) as exc:
-        log.warning("  could not run yt-dlp: %s: %s", type(exc).__name__, exc)
-        return None
-    if result.returncode != 0:
-        log.warning(
-            "  yt-dlp could not download the video: %s",
-            (result.stderr or result.stdout or "").strip()[:300],
-        )
-        return None
+        base += ["--proxy", proxy]
+    attempts = [
+        # Video only: the audio is what the transcript path already read.
+        ["-f", f"bv*[height<={height}]/b[height<={height}]/bv*/b"],
+        ["-f", RETRY_FORMAT.format(height=height), *RETRY_EXTRACTOR_ARGS],
+    ]
+    error = ""
+    for index, attempt in enumerate(attempts, start=1):
+        try:
+            result = subprocess.run(
+                [*base, *attempt, url],
+                capture_output=True, text=True, timeout=timeout, check=False,
+            )
+        except (OSError, subprocess.SubprocessError) as exc:
+            log.warning("  could not run yt-dlp: %s: %s", type(exc).__name__, exc)
+            return None
+        if result.returncode == 0:
+            downloaded = sorted(dest_dir.glob(f"{video_id}.*"))
+            if downloaded:
+                return downloaded[0]
+        error = (result.stderr or result.stdout or "").strip()[:300]
+        if index < len(attempts):
+            log.info("  yt-dlp refused the first attempt (%s) — retrying with a different format and client", error)
 
-    downloaded = sorted(dest_dir.glob(f"{video_id}.*"))
-    return downloaded[0] if downloaded else None
+    log.warning("  yt-dlp could not download the video: %s", error)
+    if "403" in error or "Forbidden" in error:
+        log.warning(
+            "  a 403 from YouTube here almost always means yt-dlp is out of date: "
+            "run  python -m pip install -U yt-dlp  in the venv and try again. "
+            "If it persists, screenshot the picks and use --video-frames DIR "
+            "(or --roundup-slides DIR for a tracker roundup)."
+        )
+    return None
 
 
 def extract_slides(
