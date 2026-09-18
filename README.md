@@ -524,13 +524,19 @@ What happens to the video:
    and a confidence read from those signals only (a "lean" or small play
    3–5, a plain pick 5, a sized play 6–8, a stated best bet, lock or 3+ unit
    play 9–10). A talking head, an odds board with nothing marked, a poster —
-   nothing. The same pick shown on ten frames is folded into one.
+   nothing. The same pick shown on ten frames is folded into one. The
+   official card's fighter names (ESPN) go along as a spelling hint, so a
+   board's "Michael Jr." comes back as the "Michael Aswell" the card filter
+   recognises.
 4. **Ingested** — the picks enter as that capper's own (tagged `on-screen`
    on the dashboard), a pasted card supersedes them like a video, and the
    tracker roundup defers to them. If a frame turns out to be a
    tracker-style board — two fighters with channel names on each side — it is
    counted as a roundup instead: one neutral vote per channel, `via
-   tracker`. So the tracker's own roundup URL works here too.
+   tracker`, and its method boards ("Win by KO/TKO or DQ", "Win by
+   Submission", "Win by Decision") become method-of-victory picks, which is
+   what the Method, Double Chance and Underdog tabs are built from. So the
+   tracker's own roundup URL works here too.
 
 **Read once.** Every frame is cached against its own bytes, so a run that
 dies part-way (a spent balance) resumes for free, and a finished reading is
@@ -1286,7 +1292,7 @@ accounts at 5.0 and adjust once you have a sample of their results.
 | `screen_picks.model` / `effort` | `claude-sonnet-5` / `medium` | Model and effort for reading frames — closer to OCR than judgement. |
 | `screen_picks.scene_threshold` | `0.3` | How much the picture must change to count as a cut. Higher than the roundup's, because a talking head cuts constantly. |
 | `screen_picks.sample_seconds` | `8` | Also take a frame at least this often, so a graphic that fades in without a cut is caught. |
-| `screen_picks.max_frames` | `150` | Ceiling on frames cut from one video, before de-duplication. |
+| `screen_picks.max_frames` | `200` | Ceiling on unique screenshots read from one video (the paid step). The video is always cut in full; the run warns if the ceiling bites. |
 | `screen_picks.max_distance` | `10` | Frames within this many bits on a 64-bit perceptual hash are the same screenshot, read once. |
 | `screen_picks.video_height` | `720` | Download resolution — enough to read a lower third. |
 | `screen_picks.keep_video` | `false` | Keep the downloaded video after the frames are cut. |

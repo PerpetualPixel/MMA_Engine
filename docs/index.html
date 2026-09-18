@@ -565,6 +565,13 @@ function buildModel(data) {
       const backers = [...(ml[side]?.cappers || []), ...mov[side].flatMap((o) => o.cappers || [])];
       if (majorityRole(backers) === "underdog") dogSide = side;
     }
+    // A roundup tally frames nothing — every line is role "unknown" — so a
+    // card built from one alone would have no underdogs at all. The live
+    // price says which side is the dog; use it when nobody said.
+    if (!dogSide && f.live_odds) {
+      const pa = f.live_odds.a?.american, pb = f.live_odds.b?.american;
+      if (typeof pa === "number" && typeof pb === "number" && pa !== pb) dogSide = pa > pb ? "a" : "b";
+    }
 
     return { ...f, cardIndex: index, ml, mov, props, dogSide };
   });
@@ -1156,7 +1163,11 @@ function renderTable() {
 
 function renderDogs() {
   const s = state.dog;
-  let fights = state.model.fights.filter((f) => f.dogSide).filter(matchesSearch);
+  // Only fights where someone actually backed the dog: a side the price
+  // calls the underdog but nobody picked has nothing to show here.
+  let fights = state.model.fights
+    .filter((f) => f.dogSide && (f.ml[f.dogSide] || f.mov[f.dogSide].length))
+    .filter(matchesSearch);
   fights = sortFights(fights, s.sort, (f) => f.ml[f.dogSide]?.avg_confidence ?? movLeadConf(f));
 
   const cardHtml = (f) => {
@@ -1197,7 +1208,7 @@ function renderDogs() {
     </article>`;
   };
   return controlsHtml("dog", { filters: false })
-    + `<div class="count-note">Fights where cappers backed the underdog (by their own framing)</div>`
+    + `<div class="count-note">Fights where cappers backed the underdog (by their own framing, or by the live price where they stated none)</div>`
     + (fights.map(cardHtml).join("") || `<p class="notice">No underdog picks in this event&rsquo;s data.</p>`);
 }
 

@@ -41,7 +41,7 @@ import subprocess
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any, Iterable, Literal
 
 import anthropic
 
@@ -100,6 +100,12 @@ name, and never invent names to match a count printed on the slide.
 numerator of "YouTube Predictions 80/81", or 0 if the slide prints no such \
 number). Copy what is printed; never substitute your own count of the names. \
 The two are compared afterwards to detect names that went unread.
+- Every bout has a moneyline board, and most are followed by up to three \
+method boards with the same layout and a title naming the finish — "Win by \
+KO/TKO or DQ", "Win by Submission", "Win by Decision" — listing the channels \
+that predicted each fighter to win that way. Report the board's market from \
+that title: ko_tko, submission or decision. A board with no such title is \
+the moneyline.
 
 If this image is not a fighter-versus-fighter slide with channel names on it \
 — an intro, a talking head, a results recap, a title card — return an empty \
@@ -133,6 +139,15 @@ class SlideFight(BaseModel):
     stated_count_b: int = Field(
         description="The same printed tally for the right fighter, 0 if absent."
     )
+    market: Literal["moneyline", "ko_tko", "submission", "decision"] = Field(
+        default="moneyline",
+        description=(
+            "Which board this is. 'moneyline' for the plain who-wins board; "
+            "'ko_tko', 'submission' or 'decision' when the board's title names "
+            "that finish ('Win by KO/TKO or DQ', 'Win by Submission', 'Win by "
+            "Decision')."
+        ),
+    )
 
 
 class SlideBoard(BaseModel):
@@ -165,15 +180,36 @@ def board_to_roundup(board: SlideBoard) -> tuple[TrackerRoundup, list[str]]:
                 gaps.append(
                     f"{name}: read {len(read)} name(s), slide says {stated}"
                 )
-        fights.append(
-            TrackerFightPicks(
-                fighter_a=fight.fighter_a,
-                fighter_b=fight.fighter_b,
-                cappers_for_a=fight.cappers_for_a,
-                cappers_for_b=fight.cappers_for_b,
-            )
-        )
+        fights.append(slide_fight_to_picks(fight))
     return TrackerRoundup(event_name="", fights=fights), gaps
+
+
+def slide_fight_to_picks(fight: SlideFight) -> TrackerFightPicks:
+    """One board in the shared roundup shape.
+
+    A moneyline board fills the moneyline lists; a method board fills that
+    finish's lists and nothing else — the moneyline board is the complete,
+    self-tallied list of who is on whom, and a name misread onto the wrong
+    side of a method board should cost that method vote, not the moneyline.
+    `merge_roundups` folds the boards of one bout together afterwards.
+    """
+    if fight.market == "moneyline":
+        return TrackerFightPicks(
+            fighter_a=fight.fighter_a,
+            fighter_b=fight.fighter_b,
+            cappers_for_a=fight.cappers_for_a,
+            cappers_for_b=fight.cappers_for_b,
+        )
+    return TrackerFightPicks(
+        fighter_a=fight.fighter_a,
+        fighter_b=fight.fighter_b,
+        cappers_for_a=[],
+        cappers_for_b=[],
+        **{
+            f"{fight.market}_for_a": fight.cappers_for_a,
+            f"{fight.market}_for_b": fight.cappers_for_b,
+        },
+    )
 
 
 @dataclass

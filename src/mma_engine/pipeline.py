@@ -248,6 +248,7 @@ def read_video_screens(
     channel: str = "",
     frames_dir: Path | None = None,
     video_file: Path | None = None,
+    fighters: list[str] | None = None,
 ) -> ScreenReport:
     """Every unique frame of a video, read for the picks printed on it.
 
@@ -289,7 +290,6 @@ def read_video_screens(
             cache_root / "screens" / "frames" / video_id,
             scene_threshold=float(settings["scene_threshold"]),
             sample_seconds=float(settings["sample_seconds"]),
-            max_frames=int(settings["max_frames"]),
         )
         # Only a download of ours is disposable; a file the user handed over
         # is theirs.
@@ -302,6 +302,14 @@ def read_video_screens(
     total = len(frames)
     frames = unique_frames(frames, max_distance=int(settings["max_distance"]))
     log.info("  %d unique screenshot(s) after dropping %d near-duplicate(s)", len(frames), total - len(frames))
+    ceiling = int(settings["max_frames"])
+    if len(frames) > ceiling:
+        log.warning(
+            "  reading the first %d of %d unique screenshots — the rest of the "
+            "video goes unread. Raise settings.screen_picks.max_frames to read it all.",
+            ceiling, len(frames),
+        )
+        frames = frames[:ceiling]
 
     reader = ScreenReader(
         model=str(settings["model"]),
@@ -309,7 +317,7 @@ def read_video_screens(
         cache_dir=cache_root / "screens",
         use_cache=bool(config.settings["use_cache"]),
     )
-    report = reader.read(frames, title=title, channel=channel)
+    report = reader.read(frames, title=title, channel=channel, fighters=fighters)
     log.info(
         "  read %d screenshot(s) (%d from cache, %d failed): %d pick(s), %d board(s)",
         report.read + report.cached, report.cached, report.failed,
@@ -355,14 +363,31 @@ def capper_for_screen_video(
     return minted
 
 
+def card_fighter_names(cards: list[dict[str, Any]]) -> list[str]:
+    """Every fighter on every fetched card, for the screen reader's hint."""
+    names: list[str] = []
+    for card in cards or []:
+        for bout in card.get("fights") or []:
+            for key in ("fighter_a", "fighter_b"):
+                value = str(bout.get(key) or "").strip()
+                if value and value not in names:
+                    names.append(value)
+    return names
+
+
 def ingest_screen_videos(
     config: Config,
     videos: list[ScreenVideoRef],
     sourced_picks: list[SourcedPick],
     sources: list[dict[str, Any]],
     skip_extraction: bool = False,
+    card_fighters: list[str] | None = None,
 ) -> str:
     """Add the picks printed on each listed video's screen, in place.
+
+    `card_fighters` — the official card's names, when ESPN answered — go to
+    the reader as a spelling hint, so a board's "Michael Jr." comes back as
+    the "Michael Aswell" the card filter will recognise.
 
     A capper's on-screen picks are their own picks — full confidence where
     the graphic states one, real odds, tagged `screens` so the dashboard can
@@ -417,7 +442,7 @@ def ingest_screen_videos(
                 log.warning("  could not read the video's title/channel — attributing by id")
             report = read_video_screens(
                 config, ref.url, video_id, title=title, channel=channel,
-                frames_dir=frames_dir, video_file=video_file,
+                frames_dir=frames_dir, video_file=video_file, fighters=card_fighters,
             )
             record.update(
                 frames=report.frames, frames_read=report.read + report.cached
@@ -971,6 +996,14 @@ def run_pipeline(
     sources: list[dict[str, Any]] = []
     event_name = config.event.get("name", "")
 
+    # The official card, fetched up front: the screen reader wants its
+    # fighter names as a spelling hint, and the annotation at the end wants
+    # the bouts. One request serves both. Fail-open as ever — no card means
+    # no hint and no filtering, never a failed run.
+    specs = config.event_specs or [{"name": event_name or "", "league": "", "label": ""}]
+    cards = fetch_event_cards(specs)
+    card_fighters = card_fighter_names(cards)
+
     for index, video in enumerate(videos, start=1):
         capper = config.capper(video.capper_id)
         log.info("[%d/%d] %s — %s", index, len(videos), capper.name, video.video_id)
@@ -1034,6 +1067,7 @@ def run_pipeline(
         sourced_picks=sourced_picks,
         sources=sources,
         skip_extraction=skip_extraction,
+        card_fighters=card_fighters,
     )
     event_name = event_name or screen_event
 
@@ -1087,8 +1121,9 @@ def run_pipeline(
             previous = json.loads(output_path.read_text(encoding="utf-8"))
         except (json.JSONDecodeError, OSError):
             pass
-    specs = config.event_specs or [{"name": event.get("name") or "", "league": "", "label": ""}]
-    cards = fetch_event_cards(specs)
+    if not cards and (event.get("name") or "") != (event_name or ""):
+        # The roundup named an event config.json didn't; one more try by it.
+        cards = fetch_event_cards([{"name": event.get("name") or "", "league": "", "label": ""}])
     if not cards:
         log.warning(
             "No ESPN card found for %s — consensus left un-annotated, so nothing "

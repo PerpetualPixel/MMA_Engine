@@ -421,8 +421,9 @@ def _refresh_totals(payload: dict[str, Any]) -> None:
                     picks += 1
                     if capper.get("id"):
                         cappers.add(capper["id"])
-                    if capper.get("video_url"):
-                        videos.add(capper["video_url"])
+                    # A video read from a file on disk has an id but no URL.
+                    if capper.get("video_id") or capper.get("video_url"):
+                        videos.add(capper.get("video_id") or capper["video_url"])
     payload.setdefault("totals", {}).update(
         fights=len(fights), picks=picks, cappers=len(cappers), videos=len(videos)
     )

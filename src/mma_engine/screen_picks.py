@@ -38,6 +38,7 @@ continues on whatever the other sources gave it.
 
 from __future__ import annotations
 
+import hashlib
 import json
 import logging
 import shutil
@@ -59,6 +60,7 @@ from .roundup_slides import (
     ffmpeg_path,
     frame_key,
     image_block,
+    slide_fight_to_picks,
 )
 from .tracker_picks import TrackerFightPicks, TrackerRoundup
 
@@ -71,7 +73,15 @@ log = logging.getLogger(__name__)
 # leaves behind are dropped by perceptual hash below.
 DEFAULT_SCENE_THRESHOLD = 0.3
 DEFAULT_SAMPLE_SECONDS = 8.0
-DEFAULT_MAX_FRAMES = 150
+# The ceiling on UNIQUE screenshots read — the paid step. Cutting frames is
+# cheap, so the video is cut in full (up to RAW_FRAME_CEILING) and only the
+# de-duplicated survivors are capped, with a warning when the cap bites: a
+# 40-minute roundup that stopped at frame 150 lost its main event once.
+DEFAULT_MAX_FRAMES = 200
+RAW_FRAME_CEILING = 2000
+# Bumped whenever the prompt or schema changes in a way that makes an older
+# cached read stale (a field it can't have filled in). Part of the cache key.
+READER_VERSION = "v2"
 # Hamming distance on a 64-bit difference hash under which two frames are
 # the same picture. 10 folds the same slide across a subtle zoom or a
 # presenter moving in the corner; two different pick cards score 25+.
@@ -104,7 +114,11 @@ graphic shows: a moneyline and a method bet on the same fighter are two picks.
 other at the right, and YouTube channel names printed in columns on whichever \
 side each channel picked, often with a "YouTube Predictions 80/81" tally. \
 Report those as a board — the two fighters, every channel name on each side, \
-copied exactly as printed, and the printed tally (0 if none) — never as picks.
+copied exactly as printed, and the printed tally (0 if none) — never as picks. \
+Every bout has a moneyline board, usually followed by method boards with the \
+same layout and a title naming the finish: "Win by KO/TKO or DQ", "Win by \
+Submission", "Win by Decision". Set the board's market from that title \
+(ko_tko, submission, decision); a board with no such title is the moneyline.
 
 Rules:
 - Report only what is printed on this frame. Never infer a pick from a \
@@ -113,17 +127,20 @@ video's title; those name the fight, not the side taken.
 - An odds board showing both fighters' prices with neither one marked as the \
 pick is not a pick.
 - Copy fighter names as printed and keep them consistent; write the matchup \
-as the two full names regardless of which side is picked.
+as the two full names regardless of which side is picked. When the message \
+lists the fighters on the card, spell each name the way that list does — a \
+board abbreviates ("Michael Jr.") where the card has the full name.
 - If the frame is a talking head, a sponsor card, an intro, a highlight clip \
 or anything else with no picks printed on it, return empty lists.\
 """
 
 USER_TEMPLATE = """\
 Video: {title}
-Channel: {channel}
+Channel: {channel}{card}
 
 Report every betting pick printed on this frame.\
 """
+CARD_TEMPLATE = "\nFighters on this card: {fighters}"
 
 
 class ScreenRead(BaseModel):
@@ -278,7 +295,7 @@ def extract_frames(
     out_dir: Path,
     scene_threshold: float = DEFAULT_SCENE_THRESHOLD,
     sample_seconds: float = DEFAULT_SAMPLE_SECONDS,
-    max_frames: int = DEFAULT_MAX_FRAMES,
+    max_frames: int = RAW_FRAME_CEILING,
     timeout: float = 900.0,
 ) -> list[Path]:
     """A frame at every cut, and at least one every `sample_seconds`.
@@ -286,6 +303,8 @@ def extract_frames(
     A pick card that fades in over a talking head never registers as a scene
     change, so a pure scene cut misses it; the periodic sample is the
     guarantee that no graphic stays up for long without being captured.
+    `max_frames` here is only a safety ceiling on the raw cut — the paid
+    ceiling is applied after de-duplication, by the caller.
     """
     binary = ffmpeg_path()
     if not binary:
@@ -408,12 +427,25 @@ def unique_frames(
 
 
 def _board_to_fight(board: SlideFight) -> TrackerFightPicks:
-    return TrackerFightPicks(
-        fighter_a=board.fighter_a,
-        fighter_b=board.fighter_b,
-        cappers_for_a=board.cappers_for_a,
-        cappers_for_b=board.cappers_for_b,
-    )
+    """A moneyline board fills the moneyline lists; a method board fills that
+    finish's lists (see `roundup_slides.slide_fight_to_picks`)."""
+    return slide_fight_to_picks(board)
+
+
+def card_hint(fighters: Iterable[str] | None) -> str:
+    """The card's fighter names as one prompt line, or "" when unknown."""
+    names = [name.strip() for name in (fighters or []) if name and name.strip()]
+    return CARD_TEMPLATE.format(fighters=", ".join(names)) if names else ""
+
+
+def read_key(path: Path, hint: str = "") -> str:
+    """Cache key for one frame's reading: the frame's bytes, the reader
+    version, and the card hint — a read made with a different hint (or none)
+    spelled the names differently and is not this read."""
+    key = f"{frame_key(path)}-{READER_VERSION}"
+    if hint:
+        key += "-" + hashlib.sha1(hint.encode("utf-8")).hexdigest()[:8]
+    return key
 
 
 class ScreenReader:
@@ -456,7 +488,7 @@ class ScreenReader:
         self.cache_dir.mkdir(parents=True, exist_ok=True)
         self._cache_path(key).write_text(parsed.model_dump_json(indent=2), encoding="utf-8")
 
-    def _read_one(self, path: Path, title: str, channel: str) -> ScreenRead:
+    def _read_one(self, path: Path, title: str, channel: str, card: str = "") -> ScreenRead:
         response = self.client.messages.parse(
             model=self.model,
             max_tokens=self.max_tokens,
@@ -476,7 +508,9 @@ class ScreenReader:
                         {
                             "type": "text",
                             "text": USER_TEMPLATE.format(
-                                title=title or "(unknown)", channel=channel or "(unknown)"
+                                title=title or "(unknown)",
+                                channel=channel or "(unknown)",
+                                card=card,
                             ),
                         },
                     ],
@@ -492,7 +526,13 @@ class ScreenReader:
             )
         return response.parsed_output
 
-    def read(self, paths: Iterable[Path], title: str = "", channel: str = "") -> ScreenReport:
+    def read(
+        self,
+        paths: Iterable[Path],
+        title: str = "",
+        channel: str = "",
+        fighters: Iterable[str] | None = None,
+    ) -> ScreenReport:
         """Read every frame, keeping whatever succeeds.
 
         An API failure part-way (a spent balance, a rate limit) stops the
@@ -503,15 +543,16 @@ class ScreenReader:
         """
         report = ScreenReport()
         raw_picks: list[Pick] = []
+        card = card_hint(fighters)
         for path in paths:
             report.frames += 1
-            key = frame_key(path)
+            key = read_key(path, card)
             parsed = self._read_cache(key)
             if parsed is not None:
                 report.cached += 1
             else:
                 try:
-                    parsed = self._read_one(path, title, channel)
+                    parsed = self._read_one(path, title, channel, card)
                 except anthropic.APIError as exc:
                     report.failed += 1
                     report.error = f"{type(exc).__name__}: {exc}"
