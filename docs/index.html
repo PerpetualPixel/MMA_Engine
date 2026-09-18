@@ -899,8 +899,14 @@ function renderMOV() {
 }
 
 /* ---------- tab: double chance (top-2 methods pooled) ---------- */
+/* The two methods the most cappers picked for this side, pooled into one
+ * "KO/TKO or DEC" line. Ranked by how many cappers picked each method, with
+ * trust weight only breaking ties: the question this answers is "which two
+ * finishes does the field expect?", a headcount, not a weighted score. */
 function doubleChance(fight, side) {
-  const options = [...fight.mov[side]].sort((x, y) => y.weight - x.weight);
+  const options = [...fight.mov[side]].sort(
+    (x, y) => (y.pick_count - x.pick_count) || (y.weight - x.weight)
+  );
   if (!options.length) return null;
   const top = options.slice(0, 2);
   const picks = top.reduce((n, o) => n + o.pick_count, 0);
