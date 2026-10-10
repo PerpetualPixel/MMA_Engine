@@ -199,6 +199,24 @@
   ul.why { margin: 6px 0 8px; padding-left: 18px; color: var(--muted); font-size: 12.5px; }
   ul.why li { margin: 2px 0; }
 
+  .fight-notes { margin: 0 0 10px; padding: 0 0 0 16px; font-size: 12px; color: var(--muted); }
+  .fight-notes li { margin: 2px 0; }
+  .fight-notes li.flag {
+    list-style: none; margin-left: -16px; padding: 7px 10px; border-radius: 6px;
+    border: 1px solid var(--gold); background: rgba(var(--gold-rgb), .10);
+    color: var(--text); font-weight: 500;
+  }
+  .sharps { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0 0; }
+  .sharps .sharp {
+    font-size: 11px; letter-spacing: .02em; padding: 2px 7px; border-radius: 999px;
+    border: 1px solid var(--line); color: var(--muted); white-space: nowrap;
+  }
+  .sharps .sharp b { color: var(--text); font-weight: 600; }
+  .sharps .sharp.sharp-all { border-color: var(--accent); }
+  .sharps .sharp.sharp-all b { color: var(--accent); }
+  .sharps .sharp.sharp-none b { color: var(--muted); }
+  .counted-note { font-size: 11px; color: var(--muted); margin-top: 6px; font-style: italic; }
+
   button.cappers-btn {
     background: var(--panel-2); border: 1px solid var(--border); color: var(--text);
     font: inherit; font-size: 12px; border-radius: 999px; padding: 3px 12px; cursor: pointer;
@@ -458,6 +476,29 @@ function normalizeConfidence(data) {
 // such field at all, and every pick in it was stated.
 const isCounted = (opt) => !!opt && opt.stated_pick_count === 0 && opt.pick_count > 0;
 
+// The tracker's own panels, when an option carries them: not "how many of
+// the 73 channels", but "how many of the 8 channels with the best record".
+// A spoken-tally fight is the only place these reach the payload (see
+// src/mma_engine/tallies.py), and on a card where the field and the sharps
+// disagree they are the more interesting number of the two.
+const SHARP_LABELS = {
+  predictors: "best predictors",
+  favorites: "best on favorites",
+  underdogs: "best on dogs",
+  method: "best on methods",
+};
+const SHARP_ORDER = ["predictors", "favorites", "underdogs", "method"];
+function sharpHtml(option) {
+  const sharp = option && option.sharp;
+  if (!sharp) return "";
+  const parts = SHARP_ORDER.filter((k) => Array.isArray(sharp[k])).map((k) => {
+    const [backing, size] = sharp[k];
+    const cls = backing === size ? " sharp-all" : backing === 0 ? " sharp-none" : "";
+    return `<span class="sharp${cls}"><b>${esc(backing)}/${esc(size)}</b> ${esc(SHARP_LABELS[k])}</span>`;
+  });
+  return parts.length ? `<div class="sharps">${parts.join("")}</div>` : "";
+}
+
 /* ---------- state ---------- */
 const state = {
   data: null,
@@ -522,7 +563,13 @@ function majorityRole(cappers) {
 }
 
 function methodShort(selection) {
-  const s = (selection || "").toLowerCase();
+  // Only the part after "by" names the method. Testing the whole string
+  // reads a method out of the fighter's own name: "Niko Price by Decision"
+  // contains "ko", and came back as a KO — which then priced the leg off the
+  // board's KO line instead of its decision line.
+  const full = (selection || "").toLowerCase();
+  const by = full.lastIndexOf(" by ");
+  const s = by === -1 ? full : full.slice(by + 4);
   if (/(ko|tko|knock)/.test(s)) return "KO/TKO";
   if (/(sub|choke|tap|armbar|guillotine|kimura)/.test(s)) return "SUB";
   if (/(dec|cards|judges|points)/.test(s)) return "DEC";
@@ -530,6 +577,18 @@ function methodShort(selection) {
   const round = s.match(/round\s*(\d)/);
   if (round) return "R" + round[1];
   return null;
+}
+
+const escapeRe = (text) => String(text).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+/** The method one option names, with the fighter's own name taken out of the
+ * string first. This is the version to use wherever a *price* or a market
+ * depends on the answer: "Niko Price" is a moneyline, but matching the raw
+ * selection found a KO in "Ni-ko" and read the board's KO line for it. */
+function selectionMethod(fight, side, selection) {
+  const fighter = side === "a" ? fight.fighter_a : side === "b" ? fight.fighter_b : "";
+  let rest = String(selection || "");
+  if (fighter) rest = rest.replace(new RegExp(escapeRe(fighter), "i"), " ");
+  return methodShort(rest);
 }
 
 function buildModel(data) {
@@ -566,11 +625,19 @@ function buildModel(data) {
       if (majorityRole(backers) === "underdog") dogSide = side;
     }
     // A roundup tally frames nothing — every line is role "unknown" — so a
-    // card built from one alone would have no underdogs at all. The live
-    // price says which side is the dog; use it when nobody said.
+    // card built from one alone would have no underdogs at all. A price says
+    // which side is the dog; use one when nobody said.
     if (!dogSide && f.live_odds) {
       const pa = f.live_odds.a?.american, pb = f.live_odds.b?.american;
       if (typeof pa === "number" && typeof pb === "number" && pa !== pb) dogSide = pa > pb ? "a" : "b";
+    }
+    // The tracker board's own moneyline, when no live line was fetched. A
+    // tally-only run has no live odds and no framing, so without this it has
+    // no underdog anywhere. See board_odds in pipeline.py.
+    if (!dogSide && f.board_odds) {
+      const pa = parseAmerican(f.board_odds.a && f.board_odds.a.moneyline);
+      const pb = parseAmerican(f.board_odds.b && f.board_odds.b.moneyline);
+      if (pa != null && pb != null && pa !== pb) dogSide = pa > pb ? "a" : "b";
     }
 
     return { ...f, cardIndex: index, ml, mov, props, dogSide };
@@ -679,6 +746,15 @@ function capperTable(cappers) {
     <tbody>${rows}</tbody></table></div>`;
 }
 
+// A tallied option has a headcount and no roster — the roundup was only
+// ever spoken, so there is no names button to offer. Say that, rather than
+// leaving a silent gap where every other option has one.
+function countedNote(opt) {
+  if (!opt || (opt.cappers || []).length || !isCounted(opt)) return "";
+  const n = opt.pick_count;
+  return `<div class="counted-note">${esc(n)} channel${n === 1 ? "" : "s"} counted off the tracker&rsquo;s roundup &mdash; it reports totals, not names</div>`;
+}
+
 const overlayPayloads = [];
 function capperBtn(title, subtitle, cappers) {
   if (!cappers || !cappers.length) return "";
@@ -785,6 +861,17 @@ const roleBannerHtml = (f) =>
   : f.cardRole === "comain" ? `<div class="role-banner comain">Co-Main Event</div>`
   : "";
 
+/* What the roundup said about this fight beyond the numbers — including, on
+ * a hand-transcribed tally, where the host's own figures didn't reconcile.
+ * A caveat that only lives in the source file is a caveat nobody reads, and
+ * this one changes whether you bet the fight. */
+const noteBannerHtml = (f) =>
+  (f.notes || []).length
+    ? `<ul class="fight-notes">${f.notes
+        .map((n) => `<li${/^FLAG\b/i.test(n) ? ' class="flag"' : ""}>${esc(n)}</li>`)
+        .join("")}</ul>`
+    : "";
+
 /* ---------- side rendering ---------- */
 function sideClass(share, otherShare, hasPicks) {
   if (!hasPicks) return "";
@@ -817,8 +904,9 @@ function mlSideHtml(fight, side) {
     <h3>${esc(name)} <span class="pct">${esc(share)}%</span>${dog}${priceTag}</h3>
     <div class="bar"><i style="width:${Math.max(0, Math.min(100, share))}%"></i></div>
     <div class="statline">weight <b>${esc(opt.weight)}</b> &middot; avg conf <b>${esc(opt.avg_confidence)}/10</b> &middot; <b>${esc(opt.pick_count)}</b> pick${opt.pick_count === 1 ? "" : "s"}</div>
+    ${sharpHtml(opt)}
     ${why.length ? `<ul class="why">${why.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>` : ""}
-    ${capperBtn(`${name} — moneyline`, fight.display, opt.cappers)}
+    ${capperBtn(`${name} — moneyline`, fight.display, opt.cappers)}${countedNote(opt)}
   </div>`;
 }
 
@@ -844,7 +932,7 @@ function renderML() {
 
   const cardHtml = (f) => `<article class="${duelClass(f)}">
     <h2><span>${esc(f.display)}</span>${badgesHtml(f)}</h2>
-    ${roleBannerHtml(f)}${cancelBannerHtml(f)}
+    ${roleBannerHtml(f)}${cancelBannerHtml(f)}${noteBannerHtml(f)}
     <div class="sides">${mlSideHtml(f, "a")}${mlSideHtml(f, "b")}</div>
   </article>`;
   return controlsHtml("ml", { noPicksToggle: true })
@@ -871,8 +959,9 @@ function movRows(fight, side, title) {
       <div class="mv-label">${esc(o.selection)} <span class="pct" style="font-size:14px">${esc(o.consensus_pct)}%</span></div>
       <div class="bar"><i style="width:${Math.max(0, Math.min(100, o.consensus_pct))}%"></i></div>
       <div class="statline">weight <b>${esc(o.weight)}</b> &middot; avg conf <b>${esc(o.avg_confidence)}/10</b> &middot; <b>${esc(o.pick_count)}</b> pick${o.pick_count === 1 ? "" : "s"}</div>
+      ${sharpHtml(o)}
       ${why.length ? `<ul class="why">${why.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>` : ""}
-      ${capperBtn(o.selection, fight.display, o.cappers)}
+      ${capperBtn(o.selection, fight.display, o.cappers)}${countedNote(o)}
     </div>`;
   }).join("");
   return `<div class="side${total >= PICKEM_MAX_SHARE ? " lead" : ""}"><h3>${esc(name)}${dog}</h3>${rows}</div>`;
@@ -890,7 +979,7 @@ function renderMOV() {
 
   const cardHtml = (f) => `<article class="${duelClass(f)}">
     <h2><span>${esc(f.display)}</span>${badgesHtml(f)}</h2>
-    ${roleBannerHtml(f)}${cancelBannerHtml(f)}
+    ${roleBannerHtml(f)}${cancelBannerHtml(f)}${noteBannerHtml(f)}
     <div class="sides">${movRows(f, "a")}${movRows(f, "b")}</div>
   </article>`;
   return controlsHtml("mov")
@@ -957,7 +1046,7 @@ function renderDC() {
 
   const cardHtml = (f) => `<article class="${duelClass(f)}">
     <h2><span>${esc(f.display)}</span>${badgesHtml(f)}</h2>
-    ${roleBannerHtml(f)}${cancelBannerHtml(f)}
+    ${roleBannerHtml(f)}${cancelBannerHtml(f)}${noteBannerHtml(f)}
     <div class="sides">${dcSideHtml(f, "a")}${dcSideHtml(f, "b")}</div>
   </article>`;
   return controlsHtml("dc")
@@ -1209,7 +1298,7 @@ function renderDogs() {
     }
     return `<article class="${duelClass(f)}">
       <h2><span>${esc(name)} <span class="badge dog">underdog</span> <span class="meta">— ${esc(f.display)}</span></span>${badgesHtml(f)}</h2>
-      ${roleBannerHtml(f)}${cancelBannerHtml(f)}
+      ${roleBannerHtml(f)}${cancelBannerHtml(f)}${noteBannerHtml(f)}
       <div class="sides" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">${sections.join("")}</div>
     </article>`;
   };
@@ -1249,6 +1338,16 @@ function renderCappersTab() {
       <span class="cstat picks"><b>${c.picks.length}</b>picks</span>
       <span class="cstat"><b>${fmt1(c.weight)}</b>total weight</span>
     </div>`).join("");
+  if (!cappers.length) {
+    // Nothing here is a real state, not a bug: a week whose only source was
+    // a spoken tally has headcounts and no names to rank. Say which it is.
+    const tallied = ((state.data || {}).totals || {}).channels_tallied || 0;
+    return `<p class="notice">${
+      tallied
+        ? `No named cappers this week. The tracker&rsquo;s roundup reached the engine as a spoken tally &mdash; ${esc(tallied)} channels counted per fight, with no channel names published &mdash; so there is nobody to rank here. Every other tab is built from those counts.`
+        : "No cappers in this payload yet."
+    }</p>`;
+  }
   return `<div class="count-note">Ordered by total weight contributed (trust &times; confidence across all picks). Click a capper for their full card.</div>` + rows;
 }
 document.addEventListener("click", (e) => {
@@ -1346,7 +1445,7 @@ function boardPriceFor(fight, side, selection) {
   if (!printed) return null;
   // A selection that is just the fighter is the moneyline; anything with a
   // method in it takes that method's price.
-  const short = methodShort(selection);
+  const short = selectionMethod(fight, side, selection);
   const key = short ? BOARD_KEYS[short] : "moneyline";
   const american = key ? parseAmerican(printed[key]) : null;
   if (american == null) return null;
@@ -1362,7 +1461,10 @@ function boardPriceFor(fight, side, selection) {
  * several days. */
 function priceOf(fight, option) {
   const side = sideOfSelection(fight, option.selection);
-  const live = side && !methodShort(option.selection) ? liveOddsFor(fight, side) : null;
+  const method = side
+    ? selectionMethod(fight, side, option.selection)
+    : methodShort(option.selection);
+  const live = side && !method ? liveOddsFor(fight, side) : null;
   return live
     || (side ? boardPriceFor(fight, side, option.selection) : null)
     || quotedPriceOf(option);
@@ -1461,7 +1563,7 @@ function straightRowHtml(c, big) {
     <div class="mv-label">${esc(c.selection)}
       <span class="straight-odds">${esc(fmtAmerican(c.odds.american))}</span>
       <span class="tag straight-value-tag">value ${esc(c.value)}</span></div>
-    <div class="statline">${esc(c.marketLabel)} &middot; strength <b>${esc(c.strength)}</b>/10 &middot; avg conf <b>${esc(c.conf)}</b>/10 &middot; <b>${esc(c.picks)}</b> pick${c.picks === 1 ? "" : "s"} &middot; priced by <b>${esc(c.odds.quoted)}</b></div>
+    <div class="statline">${esc(c.marketLabel)} &middot; strength <b>${esc(c.strength)}</b>/10 &middot; avg conf <b>${esc(c.conf)}</b>/10 &middot; <b>${esc(c.picks)}</b> pick${c.picks === 1 ? "" : "s"} &middot; priced by <b>${esc(c.odds.detail || c.odds.source || "—")}</b></div>
     ${why.length ? `<ul class="why">${why.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>` : ""}
     ${capperBtn(`${c.selection} (${fmtAmerican(c.odds.american)})`, c.fight.display, c.cappers)}
   </div>`;
@@ -2039,7 +2141,14 @@ function renderHeader() {
         ? `official card: ${esc(card.bouts)} bout${card.bouts === 1 ? "" : "s"} &middot; `
         : `${esc(totals.fights ?? 0)} fights &middot; `) +
       `${esc(totals.picks ?? 0)} picks &middot; ` +
-      `${esc(totals.cappers ?? 0)} cappers &middot; generated ${esc(generated)}` +
+      // A tally has a headcount and no roster, so "0 cappers" would be a
+      // lie about a 73-channel sample. Report whichever the run actually has.
+      (totals.cappers
+        ? `${esc(totals.cappers)} cappers &middot; `
+        : totals.channels_tallied
+          ? `${esc(totals.channels_tallied)} channels counted &middot; `
+          : `0 cappers &middot; `) +
+      `generated ${esc(generated)}` +
       oddsHtml;
 }
 </script>

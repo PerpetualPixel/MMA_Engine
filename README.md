@@ -105,6 +105,7 @@ python -m http.server -d docs 8000                    # open http://localhost:80
 | `--no-screen-videos` | Skip the `screen_videos` listed in `config.json` for this run. |
 | `--picks-from-tracker URL` | Ingest a tracker roundup — one video carrying every channel's pick. Repeatable. See below. |
 | `--no-tracker-picks` | Skip the roundups listed in `config.json` for this run. |
+| `--no-tracker-tallies` | Skip the hand-written headcount files in `tallies/` for this run. See below. |
 | `--apply-tracker-cappers` | Write channels first seen in a roundup into `config.json` at neutral trust. |
 | `--roster-from URL` | Derive trust scores from a tracker results video. See below. |
 | `--roster-mode` | `accumulate` (post-event reviews) or `replace` (period recap). |
@@ -322,6 +323,90 @@ The ESPN card filter runs afterwards as always, so a roundup that also covers
 next week's card contributes nothing off-event. Flags: `--no-tracker-picks`
 skips the configured roundups for one run; `settings.tracker_picks.enabled`
 turns them off permanently.
+
+### When the roundup is only a voice (`tallies/`)
+
+Everything above needs the deck. Sometimes there isn't one to read: the video
+won't download, the upload is audio-led, or all that reaches the machine is a
+transcript. What the host *says* is never a roster — it is a tally:
+
+> "52 channels out of 70 are on Kareckaite, for 74%."
+
+That is still the widest sample of the week, but it cannot go down the normal
+path, because every stage after extraction is keyed on *who* voted: the trust
+weighting, the one-channel-one-vote rule, the names overlay. Inventing 52
+names to fill a count would poison the trust scores and is forbidden outright
+(see the rule in `tracker_picks.SYSTEM_PROMPT`). So a tally is ingested as
+what it is — a headcount with nobody behind it.
+
+Write one file per roundup into `tallies/<slug>.json`:
+
+```json
+{
+  "event_name": "UFC Fight Night: Allen vs. Duncan",
+  "fights": [
+    {
+      "fighter_a": "Brendan Allen",
+      "fighter_b": "Christian Leroy Duncan",
+      "card_order": 11,
+      "moneyline": { "channels": 73, "counts": { "a": 44 } },
+      "method": {
+        "channels": 48,
+        "counts": { "a": { "submission": 16, "decision": 14 }, "b": { "ko_tko": 18 } }
+      },
+      "odds": {
+        "a": { "moneyline": "-127", "submission": "+290", "decision": "+240" },
+        "b": { "moneyline": "+106", "ko_tko": "+225" }
+      },
+      "sharps": { "a": { "predictors": [7, 8], "favorites": [5, 6] },
+                  "b": { "underdogs": [0, 7] } },
+      "method_sharps": { "counts": { "a_submission": [4, 4] } },
+      "notes": ["Middleweight main event, five rounds."]
+    }
+  ]
+}
+```
+
+- `channels` is the total the host said had submitted for that market. A
+  moneyline given for one side only puts the remainder on the other — two
+  numbers he did say, not a guess. A **method** split must name every vote: if
+  it doesn't sum to `channels`, the file is reported and skipped rather than
+  published, because a mis-transcribed count is indistinguishable from a real
+  one once it reaches the dashboard.
+- `odds` are the prices read off the board, keyed `moneyline` / `ko_tko` /
+  `submission` / `decision`. These are the **only** method prices the engine
+  ever has — the live feed is moneyline-only — and they are what the Straights
+  and Parlays tabs price a KO leg from.
+- `sharps` are the tracker's own panels — its 8 best predictors, 6 best
+  favorite-pickers, 7 best underdog-pickers — recorded on whichever side the
+  host attributed them to, and `method_sharps` is its 4 best method
+  predictors, keyed `<side>_<method>`. The dashboard shows these next to the
+  headcount, because on a card where the field and the sharps disagree they
+  are the more interesting number of the two.
+- `card_order` (0 = first prelim) is normally supplied by the ESPN card
+  annotation and overwritten by it when it runs; carrying it here is what lets
+  a tally-only run sort earliest-to-latest with the main event last.
+- `notes` print on the fight's card. A note beginning `FLAG` is highlighted —
+  that is where to put a place the host's own figures didn't reconcile, rather
+  than reconciling it by guesswork.
+
+A tally-only run needs no video, no transcript and no API call:
+
+```bash
+PYTHONPATH=src python -m mma_engine --no-discover --skip-extraction
+```
+
+On the dashboard a tallied option shows its share, its headcount and its
+board price, and says *"52 channels counted off the tracker's roundup — it
+reports totals, not names"* where every other option offers a names button.
+The Cappers tab is empty for such a week and says why. A fight the attributed
+pipeline already covers is **never** also tallied: a headcount and a roster of
+the same channels are the same votes, and the roster is the better reading of
+them.
+
+`settings.tracker_tallies` turns the path off (`enabled`), moves the folder
+(`dir`), or changes the confidence each tallied channel enters at
+(`confidence`).
 
 ### Scouring YouTube for anyone who covered the event
 

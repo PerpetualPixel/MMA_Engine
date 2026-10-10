@@ -138,6 +138,19 @@ DEFAULT_SETTINGS: dict[str, Any] = {
         # corrected by hand — see mma_engine.tracker_picks.load_readings.
         "readings_dir": "roundups",
     },
+    "tracker_tallies": {
+        # Ingest a roundup that was only ever spoken — a transcript giving
+        # headcounts ("52 of 70 channels are on Kareckaite") and no channel
+        # names. See mma_engine.tallies for why those can't go through the
+        # normal, name-keyed path and what is done with them instead.
+        # Enabled here means "use the files in `dir` if any are there".
+        "enabled": True,
+        # Where the hand-written tally files live, one JSON per roundup.
+        "dir": "tallies",
+        # Confidence every tallied channel enters at — the same placeholder a
+        # named roundup pick gets, since a tally states no conviction either.
+        "confidence": 5,
+    },
     "screen_picks": {
         # Read picks videos off their screen: every unique frame of the video
         # goes to a vision call that reports the picks printed on it (a pick
@@ -400,6 +413,10 @@ def load_config(path: str | Path = "config.json") -> Config:
     settings["screen_picks"] = {
         **DEFAULT_SETTINGS["screen_picks"],
         **(raw_settings.get("screen_picks") or {}),
+    }
+    settings["tracker_tallies"] = {
+        **DEFAULT_SETTINGS["tracker_tallies"],
+        **(raw_settings.get("tracker_tallies") or {}),
     }
     # Environment wins over the file so CI can override without a commit.
     if os.environ.get("MMA_MODEL"):

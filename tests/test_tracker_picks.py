@@ -11,6 +11,7 @@ Run with:  PYTHONPATH=src python -m pytest -q
 from __future__ import annotations
 
 import json
+from datetime import datetime, timedelta, timezone
 
 import pytest
 
@@ -398,6 +399,18 @@ class _StubSession:
         return _StubResponse({"items": self._items})
 
 
+def _days_ago(days: int) -> str:
+    """An upload timestamp relative to now.
+
+    The lookback window these tests exercise is measured from the day the
+    suite runs, so fixed dates in the fixtures expire: every one of them fell
+    outside a 21-day window a month after it was written, and the test failed
+    on the calendar rather than on the code.
+    """
+    when = datetime.now(timezone.utc) - timedelta(days=days)
+    return when.strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
 def _playlist_item(video_id: str, title: str, published: str) -> dict:
     return {
         "contentDetails": {"videoId": video_id, "videoPublishedAt": published},
@@ -408,11 +421,11 @@ def _playlist_item(video_id: str, title: str, published: str) -> dict:
 def test_find_tracker_roundup_returns_the_matching_upload():
     session = _StubSession(
         [
-            _playlist_item("aaaaaaaaaaa", "UFC 331 predictions roundup", "2026-09-01T00:00:00Z"),
+            _playlist_item("aaaaaaaaaaa", "UFC 331 predictions roundup", _days_ago(3)),
             _playlist_item(
                 "bbbbbbbbbbb",
                 "Overview of ALL PREDICTIONS for UFC Fight Night: Hooker vs. Parnasse",
-                "2026-09-02T00:00:00Z",
+                _days_ago(2),
             ),
         ]
     )
@@ -433,7 +446,7 @@ def test_find_tracker_roundup_returns_the_matching_upload():
 
 def test_find_tracker_roundup_returns_none_when_nothing_matches():
     session = _StubSession(
-        [_playlist_item("aaaaaaaaaaa", "UFC 331 predictions roundup", "2026-09-01T00:00:00Z")]
+        [_playlist_item("aaaaaaaaaaa", "UFC 331 predictions roundup", _days_ago(3))]
     )
     discovery = ChannelDiscovery(
         lookback_days=21, max_per_channel=1, title_contains=["hooker", "parnasse"],

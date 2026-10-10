@@ -71,6 +71,7 @@ from .screen_picks import (
     save_reading as save_screen_reading,
     unique_frames,
 )
+from .tallies import load_tallies, merge_tallies
 from .tracker_picks import (
     CapperDirectory,
     RoundupExtractor,
@@ -1099,6 +1100,32 @@ def run_pipeline(
     )
     event_name = event_name or roundup_event
 
+    # A roundup that was only ever spoken: headcounts with no channel names
+    # behind them, hand-transcribed into tallies/<slug>.json. Loaded here so
+    # the card it names can stand in for the event name, merged into the
+    # payload below. See mma_engine.tallies.
+    tally_settings = settings["tracker_tallies"]
+    tallies = (
+        load_tallies(Path(str(tally_settings["dir"])))
+        if tally_settings["enabled"]
+        else []
+    )
+    for tally in tallies:
+        sources.append(
+            {
+                "video_id": "",
+                "url": tally.source_url,
+                "capper_id": "",
+                "capper": "Predictions tracker roundup (spoken tally)",
+                "title": tally.event_name,
+                "kind": "tracker_tally",
+                "status": "ok",
+                "fights": len(tally.fights),
+                "pick_count": 0,
+            }
+        )
+    event_name = event_name or next((t.event_name for t in tallies if t.event_name), "")
+
     event = {**config.event, "name": event_name}
     payload = build_consensus(
         sourced_picks,
@@ -1108,6 +1135,17 @@ def run_pipeline(
     )
     if discovery_report:
         payload["discovery"] = discovery_report
+
+    # Tallied fights join the payload before the card annotation, so each one
+    # gets its spelling corrected and its live price stamped on exactly like
+    # an attributed fight — and only where the named sources above left a gap.
+    if tallies:
+        merge_tallies(
+            payload,
+            tallies,
+            confidence=int(tally_settings["confidence"]),
+            board_odds=board_odds,
+        )
 
     # Pin the consensus to the event's official card (ESPN): anything not on
     # the card is dropped, cancelled bouts get flagged rather than silently
@@ -1172,7 +1210,7 @@ def run_pipeline(
             flip = not _surnames_match(surname(fight["fighter_a"]), surname(board["fighter_a"]))
             fight["board_odds"] = {
                 "source": board["source"],
-                "video_id": board["video_id"],
+                "video_id": board.get("video_id", ""),
                 "a": board["b" if flip else "a"],
                 "b": board["a" if flip else "b"],
             }
@@ -1459,6 +1497,14 @@ def main(argv: list[str] | None = None) -> int:
         help="Skip the roundup videos listed in config.json for this run.",
     )
     roundup_group.add_argument(
+        "--no-tracker-tallies",
+        action="store_true",
+        help=(
+            "Skip the hand-written tally files in tallies/ for this run "
+            "(headcounts transcribed from a roundup that was only ever spoken)."
+        ),
+    )
+    roundup_group.add_argument(
         "--roundup-slides",
         metavar="DIR",
         default=None,
@@ -1704,15 +1750,32 @@ def main(argv: list[str] | None = None) -> int:
     # pick without needing a single per-capper video. So is a folder of pasted
     # cards.
     has_screens = bool(screen_videos) and config.settings["screen_picks"]["enabled"]
-    if not videos and not effective_roundups and not has_pasted and slides_dir is None and not has_screens:
+    # A hand-written tally is a run of its own too: no video to fetch, no API
+    # call to make, just the headcounts the tracker read out. See
+    # mma_engine.tallies.
+    if args.no_tracker_tallies:
+        config.settings["tracker_tallies"]["enabled"] = False
+    tally_settings = config.settings["tracker_tallies"]
+    has_tallies = bool(tally_settings["enabled"]) and any(
+        Path(str(tally_settings["dir"])).glob("*.json")
+    )
+    if (
+        not videos
+        and not effective_roundups
+        and not has_pasted
+        and slides_dir is None
+        and not has_screens
+        and not has_tallies
+    ):
         log.error(
             "No videos to process. Either add entries to the \"videos\" array in %s "
             "(e.g. {\"capper_id\": \"artem_mma\", \"url\": \"https://youtu.be/...\"}), "
             "or enable settings.discovery to pull them from the capper channels. "
             "A predictions-tracker roundup works on its own too "
             "(--picks-from-tracker https://youtu.be/...), as does a pasted "
-            "card in pasted/, or any picks video read off its screen "
-            "(--picks-from-video https://youtu.be/...).",
+            "card in pasted/, any picks video read off its screen "
+            "(--picks-from-video https://youtu.be/...), or a tally file in "
+            "tallies/ transcribed from a roundup that was only ever spoken.",
             config.path,
         )
         return 2

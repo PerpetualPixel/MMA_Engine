@@ -7,6 +7,9 @@
 #   3. read the roundup's slide deck — every tracked channel's pick for every
 #      fight, 80+ channels a card — plus any cards you pasted into pasted\
 #      for paywalled cappers
+#      ...or, when no deck could be read, the headcounts in tallies\ that
+#      were transcribed from the roundup's audio (see README.md "When the
+#      roundup is only a voice")
 #   4. build docs/data.json (the dashboard) and docs/picks.json (the
 #      weighted picks feed PerpetualPicks.com reads)
 #   5. push both, updating the live site in about a minute
