@@ -1,0 +1,270 @@
+{
+  "event_name": "UFC Fight Night: Buckley vs. Malott",
+  "source_url": "",
+  "notes": "Hand-transcribed from the UFC Predictions Tracker's pre-event roundup for UFC Edmonton (17 Oct 2026). The roundup was available only as a spoken transcript, which reports headcounts and never channel names, so it cannot be ingested as named picks — see src/mma_engine/tallies.py. Every count below is a number the host stated; fighter spellings were corrected against the official card. This card's panels are 9 best predictors, 9 best favorite-pickers, 8 best underdog-pickers and 5 best method predictors.",
+  "fights": [
+    {
+      "fighter_a": "Cody Chovancek",
+      "fighter_b": "Soo Young Yoo",
+      "card_order": 0,
+      "moneyline": { "channels": 72, "counts": { "a": 53 } },
+      "method": {
+        "channels": 45,
+        "counts": { "a": { "ko_tko": 10, "submission": 2, "decision": 23 }, "b": { "decision": 10 } }
+      },
+      "odds": {
+        "a": { "moneyline": "-135", "decision": "+210" },
+        "b": { "moneyline": "+110" }
+      },
+      "sharps": {
+        "a": { "predictors": [7, 9], "favorites": [7, 9] },
+        "b": { "underdogs": [2, 8] }
+      },
+      "method_sharps": { "counts": { "a_decision": [4, 4] } },
+      "notes": ["Bantamweight. The host said \"all four\" best method predictors had Chovancek by decision; the panel is five elsewhere on this card, so one had not reported."]
+    },
+    {
+      "fighter_a": "Melissa Croden",
+      "fighter_b": "Chelsea Chandler",
+      "card_order": 1,
+      "moneyline": { "channels": 73, "counts": { "a": 70 } },
+      "method": {
+        "channels": 49,
+        "counts": { "a": { "ko_tko": 17, "decision": 30 }, "b": { "submission": 1, "decision": 1 } }
+      },
+      "odds": {
+        "a": { "moneyline": "-300", "decision": "+130" },
+        "b": { "moneyline": "+245" }
+      },
+      "sharps": { "a": { "predictors": [9, 9], "favorites": [9, 9], "underdogs": [8, 8] } },
+      "method_sharps": { "counts": { "a_ko_tko": [3, 5], "a_decision": [2, 5] } },
+      "notes": ["Women's bantamweight. Every panel is unanimous on Croden, but they lean KO while the field and the oddsmakers lean decision."]
+    },
+    {
+      "fighter_a": "Chad Anheliger",
+      "fighter_b": "Steven Koslow",
+      "card_order": 2,
+      "moneyline": { "channels": 72, "counts": { "b": 55 } },
+      "method": {
+        "channels": 48,
+        "counts": { "a": { "ko_tko": 6, "decision": 8 }, "b": { "submission": 28, "decision": 6 } }
+      },
+      "odds": {
+        "a": { "moneyline": "+130" },
+        "b": { "moneyline": "-155", "submission": "+165" }
+      },
+      "sharps": {
+        "a": { "underdogs": [2, 8] },
+        "b": { "predictors": [6, 9], "favorites": [7, 9] }
+      },
+      "method_sharps": { "counts": { "b_submission": [2, 5], "b_decision": [1, 5] } },
+      "notes": ["Bantamweight. Anheliger has not fought in 714 days and Koslow is nearly four years out, so the panels are split."]
+    },
+    {
+      "fighter_a": "Katlyn Cerminara",
+      "fighter_b": "Mackenzie Stiller",
+      "card_order": 3,
+      "moneyline": { "channels": 70, "counts": { "a": 66 } },
+      "method": {
+        "channels": 43,
+        "counts": { "a": { "ko_tko": 1, "submission": 1, "decision": 40 }, "b": { "submission": 1 } }
+      },
+      "odds": {
+        "a": { "moneyline": "-275", "decision": "-180" },
+        "b": { "moneyline": "+225" }
+      },
+      "sharps": {
+        "a": { "predictors": [9, 9], "favorites": [8, 9] },
+        "b": { "underdogs": [0, 8] }
+      },
+      "method_sharps": { "counts": { "a_decision": [4, 5] } },
+      "notes": ["Women's flyweight; Stiller's UFC debut. Not one of the 8 best underdog-pickers is on her."]
+    },
+    {
+      "fighter_a": "Javad Mahjoub",
+      "fighter_b": "Joel Faglier",
+      "card_order": 4,
+      "moneyline": { "channels": 71, "counts": { "b": 36 } },
+      "method": {
+        "channels": 43,
+        "counts": {
+          "a": { "ko_tko": 2, "submission": 15, "decision": 2 },
+          "b": { "ko_tko": 12, "submission": 3, "decision": 9 }
+        }
+      },
+      "odds": {
+        "a": { "moneyline": "-101" },
+        "b": { "moneyline": "-119", "submission": "+295" }
+      },
+      "sharps": {
+        "a": { "underdogs": [4, 8] },
+        "b": { "predictors": [5, 9], "favorites": [5, 9] }
+      },
+      "method_sharps": { "counts": { "b_decision": [2, 5], "b_ko_tko": [1, 5] } },
+      "notes": [
+        "Heavyweight; both men undefeated and both making their UFC debut. The closest fight on the card in odds and the closest in picks — Faglier leads by one channel.",
+        "The field splits on method the way the records do: Mahjoub by submission (15) against Faglier by KO (12). The oddsmakers' most likely outcome, Faglier by submission at +295, is picked by none of the best method predictors."
+      ]
+    },
+    {
+      "fighter_a": "Julien Leblanc",
+      "fighter_b": "Nick Galanti",
+      "card_order": 5,
+      "moneyline": { "channels": 72, "counts": { "b": 72 } },
+      "method": {
+        "channels": 45,
+        "counts": { "b": { "ko_tko": 17, "submission": 28 } }
+      },
+      "odds": {
+        "a": { "moneyline": "+460" },
+        "b": { "moneyline": "-640", "submission": "-140" }
+      },
+      "sharps": { "b": { "predictors": [9, 9], "favorites": [9, 9], "underdogs": [8, 8] } },
+      "method_sharps": { "counts": { "b_ko_tko": [3, 5], "b_submission": [2, 5] } },
+      "notes": ["Middleweight. The biggest favorite on the card at -640, and the only fight where all 72 channels agree. Nobody picked a decision."]
+    },
+    {
+      "fighter_a": "Tanner Boser",
+      "fighter_b": "Jhonata Diniz",
+      "card_order": 6,
+      "moneyline": { "channels": 75, "counts": { "b": 69 } },
+      "method": {
+        "channels": 49,
+        "counts": { "a": { "ko_tko": 3 }, "b": { "ko_tko": 39, "decision": 7 } }
+      },
+      "odds": {
+        "a": { "moneyline": "+200" },
+        "b": { "moneyline": "-240", "ko_tko": "-105" }
+      },
+      "sharps": { "b": { "predictors": [9, 9], "favorites": [9, 9], "underdogs": [8, 8] } },
+      "method_sharps": { "counts": { "b_ko_tko": [5, 5] } },
+      "notes": ["Heavyweight featured prelim. The host's first best bet: every panel unanimous on Diniz, and all 5 best method predictors on the KO at -105 rather than the -240 moneyline."]
+    },
+    {
+      "fighter_a": "Mandel Nallo",
+      "fighter_b": "Nate Landwehr",
+      "card_order": 7,
+      "moneyline": { "channels": 73, "counts": { "a": 65 } },
+      "method": {
+        "channels": 47,
+        "counts": { "a": { "ko_tko": 44, "submission": 1 }, "b": { "ko_tko": 2 } }
+      },
+      "odds": {
+        "a": { "moneyline": "-280", "ko_tko": "-140" },
+        "b": { "moneyline": "+225" }
+      },
+      "sharps": { "a": { "predictors": [9, 9], "favorites": [9, 9], "underdogs": [8, 8] } },
+      "method_sharps": { "counts": { "a_ko_tko": [5, 5] } },
+      "notes": ["Lightweight; opens the main card. The host's second best bet: every panel unanimous on Nallo and all 5 best method predictors on the KO at -140. Not one channel has this going to the scorecards."]
+    },
+    {
+      "fighter_a": "Louis Jourdain",
+      "fighter_b": "Timmy Cuamba",
+      "card_order": 8,
+      "moneyline": { "channels": 73, "counts": { "a": 63 } },
+      "method": {
+        "channels": 48,
+        "counts": { "a": { "ko_tko": 9, "submission": 10, "decision": 24 }, "b": { "decision": 5 } }
+      },
+      "odds": {
+        "a": { "moneyline": "-180", "decision": "+205", "ko_tko": "+250" },
+        "b": { "moneyline": "+150" }
+      },
+      "sharps": {
+        "a": { "predictors": [8, 9], "favorites": [8, 9] },
+        "b": { "underdogs": [1, 8] }
+      },
+      "method_sharps": { "counts": { "a_ko_tko": [3, 5] } },
+      "notes": ["Bantamweight; Jourdain's UFC debut (Charles Jourdain's younger brother). The host's third best bet, though he is staying on the moneyline: the field says decision, the best method predictors say KO."]
+    },
+    {
+      "fighter_a": "Marc-Andre Barriault",
+      "fighter_b": "Kyle Daukaus",
+      "card_order": 9,
+      "moneyline": { "channels": 74, "counts": { "b": 57 } },
+      "method": {
+        "channels": 44,
+        "counts": {
+          "a": { "ko_tko": 9, "decision": 1 },
+          "b": { "ko_tko": 11, "submission": 15, "decision": 8 }
+        }
+      },
+      "odds": {
+        "a": { "moneyline": "+160" },
+        "b": { "moneyline": "-195", "submission": "+250", "ko_tko": "+265" }
+      },
+      "sharps": {
+        "a": { "underdogs": [2, 8] },
+        "b": { "predictors": [7, 9], "favorites": [6, 9] }
+      },
+      "method_sharps": { "counts": { "b_submission": [3, 5] } },
+      "notes": [
+        "Middleweight.",
+        "FLAG — this is the one fight where the host gave the method split but never stated its total, so the usual check (split must equal the stated total) could not run here. The total shown is the sum of the counts he read out."
+      ]
+    },
+    {
+      "fighter_a": "Kyle Nelson",
+      "fighter_b": "Cristian Perez",
+      "card_order": 10,
+      "moneyline": { "channels": 71, "counts": { "b": 67 } },
+      "method": {
+        "channels": 44,
+        "counts": { "a": { "decision": 1 }, "b": { "ko_tko": 35, "submission": 4, "decision": 4 } }
+      },
+      "odds": {
+        "a": { "moneyline": "+285" },
+        "b": { "moneyline": "-360", "ko_tko": "+105" }
+      },
+      "sharps": { "b": { "predictors": [9, 9], "favorites": [9, 9], "underdogs": [8, 8] } },
+      "method_sharps": { "counts": { "b_ko_tko": [4, 5] } },
+      "notes": ["Lightweight; Perez's UFC debut. Every panel unanimous on him and 80% of the field has the KO, which the oddsmakers also make the likeliest outcome at +105."]
+    },
+    {
+      "fighter_a": "Erin Blanchfield",
+      "fighter_b": "Jasmine Jasudavicius",
+      "card_order": 11,
+      "moneyline": { "channels": 75, "counts": { "a": 67 } },
+      "method": {
+        "channels": 49,
+        "counts": { "a": { "ko_tko": 1, "submission": 6, "decision": 35 }, "b": { "decision": 7 } }
+      },
+      "odds": {
+        "a": { "moneyline": "-330", "decision": "-150" },
+        "b": { "moneyline": "+260" }
+      },
+      "sharps": {
+        "a": { "predictors": [8, 9], "favorites": [8, 9] },
+        "b": { "underdogs": [1, 8] }
+      },
+      "method_sharps": { "counts": { "a_decision": [4, 5] } },
+      "notes": ["Women's flyweight co-main event. Field, panels and oddsmakers all land on Blanchfield by decision."]
+    },
+    {
+      "fighter_a": "Joaquin Buckley",
+      "fighter_b": "Mike Malott",
+      "card_order": 12,
+      "moneyline": { "channels": 74, "counts": { "a": 37, "b": 37 } },
+      "method": {
+        "channels": 45,
+        "counts": {
+          "a": { "ko_tko": 21, "decision": 1 },
+          "b": { "ko_tko": 10, "submission": 2, "decision": 11 }
+        }
+      },
+      "odds": {
+        "a": { "moneyline": "+110", "ko_tko": "+220" },
+        "b": { "moneyline": "-130", "decision": "+245" }
+      },
+      "sharps": {
+        "a": { "predictors": [5, 9], "underdogs": [5, 8] },
+        "b": { "favorites": [5, 9] }
+      },
+      "method_sharps": { "counts": { "a_ko_tko": [3, 5] } },
+      "notes": [
+        "Welterweight main event. Dead even in picks — 37 channels each — and nearly even in odds.",
+        "The method market is where the field separates: Buckley by KO/TKO at +220 takes 47% of the method votes and 3 of the 5 best method predictors, while Malott's support splits between a KO and a decision."
+      ]
+    }
+  ]
+}

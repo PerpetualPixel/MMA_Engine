@@ -1,19 +1,19 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-10T16:03:44+00:00",
+  "generated_at": "2026-10-16T14:50:25+00:00",
   "event": {
     "mode": "auto",
-    "name": "UFC Fight Night: Allen vs. Duncan",
+    "name": "UFC Fight Night: Buckley vs. Malott",
     "league": "ufc",
-    "date": "2026-10-10T21:00Z",
+    "date": "2026-10-17T21:00Z",
     "notes": "\"mode\": \"auto\" means every run resolves this itself — before config.json is even loaded, it asks ESPN for the soonest upcoming card, and if that differs from \"name\" below it rewrites \"name\"/\"league\"/\"date\", regenerates discovery.title_contains and discovery.search.queries from the new main event's fighters, and clears tracker.picks_videos (a stale roundup URL would just burn a download and a vision pass on the old event's deck). Once this week's card has happened, the next run rolls to whatever's next on its own — no manual retarget. \"name\"/\"league\"/\"date\" below are simply the last-resolved event; edit them by hand only if you delete \"mode\" and want to pin a specific card again (e.g. a Contender Series week, matched as a substring against ESPN's own event name — punctuation and case ignored, spelling not). \"league\" pins which scoreboard is searched (ufc / pfl); leave it empty to try UFC then PFL. Add more cards to the top-level \"events\" array to cover them in the same run — a PFL event the same weekend, say — and the dashboard puts a card selector at the top. If a run logs \"No ESPN card found\" (or, in auto mode, \"No upcoming event found\"), something's off with the league or the scoreboard is unreachable — nothing is filtered and off-card fights come back."
   },
   "totals": {
-    "fights": 12,
-    "picks": 1434,
+    "fights": 13,
+    "picks": 1544,
     "cappers": 0,
     "videos": 0,
-    "channels_tallied": 73
+    "channels_tallied": 75
   },
   "sources": [
     {
@@ -21,33 +21,33 @@
       "url": "",
       "capper_id": "",
       "capper": "Predictions tracker roundup (spoken tally)",
-      "title": "UFC Fight Night: Allen vs. Duncan",
+      "title": "UFC Fight Night: Buckley vs. Malott",
       "kind": "tracker_tally",
       "status": "ok",
-      "fights": 12,
+      "fights": 13,
       "pick_count": 0
     }
   ],
   "fights": [
     {
-      "fight_id": "tanzilovi|wellmaker",
-      "display": "Malcolm Wellmaker vs Otari Tanzilovi",
-      "fighter_a": "Malcolm Wellmaker",
-      "fighter_b": "Otari Tanzilovi",
-      "pick_count": 123,
-      "capper_count": 73,
+      "fight_id": "boser|diniz",
+      "display": "Tanner Boser vs Jhonata Diniz",
+      "fighter_a": "Tanner Boser",
+      "fighter_b": "Jhonata Diniz",
+      "pick_count": 124,
+      "capper_count": 75,
       "markets": [
         {
           "bet_type": "moneyline",
           "label": "Moneyline",
-          "total_weight": 182.5,
-          "pick_count": 73,
+          "total_weight": 187.5,
+          "pick_count": 75,
           "options": [
             {
-              "selection": "Malcolm Wellmaker",
-              "consensus_pct": 84.9,
-              "weight": 155.0,
-              "pick_count": 62,
+              "selection": "Jhonata Diniz",
+              "consensus_pct": 92.0,
+              "weight": 172.5,
+              "pick_count": 69,
               "avg_confidence": 5.0,
               "stated_pick_count": 0,
               "stated_avg_confidence": 0.0,
@@ -55,179 +55,29 @@
               "source": "tally",
               "sharp": {
                 "predictors": [
-                  7,
-                  8
+                  9,
+                  9
                 ],
                 "favorites": [
-                  4,
-                  6
-                ]
-              }
-            },
-            {
-              "selection": "Otari Tanzilovi",
-              "consensus_pct": 15.1,
-              "weight": 27.5,
-              "pick_count": 11,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally",
-              "sharp": {
+                  9,
+                  9
+                ],
                 "underdogs": [
-                  1,
-                  7
-                ]
-              }
-            }
-          ],
-          "source": "tally"
-        },
-        {
-          "bet_type": "method_of_victory",
-          "label": "Method of Victory",
-          "total_weight": 125.0,
-          "pick_count": 50,
-          "options": [
-            {
-              "selection": "Malcolm Wellmaker by KO/TKO",
-              "consensus_pct": 68.0,
-              "weight": 85.0,
-              "pick_count": 34,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally",
-              "sharp": {
-                "method": [
-                  3,
-                  4
+                  8,
+                  8
                 ]
               }
             },
             {
-              "selection": "Malcolm Wellmaker by Decision",
-              "consensus_pct": 18.0,
-              "weight": 22.5,
-              "pick_count": 9,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            },
-            {
-              "selection": "Otari Tanzilovi by Decision",
+              "selection": "Tanner Boser",
               "consensus_pct": 8.0,
-              "weight": 10.0,
-              "pick_count": 4,
+              "weight": 15.0,
+              "pick_count": 6,
               "avg_confidence": 5.0,
               "stated_pick_count": 0,
               "stated_avg_confidence": 0.0,
               "cappers": [],
               "source": "tally"
-            },
-            {
-              "selection": "Otari Tanzilovi by Submission",
-              "consensus_pct": 4.0,
-              "weight": 5.0,
-              "pick_count": 2,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            },
-            {
-              "selection": "Otari Tanzilovi by KO/TKO",
-              "consensus_pct": 2.0,
-              "weight": 2.5,
-              "pick_count": 1,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            }
-          ],
-          "source": "tally"
-        }
-      ],
-      "source": "tally",
-      "card_order": 7,
-      "notes": [
-        "Bantamweight; first bout of the main card."
-      ],
-      "tally_source": {
-        "file": "ufc-fight-night-allen-vs-duncan.json",
-        "url": "",
-        "event_name": "UFC Fight Night: Allen vs. Duncan"
-      },
-      "board_odds": {
-        "source": "tracker tally",
-        "video_id": "",
-        "a": {
-          "moneyline": "-225",
-          "ko_tko": "+125"
-        },
-        "b": {
-          "moneyline": "+180"
-        }
-      }
-    },
-    {
-      "fight_id": "camilo|herbert",
-      "display": "Matheus Camilo vs Jai Herbert",
-      "fighter_a": "Matheus Camilo",
-      "fighter_b": "Jai Herbert",
-      "pick_count": 122,
-      "capper_count": 73,
-      "markets": [
-        {
-          "bet_type": "moneyline",
-          "label": "Moneyline",
-          "total_weight": 182.5,
-          "pick_count": 73,
-          "options": [
-            {
-              "selection": "Matheus Camilo",
-              "consensus_pct": 76.7,
-              "weight": 140.0,
-              "pick_count": 56,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally",
-              "sharp": {
-                "predictors": [
-                  7,
-                  8
-                ],
-                "favorites": [
-                  6,
-                  6
-                ]
-              }
-            },
-            {
-              "selection": "Jai Herbert",
-              "consensus_pct": 23.3,
-              "weight": 42.5,
-              "pick_count": 17,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally",
-              "sharp": {
-                "underdogs": [
-                  1,
-                  7
-                ]
-              }
             }
           ],
           "source": "tally"
@@ -239,10 +89,10 @@
           "pick_count": 49,
           "options": [
             {
-              "selection": "Matheus Camilo by KO/TKO",
-              "consensus_pct": 42.9,
-              "weight": 52.5,
-              "pick_count": 21,
+              "selection": "Jhonata Diniz by KO/TKO",
+              "consensus_pct": 79.6,
+              "weight": 97.5,
+              "pick_count": 39,
               "avg_confidence": 5.0,
               "stated_pick_count": 0,
               "stated_avg_confidence": 0.0,
@@ -250,24 +100,13 @@
               "source": "tally",
               "sharp": {
                 "method": [
-                  3,
-                  4
+                  5,
+                  5
                 ]
               }
             },
             {
-              "selection": "Matheus Camilo by Decision",
-              "consensus_pct": 26.5,
-              "weight": 32.5,
-              "pick_count": 13,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            },
-            {
-              "selection": "Jai Herbert by Decision",
+              "selection": "Jhonata Diniz by Decision",
               "consensus_pct": 14.3,
               "weight": 17.5,
               "pick_count": 7,
@@ -278,18 +117,7 @@
               "source": "tally"
             },
             {
-              "selection": "Jai Herbert by KO/TKO",
-              "consensus_pct": 10.2,
-              "weight": 12.5,
-              "pick_count": 5,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            },
-            {
-              "selection": "Matheus Camilo by Submission",
+              "selection": "Tanner Boser by KO/TKO",
               "consensus_pct": 6.1,
               "weight": 7.5,
               "pick_count": 3,
@@ -304,46 +132,46 @@
         }
       ],
       "source": "tally",
-      "card_order": 10,
+      "card_order": 6,
       "notes": [
-        "Lightweight co-main event. All 4 best method predictors are on a Camilo win, 3 of them by KO/TKO."
+        "Heavyweight featured prelim. The host's first best bet: every panel unanimous on Diniz, and all 5 best method predictors on the KO at -105 rather than the -240 moneyline."
       ],
       "tally_source": {
-        "file": "ufc-fight-night-allen-vs-duncan.json",
+        "file": "ufc-fight-night-buckley-vs-malott.json",
         "url": "",
-        "event_name": "UFC Fight Night: Allen vs. Duncan"
+        "event_name": "UFC Fight Night: Buckley vs. Malott"
       },
       "board_odds": {
         "source": "tracker tally",
         "video_id": "",
         "a": {
-          "moneyline": "-190",
-          "ko_tko": "+140"
+          "moneyline": "+200"
         },
         "b": {
-          "moneyline": "+160"
+          "moneyline": "-240",
+          "ko_tko": "-105"
         }
       }
     },
     {
-      "fight_id": "meerschaert|walker",
-      "display": "Julius Walker vs Gerald Meerschaert",
-      "fighter_a": "Julius Walker",
-      "fighter_b": "Gerald Meerschaert",
-      "pick_count": 121,
-      "capper_count": 73,
+      "fight_id": "blanchfield|jasudavicius",
+      "display": "Erin Blanchfield vs Jasmine Jasudavicius",
+      "fighter_a": "Erin Blanchfield",
+      "fighter_b": "Jasmine Jasudavicius",
+      "pick_count": 124,
+      "capper_count": 75,
       "markets": [
         {
           "bet_type": "moneyline",
           "label": "Moneyline",
-          "total_weight": 182.5,
-          "pick_count": 73,
+          "total_weight": 187.5,
+          "pick_count": 75,
           "options": [
             {
-              "selection": "Julius Walker",
-              "consensus_pct": 83.6,
-              "weight": 152.5,
-              "pick_count": 61,
+              "selection": "Erin Blanchfield",
+              "consensus_pct": 89.3,
+              "weight": 167.5,
+              "pick_count": 67,
               "avg_confidence": 5.0,
               "stated_pick_count": 0,
               "stated_avg_confidence": 0.0,
@@ -352,28 +180,30 @@
               "sharp": {
                 "predictors": [
                   8,
-                  8
+                  9
                 ],
                 "favorites": [
-                  6,
-                  6
-                ],
-                "underdogs": [
-                  7,
-                  7
+                  8,
+                  9
                 ]
               }
             },
             {
-              "selection": "Gerald Meerschaert",
-              "consensus_pct": 16.4,
-              "weight": 30.0,
-              "pick_count": 12,
+              "selection": "Jasmine Jasudavicius",
+              "consensus_pct": 10.7,
+              "weight": 20.0,
+              "pick_count": 8,
               "avg_confidence": 5.0,
               "stated_pick_count": 0,
               "stated_avg_confidence": 0.0,
               "cappers": [],
-              "source": "tally"
+              "source": "tally",
+              "sharp": {
+                "underdogs": [
+                  1,
+                  8
+                ]
+              }
             }
           ],
           "source": "tally"
@@ -381,14 +211,14 @@
         {
           "bet_type": "method_of_victory",
           "label": "Method of Victory",
-          "total_weight": 120.0,
-          "pick_count": 48,
+          "total_weight": 122.5,
+          "pick_count": 49,
           "options": [
             {
-              "selection": "Julius Walker by KO/TKO",
-              "consensus_pct": 54.2,
-              "weight": 65.0,
-              "pick_count": 26,
+              "selection": "Erin Blanchfield by Decision",
+              "consensus_pct": 71.4,
+              "weight": 87.5,
+              "pick_count": 35,
               "avg_confidence": 5.0,
               "stated_pick_count": 0,
               "stated_avg_confidence": 0.0,
@@ -396,31 +226,14 @@
               "source": "tally",
               "sharp": {
                 "method": [
-                  2,
-                  4
+                  4,
+                  5
                 ]
               }
             },
             {
-              "selection": "Julius Walker by Decision",
-              "consensus_pct": 29.2,
-              "weight": 35.0,
-              "pick_count": 14,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally",
-              "sharp": {
-                "method": [
-                  2,
-                  4
-                ]
-              }
-            },
-            {
-              "selection": "Gerald Meerschaert by Submission",
-              "consensus_pct": 14.6,
+              "selection": "Jasmine Jasudavicius by Decision",
+              "consensus_pct": 14.3,
               "weight": 17.5,
               "pick_count": 7,
               "avg_confidence": 5.0,
@@ -430,136 +243,21 @@
               "source": "tally"
             },
             {
-              "selection": "Julius Walker by Submission",
-              "consensus_pct": 2.1,
+              "selection": "Erin Blanchfield by Submission",
+              "consensus_pct": 12.2,
+              "weight": 15.0,
+              "pick_count": 6,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            },
+            {
+              "selection": "Erin Blanchfield by KO/TKO",
+              "consensus_pct": 2.0,
               "weight": 2.5,
               "pick_count": 1,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            }
-          ],
-          "source": "tally"
-        }
-      ],
-      "source": "tally",
-      "card_order": 6,
-      "notes": [
-        "Light heavyweight. Every tracker panel is unanimous on Walker, and it is one of the host's three best bets (moneyline -295)."
-      ],
-      "tally_source": {
-        "file": "ufc-fight-night-allen-vs-duncan.json",
-        "url": "",
-        "event_name": "UFC Fight Night: Allen vs. Duncan"
-      },
-      "board_odds": {
-        "source": "tracker tally",
-        "video_id": "",
-        "a": {
-          "moneyline": "-295",
-          "ko_tko": "-115"
-        },
-        "b": {
-          "moneyline": "+235"
-        }
-      }
-    },
-    {
-      "fight_id": "allen|duncan",
-      "display": "Brendan Allen vs Christian Leroy Duncan",
-      "fighter_a": "Brendan Allen",
-      "fighter_b": "Christian Leroy Duncan",
-      "pick_count": 121,
-      "capper_count": 73,
-      "markets": [
-        {
-          "bet_type": "moneyline",
-          "label": "Moneyline",
-          "total_weight": 182.5,
-          "pick_count": 73,
-          "options": [
-            {
-              "selection": "Brendan Allen",
-              "consensus_pct": 60.3,
-              "weight": 110.0,
-              "pick_count": 44,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally",
-              "sharp": {
-                "predictors": [
-                  7,
-                  8
-                ],
-                "favorites": [
-                  5,
-                  6
-                ]
-              }
-            },
-            {
-              "selection": "Christian Leroy Duncan",
-              "consensus_pct": 39.7,
-              "weight": 72.5,
-              "pick_count": 29,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally",
-              "sharp": {
-                "underdogs": [
-                  0,
-                  7
-                ]
-              }
-            }
-          ],
-          "source": "tally"
-        },
-        {
-          "bet_type": "method_of_victory",
-          "label": "Method of Victory",
-          "total_weight": 120.0,
-          "pick_count": 48,
-          "options": [
-            {
-              "selection": "Christian Leroy Duncan by KO/TKO",
-              "consensus_pct": 37.5,
-              "weight": 45.0,
-              "pick_count": 18,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            },
-            {
-              "selection": "Brendan Allen by Submission",
-              "consensus_pct": 33.3,
-              "weight": 40.0,
-              "pick_count": 16,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally",
-              "sharp": {
-                "method": [
-                  4,
-                  4
-                ]
-              }
-            },
-            {
-              "selection": "Brendan Allen by Decision",
-              "consensus_pct": 29.2,
-              "weight": 35.0,
-              "pick_count": 14,
               "avg_confidence": 5.0,
               "stated_pick_count": 0,
               "stated_avg_confidence": 0.0,
@@ -573,343 +271,44 @@
       "source": "tally",
       "card_order": 11,
       "notes": [
-        "Middleweight main event, five rounds.",
-        "Not one of the 7 best underdog-pickers is on Duncan, and all 4 best method predictors have Allen by submission (+290). The host's third best bet (moneyline -127, or submission +290)."
+        "Women's flyweight co-main event. Field, panels and oddsmakers all land on Blanchfield by decision."
       ],
       "tally_source": {
-        "file": "ufc-fight-night-allen-vs-duncan.json",
+        "file": "ufc-fight-night-buckley-vs-malott.json",
         "url": "",
-        "event_name": "UFC Fight Night: Allen vs. Duncan"
+        "event_name": "UFC Fight Night: Buckley vs. Malott"
       },
       "board_odds": {
         "source": "tracker tally",
         "video_id": "",
         "a": {
-          "moneyline": "-127",
-          "submission": "+290",
-          "decision": "+240"
-        },
-        "b": {
-          "moneyline": "+106",
-          "ko_tko": "+225"
-        }
-      }
-    },
-    {
-      "fight_id": "bonfim|prado",
-      "display": "Francisco Prado vs Ismael Bonfim",
-      "fighter_a": "Francisco Prado",
-      "fighter_b": "Ismael Bonfim",
-      "pick_count": 122,
-      "capper_count": 72,
-      "markets": [
-        {
-          "bet_type": "moneyline",
-          "label": "Moneyline",
-          "total_weight": 180.0,
-          "pick_count": 72,
-          "options": [
-            {
-              "selection": "Francisco Prado",
-              "consensus_pct": 69.4,
-              "weight": 125.0,
-              "pick_count": 50,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally",
-              "sharp": {
-                "predictors": [
-                  6,
-                  8
-                ],
-                "favorites": [
-                  6,
-                  6
-                ]
-              }
-            },
-            {
-              "selection": "Ismael Bonfim",
-              "consensus_pct": 30.6,
-              "weight": 55.0,
-              "pick_count": 22,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally",
-              "sharp": {
-                "underdogs": [
-                  1,
-                  7
-                ]
-              }
-            }
-          ],
-          "source": "tally"
-        },
-        {
-          "bet_type": "method_of_victory",
-          "label": "Method of Victory",
-          "total_weight": 125.0,
-          "pick_count": 50,
-          "options": [
-            {
-              "selection": "Francisco Prado by KO/TKO",
-              "consensus_pct": 52.0,
-              "weight": 65.0,
-              "pick_count": 26,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally",
-              "sharp": {
-                "method": [
-                  2,
-                  4
-                ]
-              }
-            },
-            {
-              "selection": "Ismael Bonfim by Decision",
-              "consensus_pct": 26.0,
-              "weight": 32.5,
-              "pick_count": 13,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            },
-            {
-              "selection": "Francisco Prado by Submission",
-              "consensus_pct": 14.0,
-              "weight": 17.5,
-              "pick_count": 7,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally",
-              "sharp": {
-                "method": [
-                  1,
-                  4
-                ]
-              }
-            },
-            {
-              "selection": "Francisco Prado by Decision",
-              "consensus_pct": 4.0,
-              "weight": 5.0,
-              "pick_count": 2,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            },
-            {
-              "selection": "Ismael Bonfim by KO/TKO",
-              "consensus_pct": 2.0,
-              "weight": 2.5,
-              "pick_count": 1,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            },
-            {
-              "selection": "Ismael Bonfim by Submission",
-              "consensus_pct": 2.0,
-              "weight": 2.5,
-              "pick_count": 1,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            }
-          ],
-          "source": "tally"
-        }
-      ],
-      "source": "tally",
-      "card_order": 5,
-      "notes": [
-        "Lightweight, priced as a coin flip. All 6 of the tracker's best favorite-pickers are on Prado."
-      ],
-      "tally_source": {
-        "file": "ufc-fight-night-allen-vs-duncan.json",
-        "url": "",
-        "event_name": "UFC Fight Night: Allen vs. Duncan"
-      },
-      "board_odds": {
-        "source": "tracker tally",
-        "video_id": "",
-        "a": {
-          "moneyline": "-112",
-          "ko_tko": "+210"
-        },
-        "b": {
-          "moneyline": "-107",
-          "decision": "+170"
-        }
-      }
-    },
-    {
-      "fight_id": "frye|harris",
-      "display": "Allen Frye Jr. vs RJ Harris",
-      "fighter_a": "Allen Frye Jr.",
-      "fighter_b": "RJ Harris",
-      "pick_count": 120,
-      "capper_count": 72,
-      "markets": [
-        {
-          "bet_type": "moneyline",
-          "label": "Moneyline",
-          "total_weight": 180.0,
-          "pick_count": 72,
-          "options": [
-            {
-              "selection": "RJ Harris",
-              "consensus_pct": 97.2,
-              "weight": 175.0,
-              "pick_count": 70,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally",
-              "sharp": {
-                "predictors": [
-                  8,
-                  8
-                ],
-                "favorites": [
-                  6,
-                  6
-                ],
-                "underdogs": [
-                  7,
-                  7
-                ]
-              }
-            },
-            {
-              "selection": "Allen Frye Jr.",
-              "consensus_pct": 2.8,
-              "weight": 5.0,
-              "pick_count": 2,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            }
-          ],
-          "source": "tally"
-        },
-        {
-          "bet_type": "method_of_victory",
-          "label": "Method of Victory",
-          "total_weight": 120.0,
-          "pick_count": 48,
-          "options": [
-            {
-              "selection": "RJ Harris by KO/TKO",
-              "consensus_pct": 72.9,
-              "weight": 87.5,
-              "pick_count": 35,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally",
-              "sharp": {
-                "method": [
-                  2,
-                  4
-                ]
-              }
-            },
-            {
-              "selection": "RJ Harris by Submission",
-              "consensus_pct": 25.0,
-              "weight": 30.0,
-              "pick_count": 12,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally",
-              "sharp": {
-                "method": [
-                  2,
-                  4
-                ]
-              }
-            },
-            {
-              "selection": "RJ Harris by Decision",
-              "consensus_pct": 2.1,
-              "weight": 2.5,
-              "pick_count": 1,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            }
-          ],
-          "source": "tally"
-        }
-      ],
-      "source": "tally",
-      "card_order": 2,
-      "notes": [
-        "Heavyweight. Unanimous across every panel; not one method vote went to Frye."
-      ],
-      "tally_source": {
-        "file": "ufc-fight-night-allen-vs-duncan.json",
-        "url": "",
-        "event_name": "UFC Fight Night: Allen vs. Duncan"
-      },
-      "board_odds": {
-        "source": "tracker tally",
-        "video_id": "",
-        "a": {
-          "moneyline": "+265"
-        },
-        "b": {
           "moneyline": "-330",
-          "ko_tko": "+150"
+          "decision": "-150"
+        },
+        "b": {
+          "moneyline": "+260"
         }
       }
     },
     {
-      "fight_id": "franco|ribeiro",
-      "display": "Felipe Franco vs Brendson Ribeiro",
-      "fighter_a": "Felipe Franco",
-      "fighter_b": "Brendson Ribeiro",
-      "pick_count": 120,
-      "capper_count": 72,
+      "fight_id": "buckley|malott",
+      "display": "Joaquin Buckley vs Mike Malott",
+      "fighter_a": "Joaquin Buckley",
+      "fighter_b": "Mike Malott",
+      "pick_count": 119,
+      "capper_count": 74,
       "markets": [
         {
           "bet_type": "moneyline",
           "label": "Moneyline",
-          "total_weight": 180.0,
-          "pick_count": 72,
+          "total_weight": 185.0,
+          "pick_count": 74,
           "options": [
             {
-              "selection": "Felipe Franco",
-              "consensus_pct": 95.8,
-              "weight": 172.5,
-              "pick_count": 69,
+              "selection": "Joaquin Buckley",
+              "consensus_pct": 50.0,
+              "weight": 92.5,
+              "pick_count": 37,
               "avg_confidence": 5.0,
               "stated_pick_count": 0,
               "stated_avg_confidence": 0.0,
@@ -917,29 +316,29 @@
               "source": "tally",
               "sharp": {
                 "predictors": [
-                  7,
-                  8
+                  5,
+                  9
                 ],
+                "underdogs": [
+                  5,
+                  8
+                ]
+              }
+            },
+            {
+              "selection": "Mike Malott",
+              "consensus_pct": 50.0,
+              "weight": 92.5,
+              "pick_count": 37,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally",
+              "sharp": {
                 "favorites": [
                   5,
-                  6
-                ]
-              }
-            },
-            {
-              "selection": "Brendson Ribeiro",
-              "consensus_pct": 4.2,
-              "weight": 7.5,
-              "pick_count": 3,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally",
-              "sharp": {
-                "underdogs": [
-                  1,
-                  7
+                  9
                 ]
               }
             }
@@ -949,14 +348,14 @@
         {
           "bet_type": "method_of_victory",
           "label": "Method of Victory",
-          "total_weight": 120.0,
-          "pick_count": 48,
+          "total_weight": 112.5,
+          "pick_count": 45,
           "options": [
             {
-              "selection": "Felipe Franco by KO/TKO",
-              "consensus_pct": 83.3,
-              "weight": 100.0,
-              "pick_count": 40,
+              "selection": "Joaquin Buckley by KO/TKO",
+              "consensus_pct": 46.7,
+              "weight": 52.5,
+              "pick_count": 21,
               "avg_confidence": 5.0,
               "stated_pick_count": 0,
               "stated_avg_confidence": 0.0,
@@ -965,160 +364,13 @@
               "sharp": {
                 "method": [
                   3,
-                  4
+                  5
                 ]
               }
             },
             {
-              "selection": "Felipe Franco by Submission",
-              "consensus_pct": 12.5,
-              "weight": 15.0,
-              "pick_count": 6,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            },
-            {
-              "selection": "Felipe Franco by Decision",
-              "consensus_pct": 2.1,
-              "weight": 2.5,
-              "pick_count": 1,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            },
-            {
-              "selection": "Brendson Ribeiro by KO/TKO",
-              "consensus_pct": 2.1,
-              "weight": 2.5,
-              "pick_count": 1,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            }
-          ],
-          "source": "tally"
-        }
-      ],
-      "source": "tally",
-      "card_order": 3,
-      "notes": [
-        "Light heavyweight."
-      ],
-      "tally_source": {
-        "file": "ufc-fight-night-allen-vs-duncan.json",
-        "url": "",
-        "event_name": "UFC Fight Night: Allen vs. Duncan"
-      },
-      "board_odds": {
-        "source": "tracker tally",
-        "video_id": "",
-        "a": {
-          "moneyline": "-355",
-          "ko_tko": "+170",
-          "submission": "+170"
-        },
-        "b": {
-          "moneyline": "+280"
-        }
-      }
-    },
-    {
-      "fight_id": "pereira|zheleznyakova",
-      "display": "Alice Pereira vs Darya Zheleznyakova",
-      "fighter_a": "Alice Pereira",
-      "fighter_b": "Darya Zheleznyakova",
-      "pick_count": 118,
-      "capper_count": 71,
-      "markets": [
-        {
-          "bet_type": "moneyline",
-          "label": "Moneyline",
-          "total_weight": 177.5,
-          "pick_count": 71,
-          "options": [
-            {
-              "selection": "Alice Pereira",
-              "consensus_pct": 64.8,
-              "weight": 115.0,
-              "pick_count": 46,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            },
-            {
-              "selection": "Darya Zheleznyakova",
-              "consensus_pct": 35.2,
-              "weight": 62.5,
-              "pick_count": 25,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally",
-              "sharp": {
-                "predictors": [
-                  6,
-                  8
-                ],
-                "favorites": [
-                  4,
-                  6
-                ],
-                "underdogs": [
-                  6,
-                  7
-                ]
-              }
-            }
-          ],
-          "source": "tally"
-        },
-        {
-          "bet_type": "method_of_victory",
-          "label": "Method of Victory",
-          "total_weight": 117.5,
-          "pick_count": 47,
-          "options": [
-            {
-              "selection": "Darya Zheleznyakova by Decision",
-              "consensus_pct": 40.4,
-              "weight": 47.5,
-              "pick_count": 19,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally",
-              "sharp": {
-                "method": [
-                  3,
-                  4
-                ]
-              }
-            },
-            {
-              "selection": "Alice Pereira by Decision",
-              "consensus_pct": 34.0,
-              "weight": 40.0,
-              "pick_count": 16,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            },
-            {
-              "selection": "Alice Pereira by KO/TKO",
-              "consensus_pct": 23.4,
+              "selection": "Mike Malott by Decision",
+              "consensus_pct": 24.4,
               "weight": 27.5,
               "pick_count": 11,
               "avg_confidence": 5.0,
@@ -1128,8 +380,323 @@
               "source": "tally"
             },
             {
-              "selection": "Alice Pereira by Submission",
-              "consensus_pct": 2.1,
+              "selection": "Mike Malott by KO/TKO",
+              "consensus_pct": 22.2,
+              "weight": 25.0,
+              "pick_count": 10,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            },
+            {
+              "selection": "Mike Malott by Submission",
+              "consensus_pct": 4.4,
+              "weight": 5.0,
+              "pick_count": 2,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            },
+            {
+              "selection": "Joaquin Buckley by Decision",
+              "consensus_pct": 2.2,
+              "weight": 2.5,
+              "pick_count": 1,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            }
+          ],
+          "source": "tally"
+        }
+      ],
+      "source": "tally",
+      "card_order": 12,
+      "notes": [
+        "Welterweight main event. Dead even in picks — 37 channels each — and nearly even in odds.",
+        "The method market is where the field separates: Buckley by KO/TKO at +220 takes 47% of the method votes and 3 of the 5 best method predictors, while Malott's support splits between a KO and a decision."
+      ],
+      "tally_source": {
+        "file": "ufc-fight-night-buckley-vs-malott.json",
+        "url": "",
+        "event_name": "UFC Fight Night: Buckley vs. Malott"
+      },
+      "board_odds": {
+        "source": "tracker tally",
+        "video_id": "",
+        "a": {
+          "moneyline": "+110",
+          "ko_tko": "+220"
+        },
+        "b": {
+          "moneyline": "-130",
+          "decision": "+245"
+        }
+      }
+    },
+    {
+      "fight_id": "barriault|daukaus",
+      "display": "Marc-Andre Barriault vs Kyle Daukaus",
+      "fighter_a": "Marc-Andre Barriault",
+      "fighter_b": "Kyle Daukaus",
+      "pick_count": 118,
+      "capper_count": 74,
+      "markets": [
+        {
+          "bet_type": "moneyline",
+          "label": "Moneyline",
+          "total_weight": 185.0,
+          "pick_count": 74,
+          "options": [
+            {
+              "selection": "Kyle Daukaus",
+              "consensus_pct": 77.0,
+              "weight": 142.5,
+              "pick_count": 57,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally",
+              "sharp": {
+                "predictors": [
+                  7,
+                  9
+                ],
+                "favorites": [
+                  6,
+                  9
+                ]
+              }
+            },
+            {
+              "selection": "Marc-Andre Barriault",
+              "consensus_pct": 23.0,
+              "weight": 42.5,
+              "pick_count": 17,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally",
+              "sharp": {
+                "underdogs": [
+                  2,
+                  8
+                ]
+              }
+            }
+          ],
+          "source": "tally"
+        },
+        {
+          "bet_type": "method_of_victory",
+          "label": "Method of Victory",
+          "total_weight": 110.0,
+          "pick_count": 44,
+          "options": [
+            {
+              "selection": "Kyle Daukaus by Submission",
+              "consensus_pct": 34.1,
+              "weight": 37.5,
+              "pick_count": 15,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally",
+              "sharp": {
+                "method": [
+                  3,
+                  5
+                ]
+              }
+            },
+            {
+              "selection": "Kyle Daukaus by KO/TKO",
+              "consensus_pct": 25.0,
+              "weight": 27.5,
+              "pick_count": 11,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            },
+            {
+              "selection": "Marc-Andre Barriault by KO/TKO",
+              "consensus_pct": 20.5,
+              "weight": 22.5,
+              "pick_count": 9,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            },
+            {
+              "selection": "Kyle Daukaus by Decision",
+              "consensus_pct": 18.2,
+              "weight": 20.0,
+              "pick_count": 8,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            },
+            {
+              "selection": "Marc-Andre Barriault by Decision",
+              "consensus_pct": 2.3,
+              "weight": 2.5,
+              "pick_count": 1,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            }
+          ],
+          "source": "tally"
+        }
+      ],
+      "source": "tally",
+      "card_order": 9,
+      "notes": [
+        "Middleweight.",
+        "FLAG — this is the one fight where the host gave the method split but never stated its total, so the usual check (split must equal the stated total) could not run here. The total shown is the sum of the counts he read out."
+      ],
+      "tally_source": {
+        "file": "ufc-fight-night-buckley-vs-malott.json",
+        "url": "",
+        "event_name": "UFC Fight Night: Buckley vs. Malott"
+      },
+      "board_odds": {
+        "source": "tracker tally",
+        "video_id": "",
+        "a": {
+          "moneyline": "+160"
+        },
+        "b": {
+          "moneyline": "-195",
+          "submission": "+250",
+          "ko_tko": "+265"
+        }
+      }
+    },
+    {
+      "fight_id": "chandler|croden",
+      "display": "Melissa Croden vs Chelsea Chandler",
+      "fighter_a": "Melissa Croden",
+      "fighter_b": "Chelsea Chandler",
+      "pick_count": 122,
+      "capper_count": 73,
+      "markets": [
+        {
+          "bet_type": "moneyline",
+          "label": "Moneyline",
+          "total_weight": 182.5,
+          "pick_count": 73,
+          "options": [
+            {
+              "selection": "Melissa Croden",
+              "consensus_pct": 95.9,
+              "weight": 175.0,
+              "pick_count": 70,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally",
+              "sharp": {
+                "predictors": [
+                  9,
+                  9
+                ],
+                "favorites": [
+                  9,
+                  9
+                ],
+                "underdogs": [
+                  8,
+                  8
+                ]
+              }
+            },
+            {
+              "selection": "Chelsea Chandler",
+              "consensus_pct": 4.1,
+              "weight": 7.5,
+              "pick_count": 3,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            }
+          ],
+          "source": "tally"
+        },
+        {
+          "bet_type": "method_of_victory",
+          "label": "Method of Victory",
+          "total_weight": 122.5,
+          "pick_count": 49,
+          "options": [
+            {
+              "selection": "Melissa Croden by Decision",
+              "consensus_pct": 61.2,
+              "weight": 75.0,
+              "pick_count": 30,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally",
+              "sharp": {
+                "method": [
+                  2,
+                  5
+                ]
+              }
+            },
+            {
+              "selection": "Melissa Croden by KO/TKO",
+              "consensus_pct": 34.7,
+              "weight": 42.5,
+              "pick_count": 17,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally",
+              "sharp": {
+                "method": [
+                  3,
+                  5
+                ]
+              }
+            },
+            {
+              "selection": "Chelsea Chandler by Submission",
+              "consensus_pct": 2.0,
+              "weight": 2.5,
+              "pick_count": 1,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            },
+            {
+              "selection": "Chelsea Chandler by Decision",
+              "consensus_pct": 2.0,
               "weight": 2.5,
               "pick_count": 1,
               "avg_confidence": 5.0,
@@ -1145,43 +712,42 @@
       "source": "tally",
       "card_order": 1,
       "notes": [
-        "Women's bantamweight. The field is 65% Pereira but all three tracker panels are on Zheleznyakova — the sharpest disagreement on the card."
+        "Women's bantamweight. Every panel is unanimous on Croden, but they lean KO while the field and the oddsmakers lean decision."
       ],
       "tally_source": {
-        "file": "ufc-fight-night-allen-vs-duncan.json",
+        "file": "ufc-fight-night-buckley-vs-malott.json",
         "url": "",
-        "event_name": "UFC Fight Night: Allen vs. Duncan"
+        "event_name": "UFC Fight Night: Buckley vs. Malott"
       },
       "board_odds": {
         "source": "tracker tally",
         "video_id": "",
         "a": {
-          "moneyline": "-145",
-          "decision": "+150"
+          "moneyline": "-300",
+          "decision": "+130"
         },
         "b": {
-          "moneyline": "+120",
-          "decision": "+220"
+          "moneyline": "+245"
         }
       }
     },
     {
-      "fight_id": "fili|kamaka",
-      "display": "Andre Fili vs Kai Kamaka III",
-      "fighter_a": "Andre Fili",
-      "fighter_b": "Kai Kamaka III",
-      "pick_count": 117,
-      "capper_count": 71,
+      "fight_id": "cuamba|jourdain",
+      "display": "Louis Jourdain vs Timmy Cuamba",
+      "fighter_a": "Louis Jourdain",
+      "fighter_b": "Timmy Cuamba",
+      "pick_count": 121,
+      "capper_count": 73,
       "markets": [
         {
           "bet_type": "moneyline",
           "label": "Moneyline",
-          "total_weight": 177.5,
-          "pick_count": 71,
+          "total_weight": 182.5,
+          "pick_count": 73,
           "options": [
             {
-              "selection": "Andre Fili",
-              "consensus_pct": 88.7,
+              "selection": "Louis Jourdain",
+              "consensus_pct": 86.3,
               "weight": 157.5,
               "pick_count": 63,
               "avg_confidence": 5.0,
@@ -1191,22 +757,160 @@
               "source": "tally",
               "sharp": {
                 "predictors": [
-                  7,
-                  8
+                  8,
+                  9
                 ],
                 "favorites": [
-                  5,
-                  6
-                ],
-                "underdogs": [
-                  6,
-                  7
+                  8,
+                  9
                 ]
               }
             },
             {
-              "selection": "Kai Kamaka III",
-              "consensus_pct": 11.3,
+              "selection": "Timmy Cuamba",
+              "consensus_pct": 13.7,
+              "weight": 25.0,
+              "pick_count": 10,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally",
+              "sharp": {
+                "underdogs": [
+                  1,
+                  8
+                ]
+              }
+            }
+          ],
+          "source": "tally"
+        },
+        {
+          "bet_type": "method_of_victory",
+          "label": "Method of Victory",
+          "total_weight": 120.0,
+          "pick_count": 48,
+          "options": [
+            {
+              "selection": "Louis Jourdain by Decision",
+              "consensus_pct": 50.0,
+              "weight": 60.0,
+              "pick_count": 24,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            },
+            {
+              "selection": "Louis Jourdain by Submission",
+              "consensus_pct": 20.8,
+              "weight": 25.0,
+              "pick_count": 10,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            },
+            {
+              "selection": "Louis Jourdain by KO/TKO",
+              "consensus_pct": 18.8,
+              "weight": 22.5,
+              "pick_count": 9,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally",
+              "sharp": {
+                "method": [
+                  3,
+                  5
+                ]
+              }
+            },
+            {
+              "selection": "Timmy Cuamba by Decision",
+              "consensus_pct": 10.4,
+              "weight": 12.5,
+              "pick_count": 5,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            }
+          ],
+          "source": "tally"
+        }
+      ],
+      "source": "tally",
+      "card_order": 8,
+      "notes": [
+        "Bantamweight; Jourdain's UFC debut (Charles Jourdain's younger brother). The host's third best bet, though he is staying on the moneyline: the field says decision, the best method predictors say KO."
+      ],
+      "tally_source": {
+        "file": "ufc-fight-night-buckley-vs-malott.json",
+        "url": "",
+        "event_name": "UFC Fight Night: Buckley vs. Malott"
+      },
+      "board_odds": {
+        "source": "tracker tally",
+        "video_id": "",
+        "a": {
+          "moneyline": "-180",
+          "decision": "+205",
+          "ko_tko": "+250"
+        },
+        "b": {
+          "moneyline": "+150"
+        }
+      }
+    },
+    {
+      "fight_id": "landwehr|nallo",
+      "display": "Mandel Nallo vs Nate Landwehr",
+      "fighter_a": "Mandel Nallo",
+      "fighter_b": "Nate Landwehr",
+      "pick_count": 120,
+      "capper_count": 73,
+      "markets": [
+        {
+          "bet_type": "moneyline",
+          "label": "Moneyline",
+          "total_weight": 182.5,
+          "pick_count": 73,
+          "options": [
+            {
+              "selection": "Mandel Nallo",
+              "consensus_pct": 89.0,
+              "weight": 162.5,
+              "pick_count": 65,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally",
+              "sharp": {
+                "predictors": [
+                  9,
+                  9
+                ],
+                "favorites": [
+                  9,
+                  9
+                ],
+                "underdogs": [
+                  8,
+                  8
+                ]
+              }
+            },
+            {
+              "selection": "Nate Landwehr",
+              "consensus_pct": 11.0,
               "weight": 20.0,
               "pick_count": 8,
               "avg_confidence": 5.0,
@@ -1221,14 +925,14 @@
         {
           "bet_type": "method_of_victory",
           "label": "Method of Victory",
-          "total_weight": 115.0,
-          "pick_count": 46,
+          "total_weight": 117.5,
+          "pick_count": 47,
           "options": [
             {
-              "selection": "Andre Fili by Decision",
-              "consensus_pct": 82.6,
-              "weight": 95.0,
-              "pick_count": 38,
+              "selection": "Mandel Nallo by KO/TKO",
+              "consensus_pct": 93.6,
+              "weight": 110.0,
+              "pick_count": 44,
               "avg_confidence": 5.0,
               "stated_pick_count": 0,
               "stated_avg_confidence": 0.0,
@@ -1236,16 +940,16 @@
               "source": "tally",
               "sharp": {
                 "method": [
-                  3,
-                  4
+                  5,
+                  5
                 ]
               }
             },
             {
-              "selection": "Andre Fili by KO/TKO",
-              "consensus_pct": 8.7,
-              "weight": 10.0,
-              "pick_count": 4,
+              "selection": "Nate Landwehr by KO/TKO",
+              "consensus_pct": 4.3,
+              "weight": 5.0,
+              "pick_count": 2,
               "avg_confidence": 5.0,
               "stated_pick_count": 0,
               "stated_avg_confidence": 0.0,
@@ -1253,25 +957,8 @@
               "source": "tally"
             },
             {
-              "selection": "Kai Kamaka III by Decision",
-              "consensus_pct": 6.5,
-              "weight": 7.5,
-              "pick_count": 3,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally",
-              "sharp": {
-                "method": [
-                  1,
-                  4
-                ]
-              }
-            },
-            {
-              "selection": "Kai Kamaka III by KO/TKO",
-              "consensus_pct": 2.2,
+              "selection": "Mandel Nallo by Submission",
+              "consensus_pct": 2.1,
               "weight": 2.5,
               "pick_count": 1,
               "avg_confidence": 5.0,
@@ -1285,33 +972,421 @@
         }
       ],
       "source": "tally",
-      "card_order": 8,
+      "card_order": 7,
       "notes": [
-        "Featherweight. The lone dissenting best predictor is MMA Lock of the Night, on Kamaka."
+        "Lightweight; opens the main card. The host's second best bet: every panel unanimous on Nallo and all 5 best method predictors on the KO at -140. Not one channel has this going to the scorecards."
       ],
       "tally_source": {
-        "file": "ufc-fight-night-allen-vs-duncan.json",
+        "file": "ufc-fight-night-buckley-vs-malott.json",
         "url": "",
-        "event_name": "UFC Fight Night: Allen vs. Duncan"
+        "event_name": "UFC Fight Night: Buckley vs. Malott"
       },
       "board_odds": {
         "source": "tracker tally",
         "video_id": "",
         "a": {
-          "moneyline": "-155",
-          "decision": "+200"
+          "moneyline": "-280",
+          "ko_tko": "-140"
         },
         "b": {
-          "moneyline": "+130"
+          "moneyline": "+225"
         }
       }
     },
     {
-      "fight_id": "price|shahbazyan",
-      "display": "Niko Price vs Leon Shahbazyan",
-      "fighter_a": "Niko Price",
-      "fighter_b": "Leon Shahbazyan",
-      "pick_count": 116,
+      "fight_id": "anheliger|koslow",
+      "display": "Chad Anheliger vs Steven Koslow",
+      "fighter_a": "Chad Anheliger",
+      "fighter_b": "Steven Koslow",
+      "pick_count": 120,
+      "capper_count": 72,
+      "markets": [
+        {
+          "bet_type": "moneyline",
+          "label": "Moneyline",
+          "total_weight": 180.0,
+          "pick_count": 72,
+          "options": [
+            {
+              "selection": "Steven Koslow",
+              "consensus_pct": 76.4,
+              "weight": 137.5,
+              "pick_count": 55,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally",
+              "sharp": {
+                "predictors": [
+                  6,
+                  9
+                ],
+                "favorites": [
+                  7,
+                  9
+                ]
+              }
+            },
+            {
+              "selection": "Chad Anheliger",
+              "consensus_pct": 23.6,
+              "weight": 42.5,
+              "pick_count": 17,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally",
+              "sharp": {
+                "underdogs": [
+                  2,
+                  8
+                ]
+              }
+            }
+          ],
+          "source": "tally"
+        },
+        {
+          "bet_type": "method_of_victory",
+          "label": "Method of Victory",
+          "total_weight": 120.0,
+          "pick_count": 48,
+          "options": [
+            {
+              "selection": "Steven Koslow by Submission",
+              "consensus_pct": 58.3,
+              "weight": 70.0,
+              "pick_count": 28,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally",
+              "sharp": {
+                "method": [
+                  2,
+                  5
+                ]
+              }
+            },
+            {
+              "selection": "Chad Anheliger by Decision",
+              "consensus_pct": 16.7,
+              "weight": 20.0,
+              "pick_count": 8,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            },
+            {
+              "selection": "Chad Anheliger by KO/TKO",
+              "consensus_pct": 12.5,
+              "weight": 15.0,
+              "pick_count": 6,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            },
+            {
+              "selection": "Steven Koslow by Decision",
+              "consensus_pct": 12.5,
+              "weight": 15.0,
+              "pick_count": 6,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally",
+              "sharp": {
+                "method": [
+                  1,
+                  5
+                ]
+              }
+            }
+          ],
+          "source": "tally"
+        }
+      ],
+      "source": "tally",
+      "card_order": 2,
+      "notes": [
+        "Bantamweight. Anheliger has not fought in 714 days and Koslow is nearly four years out, so the panels are split."
+      ],
+      "tally_source": {
+        "file": "ufc-fight-night-buckley-vs-malott.json",
+        "url": "",
+        "event_name": "UFC Fight Night: Buckley vs. Malott"
+      },
+      "board_odds": {
+        "source": "tracker tally",
+        "video_id": "",
+        "a": {
+          "moneyline": "+130"
+        },
+        "b": {
+          "moneyline": "-155",
+          "submission": "+165"
+        }
+      }
+    },
+    {
+      "fight_id": "chovancek|yoo",
+      "display": "Cody Chovancek vs Soo Young Yoo",
+      "fighter_a": "Cody Chovancek",
+      "fighter_b": "Soo Young Yoo",
+      "pick_count": 117,
+      "capper_count": 72,
+      "markets": [
+        {
+          "bet_type": "moneyline",
+          "label": "Moneyline",
+          "total_weight": 180.0,
+          "pick_count": 72,
+          "options": [
+            {
+              "selection": "Cody Chovancek",
+              "consensus_pct": 73.6,
+              "weight": 132.5,
+              "pick_count": 53,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally",
+              "sharp": {
+                "predictors": [
+                  7,
+                  9
+                ],
+                "favorites": [
+                  7,
+                  9
+                ]
+              }
+            },
+            {
+              "selection": "Soo Young Yoo",
+              "consensus_pct": 26.4,
+              "weight": 47.5,
+              "pick_count": 19,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally",
+              "sharp": {
+                "underdogs": [
+                  2,
+                  8
+                ]
+              }
+            }
+          ],
+          "source": "tally"
+        },
+        {
+          "bet_type": "method_of_victory",
+          "label": "Method of Victory",
+          "total_weight": 112.5,
+          "pick_count": 45,
+          "options": [
+            {
+              "selection": "Cody Chovancek by Decision",
+              "consensus_pct": 51.1,
+              "weight": 57.5,
+              "pick_count": 23,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally",
+              "sharp": {
+                "method": [
+                  4,
+                  4
+                ]
+              }
+            },
+            {
+              "selection": "Cody Chovancek by KO/TKO",
+              "consensus_pct": 22.2,
+              "weight": 25.0,
+              "pick_count": 10,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            },
+            {
+              "selection": "Soo Young Yoo by Decision",
+              "consensus_pct": 22.2,
+              "weight": 25.0,
+              "pick_count": 10,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            },
+            {
+              "selection": "Cody Chovancek by Submission",
+              "consensus_pct": 4.4,
+              "weight": 5.0,
+              "pick_count": 2,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            }
+          ],
+          "source": "tally"
+        }
+      ],
+      "source": "tally",
+      "card_order": 0,
+      "notes": [
+        "Bantamweight. The host said \"all four\" best method predictors had Chovancek by decision; the panel is five elsewhere on this card, so one had not reported."
+      ],
+      "tally_source": {
+        "file": "ufc-fight-night-buckley-vs-malott.json",
+        "url": "",
+        "event_name": "UFC Fight Night: Buckley vs. Malott"
+      },
+      "board_odds": {
+        "source": "tracker tally",
+        "video_id": "",
+        "a": {
+          "moneyline": "-135",
+          "decision": "+210"
+        },
+        "b": {
+          "moneyline": "+110"
+        }
+      }
+    },
+    {
+      "fight_id": "galanti|leblanc",
+      "display": "Julien Leblanc vs Nick Galanti",
+      "fighter_a": "Julien Leblanc",
+      "fighter_b": "Nick Galanti",
+      "pick_count": 117,
+      "capper_count": 72,
+      "markets": [
+        {
+          "bet_type": "moneyline",
+          "label": "Moneyline",
+          "total_weight": 180.0,
+          "pick_count": 72,
+          "options": [
+            {
+              "selection": "Nick Galanti",
+              "consensus_pct": 100.0,
+              "weight": 180.0,
+              "pick_count": 72,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally",
+              "sharp": {
+                "predictors": [
+                  9,
+                  9
+                ],
+                "favorites": [
+                  9,
+                  9
+                ],
+                "underdogs": [
+                  8,
+                  8
+                ]
+              }
+            }
+          ],
+          "source": "tally"
+        },
+        {
+          "bet_type": "method_of_victory",
+          "label": "Method of Victory",
+          "total_weight": 112.5,
+          "pick_count": 45,
+          "options": [
+            {
+              "selection": "Nick Galanti by Submission",
+              "consensus_pct": 62.2,
+              "weight": 70.0,
+              "pick_count": 28,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally",
+              "sharp": {
+                "method": [
+                  2,
+                  5
+                ]
+              }
+            },
+            {
+              "selection": "Nick Galanti by KO/TKO",
+              "consensus_pct": 37.8,
+              "weight": 42.5,
+              "pick_count": 17,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally",
+              "sharp": {
+                "method": [
+                  3,
+                  5
+                ]
+              }
+            }
+          ],
+          "source": "tally"
+        }
+      ],
+      "source": "tally",
+      "card_order": 5,
+      "notes": [
+        "Middleweight. The biggest favorite on the card at -640, and the only fight where all 72 channels agree. Nobody picked a decision."
+      ],
+      "tally_source": {
+        "file": "ufc-fight-night-buckley-vs-malott.json",
+        "url": "",
+        "event_name": "UFC Fight Night: Buckley vs. Malott"
+      },
+      "board_odds": {
+        "source": "tracker tally",
+        "video_id": "",
+        "a": {
+          "moneyline": "+460"
+        },
+        "b": {
+          "moneyline": "-640",
+          "submission": "-140"
+        }
+      }
+    },
+    {
+      "fight_id": "nelson|perez",
+      "display": "Kyle Nelson vs Cristian Perez",
+      "fighter_a": "Kyle Nelson",
+      "fighter_b": "Cristian Perez",
+      "pick_count": 115,
       "capper_count": 71,
       "markets": [
         {
@@ -1321,10 +1396,10 @@
           "pick_count": 71,
           "options": [
             {
-              "selection": "Niko Price",
-              "consensus_pct": 54.9,
-              "weight": 97.5,
-              "pick_count": 39,
+              "selection": "Cristian Perez",
+              "consensus_pct": 94.4,
+              "weight": 167.5,
+              "pick_count": 67,
               "avg_confidence": 5.0,
               "stated_pick_count": 0,
               "stated_avg_confidence": 0.0,
@@ -1332,24 +1407,24 @@
               "source": "tally",
               "sharp": {
                 "predictors": [
-                  5,
-                  8
+                  9,
+                  9
                 ],
                 "favorites": [
-                  5,
-                  6
+                  9,
+                  9
                 ],
                 "underdogs": [
-                  5,
-                  7
+                  8,
+                  8
                 ]
               }
             },
             {
-              "selection": "Leon Shahbazyan",
-              "consensus_pct": 45.1,
-              "weight": 80.0,
-              "pick_count": 32,
+              "selection": "Kyle Nelson",
+              "consensus_pct": 5.6,
+              "weight": 10.0,
+              "pick_count": 4,
               "avg_confidence": 5.0,
               "stated_pick_count": 0,
               "stated_avg_confidence": 0.0,
@@ -1362,14 +1437,14 @@
         {
           "bet_type": "method_of_victory",
           "label": "Method of Victory",
-          "total_weight": 112.5,
-          "pick_count": 45,
+          "total_weight": 110.0,
+          "pick_count": 44,
           "options": [
             {
-              "selection": "Niko Price by KO/TKO",
-              "consensus_pct": 46.7,
-              "weight": 52.5,
-              "pick_count": 21,
+              "selection": "Cristian Perez by KO/TKO",
+              "consensus_pct": 79.5,
+              "weight": 87.5,
+              "pick_count": 35,
               "avg_confidence": 5.0,
               "stated_pick_count": 0,
               "stated_avg_confidence": 0.0,
@@ -1377,16 +1452,16 @@
               "source": "tally",
               "sharp": {
                 "method": [
-                  3,
-                  4
+                  4,
+                  5
                 ]
               }
             },
             {
-              "selection": "Leon Shahbazyan by Submission",
-              "consensus_pct": 37.8,
-              "weight": 42.5,
-              "pick_count": 17,
+              "selection": "Cristian Perez by Submission",
+              "consensus_pct": 9.1,
+              "weight": 10.0,
+              "pick_count": 4,
               "avg_confidence": 5.0,
               "stated_pick_count": 0,
               "stated_avg_confidence": 0.0,
@@ -1394,8 +1469,162 @@
               "source": "tally"
             },
             {
-              "selection": "Leon Shahbazyan by Decision",
-              "consensus_pct": 6.7,
+              "selection": "Cristian Perez by Decision",
+              "consensus_pct": 9.1,
+              "weight": 10.0,
+              "pick_count": 4,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            },
+            {
+              "selection": "Kyle Nelson by Decision",
+              "consensus_pct": 2.3,
+              "weight": 2.5,
+              "pick_count": 1,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            }
+          ],
+          "source": "tally"
+        }
+      ],
+      "source": "tally",
+      "card_order": 10,
+      "notes": [
+        "Lightweight; Perez's UFC debut. Every panel unanimous on him and 80% of the field has the KO, which the oddsmakers also make the likeliest outcome at +105."
+      ],
+      "tally_source": {
+        "file": "ufc-fight-night-buckley-vs-malott.json",
+        "url": "",
+        "event_name": "UFC Fight Night: Buckley vs. Malott"
+      },
+      "board_odds": {
+        "source": "tracker tally",
+        "video_id": "",
+        "a": {
+          "moneyline": "+285"
+        },
+        "b": {
+          "moneyline": "-360",
+          "ko_tko": "+105"
+        }
+      }
+    },
+    {
+      "fight_id": "faglier|mahjoub",
+      "display": "Javad Mahjoub vs Joel Faglier",
+      "fighter_a": "Javad Mahjoub",
+      "fighter_b": "Joel Faglier",
+      "pick_count": 114,
+      "capper_count": 71,
+      "markets": [
+        {
+          "bet_type": "moneyline",
+          "label": "Moneyline",
+          "total_weight": 177.5,
+          "pick_count": 71,
+          "options": [
+            {
+              "selection": "Joel Faglier",
+              "consensus_pct": 50.7,
+              "weight": 90.0,
+              "pick_count": 36,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally",
+              "sharp": {
+                "predictors": [
+                  5,
+                  9
+                ],
+                "favorites": [
+                  5,
+                  9
+                ]
+              }
+            },
+            {
+              "selection": "Javad Mahjoub",
+              "consensus_pct": 49.3,
+              "weight": 87.5,
+              "pick_count": 35,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally",
+              "sharp": {
+                "underdogs": [
+                  4,
+                  8
+                ]
+              }
+            }
+          ],
+          "source": "tally"
+        },
+        {
+          "bet_type": "method_of_victory",
+          "label": "Method of Victory",
+          "total_weight": 107.5,
+          "pick_count": 43,
+          "options": [
+            {
+              "selection": "Javad Mahjoub by Submission",
+              "consensus_pct": 34.9,
+              "weight": 37.5,
+              "pick_count": 15,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            },
+            {
+              "selection": "Joel Faglier by KO/TKO",
+              "consensus_pct": 27.9,
+              "weight": 30.0,
+              "pick_count": 12,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally",
+              "sharp": {
+                "method": [
+                  1,
+                  5
+                ]
+              }
+            },
+            {
+              "selection": "Joel Faglier by Decision",
+              "consensus_pct": 20.9,
+              "weight": 22.5,
+              "pick_count": 9,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally",
+              "sharp": {
+                "method": [
+                  2,
+                  5
+                ]
+              }
+            },
+            {
+              "selection": "Joel Faglier by Submission",
+              "consensus_pct": 7.0,
               "weight": 7.5,
               "pick_count": 3,
               "avg_confidence": 5.0,
@@ -1405,8 +1634,8 @@
               "source": "tally"
             },
             {
-              "selection": "Leon Shahbazyan by KO/TKO",
-              "consensus_pct": 4.4,
+              "selection": "Javad Mahjoub by KO/TKO",
+              "consensus_pct": 4.7,
               "weight": 5.0,
               "pick_count": 2,
               "avg_confidence": 5.0,
@@ -1416,21 +1645,10 @@
               "source": "tally"
             },
             {
-              "selection": "Niko Price by Submission",
-              "consensus_pct": 2.2,
-              "weight": 2.5,
-              "pick_count": 1,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            },
-            {
-              "selection": "Niko Price by Decision",
-              "consensus_pct": 2.2,
-              "weight": 2.5,
-              "pick_count": 1,
+              "selection": "Javad Mahjoub by Decision",
+              "consensus_pct": 4.7,
+              "weight": 5.0,
+              "pick_count": 2,
               "avg_confidence": 5.0,
               "stated_pick_count": 0,
               "stated_avg_confidence": 0.0,
@@ -1444,32 +1662,32 @@
       "source": "tally",
       "card_order": 4,
       "notes": [
-        "Welterweight; Niko Price's retirement fight. The only bout where the consensus is on the betting underdog, and one of the host's three best bets (moneyline +130, or KO +290)."
+        "Heavyweight; both men undefeated and both making their UFC debut. The closest fight on the card in odds and the closest in picks — Faglier leads by one channel.",
+        "The field splits on method the way the records do: Mahjoub by submission (15) against Faglier by KO (12). The oddsmakers' most likely outcome, Faglier by submission at +295, is picked by none of the best method predictors."
       ],
       "tally_source": {
-        "file": "ufc-fight-night-allen-vs-duncan.json",
+        "file": "ufc-fight-night-buckley-vs-malott.json",
         "url": "",
-        "event_name": "UFC Fight Night: Allen vs. Duncan"
+        "event_name": "UFC Fight Night: Buckley vs. Malott"
       },
       "board_odds": {
         "source": "tracker tally",
         "video_id": "",
         "a": {
-          "moneyline": "+130",
-          "ko_tko": "+290"
+          "moneyline": "-101"
         },
         "b": {
-          "moneyline": "-155",
-          "submission": "+140"
+          "moneyline": "-119",
+          "submission": "+295"
         }
       }
     },
     {
-      "fight_id": "gatto|kareckaite",
-      "display": "Ernesta Kareckaite vs Melissa Gatto",
-      "fighter_a": "Ernesta Kareckaite",
-      "fighter_b": "Melissa Gatto",
-      "pick_count": 117,
+      "fight_id": "cerminara|stiller",
+      "display": "Katlyn Cerminara vs Mackenzie Stiller",
+      "fighter_a": "Katlyn Cerminara",
+      "fighter_b": "Mackenzie Stiller",
+      "pick_count": 113,
       "capper_count": 70,
       "markets": [
         {
@@ -1479,10 +1697,10 @@
           "pick_count": 70,
           "options": [
             {
-              "selection": "Ernesta Kareckaite",
-              "consensus_pct": 74.3,
-              "weight": 130.0,
-              "pick_count": 52,
+              "selection": "Katlyn Cerminara",
+              "consensus_pct": 94.3,
+              "weight": 165.0,
+              "pick_count": 66,
               "avg_confidence": 5.0,
               "stated_pick_count": 0,
               "stated_avg_confidence": 0.0,
@@ -1490,181 +1708,63 @@
               "source": "tally",
               "sharp": {
                 "predictors": [
-                  6,
-                  8
+                  9,
+                  9
                 ],
                 "favorites": [
+                  8,
+                  9
+                ]
+              }
+            },
+            {
+              "selection": "Mackenzie Stiller",
+              "consensus_pct": 5.7,
+              "weight": 10.0,
+              "pick_count": 4,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally",
+              "sharp": {
+                "underdogs": [
+                  0,
+                  8
+                ]
+              }
+            }
+          ],
+          "source": "tally"
+        },
+        {
+          "bet_type": "method_of_victory",
+          "label": "Method of Victory",
+          "total_weight": 107.5,
+          "pick_count": 43,
+          "options": [
+            {
+              "selection": "Katlyn Cerminara by Decision",
+              "consensus_pct": 93.0,
+              "weight": 100.0,
+              "pick_count": 40,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally",
+              "sharp": {
+                "method": [
                   4,
-                  6
-                ],
-                "underdogs": [
-                  5,
-                  7
+                  5
                 ]
               }
             },
             {
-              "selection": "Melissa Gatto",
-              "consensus_pct": 25.7,
-              "weight": 45.0,
-              "pick_count": 18,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            }
-          ],
-          "source": "tally"
-        },
-        {
-          "bet_type": "method_of_victory",
-          "label": "Method of Victory",
-          "total_weight": 117.5,
-          "pick_count": 47,
-          "options": [
-            {
-              "selection": "Ernesta Kareckaite by Decision",
-              "consensus_pct": 78.7,
-              "weight": 92.5,
-              "pick_count": 37,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally",
-              "sharp": {
-                "method": [
-                  2,
-                  4
-                ]
-              }
-            },
-            {
-              "selection": "Melissa Gatto by Decision",
-              "consensus_pct": 21.3,
-              "weight": 25.0,
-              "pick_count": 10,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally",
-              "sharp": {
-                "method": [
-                  2,
-                  4
-                ]
-              }
-            }
-          ],
-          "source": "tally"
-        }
-      ],
-      "source": "tally",
-      "card_order": 0,
-      "notes": [
-        "Women's flyweight. Nobody took a finish: all 47 method votes are decisions."
-      ],
-      "tally_source": {
-        "file": "ufc-fight-night-allen-vs-duncan.json",
-        "url": "",
-        "event_name": "UFC Fight Night: Allen vs. Duncan"
-      },
-      "board_odds": {
-        "source": "tracker tally",
-        "video_id": "",
-        "a": {
-          "moneyline": "-115",
-          "decision": "+145"
-        },
-        "b": {
-          "moneyline": "-103",
-          "decision": "+155"
-        }
-      }
-    },
-    {
-      "fight_id": "godinez|souza",
-      "display": "Loopy Godinez vs Ketlen Souza",
-      "fighter_a": "Loopy Godinez",
-      "fighter_b": "Ketlen Souza",
-      "pick_count": 117,
-      "capper_count": 70,
-      "markets": [
-        {
-          "bet_type": "moneyline",
-          "label": "Moneyline",
-          "total_weight": 175.0,
-          "pick_count": 70,
-          "options": [
-            {
-              "selection": "Loopy Godinez",
-              "consensus_pct": 64.3,
-              "weight": 112.5,
-              "pick_count": 45,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally",
-              "sharp": {
-                "predictors": [
-                  7,
-                  8
-                ],
-                "favorites": [
-                  5,
-                  6
-                ],
-                "underdogs": [
-                  6,
-                  7
-                ]
-              }
-            },
-            {
-              "selection": "Ketlen Souza",
-              "consensus_pct": 35.7,
-              "weight": 62.5,
-              "pick_count": 25,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            }
-          ],
-          "source": "tally"
-        },
-        {
-          "bet_type": "method_of_victory",
-          "label": "Method of Victory",
-          "total_weight": 117.5,
-          "pick_count": 47,
-          "options": [
-            {
-              "selection": "Loopy Godinez by Decision",
-              "consensus_pct": 80.9,
-              "weight": 95.0,
-              "pick_count": 38,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally",
-              "sharp": {
-                "method": [
-                  3,
-                  4
-                ]
-              }
-            },
-            {
-              "selection": "Ketlen Souza by Decision",
-              "consensus_pct": 14.9,
-              "weight": 17.5,
-              "pick_count": 7,
+              "selection": "Katlyn Cerminara by KO/TKO",
+              "consensus_pct": 2.3,
+              "weight": 2.5,
+              "pick_count": 1,
               "avg_confidence": 5.0,
               "stated_pick_count": 0,
               "stated_avg_confidence": 0.0,
@@ -1672,10 +1772,21 @@
               "source": "tally"
             },
             {
-              "selection": "Ketlen Souza by KO/TKO",
-              "consensus_pct": 4.3,
-              "weight": 5.0,
-              "pick_count": 2,
+              "selection": "Katlyn Cerminara by Submission",
+              "consensus_pct": 2.3,
+              "weight": 2.5,
+              "pick_count": 1,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            },
+            {
+              "selection": "Mackenzie Stiller by Submission",
+              "consensus_pct": 2.3,
+              "weight": 2.5,
+              "pick_count": 1,
               "avg_confidence": 5.0,
               "stated_pick_count": 0,
               "stated_avg_confidence": 0.0,
@@ -1687,26 +1798,24 @@
         }
       ],
       "source": "tally",
-      "card_order": 9,
+      "card_order": 3,
       "notes": [
-        "Women's strawweight.",
-        "FLAG — the host's own numbers disagree here: he said 45 channels of 70 and then called it 77%, but 45 of 70 is 64% (77% would be about 54). The two stated counts are used as spoken; this fight's moneyline share may be understated by roughly 13 points. Re-check against the deck before betting it.",
-        "BetSam is the one best-underdog-picker on Souza."
+        "Women's flyweight; Stiller's UFC debut. Not one of the 8 best underdog-pickers is on her."
       ],
       "tally_source": {
-        "file": "ufc-fight-night-allen-vs-duncan.json",
+        "file": "ufc-fight-night-buckley-vs-malott.json",
         "url": "",
-        "event_name": "UFC Fight Night: Allen vs. Duncan"
+        "event_name": "UFC Fight Night: Buckley vs. Malott"
       },
       "board_odds": {
         "source": "tracker tally",
         "video_id": "",
         "a": {
-          "moneyline": "-235",
-          "decision": "-125"
+          "moneyline": "-275",
+          "decision": "-180"
         },
         "b": {
-          "moneyline": "+195"
+          "moneyline": "+225"
         }
       }
     }
