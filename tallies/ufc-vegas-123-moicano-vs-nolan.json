@@ -1,0 +1,265 @@
+{
+  "event_name": "UFC Fight Night: Moicano vs. Nolan",
+  "source_url": "",
+  "notes": "Hand-transcribed from the UFC Predictions Tracker's pre-event roundup for UFC Vegas 123 (Meta APEX, Las Vegas, 31 Oct 2026). The roundup was available only as a spoken transcript, which reports headcounts and never channel names, so it cannot be ingested as named picks — see src/mma_engine/tallies.py. Every count below is a number the host stated; fighter spellings were corrected against the official card. The host noted his best-method panel was thin this week (2 to 4 channels, against 5 to 6 best predictors and 7 to 8 best underdog-pickers), so method-panel counts carry less weight on this card than usual.",
+  "fights": [
+    {
+      "fighter_a": "Lucia Szabova",
+      "fighter_b": "Tainara Lisboa",
+      "card_order": 0,
+      "moneyline": { "channels": 68, "counts": { "a": 68 } },
+      "method": {
+        "channels": 45,
+        "counts": { "a": { "ko_tko": 24, "submission": 8, "decision": 13 } }
+      },
+      "odds": {
+        "a": { "moneyline": "-700", "submission": "+175", "decision": "+175" },
+        "b": { "moneyline": "+495" }
+      },
+      "sharps": { "a": { "predictors": [6, 6], "favorites": [6, 6], "underdogs": [8, 8] } },
+      "method_sharps": { "counts": { "a_ko_tko": [1, 2], "a_decision": [1, 2] } },
+      "notes": [
+        "Women's flyweight; Szabova's UFC debut at 12-0, and the only unanimous fight on the card — all 68 channels and every panel.",
+        "The submission count came through the transcript garbled; 8 is what the host's own stated total of 45 requires, and the reconciliation check confirms it.",
+        "The oddsmakers disagree with the field on method: they price submission and decision level at +175 each, while 53% of the channels have the KO."
+      ]
+    },
+    {
+      "fighter_a": "Talita Alencar",
+      "fighter_b": "Piera Rodriguez",
+      "card_order": 1,
+      "moneyline": { "channels": 67, "counts": { "b": 61 } },
+      "method": {
+        "channels": 45,
+        "counts": { "a": { "submission": 3, "decision": 1 }, "b": { "ko_tko": 1, "decision": 40 } }
+      },
+      "odds": {
+        "a": { "moneyline": "+235" },
+        "b": { "moneyline": "-290", "decision": "-130" }
+      },
+      "sharps": {
+        "a": { "underdogs": [1, 8] },
+        "b": { "predictors": [6, 6], "favorites": [6, 6] }
+      },
+      "notes": ["Women's strawweight. The host said every best method predictor had Rodriguez by decision but never gave the panel's size for this fight, so no method-panel count is recorded."]
+    },
+    {
+      "fighter_a": "Nick Klein",
+      "fighter_b": "Joe Kropschot",
+      "card_order": 2,
+      "moneyline": { "channels": 67, "counts": { "b": 64 } },
+      "method": {
+        "channels": 47,
+        "counts": {
+          "a": { "ko_tko": 1, "submission": 1 },
+          "b": { "ko_tko": 22, "submission": 19, "decision": 4 }
+        }
+      },
+      "odds": {
+        "a": { "moneyline": "+265" },
+        "b": { "moneyline": "-335", "submission": "+125" }
+      },
+      "sharps": {
+        "a": { "underdogs": [1, 8] },
+        "b": { "predictors": [6, 6], "favorites": [6, 6] }
+      },
+      "method_sharps": { "counts": { "b_submission": [2, 3] } },
+      "notes": ["Middleweight; Kropschot's UFC debut. 87% of the method votes have him finishing it."]
+    },
+    {
+      "fighter_a": "Zachary Reese",
+      "fighter_b": "Mickey Gall",
+      "card_order": 3,
+      "moneyline": { "channels": 67, "counts": { "a": 65 } },
+      "method": {
+        "channels": 48,
+        "counts": { "a": { "ko_tko": 44, "submission": 1, "decision": 2 }, "b": { "submission": 1 } }
+      },
+      "odds": {
+        "a": { "moneyline": "-335", "ko_tko": "-120" },
+        "b": { "moneyline": "+260" }
+      },
+      "sharps": {
+        "a": { "predictors": [5, 6], "favorites": [5, 6] },
+        "b": { "underdogs": [0, 8] }
+      },
+      "method_sharps": { "counts": { "a_ko_tko": [4, 4] } },
+      "notes": ["Middleweight; Gall's first fight in two years. 92% of the method votes are a Reese KO, and not one of the 8 best underdog-pickers is on Gall."]
+    },
+    {
+      "fighter_a": "Julian Erosa",
+      "fighter_b": "JeongYeong Lee",
+      "card_order": 4,
+      "moneyline": { "channels": 69, "counts": { "a": 41 } },
+      "method": {
+        "channels": 42,
+        "counts": {
+          "a": { "ko_tko": 4, "submission": 11, "decision": 5 },
+          "b": { "ko_tko": 19, "decision": 3 }
+        }
+      },
+      "odds": {
+        "a": { "moneyline": "+140" },
+        "b": { "moneyline": "-170", "ko_tko": "+115" }
+      },
+      "sharps": { "a": { "predictors": [5, 6], "favorites": [5, 6], "underdogs": [6, 8] } },
+      "method_sharps": { "counts": { "a_submission": [2, 4], "a_decision": [1, 4] } },
+      "notes": ["Featherweight, and Erosa's retirement fight. The host's first best bet: Erosa is the +140 underdog in odds but the favorite across every panel and 59% of the field."]
+    },
+    {
+      "fighter_a": "Rodrigo Sezinando",
+      "fighter_b": "Theodor Berggren",
+      "card_order": 5,
+      "moneyline": { "channels": 68, "counts": { "a": 44 } },
+      "method": {
+        "channels": 48,
+        "counts": {
+          "a": { "ko_tko": 8, "submission": 12, "decision": 9 },
+          "b": { "ko_tko": 15, "submission": 1, "decision": 3 }
+        }
+      },
+      "odds": {
+        "a": { "moneyline": "-175", "ko_tko": "+225" },
+        "b": { "moneyline": "+150" }
+      },
+      "sharps": {
+        "a": { "predictors": [3, 6], "favorites": [3, 6], "underdogs": [4, 8] },
+        "b": { "predictors": [3, 6], "favorites": [3, 6], "underdogs": [4, 8] }
+      },
+      "method_sharps": { "counts": { "a_submission": [1, 4], "a_decision": [2, 4] } },
+      "notes": [
+        "Welterweight. Both men lost their UFC debut to the same fighter, Daniil Donchenko, and every sharp panel here is split exactly down the middle.",
+        "FLAG — the host gave this method split without stating its total, so the usual reconciliation check could not run; 48 is the sum of the counts he read out."
+      ]
+    },
+    {
+      "fighter_a": "Francis Marshall",
+      "fighter_b": "Dakota Hope",
+      "card_order": 6,
+      "moneyline": { "channels": 66, "counts": { "a": 58 } },
+      "method": {
+        "channels": 45,
+        "counts": { "a": { "ko_tko": 2, "submission": 3, "decision": 35 }, "b": { "decision": 5 } }
+      },
+      "odds": {
+        "a": { "moneyline": "-230", "decision": "+130" },
+        "b": { "moneyline": "+190" }
+      },
+      "sharps": {
+        "a": { "predictors": [5, 5], "favorites": [5, 5] },
+        "b": { "underdogs": [1, 7] }
+      },
+      "method_sharps": { "counts": { "a_decision": [2, 3], "b_decision": [1, 3] } },
+      "notes": ["Featherweight prelim headliner. Marshall missed weight, so it goes ahead at catchweight."]
+    },
+    {
+      "fighter_a": "Jean-Paul Lebosnoyani",
+      "fighter_b": "Farman Hasanov",
+      "card_order": 7,
+      "moneyline": { "channels": 67, "counts": { "a": 63 } },
+      "method": {
+        "channels": 45,
+        "counts": { "a": { "ko_tko": 20, "submission": 15, "decision": 9 }, "b": { "decision": 1 } }
+      },
+      "odds": {
+        "a": { "moneyline": "-295", "submission": "+180" },
+        "b": { "moneyline": "+240" }
+      },
+      "sharps": { "a": { "predictors": [5, 5], "favorites": [5, 5], "underdogs": [7, 7] } },
+      "method_sharps": { "counts": { "a_submission": [3, 4], "a_ko_tko": [1, 4] } },
+      "notes": ["Welterweight; opens the main card. The host's second best bet: every panel 100% on Lebosnoyani, and 78% of the method votes have him finishing it."]
+    },
+    {
+      "fighter_a": "Yana Santos",
+      "fighter_b": "Luana Santos",
+      "card_order": 8,
+      "moneyline": { "channels": 66, "counts": { "b": 55 } },
+      "method": {
+        "channels": 44,
+        "counts": { "a": { "decision": 5 }, "b": { "submission": 7, "decision": 32 } }
+      },
+      "odds": {
+        "a": { "moneyline": "+225" },
+        "b": { "moneyline": "-275", "decision": "-120" }
+      },
+      "sharps": {
+        "a": { "underdogs": [2, 8] },
+        "b": { "predictors": [4, 6], "favorites": [5, 6] }
+      },
+      "method_sharps": { "counts": { "b_decision": [2, 3] } },
+      "notes": ["Women's bantamweight, No. 6 against No. 7. Not one channel picked a KO here."]
+    },
+    {
+      "fighter_a": "Ode' Osbourne",
+      "fighter_b": "Cody Durden",
+      "card_order": 9,
+      "moneyline": { "channels": 67, "counts": { "b": 41 } },
+      "method": {
+        "channels": 45,
+        "counts": {
+          "a": { "ko_tko": 14, "submission": 1, "decision": 2 },
+          "b": { "ko_tko": 1, "submission": 7, "decision": 20 }
+        }
+      },
+      "odds": {
+        "a": { "moneyline": "-104", "ko_tko": "+190" },
+        "b": { "moneyline": "-115" }
+      },
+      "sharps": {
+        "a": { "predictors": [3, 6], "favorites": [3, 6], "underdogs": [6, 8] },
+        "b": { "predictors": [3, 6], "favorites": [3, 6] }
+      },
+      "method_sharps": { "counts": { "a_ko_tko": [3, 4] } },
+      "notes": ["Flyweight, and the closest fight on the card in odds at -115/-104. The field is 61% Durden by decision while the best underdog-pickers and the best method predictors are both on an Osbourne KO."]
+    },
+    {
+      "fighter_a": "Randy Brown",
+      "fighter_b": "Jacobe Smith",
+      "card_order": 10,
+      "moneyline": { "channels": 70, "counts": { "b": 59 } },
+      "method": {
+        "channels": 46,
+        "counts": {
+          "a": { "ko_tko": 5, "decision": 3 },
+          "b": { "ko_tko": 34, "submission": 1, "decision": 3 }
+        }
+      },
+      "odds": {
+        "a": { "moneyline": "+225" },
+        "b": { "moneyline": "-275", "ko_tko": "+145" }
+      },
+      "sharps": {
+        "a": { "underdogs": [1, 8] },
+        "b": { "predictors": [4, 6], "favorites": [4, 6] }
+      },
+      "method_sharps": { "counts": { "b_ko_tko": [2, 4], "b_submission": [1, 4] } },
+      "notes": ["Welterweight co-main. Smith is 4-0 in the UFC with every win by finish, and 74% of the method votes have him doing it again."]
+    },
+    {
+      "fighter_a": "Renato Moicano",
+      "fighter_b": "Tom Nolan",
+      "card_order": 11,
+      "moneyline": { "channels": 69, "counts": { "a": 46 } },
+      "method": {
+        "channels": 47,
+        "counts": {
+          "a": { "ko_tko": 1, "submission": 26, "decision": 2 },
+          "b": { "ko_tko": 16, "decision": 2 }
+        }
+      },
+      "odds": {
+        "a": { "moneyline": "-125", "submission": "+185" },
+        "b": { "moneyline": "+105", "ko_tko": "+225" }
+      },
+      "sharps": {
+        "a": { "predictors": [5, 6], "favorites": [6, 6], "underdogs": [6, 8] },
+        "b": { "underdogs": [2, 8] }
+      },
+      "method_sharps": { "counts": { "a_submission": [3, 3] } },
+      "notes": [
+        "Lightweight main event, five rounds.",
+        "The host's third best bet. The books have it near even at -125/+105, but the channels are 67% Moicano, the best favorite-pickers are 6/6 on him, and all three best method predictors have the submission at +185."
+      ]
+    }
+  ]
+}

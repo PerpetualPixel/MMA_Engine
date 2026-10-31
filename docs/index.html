@@ -543,6 +543,16 @@ const lastToken = (name) =>
 
 function sideOfSelection(fight, selection) {
   const s = (selection || "").toLowerCase();
+  // The whole name first. Every selection the pipeline writes begins with the
+  // fighter's full name ("Luana Santos", "Luana Santos by Decision"), and on a
+  // card where both fighters share a surname — Yana Santos vs Luana Santos —
+  // that is the only thing that separates them: every check below matches both
+  // sides on "santos" and gives up, which left the whole fight rendering as
+  // "no cappers on this side".
+  const fa = (fight.fighter_a || "").toLowerCase(), fb = (fight.fighter_b || "").toLowerCase();
+  const whole = (full) => full && (s === full || s.startsWith(full + " "));
+  if (whole(fa) && !whole(fb)) return "a";
+  if (whole(fb) && !whole(fa)) return "b";
   const ta = lastToken(fight.fighter_a), tb = lastToken(fight.fighter_b);
   const hasA = ta && s.includes(ta), hasB = tb && s.includes(tb);
   if (hasA && !hasB) return "a";
@@ -1116,7 +1126,13 @@ function tableRow(f) {
   // all, the side actually carrying method picks stands in.
   const side = lead ? lead.side : (f.mov.a.length >= f.mov.b.length ? "a" : "b");
   const name = side === "a" ? f.fighter_a : f.fighter_b;
-  const surname = surnameOf(name);
+  // Surname alone, unless both fighters share one — "Santos by Decision" on a
+  // Yana-versus-Luana row names neither of them, and an exported row is read
+  // on its own, away from the moneyline column that would disambiguate it.
+  const surname =
+    surnameOf(f.fighter_a).toLowerCase() === surnameOf(f.fighter_b).toLowerCase()
+      ? name
+      : surnameOf(name);
 
   const ml = lead ? { text: name, pct: lead.share, lock: isLock(lead.share, lead.opt) } : null;
 
