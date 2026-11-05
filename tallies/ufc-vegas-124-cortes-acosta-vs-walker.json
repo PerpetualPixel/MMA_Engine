@@ -1,0 +1,321 @@
+{
+  "event_name": "UFC Fight Night: Cortes-Acosta vs. Walker",
+  "source_url": "",
+  "notes": "Hand-transcribed from the UFC Predictions Tracker's pre-event roundup for UFC Vegas 124 (Meta APEX, Las Vegas, 7 Nov 2026). The roundup was available only as a spoken transcript, which reports headcounts and never channel names, so it cannot be ingested as named picks — see src/mma_engine/tallies.py. Every count below is a number the host stated; fighter spellings were corrected against the official card. Panels this card: 7 best predictors, 6 best favorite-pickers, 7 best underdog-pickers, and a best-method panel of only 1 to 4 channels, which the host said was still filling in. Bout order follows the host's walk through the card; outlets disagree on where the prelims end.",
+  "fights": [
+    {
+      "fighter_a": "Jonny Parsons",
+      "fighter_b": "Jose Souza",
+      "card_order": 0,
+      "moneyline": { "channels": 71, "counts": { "b": 53 } },
+      "method": {
+        "channels": 49,
+        "counts": { "a": { "ko_tko": 12, "decision": 2 }, "b": { "ko_tko": 12, "decision": 23 } }
+      },
+      "odds": {
+        "a": { "moneyline": "+190" },
+        "b": { "moneyline": "-240", "ko_tko": "+150" }
+      },
+      "sharps": {
+        "a": { "underdogs": [1, 7] },
+        "b": { "predictors": [6, 7], "favorites": [5, 6] }
+      },
+      "method_sharps": { "counts": { "b_ko_tko": [1, 3], "b_decision": [1, 3] } },
+      "notes": ["Welterweight. One of the host's best bets, though he warns both men have fought rarely and recently enough that there is little to read."]
+    },
+    {
+      "fighter_a": "Seokhyeon Ko",
+      "fighter_b": "Wellington Turman",
+      "card_order": 1,
+      "method": {
+        "channels": 45,
+        "counts": { "a": { "ko_tko": 24, "submission": 2, "decision": 19 } }
+      },
+      "odds": {
+        "a": { "moneyline": "-705", "decision": "+135", "ko_tko": "+150" },
+        "b": { "moneyline": "+500" }
+      },
+      "sharps": { "a": { "predictors": [7, 7], "favorites": [6, 6], "underdogs": [7, 7] } },
+      "method_sharps": { "counts": { "a_decision": [2, 3] } },
+      "notes": [
+        "Welterweight; Ko is the biggest favorite on the card at -705.",
+        "FLAG — no moneyline is recorded for this fight. The host said every channel picked Ko but never said how many channels that was, and a headcount nobody stated is not one this engine will invent. Every panel is 100% on Ko, and all 45 method votes are for him, so treat the moneyline as unanimous; the Moneylines tab simply has no count to show."
+      ]
+    },
+    {
+      "fighter_a": "Mantas Kondratavicius",
+      "fighter_b": "Andre Petroski",
+      "card_order": 2,
+      "moneyline": { "channels": 70, "counts": { "a": 67 } },
+      "method": {
+        "channels": 48,
+        "counts": { "a": { "ko_tko": 45, "submission": 1, "decision": 1 }, "b": { "submission": 1 } }
+      },
+      "odds": {
+        "a": { "moneyline": "-295", "ko_tko": "-165" },
+        "b": { "moneyline": "+235" }
+      },
+      "sharps": { "a": { "predictors": [7, 7], "favorites": [6, 6], "underdogs": [7, 7] } },
+      "notes": [
+        "Middleweight. The host's first best bet: every panel 100% on Kondratavicius and 94% of the method votes a KO, which pays -165 against a -295 moneyline.",
+        "The best method predictors were also unanimous on that KO, but the host never gave the panel's size for this fight, so no method-panel count is recorded."
+      ]
+    },
+    {
+      "fighter_a": "Austin Bashi",
+      "fighter_b": "Carlos Calderon",
+      "card_order": 3,
+      "moneyline": { "channels": 29, "counts": { "a": 28 } },
+      "method": {
+        "channels": 19,
+        "counts": { "a": { "ko_tko": 1, "submission": 15, "decision": 2 }, "b": { "submission": 1 } }
+      },
+      "odds": {
+        "a": { "moneyline": "-480" },
+        "b": { "moneyline": "+235" }
+      },
+      "method_sharps": { "counts": { "a_submission": [1, 1] } },
+      "notes": [
+        "Featherweight. Calderon took this on four days' notice after Lucas Brennan tore an ACL, so the sample is a third of the card's: 29 channels on the winner, 19 on the method, one best-method predictor, and no method prices posted yet.",
+        "The host gave the submission count as \"15 out of 90\", which cannot be right against a 29-channel field; 19 is what his own split sums to and is used here.",
+        "He said the few best predictors who had posted were all on Bashi but gave no panel sizes, so no sharp counts are recorded."
+      ]
+    },
+    {
+      "fighter_a": "Jose Delano",
+      "fighter_b": "Murtazali Magomedov",
+      "card_order": 4,
+      "moneyline": { "channels": 71, "counts": { "b": 46 } },
+      "method": {
+        "channels": 45,
+        "counts": {
+          "a": { "ko_tko": 7, "decision": 11 },
+          "b": { "ko_tko": 5, "submission": 13, "decision": 9 }
+        }
+      },
+      "odds": {
+        "a": { "moneyline": "-116", "decision": "+255" },
+        "b": { "moneyline": "-103" }
+      },
+      "sharps": {
+        "a": { "predictors": [4, 7], "underdogs": [4, 7] },
+        "b": { "favorites": [4, 6] }
+      },
+      "method_sharps": {
+        "counts": { "a_ko_tko": [1, 4], "a_decision": [1, 4], "b_ko_tko": [1, 4], "b_submission": [1, 4] }
+      },
+      "notes": [
+        "Featherweight, and close everywhere: -116/-103 in odds, 65% Magomedov in the field, and the three sharp panels split between the two men.",
+        "FLAG — the host gave this method split without stating its total, so the usual reconciliation check could not run; 45 is the sum of the counts he read out.",
+        "The best method panel is split four ways, one vote to each of KO and decision for Delano and KO and submission for Magomedov."
+      ]
+    },
+    {
+      "fighter_a": "Karine Silva",
+      "fighter_b": "Gabriella Fernandes",
+      "card_order": 5,
+      "moneyline": { "channels": 71, "counts": { "a": 55 } },
+      "method": {
+        "channels": 44,
+        "counts": { "a": { "submission": 10, "decision": 24 }, "b": { "submission": 1, "decision": 9 } }
+      },
+      "odds": {
+        "a": { "moneyline": "-225", "decision": "+155" },
+        "b": { "moneyline": "+190" }
+      },
+      "sharps": {
+        "a": { "predictors": [6, 7], "favorites": [5, 6] },
+        "b": { "underdogs": [2, 7] }
+      },
+      "method_sharps": { "counts": { "b_decision": [2, 3] } },
+      "notes": ["Women's flyweight. Not one channel picked a KO, and the best method predictors go the other way from the field — 2 of 3 have Fernandes by decision."]
+    },
+    {
+      "fighter_a": "Gabriel Lorenco",
+      "fighter_b": "Thomas Petersen",
+      "card_order": 6,
+      "moneyline": { "channels": 70, "counts": { "a": 39 } },
+      "method": {
+        "channels": 44,
+        "counts": {
+          "a": { "ko_tko": 23, "submission": 1, "decision": 1 },
+          "b": { "ko_tko": 4, "submission": 5, "decision": 10 }
+        }
+      },
+      "odds": {
+        "a": { "moneyline": "+145", "ko_tko": "+265" },
+        "b": { "moneyline": "-170", "ko_tko": "+270", "decision": "+250" }
+      },
+      "sharps": {
+        "a": { "underdogs": [1, 7] },
+        "b": { "predictors": [5, 7], "favorites": [4, 6] }
+      },
+      "method_sharps": { "counts": { "b_decision": [2, 3] } },
+      "notes": ["Heavyweight; Lorenco's UFC debut. The field is 56% the debutant while every sharp panel is on Petersen — the host puts that down to Petersen alternating wins and losses."]
+    },
+    {
+      "fighter_a": "Keiichiro Nakamura",
+      "fighter_b": "Ollie Schmid",
+      "card_order": 7,
+      "moneyline": { "channels": 71, "counts": { "a": 62 } },
+      "method": {
+        "channels": 48,
+        "counts": {
+          "a": { "ko_tko": 38, "submission": 1, "decision": 4 },
+          "b": { "ko_tko": 3, "submission": 1, "decision": 1 }
+        }
+      },
+      "odds": {
+        "a": { "moneyline": "-355", "ko_tko": "-150" },
+        "b": { "moneyline": "+280" }
+      },
+      "sharps": {
+        "a": { "predictors": [6, 7], "favorites": [5, 6] },
+        "b": { "underdogs": [2, 7] }
+      },
+      "notes": [
+        "Featherweight prelim headliner; Nakamura won the Road to UFC tournament this year.",
+        "The best method predictors were unanimous on a Nakamura KO, but the host never gave the panel's size for this fight, so no method-panel count is recorded."
+      ]
+    },
+    {
+      "fighter_a": "Mitch Raposo",
+      "fighter_b": "Marcos Degli",
+      "card_order": 8,
+      "moneyline": { "channels": 69, "counts": { "b": 58 } },
+      "method": {
+        "channels": 47,
+        "counts": { "a": { "decision": 6 }, "b": { "ko_tko": 18, "submission": 9, "decision": 14 } }
+      },
+      "odds": {
+        "a": { "moneyline": "+195" },
+        "b": { "moneyline": "-235", "decision": "+180" }
+      },
+      "sharps": {
+        "a": { "underdogs": [1, 7] },
+        "b": { "predictors": [5, 7], "favorites": [4, 6] }
+      },
+      "method_sharps": { "counts": { "b_submission": [3, 4] } },
+      "notes": ["Flyweight; opens the main card and Degli's UFC debut. The best method predictors are on a submission that only 19% of the field picked, and that the oddsmakers rate behind a decision."]
+    },
+    {
+      "fighter_a": "Priscila Cachoeira",
+      "fighter_b": "Nina Milosevic",
+      "card_order": 9,
+      "moneyline": { "channels": 71, "counts": { "b": 66 } },
+      "method": {
+        "channels": 46,
+        "counts": { "a": { "ko_tko": 1 }, "b": { "ko_tko": 25, "submission": 17, "decision": 3 } }
+      },
+      "odds": {
+        "a": { "moneyline": "+385" },
+        "b": { "moneyline": "-505", "ko_tko": "+175", "submission": "+185" }
+      },
+      "sharps": {
+        "a": { "underdogs": [1, 7] },
+        "b": { "predictors": [6, 7], "favorites": [5, 6] }
+      },
+      "notes": [
+        "Women's bantamweight. 91% of the method votes have Milosevic finishing it.",
+        "The host said the best method predictors were split between her KO and her submission but gave no panel size, so no method-panel count is recorded."
+      ]
+    },
+    {
+      "fighter_a": "Billy Elekana",
+      "fighter_b": "Lucas Fernando",
+      "card_order": 10,
+      "moneyline": { "channels": 71, "counts": { "b": 58 } },
+      "method": {
+        "channels": 46,
+        "counts": {
+          "a": { "ko_tko": 1, "submission": 3, "decision": 4 },
+          "b": { "ko_tko": 27, "decision": 11 }
+        }
+      },
+      "odds": {
+        "a": { "moneyline": "+260" },
+        "b": { "moneyline": "-325", "ko_tko": "+155", "decision": "+200" }
+      },
+      "sharps": {
+        "a": { "underdogs": [1, 7] },
+        "b": { "predictors": [7, 7], "favorites": [6, 6] }
+      },
+      "method_sharps": { "counts": { "b_ko_tko": [2, 4], "b_decision": [2, 4] } },
+      "notes": ["Light heavyweight. The host's second best bet: the best predictors and best favorite-pickers are 100% on Fernando, though the method panel splits evenly between his KO (+155) and his decision (+200)."]
+    },
+    {
+      "fighter_a": "Davey Grant",
+      "fighter_b": "Elijah Smith",
+      "card_order": 11,
+      "moneyline": { "channels": 69, "counts": { "b": 58 } },
+      "method": {
+        "channels": 45,
+        "counts": {
+          "a": { "ko_tko": 1, "decision": 5 },
+          "b": { "ko_tko": 9, "submission": 6, "decision": 24 }
+        }
+      },
+      "odds": {
+        "a": { "moneyline": "+255" },
+        "b": { "moneyline": "-315", "ko_tko": "+210", "decision": "+205" }
+      },
+      "sharps": {
+        "a": { "underdogs": [1, 7] },
+        "b": { "predictors": [6, 7], "favorites": [5, 6], "underdogs": [6, 7] }
+      },
+      "method_sharps": { "counts": { "a_ko_tko": [1, 3], "a_decision": [1, 3] } },
+      "notes": [
+        "Bantamweight, and a 16-year age gap: Grant is 40, Smith 24.",
+        "The host names the lone dissenter across all three sharp panels as Axel MMA, on Grant.",
+        "Also one of his best bets, on Smith's moneyline — but note 2 of the 3 best method predictors have the +255 underdog winning."
+      ]
+    },
+    {
+      "fighter_a": "Tatiana Suarez",
+      "fighter_b": "Virna Jandiroba",
+      "card_order": 12,
+      "moneyline": { "channels": 71, "counts": { "a": 58 } },
+      "method": {
+        "channels": 46,
+        "counts": { "a": { "submission": 3, "decision": 35 }, "b": { "decision": 8 } }
+      },
+      "odds": {
+        "a": { "moneyline": "-210", "decision": "-118" },
+        "b": { "moneyline": "+170" }
+      },
+      "sharps": {
+        "a": { "predictors": [4, 7], "favorites": [4, 6] },
+        "b": { "underdogs": [2, 7] }
+      },
+      "notes": [
+        "Women's strawweight co-main, No. 2 against No. 3. Not one channel picked a KO.",
+        "The field is 82% Suarez but the best predictors are only 4 of 7 — the widest field-versus-sharps gap on the card.",
+        "The best method predictors were unanimous on Suarez by decision, but the host gave no panel size, so no method-panel count is recorded."
+      ]
+    },
+    {
+      "fighter_a": "Waldo Cortes-Acosta",
+      "fighter_b": "Johnny Walker",
+      "card_order": 13,
+      "moneyline": { "channels": 72, "counts": { "a": 55 } },
+      "method": {
+        "channels": 48,
+        "counts": { "a": { "ko_tko": 39, "decision": 2 }, "b": { "ko_tko": 6, "submission": 1 } }
+      },
+      "odds": {
+        "a": { "moneyline": "-225", "ko_tko": "-114" },
+        "b": { "moneyline": "+185" }
+      },
+      "sharps": {
+        "a": { "predictors": [4, 7], "favorites": [3, 6] },
+        "b": { "favorites": [3, 6], "underdogs": [2, 7] }
+      },
+      "method_sharps": { "counts": { "a_ko_tko": [3, 4], "b_ko_tko": [1, 4] } },
+      "notes": [
+        "Heavyweight main event, moved up after Sean Brady withdrew.",
+        "94% of the method votes have this ending by KO either way, and the best method panel agrees unanimously on that — only on who. Cortes-Acosta by KO pays -114 against his -225 moneyline.",
+        "The field is 76% Cortes-Acosta but the best predictors are 4 of 7 and the best favorite-pickers are dead even."
+      ]
+    }
+  ]
+}

@@ -920,6 +920,12 @@ function mlSideHtml(fight, side) {
   </div>`;
 }
 
+/** True when the payload carries no moneyline market for this fight at all
+ *  — not "nobody picked this side", but "no winner count was recorded". A
+ *  tally whose host read out the method split and never said how many
+ *  channels picked the winner lands here. */
+const hasNoMoneyline = (f) => !f.ml.a && !f.ml.b && !f.ml.other.length;
+
 function badgesHtml(fight) {
   const lead = mlLead(fight);
   const badges = [];
@@ -933,7 +939,11 @@ function renderML() {
   const s = state.ml;
   // Every bout on the official card shows here, picked or not — plus any
   // picked fight the card annotation doesn't cover (no card fetched).
-  let fights = state.model.fights.filter((f) => f.ml.a || f.ml.b || f.card_status);
+  // A fight with method picks but no winner count still belongs here: it is
+  // on the card, and dropping it is how a bout goes missing without saying so.
+  let fights = state.model.fights.filter(
+    (f) => f.ml.a || f.ml.b || f.card_status || f.mov.a.length || f.mov.b.length
+  );
   fights = fights.filter(matchesSearch);
   if (s.hideNoPicks) fights = fights.filter((f) => f.ml.a || f.ml.b);
   if (s.hidePickems) fights = fights.filter((f) => !isPickem(f));
@@ -943,7 +953,9 @@ function renderML() {
   const cardHtml = (f) => `<article class="${duelClass(f)}">
     <h2><span>${esc(f.display)}</span>${badgesHtml(f)}</h2>
     ${roleBannerHtml(f)}${cancelBannerHtml(f)}${noteBannerHtml(f)}
-    <div class="sides">${mlSideHtml(f, "a")}${mlSideHtml(f, "b")}</div>
+    ${hasNoMoneyline(f)
+      ? `<p class="notice">No winner count was recorded for this bout &mdash; see the note above. Its method picks are on the Method of Victory tab.</p>`
+      : `<div class="sides">${mlSideHtml(f, "a")}${mlSideHtml(f, "b")}</div>`}
   </article>`;
   return controlsHtml("ml", { noPicksToggle: true })
     + `<div class="count-note">${fights.length} fight${fights.length === 1 ? "" : "s"}</div>`
