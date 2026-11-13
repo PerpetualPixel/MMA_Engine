@@ -1,0 +1,292 @@
+{
+  "event_name": "UFC 334: Gane vs. Hokit",
+  "source_url": "",
+  "notes": "Hand-transcribed from the UFC Predictions Tracker's pre-event roundup for UFC 334 (Madison Square Garden, New York, 14 Nov 2026). The roundup was available only as a spoken transcript, which reports headcounts and never channel names, so it cannot be ingested as named picks — see src/mma_engine/tallies.py. Every count below is a number the host stated; fighter spellings were corrected against the official card. Panels this card: 7 best predictors, 8 best favorite-pickers, 8 best underdog-pickers, and a best-method panel of 3 to 4 whose size the host often left unsaid — where he did, no method-panel count is recorded.",
+  "fights": [
+    {
+      "fighter_a": "Evan Elder",
+      "fighter_b": "Samuel Sanches",
+      "card_order": 0,
+      "moneyline": { "channels": 84, "counts": { "a": 57 } },
+      "method": {
+        "channels": 54,
+        "counts": {
+          "a": { "ko_tko": 3, "submission": 6, "decision": 27 },
+          "b": { "ko_tko": 14, "decision": 4 }
+        }
+      },
+      "odds": {
+        "a": { "moneyline": "+100", "decision": "+250" },
+        "b": { "moneyline": "-120", "ko_tko": "+175" }
+      },
+      "sharps": { "a": { "predictors": [6, 7], "favorites": [7, 8], "underdogs": [7, 8] } },
+      "method_sharps": { "counts": { "a_decision": [2, 3] } },
+      "notes": ["Lightweight, and the closest fight on the card in odds. The host's first best bet: Elder is the +100 underdog but takes 68% of the field and every sharp panel, and his decision pays +250."]
+    },
+    {
+      "fighter_a": "Alateng Heili",
+      "fighter_b": "Juan Diaz",
+      "card_order": 1,
+      "moneyline": { "channels": 80, "counts": { "b": 80 } },
+      "method": {
+        "channels": 54,
+        "counts": { "b": { "ko_tko": 11, "submission": 18, "decision": 25 } }
+      },
+      "odds": {
+        "a": { "moneyline": "+295" },
+        "b": { "moneyline": "-385" }
+      },
+      "sharps": { "b": { "predictors": [6, 6], "favorites": [8, 8], "underdogs": [7, 7] } },
+      "method_sharps": { "counts": { "b_decision": [2, 3] } },
+      "notes": [
+        "Bantamweight; Heili replaced Adrian Yanez, who withdrew injured.",
+        "Unanimous on the winner — all 80 channels and every panel on Diaz — but the method vote is the most evenly spread on the card: 25 decision, 18 submission, 11 KO.",
+        "No method prices are posted yet; the bout was made late."
+      ]
+    },
+    {
+      "fighter_a": "Macy Chiasson",
+      "fighter_b": "Bia Mesquita",
+      "card_order": 2,
+      "moneyline": { "channels": 85, "counts": { "b": 82 } },
+      "method": {
+        "channels": 61,
+        "counts": { "a": { "ko_tko": 1, "submission": 1 }, "b": { "submission": 54, "decision": 5 } }
+      },
+      "odds": {
+        "a": { "moneyline": "+215" },
+        "b": { "moneyline": "-265", "submission": "-116" }
+      },
+      "sharps": {
+        "a": { "underdogs": [1, 8] },
+        "b": { "predictors": [6, 7], "favorites": [7, 8] }
+      },
+      "method_sharps": { "counts": { "b_submission": [3, 4] } },
+      "notes": ["Women's bantamweight. Mesquita has won all three UFC fights by submission, and 89% of the method votes have her doing it again at -116."]
+    },
+    {
+      "fighter_a": "Jared Gordon",
+      "fighter_b": "Melquizael Costa",
+      "card_order": 3,
+      "moneyline": { "channels": 86, "counts": { "b": 85 } },
+      "method": {
+        "channels": 59,
+        "counts": { "a": { "decision": 1 }, "b": { "ko_tko": 43, "submission": 7, "decision": 8 } }
+      },
+      "odds": {
+        "a": { "moneyline": "+295" },
+        "b": { "moneyline": "-375", "ko_tko": "+150" }
+      },
+      "sharps": { "b": { "predictors": [7, 7], "favorites": [8, 8], "underdogs": [8, 8] } },
+      "notes": [
+        "Lightweight. Every panel is unanimous on Costa and 85 of 86 channels agree.",
+        "The host said the best method predictors split one for the KO and one for a decision but never gave the panel's size, so no method-panel count is recorded."
+      ]
+    },
+    {
+      "fighter_a": "Donte Johnson",
+      "fighter_b": "Cesar Almeida",
+      "card_order": 4,
+      "moneyline": { "channels": 86, "counts": { "a": 59 } },
+      "method": {
+        "channels": 60,
+        "counts": {
+          "a": { "ko_tko": 32, "submission": 2, "decision": 9 },
+          "b": { "ko_tko": 9, "decision": 8 }
+        }
+      },
+      "odds": {
+        "a": { "moneyline": "-165", "ko_tko": "+150" },
+        "b": { "moneyline": "+140", "ko_tko": "+225" }
+      },
+      "sharps": {
+        "a": { "predictors": [4, 7], "favorites": [5, 8] },
+        "b": { "underdogs": [4, 8] }
+      },
+      "method_sharps": { "counts": { "a_ko_tko": [3, 4], "b_ko_tko": [1, 4] } },
+      "notes": ["Middleweight. Every best method predictor has this ending by KO — they only disagree on who, and so do the oddsmakers."]
+    },
+    {
+      "fighter_a": "Jim Miller",
+      "fighter_b": "Terrance McKinney",
+      "card_order": 5,
+      "moneyline": { "channels": 86, "counts": { "b": 67 } },
+      "method": {
+        "channels": 59,
+        "counts": { "a": { "submission": 14 }, "b": { "ko_tko": 45 } }
+      },
+      "odds": {
+        "a": { "moneyline": "+170" },
+        "b": { "moneyline": "-200", "ko_tko": "+140" }
+      },
+      "sharps": { "b": { "predictors": [7, 7], "favorites": [8, 8], "underdogs": [8, 8] } },
+      "method_sharps": { "counts": { "b_ko_tko": [2, 3] } },
+      "notes": [
+        "Lightweight; Miller's 48th UFC fight.",
+        "The most one-sided method read on the card: not one of the 59 channels has this going to the scorecards. Every channel on McKinney has the KO, every channel on Miller has the submission.",
+        "The host's second best bet: all three panels are 100% on McKinney, and his KO pays +140 against a -200 moneyline."
+      ]
+    },
+    {
+      "fighter_a": "Drew Dober",
+      "fighter_b": "Chris Duncan",
+      "card_order": 6,
+      "moneyline": { "channels": 87, "counts": { "b": 54 } },
+      "method": {
+        "channels": 56,
+        "counts": {
+          "a": { "ko_tko": 21 },
+          "b": { "ko_tko": 6, "submission": 12, "decision": 17 }
+        }
+      },
+      "odds": {
+        "a": { "moneyline": "+140", "ko_tko": "+195" },
+        "b": { "moneyline": "-170", "ko_tko": "+290", "submission": "+290", "decision": "+405" }
+      },
+      "sharps": {
+        "a": { "underdogs": [3, 8] },
+        "b": { "predictors": [5, 7], "favorites": [6, 8] }
+      },
+      "method_sharps": { "counts": { "a_ko_tko": [2, 3] } },
+      "notes": ["Lightweight. The field and the panels favour Duncan on the moneyline, but the single most-picked method is Dober by KO at +195 — and the best method predictors are there too."]
+    },
+    {
+      "fighter_a": "Stephen Thompson",
+      "fighter_b": "Charles Radtke",
+      "card_order": 7,
+      "moneyline": { "channels": 87, "counts": { "a": 61 } },
+      "method": {
+        "channels": 58,
+        "counts": { "a": { "ko_tko": 17, "decision": 24 }, "b": { "ko_tko": 2, "decision": 15 } }
+      },
+      "odds": {
+        "a": { "moneyline": "-155", "decision": "+130" },
+        "b": { "moneyline": "+130" }
+      },
+      "sharps": {
+        "a": { "predictors": [6, 7], "favorites": [6, 8] },
+        "b": { "underdogs": [1, 8] }
+      },
+      "notes": [
+        "Welterweight prelim headliner, and Thompson's retirement fight. Not one channel picked a submission.",
+        "FLAG — the host gave this method split without stating its total, so the usual reconciliation check could not run; 58 is the sum of the counts he read out.",
+        "He also said the best method predictors were split between Thompson's KO and his decision but gave no panel size, so no method-panel count is recorded."
+      ]
+    },
+    {
+      "fighter_a": "Bilal Hasan",
+      "fighter_b": "Luis Gurule",
+      "card_order": 8,
+      "moneyline": { "channels": 84, "counts": { "a": 84 } },
+      "method": {
+        "channels": 65,
+        "counts": { "a": { "ko_tko": 64, "decision": 1 } }
+      },
+      "odds": {
+        "a": { "moneyline": "-1000", "ko_tko": "-345" },
+        "b": { "moneyline": "+675" }
+      },
+      "sharps": { "a": { "predictors": [7, 7], "favorites": [8, 8], "underdogs": [8, 8] } },
+      "notes": [
+        "Flyweight; opens the main card. The biggest favourite and the biggest underdog on the card, and the most lopsided fight the engine has recorded: all 84 channels and every panel on Hasan, and 64 of 65 method votes his KO.",
+        "The host read that KO share as 89.5%; the two counts he gave make it 98.5%. The counts are used.",
+        "He said every best method predictor had the KO but gave no panel size, so no method-panel count is recorded."
+      ]
+    },
+    {
+      "fighter_a": "Uros Medic",
+      "fighter_b": "Kevin Holland",
+      "card_order": 9,
+      "moneyline": { "channels": 87, "counts": { "a": 54 } },
+      "method": {
+        "channels": 59,
+        "counts": {
+          "a": { "ko_tko": 32, "decision": 6 },
+          "b": { "ko_tko": 7, "submission": 12, "decision": 2 }
+        }
+      },
+      "odds": {
+        "a": { "moneyline": "-155", "ko_tko": "+108" },
+        "b": { "moneyline": "+130" }
+      },
+      "sharps": {
+        "a": { "predictors": [5, 7], "favorites": [5, 8] },
+        "b": { "underdogs": [2, 8] }
+      },
+      "method_sharps": { "counts": { "b_submission": [2, 3] } },
+      "notes": ["Welterweight. The field, the panels and the oddsmakers all have Medic by KO at +108, but the best method predictors go the other way — 2 of 3 on a Holland submission."]
+    },
+    {
+      "fighter_a": "Caio Borralho",
+      "fighter_b": "Yousri Belgaroui",
+      "card_order": 10,
+      "moneyline": { "channels": 86, "counts": { "b": 48 } },
+      "method": {
+        "channels": 61,
+        "counts": { "a": { "submission": 1, "decision": 28 }, "b": { "ko_tko": 10, "decision": 22 } }
+      },
+      "odds": {
+        "a": { "moneyline": "-160", "decision": "+130" },
+        "b": { "moneyline": "+135" }
+      },
+      "sharps": {
+        "a": { "favorites": [3, 8] },
+        "b": { "predictors": [4, 7], "underdogs": [5, 8] }
+      },
+      "method_sharps": { "counts": { "a_decision": [2, 4], "b_ko_tko": [1, 4], "b_decision": [1, 4] } },
+      "notes": ["Middleweight. Borralho is the favourite in odds and nowhere else: the field, the best predictors, the best favorite-pickers and the best underdog-pickers all lean Belgaroui."]
+    },
+    {
+      "fighter_a": "Kayla Harrison",
+      "fighter_b": "Amanda Nunes",
+      "card_order": 11,
+      "moneyline": { "channels": 87, "counts": { "b": 47 } },
+      "method": {
+        "channels": 57,
+        "counts": {
+          "a": { "ko_tko": 3, "submission": 15, "decision": 6 },
+          "b": { "ko_tko": 22, "decision": 11 }
+        }
+      },
+      "odds": {
+        "a": { "moneyline": "-180", "submission": "+185", "decision": "+300" },
+        "b": { "moneyline": "+150", "ko_tko": "+305" }
+      },
+      "sharps": {
+        "a": { "favorites": [1, 8] },
+        "b": { "predictors": [6, 7], "favorites": [7, 8], "underdogs": [6, 8] }
+      },
+      "notes": [
+        "Women's bantamweight title, co-main — Nunes's comeback after three years out.",
+        "The widest odds-versus-sharps gap on the card and the host's third best bet: Nunes is a +150 underdog, the field is a near coin flip at 54%, but 6 of 7 best predictors and 7 of 8 best favorite-pickers are on her. Only one of the eight best favorite-pickers has the champion.",
+        "The host said the method panel split between a Nunes KO and a Nunes decision but gave no panel size, so no method-panel count is recorded."
+      ]
+    },
+    {
+      "fighter_a": "Ciryl Gane",
+      "fighter_b": "Josh Hokit",
+      "card_order": 12,
+      "moneyline": { "channels": 87, "counts": { "a": 54 } },
+      "method": {
+        "channels": 55,
+        "counts": {
+          "a": { "ko_tko": 29, "decision": 7 },
+          "b": { "ko_tko": 13, "submission": 4, "decision": 2 }
+        }
+      },
+      "odds": {
+        "a": { "moneyline": "-190", "ko_tko": "+145" },
+        "b": { "moneyline": "+160" }
+      },
+      "sharps": {
+        "a": { "predictors": [5, 7], "favorites": [5, 8] },
+        "b": { "underdogs": [3, 8] }
+      },
+      "notes": [
+        "Heavyweight title, main event. Hokit is 10-0 and unbeaten in four UFC fights inside eight months.",
+        "84% of the method votes have this ending inside the distance; Gane by KO pays +145 against his -190 moneyline.",
+        "The host said most best method predictors had Gane by KO but gave no panel size, so no method-panel count is recorded."
+      ]
+    }
+  ]
+}
