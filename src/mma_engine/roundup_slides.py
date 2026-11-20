@@ -38,6 +38,7 @@ import logging
 import os
 import shutil
 import subprocess
+from functools import lru_cache
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -247,6 +248,35 @@ def ffmpeg_path() -> str | None:
         return shutil.which("ffmpeg")
 
 
+@lru_cache(maxsize=4)
+def frame_rate_flag(binary: str) -> str:
+    """The option this ffmpeg spells "one output frame per selected input".
+
+    ffmpeg 8 removed `-vsync`, which both frame extractors used. Without it
+    ffmpeg does not fall back — it refuses the whole command ("Unrecognized
+    option 'vsync'") and writes no frames at all, so a deck read or a picks
+    video came back empty rather than failing loudly. `-fps_mode` has meant
+    the same thing since 5.1, so prefer it and keep `-vsync` for binaries
+    older than that: `imageio-ffmpeg` ships whatever its current wheel
+    carries, which is not pinned to one major version.
+
+    Probed once per binary with a frame of generated video, because the
+    version string is spelled differently by every build (n9.0.2, 4.4.2,
+    N-109xxx-g...) and is no use for deciding this.
+    """
+    probe = [
+        binary, "-hide_banner", "-loglevel", "error",
+        "-f", "lavfi", "-i", "nullsrc=s=16x16:d=0.04",
+        "-fps_mode", "vfr", "-frames:v", "1", "-f", "null", "-",
+    ]
+    try:
+        if subprocess.run(probe, capture_output=True, timeout=30).returncode == 0:
+            return "-fps_mode"
+    except (OSError, subprocess.SubprocessError):
+        pass
+    return "-vsync"
+
+
 # What a second attempt changes when the first download is refused. YouTube
 # answers 403 on the adaptive (video-only) streams from time to time — a
 # player change yt-dlp hasn't caught up with, or a client that now wants a
@@ -366,7 +396,7 @@ def extract_slides(
         # straight onto a fight slide, that is a whole fight missed.
         rf"select='eq(n\,0)+gt(scene,{scene_threshold})',"
         "mpdecimate=hi=64*24:lo=64*12:frac=0.33",
-        "-vsync",
+        frame_rate_flag(binary),
         "vfr",
         "-frames:v",
         str(max_frames),
