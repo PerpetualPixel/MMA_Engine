@@ -59,6 +59,7 @@ from .roundup_slides import (
     SlideFight,
     ffmpeg_path,
     frame_key,
+    frame_rate_flag,
     image_block,
     slide_fight_to_picks,
 )
@@ -332,7 +333,7 @@ def extract_frames(
         str(video),
         "-vf",
         select,
-        "-vsync",
+        frame_rate_flag(binary),
         "vfr",
         "-frames:v",
         str(max_frames),

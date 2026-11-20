@@ -1,19 +1,19 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-13T05:21:16+00:00",
+  "generated_at": "2026-11-20T14:21:23+00:00",
   "event": {
     "mode": "auto",
-    "name": "UFC 334: Gane vs. Hokit",
+    "name": "UFC Fight Night: Prochazka vs. Stirling",
     "league": "ufc",
-    "date": "2026-11-14T22:00Z",
+    "date": "2026-11-21T15:00Z",
     "notes": "\"mode\": \"auto\" means every run resolves this itself — before config.json is even loaded, it asks ESPN for the soonest upcoming card, and if that differs from \"name\" below it rewrites \"name\"/\"league\"/\"date\", regenerates discovery.title_contains and discovery.search.queries from the new main event's fighters, and clears tracker.picks_videos (a stale roundup URL would just burn a download and a vision pass on the old event's deck). Once this week's card has happened, the next run rolls to whatever's next on its own — no manual retarget. \"name\"/\"league\"/\"date\" below are simply the last-resolved event; edit them by hand only if you delete \"mode\" and want to pin a specific card again (e.g. a Contender Series week, matched as a substring against ESPN's own event name — punctuation and case ignored, spelling not). \"league\" pins which scoreboard is searched (ufc / pfl); leave it empty to try UFC then PFL. Add more cards to the top-level \"events\" array to cover them in the same run — a PFL event the same weekend, say — and the dashboard puts a card selector at the top. If a run logs \"No ESPN card found\" (or, in auto mode, \"No upcoming event found\"), something's off with the league or the scoreboard is unreachable — nothing is filtered and off-card fights come back."
   },
   "totals": {
-    "fights": 13,
-    "picks": 1870,
+    "fights": 12,
+    "picks": 1518,
     "cappers": 0,
     "videos": 0,
-    "channels_tallied": 87
+    "channels_tallied": 81
   },
   "sources": [
     {
@@ -21,33 +21,33 @@
       "url": "",
       "capper_id": "",
       "capper": "Predictions tracker roundup (spoken tally)",
-      "title": "UFC 334: Gane vs. Hokit",
+      "title": "UFC Fight Night: Prochazka vs. Stirling",
       "kind": "tracker_tally",
       "status": "ok",
-      "fights": 13,
+      "fights": 12,
       "pick_count": 0
     }
   ],
   "fights": [
     {
-      "fight_id": "holland|medic",
-      "display": "Uros Medic vs Kevin Holland",
-      "fighter_a": "Uros Medic",
-      "fighter_b": "Kevin Holland",
-      "pick_count": 146,
-      "capper_count": 87,
+      "fight_id": "hooker|ortega",
+      "display": "Dan Hooker vs Brian Ortega",
+      "fighter_a": "Dan Hooker",
+      "fighter_b": "Brian Ortega",
+      "pick_count": 136,
+      "capper_count": 81,
       "markets": [
         {
           "bet_type": "moneyline",
           "label": "Moneyline",
-          "total_weight": 217.5,
-          "pick_count": 87,
+          "total_weight": 202.5,
+          "pick_count": 81,
           "options": [
             {
-              "selection": "Uros Medic",
-              "consensus_pct": 62.1,
-              "weight": 135.0,
-              "pick_count": 54,
+              "selection": "Dan Hooker",
+              "consensus_pct": 74.1,
+              "weight": 150.0,
+              "pick_count": 60,
               "avg_confidence": 5.0,
               "stated_pick_count": 0,
               "stated_avg_confidence": 0.0,
@@ -55,475 +55,18 @@
               "source": "tally",
               "sharp": {
                 "predictors": [
-                  5,
-                  7
+                  4,
+                  6
                 ],
                 "favorites": [
-                  5,
-                  8
+                  4,
+                  5
                 ]
               }
             },
             {
-              "selection": "Kevin Holland",
-              "consensus_pct": 37.9,
-              "weight": 82.5,
-              "pick_count": 33,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally",
-              "sharp": {
-                "underdogs": [
-                  2,
-                  8
-                ]
-              }
-            }
-          ],
-          "source": "tally"
-        },
-        {
-          "bet_type": "method_of_victory",
-          "label": "Method of Victory",
-          "total_weight": 147.5,
-          "pick_count": 59,
-          "options": [
-            {
-              "selection": "Uros Medic by KO/TKO",
-              "consensus_pct": 54.2,
-              "weight": 80.0,
-              "pick_count": 32,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            },
-            {
-              "selection": "Kevin Holland by Submission",
-              "consensus_pct": 20.3,
-              "weight": 30.0,
-              "pick_count": 12,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally",
-              "sharp": {
-                "method": [
-                  2,
-                  3
-                ]
-              }
-            },
-            {
-              "selection": "Kevin Holland by KO/TKO",
-              "consensus_pct": 11.9,
-              "weight": 17.5,
-              "pick_count": 7,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            },
-            {
-              "selection": "Uros Medic by Decision",
-              "consensus_pct": 10.2,
-              "weight": 15.0,
-              "pick_count": 6,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            },
-            {
-              "selection": "Kevin Holland by Decision",
-              "consensus_pct": 3.4,
-              "weight": 5.0,
-              "pick_count": 2,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            }
-          ],
-          "source": "tally"
-        }
-      ],
-      "source": "tally",
-      "card_order": 9,
-      "notes": [
-        "Welterweight. The field, the panels and the oddsmakers all have Medic by KO at +108, but the best method predictors go the other way — 2 of 3 on a Holland submission."
-      ],
-      "tally_source": {
-        "file": "ufc-334-gane-vs-hokit.json",
-        "url": "",
-        "event_name": "UFC 334: Gane vs. Hokit"
-      },
-      "board_odds": {
-        "source": "tracker tally",
-        "video_id": "",
-        "a": {
-          "moneyline": "-155",
-          "ko_tko": "+108"
-        },
-        "b": {
-          "moneyline": "+130"
-        }
-      }
-    },
-    {
-      "fight_id": "radtke|thompson",
-      "display": "Stephen Thompson vs Charles Radtke",
-      "fighter_a": "Stephen Thompson",
-      "fighter_b": "Charles Radtke",
-      "pick_count": 145,
-      "capper_count": 87,
-      "markets": [
-        {
-          "bet_type": "moneyline",
-          "label": "Moneyline",
-          "total_weight": 217.5,
-          "pick_count": 87,
-          "options": [
-            {
-              "selection": "Stephen Thompson",
-              "consensus_pct": 70.1,
-              "weight": 152.5,
-              "pick_count": 61,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally",
-              "sharp": {
-                "predictors": [
-                  6,
-                  7
-                ],
-                "favorites": [
-                  6,
-                  8
-                ]
-              }
-            },
-            {
-              "selection": "Charles Radtke",
-              "consensus_pct": 29.9,
-              "weight": 65.0,
-              "pick_count": 26,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally",
-              "sharp": {
-                "underdogs": [
-                  1,
-                  8
-                ]
-              }
-            }
-          ],
-          "source": "tally"
-        },
-        {
-          "bet_type": "method_of_victory",
-          "label": "Method of Victory",
-          "total_weight": 145.0,
-          "pick_count": 58,
-          "options": [
-            {
-              "selection": "Stephen Thompson by Decision",
-              "consensus_pct": 41.4,
-              "weight": 60.0,
-              "pick_count": 24,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            },
-            {
-              "selection": "Stephen Thompson by KO/TKO",
-              "consensus_pct": 29.3,
-              "weight": 42.5,
-              "pick_count": 17,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            },
-            {
-              "selection": "Charles Radtke by Decision",
+              "selection": "Brian Ortega",
               "consensus_pct": 25.9,
-              "weight": 37.5,
-              "pick_count": 15,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            },
-            {
-              "selection": "Charles Radtke by KO/TKO",
-              "consensus_pct": 3.4,
-              "weight": 5.0,
-              "pick_count": 2,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            }
-          ],
-          "source": "tally"
-        }
-      ],
-      "source": "tally",
-      "card_order": 7,
-      "notes": [
-        "Welterweight prelim headliner, and Thompson's retirement fight. Not one channel picked a submission.",
-        "FLAG — the host gave this method split without stating its total, so the usual reconciliation check could not run; 58 is the sum of the counts he read out.",
-        "He also said the best method predictors were split between Thompson's KO and his decision but gave no panel size, so no method-panel count is recorded."
-      ],
-      "tally_source": {
-        "file": "ufc-334-gane-vs-hokit.json",
-        "url": "",
-        "event_name": "UFC 334: Gane vs. Hokit"
-      },
-      "board_odds": {
-        "source": "tracker tally",
-        "video_id": "",
-        "a": {
-          "moneyline": "-155",
-          "decision": "+130"
-        },
-        "b": {
-          "moneyline": "+130"
-        }
-      }
-    },
-    {
-      "fight_id": "harrison|nunes",
-      "display": "Kayla Harrison vs Amanda Nunes",
-      "fighter_a": "Kayla Harrison",
-      "fighter_b": "Amanda Nunes",
-      "pick_count": 144,
-      "capper_count": 87,
-      "markets": [
-        {
-          "bet_type": "moneyline",
-          "label": "Moneyline",
-          "total_weight": 217.5,
-          "pick_count": 87,
-          "options": [
-            {
-              "selection": "Amanda Nunes",
-              "consensus_pct": 54.0,
-              "weight": 117.5,
-              "pick_count": 47,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally",
-              "sharp": {
-                "predictors": [
-                  6,
-                  7
-                ],
-                "favorites": [
-                  7,
-                  8
-                ],
-                "underdogs": [
-                  6,
-                  8
-                ]
-              }
-            },
-            {
-              "selection": "Kayla Harrison",
-              "consensus_pct": 46.0,
-              "weight": 100.0,
-              "pick_count": 40,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally",
-              "sharp": {
-                "favorites": [
-                  1,
-                  8
-                ]
-              }
-            }
-          ],
-          "source": "tally"
-        },
-        {
-          "bet_type": "method_of_victory",
-          "label": "Method of Victory",
-          "total_weight": 142.5,
-          "pick_count": 57,
-          "options": [
-            {
-              "selection": "Amanda Nunes by KO/TKO",
-              "consensus_pct": 38.6,
-              "weight": 55.0,
-              "pick_count": 22,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            },
-            {
-              "selection": "Kayla Harrison by Submission",
-              "consensus_pct": 26.3,
-              "weight": 37.5,
-              "pick_count": 15,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            },
-            {
-              "selection": "Amanda Nunes by Decision",
-              "consensus_pct": 19.3,
-              "weight": 27.5,
-              "pick_count": 11,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            },
-            {
-              "selection": "Kayla Harrison by Decision",
-              "consensus_pct": 10.5,
-              "weight": 15.0,
-              "pick_count": 6,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            },
-            {
-              "selection": "Kayla Harrison by KO/TKO",
-              "consensus_pct": 5.3,
-              "weight": 7.5,
-              "pick_count": 3,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            }
-          ],
-          "source": "tally"
-        }
-      ],
-      "source": "tally",
-      "card_order": 11,
-      "notes": [
-        "Women's bantamweight title, co-main — Nunes's comeback after three years out.",
-        "The widest odds-versus-sharps gap on the card and the host's third best bet: Nunes is a +150 underdog, the field is a near coin flip at 54%, but 6 of 7 best predictors and 7 of 8 best favorite-pickers are on her. Only one of the eight best favorite-pickers has the champion.",
-        "The host said the method panel split between a Nunes KO and a Nunes decision but gave no panel size, so no method-panel count is recorded."
-      ],
-      "tally_source": {
-        "file": "ufc-334-gane-vs-hokit.json",
-        "url": "",
-        "event_name": "UFC 334: Gane vs. Hokit"
-      },
-      "board_odds": {
-        "source": "tracker tally",
-        "video_id": "",
-        "a": {
-          "moneyline": "-180",
-          "submission": "+185",
-          "decision": "+300"
-        },
-        "b": {
-          "moneyline": "+150",
-          "ko_tko": "+305"
-        }
-      }
-    },
-    {
-      "fight_id": "dober|duncan",
-      "display": "Drew Dober vs Chris Duncan",
-      "fighter_a": "Drew Dober",
-      "fighter_b": "Chris Duncan",
-      "pick_count": 143,
-      "capper_count": 87,
-      "markets": [
-        {
-          "bet_type": "moneyline",
-          "label": "Moneyline",
-          "total_weight": 217.5,
-          "pick_count": 87,
-          "options": [
-            {
-              "selection": "Chris Duncan",
-              "consensus_pct": 62.1,
-              "weight": 135.0,
-              "pick_count": 54,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally",
-              "sharp": {
-                "predictors": [
-                  5,
-                  7
-                ],
-                "favorites": [
-                  6,
-                  8
-                ]
-              }
-            },
-            {
-              "selection": "Drew Dober",
-              "consensus_pct": 37.9,
-              "weight": 82.5,
-              "pick_count": 33,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally",
-              "sharp": {
-                "underdogs": [
-                  3,
-                  8
-                ]
-              }
-            }
-          ],
-          "source": "tally"
-        },
-        {
-          "bet_type": "method_of_victory",
-          "label": "Method of Victory",
-          "total_weight": 140.0,
-          "pick_count": 56,
-          "options": [
-            {
-              "selection": "Drew Dober by KO/TKO",
-              "consensus_pct": 37.5,
               "weight": 52.5,
               "pick_count": 21,
               "avg_confidence": 5.0,
@@ -532,122 +75,8 @@
               "cappers": [],
               "source": "tally",
               "sharp": {
-                "method": [
-                  2,
-                  3
-                ]
-              }
-            },
-            {
-              "selection": "Chris Duncan by Decision",
-              "consensus_pct": 30.4,
-              "weight": 42.5,
-              "pick_count": 17,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            },
-            {
-              "selection": "Chris Duncan by Submission",
-              "consensus_pct": 21.4,
-              "weight": 30.0,
-              "pick_count": 12,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            },
-            {
-              "selection": "Chris Duncan by KO/TKO",
-              "consensus_pct": 10.7,
-              "weight": 15.0,
-              "pick_count": 6,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            }
-          ],
-          "source": "tally"
-        }
-      ],
-      "source": "tally",
-      "card_order": 6,
-      "notes": [
-        "Lightweight. The field and the panels favour Duncan on the moneyline, but the single most-picked method is Dober by KO at +195 — and the best method predictors are there too."
-      ],
-      "tally_source": {
-        "file": "ufc-334-gane-vs-hokit.json",
-        "url": "",
-        "event_name": "UFC 334: Gane vs. Hokit"
-      },
-      "board_odds": {
-        "source": "tracker tally",
-        "video_id": "",
-        "a": {
-          "moneyline": "+140",
-          "ko_tko": "+195"
-        },
-        "b": {
-          "moneyline": "-170",
-          "ko_tko": "+290",
-          "submission": "+290",
-          "decision": "+405"
-        }
-      }
-    },
-    {
-      "fight_id": "gane|hokit",
-      "display": "Ciryl Gane vs Josh Hokit",
-      "fighter_a": "Ciryl Gane",
-      "fighter_b": "Josh Hokit",
-      "pick_count": 142,
-      "capper_count": 87,
-      "markets": [
-        {
-          "bet_type": "moneyline",
-          "label": "Moneyline",
-          "total_weight": 217.5,
-          "pick_count": 87,
-          "options": [
-            {
-              "selection": "Ciryl Gane",
-              "consensus_pct": 62.1,
-              "weight": 135.0,
-              "pick_count": 54,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally",
-              "sharp": {
-                "predictors": [
-                  5,
-                  7
-                ],
-                "favorites": [
-                  5,
-                  8
-                ]
-              }
-            },
-            {
-              "selection": "Josh Hokit",
-              "consensus_pct": 37.9,
-              "weight": 82.5,
-              "pick_count": 33,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally",
-              "sharp": {
                 "underdogs": [
-                  3,
+                  2,
                   8
                 ]
               }
@@ -662,7 +91,7 @@
           "pick_count": 55,
           "options": [
             {
-              "selection": "Ciryl Gane by KO/TKO",
+              "selection": "Dan Hooker by Decision",
               "consensus_pct": 52.7,
               "weight": 72.5,
               "pick_count": 29,
@@ -670,195 +99,50 @@
               "stated_pick_count": 0,
               "stated_avg_confidence": 0.0,
               "cappers": [],
-              "source": "tally"
-            },
-            {
-              "selection": "Josh Hokit by KO/TKO",
-              "consensus_pct": 23.6,
-              "weight": 32.5,
-              "pick_count": 13,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            },
-            {
-              "selection": "Ciryl Gane by Decision",
-              "consensus_pct": 12.7,
-              "weight": 17.5,
-              "pick_count": 7,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            },
-            {
-              "selection": "Josh Hokit by Submission",
-              "consensus_pct": 7.3,
-              "weight": 10.0,
-              "pick_count": 4,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            },
-            {
-              "selection": "Josh Hokit by Decision",
-              "consensus_pct": 3.6,
-              "weight": 5.0,
-              "pick_count": 2,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            }
-          ],
-          "source": "tally"
-        }
-      ],
-      "source": "tally",
-      "card_order": 12,
-      "notes": [
-        "Heavyweight title, main event. Hokit is 10-0 and unbeaten in four UFC fights inside eight months.",
-        "84% of the method votes have this ending inside the distance; Gane by KO pays +145 against his -190 moneyline.",
-        "The host said most best method predictors had Gane by KO but gave no panel size, so no method-panel count is recorded."
-      ],
-      "tally_source": {
-        "file": "ufc-334-gane-vs-hokit.json",
-        "url": "",
-        "event_name": "UFC 334: Gane vs. Hokit"
-      },
-      "board_odds": {
-        "source": "tracker tally",
-        "video_id": "",
-        "a": {
-          "moneyline": "-190",
-          "ko_tko": "+145"
-        },
-        "b": {
-          "moneyline": "+160"
-        }
-      }
-    },
-    {
-      "fight_id": "belgaroui|borralho",
-      "display": "Caio Borralho vs Yousri Belgaroui",
-      "fighter_a": "Caio Borralho",
-      "fighter_b": "Yousri Belgaroui",
-      "pick_count": 147,
-      "capper_count": 86,
-      "markets": [
-        {
-          "bet_type": "moneyline",
-          "label": "Moneyline",
-          "total_weight": 215.0,
-          "pick_count": 86,
-          "options": [
-            {
-              "selection": "Yousri Belgaroui",
-              "consensus_pct": 55.8,
-              "weight": 120.0,
-              "pick_count": 48,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
               "source": "tally",
               "sharp": {
-                "predictors": [
-                  4,
-                  7
-                ],
-                "underdogs": [
-                  5,
-                  8
-                ]
-              }
-            },
-            {
-              "selection": "Caio Borralho",
-              "consensus_pct": 44.2,
-              "weight": 95.0,
-              "pick_count": 38,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally",
-              "sharp": {
-                "favorites": [
+                "method": [
                   3,
-                  8
-                ]
-              }
-            }
-          ],
-          "source": "tally"
-        },
-        {
-          "bet_type": "method_of_victory",
-          "label": "Method of Victory",
-          "total_weight": 152.5,
-          "pick_count": 61,
-          "options": [
-            {
-              "selection": "Caio Borralho by Decision",
-              "consensus_pct": 45.9,
-              "weight": 70.0,
-              "pick_count": 28,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally",
-              "sharp": {
-                "method": [
-                  2,
                   4
                 ]
               }
             },
             {
-              "selection": "Yousri Belgaroui by Decision",
-              "consensus_pct": 36.1,
-              "weight": 55.0,
-              "pick_count": 22,
+              "selection": "Brian Ortega by Submission",
+              "consensus_pct": 25.5,
+              "weight": 35.0,
+              "pick_count": 14,
               "avg_confidence": 5.0,
               "stated_pick_count": 0,
               "stated_avg_confidence": 0.0,
               "cappers": [],
-              "source": "tally",
-              "sharp": {
-                "method": [
-                  1,
-                  4
-                ]
-              }
+              "source": "tally"
             },
             {
-              "selection": "Yousri Belgaroui by KO/TKO",
-              "consensus_pct": 16.4,
+              "selection": "Dan Hooker by KO/TKO",
+              "consensus_pct": 18.2,
               "weight": 25.0,
               "pick_count": 10,
               "avg_confidence": 5.0,
               "stated_pick_count": 0,
               "stated_avg_confidence": 0.0,
               "cappers": [],
-              "source": "tally",
-              "sharp": {
-                "method": [
-                  1,
-                  4
-                ]
-              }
+              "source": "tally"
             },
             {
-              "selection": "Caio Borralho by Submission",
-              "consensus_pct": 1.6,
+              "selection": "Dan Hooker by Submission",
+              "consensus_pct": 1.8,
+              "weight": 2.5,
+              "pick_count": 1,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            },
+            {
+              "selection": "Brian Ortega by Decision",
+              "consensus_pct": 1.8,
               "weight": 2.5,
               "pick_count": 1,
               "avg_confidence": 5.0,
@@ -872,46 +156,47 @@
         }
       ],
       "source": "tally",
-      "card_order": 10,
+      "card_order": 9,
       "notes": [
-        "Middleweight. Borralho is the favourite in odds and nowhere else: the field, the best predictors, the best favorite-pickers and the best underdog-pickers all lean Belgaroui."
+        "Lightweight. Every one of Ortega's 15 method votes bar one is a submission, and the oddsmakers rate a Hooker KO (+210) a shade behind his decision (+180) despite only 18% of the field picking it."
       ],
       "tally_source": {
-        "file": "ufc-334-gane-vs-hokit.json",
+        "file": "ufc-qatar-prochazka-vs-stirling.json",
         "url": "",
-        "event_name": "UFC 334: Gane vs. Hokit"
+        "event_name": "UFC Fight Night: Prochazka vs. Stirling"
       },
       "board_odds": {
         "source": "tracker tally",
         "video_id": "",
         "a": {
-          "moneyline": "-160",
-          "decision": "+130"
+          "moneyline": "-190",
+          "decision": "+180",
+          "ko_tko": "+210"
         },
         "b": {
-          "moneyline": "+135"
+          "moneyline": "+160"
         }
       }
     },
     {
-      "fight_id": "almeida|johnson",
-      "display": "Donte Johnson vs Cesar Almeida",
-      "fighter_a": "Donte Johnson",
-      "fighter_b": "Cesar Almeida",
-      "pick_count": 146,
-      "capper_count": 86,
+      "fight_id": "albazi|costa",
+      "display": "Amir Albazi vs Alessandro Costa",
+      "fighter_a": "Amir Albazi",
+      "fighter_b": "Alessandro Costa",
+      "pick_count": 135,
+      "capper_count": 81,
       "markets": [
         {
           "bet_type": "moneyline",
           "label": "Moneyline",
-          "total_weight": 215.0,
-          "pick_count": 86,
+          "total_weight": 202.5,
+          "pick_count": 81,
           "options": [
             {
-              "selection": "Donte Johnson",
-              "consensus_pct": 68.6,
-              "weight": 147.5,
-              "pick_count": 59,
+              "selection": "Alessandro Costa",
+              "consensus_pct": 58.0,
+              "weight": 117.5,
+              "pick_count": 47,
               "avg_confidence": 5.0,
               "stated_pick_count": 0,
               "stated_avg_confidence": 0.0,
@@ -919,26 +204,34 @@
               "source": "tally",
               "sharp": {
                 "predictors": [
-                  4,
-                  7
+                  3,
+                  6
                 ],
-                "favorites": [
-                  5,
+                "underdogs": [
+                  4,
                   8
                 ]
               }
             },
             {
-              "selection": "Cesar Almeida",
-              "consensus_pct": 31.4,
-              "weight": 67.5,
-              "pick_count": 27,
+              "selection": "Amir Albazi",
+              "consensus_pct": 42.0,
+              "weight": 85.0,
+              "pick_count": 34,
               "avg_confidence": 5.0,
               "stated_pick_count": 0,
               "stated_avg_confidence": 0.0,
               "cappers": [],
               "source": "tally",
               "sharp": {
+                "predictors": [
+                  3,
+                  6
+                ],
+                "favorites": [
+                  3,
+                  5
+                ],
                 "underdogs": [
                   4,
                   8
@@ -951,14 +244,14 @@
         {
           "bet_type": "method_of_victory",
           "label": "Method of Victory",
-          "total_weight": 150.0,
-          "pick_count": 60,
+          "total_weight": 135.0,
+          "pick_count": 54,
           "options": [
             {
-              "selection": "Donte Johnson by KO/TKO",
-              "consensus_pct": 53.3,
-              "weight": 80.0,
-              "pick_count": 32,
+              "selection": "Amir Albazi by Decision",
+              "consensus_pct": 37.0,
+              "weight": 50.0,
+              "pick_count": 20,
               "avg_confidence": 5.0,
               "stated_pick_count": 0,
               "stated_avg_confidence": 0.0,
@@ -967,26 +260,15 @@
               "sharp": {
                 "method": [
                   3,
-                  4
+                  5
                 ]
               }
             },
             {
-              "selection": "Donte Johnson by Decision",
-              "consensus_pct": 15.0,
-              "weight": 22.5,
-              "pick_count": 9,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            },
-            {
-              "selection": "Cesar Almeida by KO/TKO",
-              "consensus_pct": 15.0,
-              "weight": 22.5,
-              "pick_count": 9,
+              "selection": "Alessandro Costa by Decision",
+              "consensus_pct": 35.2,
+              "weight": 47.5,
+              "pick_count": 19,
               "avg_confidence": 5.0,
               "stated_pick_count": 0,
               "stated_avg_confidence": 0.0,
@@ -994,16 +276,16 @@
               "source": "tally",
               "sharp": {
                 "method": [
-                  1,
-                  4
+                  2,
+                  5
                 ]
               }
             },
             {
-              "selection": "Cesar Almeida by Decision",
-              "consensus_pct": 13.3,
-              "weight": 20.0,
-              "pick_count": 8,
+              "selection": "Alessandro Costa by KO/TKO",
+              "consensus_pct": 18.5,
+              "weight": 25.0,
+              "pick_count": 10,
               "avg_confidence": 5.0,
               "stated_pick_count": 0,
               "stated_avg_confidence": 0.0,
@@ -1011,8 +293,19 @@
               "source": "tally"
             },
             {
-              "selection": "Donte Johnson by Submission",
-              "consensus_pct": 3.3,
+              "selection": "Alessandro Costa by Submission",
+              "consensus_pct": 5.6,
+              "weight": 7.5,
+              "pick_count": 3,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            },
+            {
+              "selection": "Amir Albazi by KO/TKO",
+              "consensus_pct": 3.7,
               "weight": 5.0,
               "pick_count": 2,
               "avg_confidence": 5.0,
@@ -1028,45 +321,46 @@
       "source": "tally",
       "card_order": 4,
       "notes": [
-        "Middleweight. Every best method predictor has this ending by KO — they only disagree on who, and so do the oddsmakers."
+        "Flyweight rematch — Albazi won the first by KO four years ago — and the closest fight on the card at -115/-105.",
+        "Close everywhere: 58% Costa in the field, the best predictors 3-3, the best underdog-pickers 4-4, and every best method predictor expecting a decision either way.",
+        "FLAG — the host gave the method split without stating its total, so the usual reconciliation check could not run; 54 is the sum of the counts he read out.",
+        "He called an Albazi decision the oddsmakers' likeliest outcome but gave no price, so no method price is recorded."
       ],
       "tally_source": {
-        "file": "ufc-334-gane-vs-hokit.json",
+        "file": "ufc-qatar-prochazka-vs-stirling.json",
         "url": "",
-        "event_name": "UFC 334: Gane vs. Hokit"
+        "event_name": "UFC Fight Night: Prochazka vs. Stirling"
       },
       "board_odds": {
         "source": "tracker tally",
         "video_id": "",
         "a": {
-          "moneyline": "-165",
-          "ko_tko": "+150"
+          "moneyline": "-115"
         },
         "b": {
-          "moneyline": "+140",
-          "ko_tko": "+225"
+          "moneyline": "-105"
         }
       }
     },
     {
-      "fight_id": "costa|gordon",
-      "display": "Jared Gordon vs Melquizael Costa",
-      "fighter_a": "Jared Gordon",
-      "fighter_b": "Melquizael Costa",
-      "pick_count": 145,
-      "capper_count": 86,
+      "fight_id": "prochazka|stirling",
+      "display": "Jiri Prochazka vs Navajo Stirling",
+      "fighter_a": "Jiri Prochazka",
+      "fighter_b": "Navajo Stirling",
+      "pick_count": 135,
+      "capper_count": 81,
       "markets": [
         {
           "bet_type": "moneyline",
           "label": "Moneyline",
-          "total_weight": 215.0,
-          "pick_count": 86,
+          "total_weight": 202.5,
+          "pick_count": 81,
           "options": [
             {
-              "selection": "Melquizael Costa",
-              "consensus_pct": 98.8,
-              "weight": 212.5,
-              "pick_count": 85,
+              "selection": "Navajo Stirling",
+              "consensus_pct": 64.2,
+              "weight": 130.0,
+              "pick_count": 52,
               "avg_confidence": 5.0,
               "stated_pick_count": 0,
               "stated_avg_confidence": 0.0,
@@ -1074,159 +368,31 @@
               "source": "tally",
               "sharp": {
                 "predictors": [
-                  7,
-                  7
+                  4,
+                  6
                 ],
                 "favorites": [
-                  8,
-                  8
-                ],
-                "underdogs": [
-                  8,
-                  8
+                  4,
+                  5
                 ]
               }
             },
             {
-              "selection": "Jared Gordon",
-              "consensus_pct": 1.2,
-              "weight": 2.5,
-              "pick_count": 1,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            }
-          ],
-          "source": "tally"
-        },
-        {
-          "bet_type": "method_of_victory",
-          "label": "Method of Victory",
-          "total_weight": 147.5,
-          "pick_count": 59,
-          "options": [
-            {
-              "selection": "Melquizael Costa by KO/TKO",
-              "consensus_pct": 72.9,
-              "weight": 107.5,
-              "pick_count": 43,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            },
-            {
-              "selection": "Melquizael Costa by Decision",
-              "consensus_pct": 13.6,
-              "weight": 20.0,
-              "pick_count": 8,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            },
-            {
-              "selection": "Melquizael Costa by Submission",
-              "consensus_pct": 11.9,
-              "weight": 17.5,
-              "pick_count": 7,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            },
-            {
-              "selection": "Jared Gordon by Decision",
-              "consensus_pct": 1.7,
-              "weight": 2.5,
-              "pick_count": 1,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            }
-          ],
-          "source": "tally"
-        }
-      ],
-      "source": "tally",
-      "card_order": 3,
-      "notes": [
-        "Lightweight. Every panel is unanimous on Costa and 85 of 86 channels agree.",
-        "The host said the best method predictors split one for the KO and one for a decision but never gave the panel's size, so no method-panel count is recorded."
-      ],
-      "tally_source": {
-        "file": "ufc-334-gane-vs-hokit.json",
-        "url": "",
-        "event_name": "UFC 334: Gane vs. Hokit"
-      },
-      "board_odds": {
-        "source": "tracker tally",
-        "video_id": "",
-        "a": {
-          "moneyline": "+295"
-        },
-        "b": {
-          "moneyline": "-375",
-          "ko_tko": "+150"
-        }
-      }
-    },
-    {
-      "fight_id": "mckinney|miller",
-      "display": "Jim Miller vs Terrance McKinney",
-      "fighter_a": "Jim Miller",
-      "fighter_b": "Terrance McKinney",
-      "pick_count": 145,
-      "capper_count": 86,
-      "markets": [
-        {
-          "bet_type": "moneyline",
-          "label": "Moneyline",
-          "total_weight": 215.0,
-          "pick_count": 86,
-          "options": [
-            {
-              "selection": "Terrance McKinney",
-              "consensus_pct": 77.9,
-              "weight": 167.5,
-              "pick_count": 67,
+              "selection": "Jiri Prochazka",
+              "consensus_pct": 35.8,
+              "weight": 72.5,
+              "pick_count": 29,
               "avg_confidence": 5.0,
               "stated_pick_count": 0,
               "stated_avg_confidence": 0.0,
               "cappers": [],
               "source": "tally",
               "sharp": {
-                "predictors": [
-                  7,
-                  7
-                ],
-                "favorites": [
-                  8,
-                  8
-                ],
                 "underdogs": [
-                  8,
+                  3,
                   8
                 ]
               }
-            },
-            {
-              "selection": "Jim Miller",
-              "consensus_pct": 22.1,
-              "weight": 47.5,
-              "pick_count": 19,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
             }
           ],
           "source": "tally"
@@ -1234,14 +400,14 @@
         {
           "bet_type": "method_of_victory",
           "label": "Method of Victory",
-          "total_weight": 147.5,
-          "pick_count": 59,
+          "total_weight": 135.0,
+          "pick_count": 54,
           "options": [
             {
-              "selection": "Terrance McKinney by KO/TKO",
-              "consensus_pct": 76.3,
-              "weight": 112.5,
-              "pick_count": 45,
+              "selection": "Navajo Stirling by KO/TKO",
+              "consensus_pct": 61.1,
+              "weight": 82.5,
+              "pick_count": 33,
               "avg_confidence": 5.0,
               "stated_pick_count": 0,
               "stated_avg_confidence": 0.0,
@@ -1250,15 +416,171 @@
               "sharp": {
                 "method": [
                   2,
-                  3
+                  5
                 ]
               }
             },
             {
-              "selection": "Jim Miller by Submission",
-              "consensus_pct": 23.7,
-              "weight": 35.0,
-              "pick_count": 14,
+              "selection": "Jiri Prochazka by KO/TKO",
+              "consensus_pct": 35.2,
+              "weight": 47.5,
+              "pick_count": 19,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally",
+              "sharp": {
+                "method": [
+                  2,
+                  5
+                ]
+              }
+            },
+            {
+              "selection": "Navajo Stirling by Decision",
+              "consensus_pct": 3.7,
+              "weight": 5.0,
+              "pick_count": 2,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally",
+              "sharp": {
+                "method": [
+                  1,
+                  5
+                ]
+              }
+            }
+          ],
+          "source": "tally"
+        }
+      ],
+      "source": "tally",
+      "card_order": 11,
+      "notes": [
+        "Light heavyweight main event, five rounds. Stirling is 11-0 and 6-0 in the UFC.",
+        "96% of the method votes have this ending by KO and not one channel picked a submission; the best method predictors split 2-2 on who lands it."
+      ],
+      "tally_source": {
+        "file": "ufc-qatar-prochazka-vs-stirling.json",
+        "url": "",
+        "event_name": "UFC Fight Night: Prochazka vs. Stirling"
+      },
+      "board_odds": {
+        "source": "tracker tally",
+        "video_id": "",
+        "a": {
+          "moneyline": "+140",
+          "ko_tko": "+185"
+        },
+        "b": {
+          "moneyline": "-165",
+          "ko_tko": "-111"
+        }
+      }
+    },
+    {
+      "fight_id": "gaziev|teixeira",
+      "display": "Shamil Gaziev vs Tallison Teixeira",
+      "fighter_a": "Shamil Gaziev",
+      "fighter_b": "Tallison Teixeira",
+      "pick_count": 135,
+      "capper_count": 80,
+      "markets": [
+        {
+          "bet_type": "moneyline",
+          "label": "Moneyline",
+          "total_weight": 200.0,
+          "pick_count": 80,
+          "options": [
+            {
+              "selection": "Shamil Gaziev",
+              "consensus_pct": 88.8,
+              "weight": 177.5,
+              "pick_count": 71,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally",
+              "sharp": {
+                "predictors": [
+                  6,
+                  6
+                ],
+                "favorites": [
+                  5,
+                  5
+                ]
+              }
+            },
+            {
+              "selection": "Tallison Teixeira",
+              "consensus_pct": 11.2,
+              "weight": 22.5,
+              "pick_count": 9,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally",
+              "sharp": {
+                "underdogs": [
+                  0,
+                  8
+                ]
+              }
+            }
+          ],
+          "source": "tally"
+        },
+        {
+          "bet_type": "method_of_victory",
+          "label": "Method of Victory",
+          "total_weight": 137.5,
+          "pick_count": 55,
+          "options": [
+            {
+              "selection": "Shamil Gaziev by KO/TKO",
+              "consensus_pct": 85.5,
+              "weight": 117.5,
+              "pick_count": 47,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            },
+            {
+              "selection": "Tallison Teixeira by KO/TKO",
+              "consensus_pct": 10.9,
+              "weight": 15.0,
+              "pick_count": 6,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            },
+            {
+              "selection": "Shamil Gaziev by Submission",
+              "consensus_pct": 1.8,
+              "weight": 2.5,
+              "pick_count": 1,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            },
+            {
+              "selection": "Shamil Gaziev by Decision",
+              "consensus_pct": 1.8,
+              "weight": 2.5,
+              "pick_count": 1,
               "avg_confidence": 5.0,
               "stated_pick_count": 0,
               "stated_avg_confidence": 0.0,
@@ -1272,46 +594,45 @@
       "source": "tally",
       "card_order": 5,
       "notes": [
-        "Lightweight; Miller's 48th UFC fight.",
-        "The most one-sided method read on the card: not one of the 59 channels has this going to the scorecards. Every channel on McKinney has the KO, every channel on Miller has the submission.",
-        "The host's second best bet: all three panels are 100% on McKinney, and his KO pays +140 against a -200 moneyline."
+        "Heavyweight. 96% of the method votes are a KO either way, and not one of the 8 best underdog-pickers is on Teixeira.",
+        "The host's second best bet: every panel 100% on Gaziev and the KO at -140 against a -195 moneyline. He said the method predictors were unanimous on it too but gave no panel size, so no method-panel count is recorded."
       ],
       "tally_source": {
-        "file": "ufc-334-gane-vs-hokit.json",
+        "file": "ufc-qatar-prochazka-vs-stirling.json",
         "url": "",
-        "event_name": "UFC 334: Gane vs. Hokit"
+        "event_name": "UFC Fight Night: Prochazka vs. Stirling"
       },
       "board_odds": {
         "source": "tracker tally",
         "video_id": "",
         "a": {
-          "moneyline": "+170"
+          "moneyline": "-195",
+          "ko_tko": "-140"
         },
         "b": {
-          "moneyline": "-200",
-          "ko_tko": "+140"
+          "moneyline": "+165"
         }
       }
     },
     {
-      "fight_id": "chiasson|mesquita",
-      "display": "Macy Chiasson vs Bia Mesquita",
-      "fighter_a": "Macy Chiasson",
-      "fighter_b": "Bia Mesquita",
-      "pick_count": 146,
-      "capper_count": 85,
+      "fight_id": "luna|topuria",
+      "display": "Aleksandre Topuria vs Santiago Luna",
+      "fighter_a": "Aleksandre Topuria",
+      "fighter_b": "Santiago Luna",
+      "pick_count": 135,
+      "capper_count": 80,
       "markets": [
         {
           "bet_type": "moneyline",
           "label": "Moneyline",
-          "total_weight": 212.5,
-          "pick_count": 85,
+          "total_weight": 200.0,
+          "pick_count": 80,
           "options": [
             {
-              "selection": "Bia Mesquita",
-              "consensus_pct": 96.5,
-              "weight": 205.0,
-              "pick_count": 82,
+              "selection": "Aleksandre Topuria",
+              "consensus_pct": 90.0,
+              "weight": 180.0,
+              "pick_count": 72,
               "avg_confidence": 5.0,
               "stated_pick_count": 0,
               "stated_avg_confidence": 0.0,
@@ -1319,20 +640,157 @@
               "source": "tally",
               "sharp": {
                 "predictors": [
-                  6,
-                  7
+                  5,
+                  6
                 ],
                 "favorites": [
-                  7,
-                  8
+                  5,
+                  5
                 ]
               }
             },
             {
-              "selection": "Macy Chiasson",
-              "consensus_pct": 3.5,
-              "weight": 7.5,
-              "pick_count": 3,
+              "selection": "Santiago Luna",
+              "consensus_pct": 10.0,
+              "weight": 20.0,
+              "pick_count": 8,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally",
+              "sharp": {
+                "underdogs": [
+                  2,
+                  8
+                ]
+              }
+            }
+          ],
+          "source": "tally"
+        },
+        {
+          "bet_type": "method_of_victory",
+          "label": "Method of Victory",
+          "total_weight": 137.5,
+          "pick_count": 55,
+          "options": [
+            {
+              "selection": "Aleksandre Topuria by Decision",
+              "consensus_pct": 65.5,
+              "weight": 90.0,
+              "pick_count": 36,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally",
+              "sharp": {
+                "method": [
+                  4,
+                  5
+                ]
+              }
+            },
+            {
+              "selection": "Aleksandre Topuria by KO/TKO",
+              "consensus_pct": 25.5,
+              "weight": 35.0,
+              "pick_count": 14,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            },
+            {
+              "selection": "Aleksandre Topuria by Submission",
+              "consensus_pct": 7.3,
+              "weight": 10.0,
+              "pick_count": 4,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            },
+            {
+              "selection": "Santiago Luna by KO/TKO",
+              "consensus_pct": 1.8,
+              "weight": 2.5,
+              "pick_count": 1,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            }
+          ],
+          "source": "tally"
+        }
+      ],
+      "source": "tally",
+      "card_order": 6,
+      "notes": [
+        "Bantamweight prelim headliner."
+      ],
+      "tally_source": {
+        "file": "ufc-qatar-prochazka-vs-stirling.json",
+        "url": "",
+        "event_name": "UFC Fight Night: Prochazka vs. Stirling"
+      },
+      "board_odds": {
+        "source": "tracker tally",
+        "video_id": "",
+        "a": {
+          "moneyline": "-285",
+          "decision": "+125"
+        },
+        "b": {
+          "moneyline": "+230"
+        }
+      }
+    },
+    {
+      "fight_id": "aliskerov|cannonier",
+      "display": "Jared Cannonier vs Ikram Aliskerov",
+      "fighter_a": "Jared Cannonier",
+      "fighter_b": "Ikram Aliskerov",
+      "pick_count": 134,
+      "capper_count": 80,
+      "markets": [
+        {
+          "bet_type": "moneyline",
+          "label": "Moneyline",
+          "total_weight": 200.0,
+          "pick_count": 80,
+          "options": [
+            {
+              "selection": "Ikram Aliskerov",
+              "consensus_pct": 80.0,
+              "weight": 160.0,
+              "pick_count": 64,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally",
+              "sharp": {
+                "predictors": [
+                  5,
+                  6
+                ],
+                "favorites": [
+                  4,
+                  5
+                ]
+              }
+            },
+            {
+              "selection": "Jared Cannonier",
+              "consensus_pct": 20.0,
+              "weight": 40.0,
+              "pick_count": 16,
               "avg_confidence": 5.0,
               "stated_pick_count": 0,
               "stated_avg_confidence": 0.0,
@@ -1351,14 +809,14 @@
         {
           "bet_type": "method_of_victory",
           "label": "Method of Victory",
-          "total_weight": 152.5,
-          "pick_count": 61,
+          "total_weight": 135.0,
+          "pick_count": 54,
           "options": [
             {
-              "selection": "Bia Mesquita by Submission",
-              "consensus_pct": 88.5,
-              "weight": 135.0,
-              "pick_count": 54,
+              "selection": "Ikram Aliskerov by Decision",
+              "consensus_pct": 61.1,
+              "weight": 82.5,
+              "pick_count": 33,
               "avg_confidence": 5.0,
               "stated_pick_count": 0,
               "stated_avg_confidence": 0.0,
@@ -1366,16 +824,16 @@
               "source": "tally",
               "sharp": {
                 "method": [
-                  3,
-                  4
+                  4,
+                  5
                 ]
               }
             },
             {
-              "selection": "Bia Mesquita by Decision",
-              "consensus_pct": 8.2,
-              "weight": 12.5,
-              "pick_count": 5,
+              "selection": "Ikram Aliskerov by KO/TKO",
+              "consensus_pct": 20.4,
+              "weight": 27.5,
+              "pick_count": 11,
               "avg_confidence": 5.0,
               "stated_pick_count": 0,
               "stated_avg_confidence": 0.0,
@@ -1383,8 +841,19 @@
               "source": "tally"
             },
             {
-              "selection": "Macy Chiasson by KO/TKO",
-              "consensus_pct": 1.6,
+              "selection": "Jared Cannonier by KO/TKO",
+              "consensus_pct": 14.8,
+              "weight": 20.0,
+              "pick_count": 8,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            },
+            {
+              "selection": "Jared Cannonier by Decision",
+              "consensus_pct": 1.9,
               "weight": 2.5,
               "pick_count": 1,
               "avg_confidence": 5.0,
@@ -1394,8 +863,8 @@
               "source": "tally"
             },
             {
-              "selection": "Macy Chiasson by Submission",
-              "consensus_pct": 1.6,
+              "selection": "Ikram Aliskerov by Submission",
+              "consensus_pct": 1.9,
               "weight": 2.5,
               "pick_count": 1,
               "avg_confidence": 5.0,
@@ -1409,46 +878,47 @@
         }
       ],
       "source": "tally",
-      "card_order": 2,
+      "card_order": 7,
       "notes": [
-        "Women's bantamweight. Mesquita has won all three UFC fights by submission, and 89% of the method votes have her doing it again at -116."
+        "Middleweight; opens the main card. Aliskerov is the biggest favorite on the card at -295."
       ],
       "tally_source": {
-        "file": "ufc-334-gane-vs-hokit.json",
+        "file": "ufc-qatar-prochazka-vs-stirling.json",
         "url": "",
-        "event_name": "UFC 334: Gane vs. Hokit"
+        "event_name": "UFC Fight Night: Prochazka vs. Stirling"
       },
       "board_odds": {
         "source": "tracker tally",
         "video_id": "",
         "a": {
-          "moneyline": "+215"
+          "moneyline": "+240"
         },
         "b": {
-          "moneyline": "-265",
-          "submission": "-116"
+          "moneyline": "-295",
+          "decision": "+175",
+          "ko_tko": "+195"
         }
       }
     },
     {
-      "fight_id": "gurule|hasan",
-      "display": "Bilal Hasan vs Luis Gurule",
-      "fighter_a": "Bilal Hasan",
-      "fighter_b": "Luis Gurule",
-      "pick_count": 149,
-      "capper_count": 84,
+      "fight_id": "almabayev|horiguchi",
+      "display": "Kyoji Horiguchi vs Asu Almabayev",
+      "fighter_a": "Kyoji Horiguchi",
+      "fighter_b": "Asu Almabayev",
+      "pick_count": 134,
+      "capper_count": 80,
       "markets": [
         {
           "bet_type": "moneyline",
           "label": "Moneyline",
-          "total_weight": 210.0,
-          "pick_count": 84,
+          "total_weight": 200.0,
+          "pick_count": 80,
           "options": [
             {
-              "selection": "Bilal Hasan",
-              "consensus_pct": 100.0,
-              "weight": 210.0,
-              "pick_count": 84,
+              "selection": "Kyoji Horiguchi",
+              "consensus_pct": 92.5,
+              "weight": 185.0,
+              "pick_count": 74,
               "avg_confidence": 5.0,
               "stated_pick_count": 0,
               "stated_avg_confidence": 0.0,
@@ -1456,15 +926,28 @@
               "source": "tally",
               "sharp": {
                 "predictors": [
-                  7,
-                  7
+                  5,
+                  6
                 ],
                 "favorites": [
-                  8,
-                  8
-                ],
+                  4,
+                  5
+                ]
+              }
+            },
+            {
+              "selection": "Asu Almabayev",
+              "consensus_pct": 7.5,
+              "weight": 15.0,
+              "pick_count": 6,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally",
+              "sharp": {
                 "underdogs": [
-                  8,
+                  1,
                   8
                 ]
               }
@@ -1475,14 +958,31 @@
         {
           "bet_type": "method_of_victory",
           "label": "Method of Victory",
-          "total_weight": 162.5,
-          "pick_count": 65,
+          "total_weight": 135.0,
+          "pick_count": 54,
           "options": [
             {
-              "selection": "Bilal Hasan by KO/TKO",
-              "consensus_pct": 98.5,
-              "weight": 160.0,
-              "pick_count": 64,
+              "selection": "Kyoji Horiguchi by Decision",
+              "consensus_pct": 70.4,
+              "weight": 95.0,
+              "pick_count": 38,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally",
+              "sharp": {
+                "method": [
+                  4,
+                  5
+                ]
+              }
+            },
+            {
+              "selection": "Kyoji Horiguchi by KO/TKO",
+              "consensus_pct": 16.7,
+              "weight": 22.5,
+              "pick_count": 9,
               "avg_confidence": 5.0,
               "stated_pick_count": 0,
               "stated_avg_confidence": 0.0,
@@ -1490,8 +990,19 @@
               "source": "tally"
             },
             {
-              "selection": "Bilal Hasan by Decision",
-              "consensus_pct": 1.5,
+              "selection": "Asu Almabayev by Decision",
+              "consensus_pct": 11.1,
+              "weight": 15.0,
+              "pick_count": 6,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            },
+            {
+              "selection": "Kyoji Horiguchi by Submission",
+              "consensus_pct": 1.9,
               "weight": 2.5,
               "pick_count": 1,
               "avg_confidence": 5.0,
@@ -1507,46 +1018,44 @@
       "source": "tally",
       "card_order": 8,
       "notes": [
-        "Flyweight; opens the main card. The biggest favourite and the biggest underdog on the card, and the most lopsided fight the engine has recorded: all 84 channels and every panel on Hasan, and 64 of 65 method votes his KO.",
-        "The host read that KO share as 89.5%; the two counts he gave make it 98.5%. The counts are used.",
-        "He said every best method predictor had the KO but gave no panel size, so no method-panel count is recorded."
+        "Flyweight. The host's third best bet: Horiguchi takes 92.5% of the field and his decision pays +110 against a -195 moneyline."
       ],
       "tally_source": {
-        "file": "ufc-334-gane-vs-hokit.json",
+        "file": "ufc-qatar-prochazka-vs-stirling.json",
         "url": "",
-        "event_name": "UFC 334: Gane vs. Hokit"
+        "event_name": "UFC Fight Night: Prochazka vs. Stirling"
       },
       "board_odds": {
         "source": "tracker tally",
         "video_id": "",
         "a": {
-          "moneyline": "-1000",
-          "ko_tko": "-345"
+          "moneyline": "-195",
+          "decision": "+110"
         },
         "b": {
-          "moneyline": "+675"
+          "moneyline": "+165"
         }
       }
     },
     {
-      "fight_id": "elder|sanches",
-      "display": "Evan Elder vs Samuel Sanches",
-      "fighter_a": "Evan Elder",
-      "fighter_b": "Samuel Sanches",
-      "pick_count": 138,
-      "capper_count": 84,
+      "fight_id": "abdullayev|matthews",
+      "display": "Jake Matthews vs Tahir Abdullayev",
+      "fighter_a": "Jake Matthews",
+      "fighter_b": "Tahir Abdullayev",
+      "pick_count": 133,
+      "capper_count": 80,
       "markets": [
         {
           "bet_type": "moneyline",
           "label": "Moneyline",
-          "total_weight": 210.0,
-          "pick_count": 84,
+          "total_weight": 200.0,
+          "pick_count": 80,
           "options": [
             {
-              "selection": "Evan Elder",
-              "consensus_pct": 67.9,
-              "weight": 142.5,
-              "pick_count": 57,
+              "selection": "Jake Matthews",
+              "consensus_pct": 95.0,
+              "weight": 190.0,
+              "pick_count": 76,
               "avg_confidence": 5.0,
               "stated_pick_count": 0,
               "stated_avg_confidence": 0.0,
@@ -1554,24 +1063,172 @@
               "source": "tally",
               "sharp": {
                 "predictors": [
-                  6,
-                  7
+                  5,
+                  6
                 ],
                 "favorites": [
-                  7,
+                  4,
+                  5
+                ]
+              }
+            },
+            {
+              "selection": "Tahir Abdullayev",
+              "consensus_pct": 5.0,
+              "weight": 10.0,
+              "pick_count": 4,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally",
+              "sharp": {
+                "underdogs": [
+                  2,
                   8
+                ]
+              }
+            }
+          ],
+          "source": "tally"
+        },
+        {
+          "bet_type": "method_of_victory",
+          "label": "Method of Victory",
+          "total_weight": 132.5,
+          "pick_count": 53,
+          "options": [
+            {
+              "selection": "Jake Matthews by Decision",
+              "consensus_pct": 79.2,
+              "weight": 105.0,
+              "pick_count": 42,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally",
+              "sharp": {
+                "method": [
+                  4,
+                  4
+                ]
+              }
+            },
+            {
+              "selection": "Jake Matthews by Submission",
+              "consensus_pct": 11.3,
+              "weight": 15.0,
+              "pick_count": 6,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            },
+            {
+              "selection": "Jake Matthews by KO/TKO",
+              "consensus_pct": 5.7,
+              "weight": 7.5,
+              "pick_count": 3,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            },
+            {
+              "selection": "Tahir Abdullayev by Submission",
+              "consensus_pct": 1.9,
+              "weight": 2.5,
+              "pick_count": 1,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            },
+            {
+              "selection": "Tahir Abdullayev by Decision",
+              "consensus_pct": 1.9,
+              "weight": 2.5,
+              "pick_count": 1,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            }
+          ],
+          "source": "tally"
+        }
+      ],
+      "source": "tally",
+      "card_order": 3,
+      "notes": [
+        "Welterweight. 79% of the method votes and all four best method predictors have Matthews by decision at +140. Abdullayev missed weight by a pound."
+      ],
+      "tally_source": {
+        "file": "ufc-qatar-prochazka-vs-stirling.json",
+        "url": "",
+        "event_name": "UFC Fight Night: Prochazka vs. Stirling"
+      },
+      "board_odds": {
+        "source": "tracker tally",
+        "video_id": "",
+        "a": {
+          "moneyline": "-260",
+          "decision": "+140"
+        },
+        "b": {
+          "moneyline": "+210"
+        }
+      }
+    },
+    {
+      "fight_id": "fan|motta",
+      "display": "Nikolas Motta vs Dom Mar Fan",
+      "fighter_a": "Nikolas Motta",
+      "fighter_b": "Dom Mar Fan",
+      "pick_count": 133,
+      "capper_count": 79,
+      "markets": [
+        {
+          "bet_type": "moneyline",
+          "label": "Moneyline",
+          "total_weight": 197.5,
+          "pick_count": 79,
+          "options": [
+            {
+              "selection": "Nikolas Motta",
+              "consensus_pct": 60.8,
+              "weight": 120.0,
+              "pick_count": 48,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally",
+              "sharp": {
+                "predictors": [
+                  4,
+                  6
+                ],
+                "favorites": [
+                  4,
+                  5
                 ],
                 "underdogs": [
-                  7,
+                  6,
                   8
                 ]
               }
             },
             {
-              "selection": "Samuel Sanches",
-              "consensus_pct": 32.1,
-              "weight": 67.5,
-              "pick_count": 27,
+              "selection": "Dom Mar Fan",
+              "consensus_pct": 39.2,
+              "weight": 77.5,
+              "pick_count": 31,
               "avg_confidence": 5.0,
               "stated_pick_count": 0,
               "stated_avg_confidence": 0.0,
@@ -1588,10 +1245,21 @@
           "pick_count": 54,
           "options": [
             {
-              "selection": "Evan Elder by Decision",
-              "consensus_pct": 50.0,
-              "weight": 67.5,
-              "pick_count": 27,
+              "selection": "Nikolas Motta by KO/TKO",
+              "consensus_pct": 42.6,
+              "weight": 57.5,
+              "pick_count": 23,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            },
+            {
+              "selection": "Dom Mar Fan by Decision",
+              "consensus_pct": 35.2,
+              "weight": 47.5,
+              "pick_count": 19,
               "avg_confidence": 5.0,
               "stated_pick_count": 0,
               "stated_avg_confidence": 0.0,
@@ -1599,16 +1267,16 @@
               "source": "tally",
               "sharp": {
                 "method": [
-                  2,
-                  3
+                  3,
+                  5
                 ]
               }
             },
             {
-              "selection": "Samuel Sanches by KO/TKO",
-              "consensus_pct": 25.9,
-              "weight": 35.0,
-              "pick_count": 14,
+              "selection": "Nikolas Motta by Decision",
+              "consensus_pct": 13.0,
+              "weight": 17.5,
+              "pick_count": 7,
               "avg_confidence": 5.0,
               "stated_pick_count": 0,
               "stated_avg_confidence": 0.0,
@@ -1616,30 +1284,157 @@
               "source": "tally"
             },
             {
-              "selection": "Evan Elder by Submission",
-              "consensus_pct": 11.1,
-              "weight": 15.0,
-              "pick_count": 6,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            },
-            {
-              "selection": "Samuel Sanches by Decision",
-              "consensus_pct": 7.4,
-              "weight": 10.0,
-              "pick_count": 4,
-              "avg_confidence": 5.0,
-              "stated_pick_count": 0,
-              "stated_avg_confidence": 0.0,
-              "cappers": [],
-              "source": "tally"
-            },
-            {
-              "selection": "Evan Elder by KO/TKO",
+              "selection": "Dom Mar Fan by KO/TKO",
               "consensus_pct": 5.6,
+              "weight": 7.5,
+              "pick_count": 3,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            },
+            {
+              "selection": "Dom Mar Fan by Submission",
+              "consensus_pct": 3.7,
+              "weight": 5.0,
+              "pick_count": 2,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            }
+          ],
+          "source": "tally"
+        }
+      ],
+      "source": "tally",
+      "card_order": 2,
+      "notes": [
+        "Lightweight. The field and all three sharp panels are on the +135 underdog Motta, but 4 of 5 best method predictors have Mar Fan winning — the sharpest internal disagreement on the card."
+      ],
+      "tally_source": {
+        "file": "ufc-qatar-prochazka-vs-stirling.json",
+        "url": "",
+        "event_name": "UFC Fight Night: Prochazka vs. Stirling"
+      },
+      "board_odds": {
+        "source": "tracker tally",
+        "video_id": "",
+        "a": {
+          "moneyline": "+135",
+          "ko_tko": "+255"
+        },
+        "b": {
+          "moneyline": "-165",
+          "decision": "+235"
+        }
+      }
+    },
+    {
+      "fight_id": "sterling|vallejos",
+      "display": "Aljamain Sterling vs Kevin Vallejos",
+      "fighter_a": "Aljamain Sterling",
+      "fighter_b": "Kevin Vallejos",
+      "pick_count": 131,
+      "capper_count": 79,
+      "markets": [
+        {
+          "bet_type": "moneyline",
+          "label": "Moneyline",
+          "total_weight": 197.5,
+          "pick_count": 79,
+          "options": [
+            {
+              "selection": "Aljamain Sterling",
+              "consensus_pct": 57.0,
+              "weight": 112.5,
+              "pick_count": 45,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally",
+              "sharp": {
+                "predictors": [
+                  4,
+                  6
+                ],
+                "underdogs": [
+                  5,
+                  8
+                ]
+              }
+            },
+            {
+              "selection": "Kevin Vallejos",
+              "consensus_pct": 43.0,
+              "weight": 85.0,
+              "pick_count": 34,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally",
+              "sharp": {
+                "favorites": [
+                  2,
+                  5
+                ]
+              }
+            }
+          ],
+          "source": "tally"
+        },
+        {
+          "bet_type": "method_of_victory",
+          "label": "Method of Victory",
+          "total_weight": 130.0,
+          "pick_count": 52,
+          "options": [
+            {
+              "selection": "Aljamain Sterling by Decision",
+              "consensus_pct": 50.0,
+              "weight": 65.0,
+              "pick_count": 26,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally",
+              "sharp": {
+                "method": [
+                  3,
+                  4
+                ]
+              }
+            },
+            {
+              "selection": "Kevin Vallejos by KO/TKO",
+              "consensus_pct": 28.8,
+              "weight": 37.5,
+              "pick_count": 15,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            },
+            {
+              "selection": "Kevin Vallejos by Decision",
+              "consensus_pct": 15.4,
+              "weight": 20.0,
+              "pick_count": 8,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            },
+            {
+              "selection": "Aljamain Sterling by Submission",
+              "consensus_pct": 5.8,
               "weight": 7.5,
               "pick_count": 3,
               "avg_confidence": 5.0,
@@ -1653,47 +1448,47 @@
         }
       ],
       "source": "tally",
-      "card_order": 0,
+      "card_order": 10,
       "notes": [
-        "Lightweight, and the closest fight on the card in odds. The host's first best bet: Elder is the +100 underdog but takes 68% of the field and every sharp panel, and his decision pays +250."
+        "Featherweight co-main. Sterling is the +110 underdog in odds and the favorite everywhere else — the field, the best predictors and the best underdog-pickers. Even the best favorite-pickers have Vallejos at only 2 of 5."
       ],
       "tally_source": {
-        "file": "ufc-334-gane-vs-hokit.json",
+        "file": "ufc-qatar-prochazka-vs-stirling.json",
         "url": "",
-        "event_name": "UFC 334: Gane vs. Hokit"
+        "event_name": "UFC Fight Night: Prochazka vs. Stirling"
       },
       "board_odds": {
         "source": "tracker tally",
         "video_id": "",
         "a": {
-          "moneyline": "+100",
-          "decision": "+250"
+          "moneyline": "+110",
+          "decision": "+165"
         },
         "b": {
-          "moneyline": "-120",
-          "ko_tko": "+175"
+          "moneyline": "-135",
+          "ko_tko": "+200"
         }
       }
     },
     {
-      "fight_id": "diaz|heili",
-      "display": "Alateng Heili vs Juan Diaz",
-      "fighter_a": "Alateng Heili",
-      "fighter_b": "Juan Diaz",
-      "pick_count": 134,
-      "capper_count": 80,
+      "fight_id": "lorenz|nurgozhay",
+      "display": "Diyar Nurgozhay vs Alik Lorenz",
+      "fighter_a": "Diyar Nurgozhay",
+      "fighter_b": "Alik Lorenz",
+      "pick_count": 126,
+      "capper_count": 77,
       "markets": [
         {
           "bet_type": "moneyline",
           "label": "Moneyline",
-          "total_weight": 200.0,
-          "pick_count": 80,
+          "total_weight": 192.5,
+          "pick_count": 77,
           "options": [
             {
-              "selection": "Juan Diaz",
-              "consensus_pct": 100.0,
-              "weight": 200.0,
-              "pick_count": 80,
+              "selection": "Diyar Nurgozhay",
+              "consensus_pct": 89.6,
+              "weight": 172.5,
+              "pick_count": 69,
               "avg_confidence": 5.0,
               "stated_pick_count": 0,
               "stated_avg_confidence": 0.0,
@@ -1705,12 +1500,29 @@
                   6
                 ],
                 "favorites": [
-                  8,
-                  8
+                  5,
+                  5
                 ],
                 "underdogs": [
                   7,
-                  7
+                  8
+                ]
+              }
+            },
+            {
+              "selection": "Alik Lorenz",
+              "consensus_pct": 10.4,
+              "weight": 20.0,
+              "pick_count": 8,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally",
+              "sharp": {
+                "underdogs": [
+                  1,
+                  8
                 ]
               }
             }
@@ -1720,14 +1532,14 @@
         {
           "bet_type": "method_of_victory",
           "label": "Method of Victory",
-          "total_weight": 135.0,
-          "pick_count": 54,
+          "total_weight": 122.5,
+          "pick_count": 49,
           "options": [
             {
-              "selection": "Juan Diaz by Decision",
-              "consensus_pct": 46.3,
-              "weight": 62.5,
-              "pick_count": 25,
+              "selection": "Diyar Nurgozhay by KO/TKO",
+              "consensus_pct": 69.4,
+              "weight": 85.0,
+              "pick_count": 34,
               "avg_confidence": 5.0,
               "stated_pick_count": 0,
               "stated_avg_confidence": 0.0,
@@ -1735,16 +1547,16 @@
               "source": "tally",
               "sharp": {
                 "method": [
-                  2,
-                  3
+                  4,
+                  5
                 ]
               }
             },
             {
-              "selection": "Juan Diaz by Submission",
-              "consensus_pct": 33.3,
-              "weight": 45.0,
-              "pick_count": 18,
+              "selection": "Diyar Nurgozhay by Decision",
+              "consensus_pct": 16.3,
+              "weight": 20.0,
+              "pick_count": 8,
               "avg_confidence": 5.0,
               "stated_pick_count": 0,
               "stated_avg_confidence": 0.0,
@@ -1752,10 +1564,192 @@
               "source": "tally"
             },
             {
-              "selection": "Juan Diaz by KO/TKO",
-              "consensus_pct": 20.4,
-              "weight": 27.5,
-              "pick_count": 11,
+              "selection": "Alik Lorenz by KO/TKO",
+              "consensus_pct": 8.2,
+              "weight": 10.0,
+              "pick_count": 4,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            },
+            {
+              "selection": "Diyar Nurgozhay by Submission",
+              "consensus_pct": 2.0,
+              "weight": 2.5,
+              "pick_count": 1,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            },
+            {
+              "selection": "Alik Lorenz by Submission",
+              "consensus_pct": 2.0,
+              "weight": 2.5,
+              "pick_count": 1,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            },
+            {
+              "selection": "Alik Lorenz by Decision",
+              "consensus_pct": 2.0,
+              "weight": 2.5,
+              "pick_count": 1,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            }
+          ],
+          "source": "tally"
+        }
+      ],
+      "source": "tally",
+      "card_order": 0,
+      "notes": [
+        "Light heavyweight; Lorenz's UFC debut. The host's first best bet — every panel on Nurgozhay and 4 of 5 method predictors on his KO — but no method prices are posted for it yet, so the KO cannot be priced here."
+      ],
+      "tally_source": {
+        "file": "ufc-qatar-prochazka-vs-stirling.json",
+        "url": "",
+        "event_name": "UFC Fight Night: Prochazka vs. Stirling"
+      },
+      "board_odds": {
+        "source": "tracker tally",
+        "video_id": "",
+        "a": {
+          "moneyline": "-250"
+        },
+        "b": {
+          "moneyline": "+200"
+        }
+      }
+    },
+    {
+      "fight_id": "mitchell|yousaf",
+      "display": "John Mitchell vs Shoaib Yousaf",
+      "fighter_a": "John Mitchell",
+      "fighter_b": "Shoaib Yousaf",
+      "pick_count": 51,
+      "capper_count": 34,
+      "markets": [
+        {
+          "bet_type": "moneyline",
+          "label": "Moneyline",
+          "total_weight": 85.0,
+          "pick_count": 34,
+          "options": [
+            {
+              "selection": "Shoaib Yousaf",
+              "consensus_pct": 64.7,
+              "weight": 55.0,
+              "pick_count": 22,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally",
+              "sharp": {
+                "predictors": [
+                  2,
+                  4
+                ],
+                "underdogs": [
+                  2,
+                  4
+                ]
+              }
+            },
+            {
+              "selection": "John Mitchell",
+              "consensus_pct": 35.3,
+              "weight": 30.0,
+              "pick_count": 12,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally",
+              "sharp": {
+                "predictors": [
+                  2,
+                  4
+                ],
+                "favorites": [
+                  1,
+                  3
+                ],
+                "underdogs": [
+                  2,
+                  4
+                ]
+              }
+            }
+          ],
+          "source": "tally"
+        },
+        {
+          "bet_type": "method_of_victory",
+          "label": "Method of Victory",
+          "total_weight": 42.5,
+          "pick_count": 17,
+          "options": [
+            {
+              "selection": "Shoaib Yousaf by Decision",
+              "consensus_pct": 35.3,
+              "weight": 15.0,
+              "pick_count": 6,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            },
+            {
+              "selection": "John Mitchell by Decision",
+              "consensus_pct": 29.4,
+              "weight": 12.5,
+              "pick_count": 5,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            },
+            {
+              "selection": "Shoaib Yousaf by KO/TKO",
+              "consensus_pct": 23.5,
+              "weight": 10.0,
+              "pick_count": 4,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            },
+            {
+              "selection": "John Mitchell by KO/TKO",
+              "consensus_pct": 5.9,
+              "weight": 2.5,
+              "pick_count": 1,
+              "avg_confidence": 5.0,
+              "stated_pick_count": 0,
+              "stated_avg_confidence": 0.0,
+              "cappers": [],
+              "source": "tally"
+            },
+            {
+              "selection": "John Mitchell by Submission",
+              "consensus_pct": 5.9,
+              "weight": 2.5,
+              "pick_count": 1,
               "avg_confidence": 5.0,
               "stated_pick_count": 0,
               "stated_avg_confidence": 0.0,
@@ -1769,23 +1763,23 @@
       "source": "tally",
       "card_order": 1,
       "notes": [
-        "Bantamweight; Heili replaced Adrian Yanez, who withdrew injured.",
-        "Unanimous on the winner — all 80 channels and every panel on Diaz — but the method vote is the most evenly spread on the card: 25 decision, 18 submission, 11 KO.",
-        "No method prices are posted yet; the bout was made late."
+        "Lightweight; both men making their UFC debut, and the bout was added days before the event.",
+        "The thinnest sample on the card by a long way: 34 channels on the winner against 77-81 elsewhere, 17 on the method, and the sharp panels only part-reported (4 of 6 best predictors, 3 of 5 best favorite-pickers, 4 of 8 best underdog-pickers). No best method predictor has posted, and no method prices exist yet.",
+        "FLAG — the host gave the method split without stating its total, so the usual reconciliation check could not run; 17 is the sum of the counts he read out."
       ],
       "tally_source": {
-        "file": "ufc-334-gane-vs-hokit.json",
+        "file": "ufc-qatar-prochazka-vs-stirling.json",
         "url": "",
-        "event_name": "UFC 334: Gane vs. Hokit"
+        "event_name": "UFC Fight Night: Prochazka vs. Stirling"
       },
       "board_odds": {
         "source": "tracker tally",
         "video_id": "",
         "a": {
-          "moneyline": "+295"
+          "moneyline": "-140"
         },
         "b": {
-          "moneyline": "-385"
+          "moneyline": "+120"
         }
       }
     }

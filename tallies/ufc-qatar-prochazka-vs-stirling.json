@@ -1,0 +1,278 @@
+{
+  "event_name": "UFC Fight Night: Prochazka vs. Stirling",
+  "source_url": "",
+  "notes": "Hand-transcribed from the UFC Predictions Tracker's pre-event roundup for UFC Qatar (ABHA Arena, Doha, 21 Nov 2026). The roundup was available only as a spoken transcript, which reports headcounts and never channel names, so it cannot be ingested as named picks — see src/mma_engine/tallies.py. Every count below is a number the host stated; fighter spellings were corrected against the official card. Panels this card: 6 best predictors, 5 best favorite-pickers, 8 best underdog-pickers and 4 to 5 best method predictors. The host counted 11 fights; the card has 12, because Mitchell vs Yousaf was added after he recorded.",
+  "fights": [
+    {
+      "fighter_a": "Diyar Nurgozhay",
+      "fighter_b": "Alik Lorenz",
+      "card_order": 0,
+      "moneyline": { "channels": 77, "counts": { "a": 69 } },
+      "method": {
+        "channels": 49,
+        "counts": {
+          "a": { "ko_tko": 34, "submission": 1, "decision": 8 },
+          "b": { "ko_tko": 4, "submission": 1, "decision": 1 }
+        }
+      },
+      "odds": {
+        "a": { "moneyline": "-250" },
+        "b": { "moneyline": "+200" }
+      },
+      "sharps": {
+        "a": { "predictors": [6, 6], "favorites": [5, 5], "underdogs": [7, 8] },
+        "b": { "underdogs": [1, 8] }
+      },
+      "method_sharps": { "counts": { "a_ko_tko": [4, 5] } },
+      "notes": ["Light heavyweight; Lorenz's UFC debut. The host's first best bet — every panel on Nurgozhay and 4 of 5 method predictors on his KO — but no method prices are posted for it yet, so the KO cannot be priced here."]
+    },
+    {
+      "fighter_a": "John Mitchell",
+      "fighter_b": "Shoaib Yousaf",
+      "card_order": 1,
+      "moneyline": { "channels": 34, "counts": { "b": 22 } },
+      "method": {
+        "channels": 17,
+        "counts": {
+          "a": { "ko_tko": 1, "submission": 1, "decision": 5 },
+          "b": { "ko_tko": 4, "decision": 6 }
+        }
+      },
+      "odds": {
+        "a": { "moneyline": "-140" },
+        "b": { "moneyline": "+120" }
+      },
+      "sharps": {
+        "a": { "predictors": [2, 4], "favorites": [1, 3], "underdogs": [2, 4] },
+        "b": { "predictors": [2, 4], "underdogs": [2, 4] }
+      },
+      "notes": [
+        "Lightweight; both men making their UFC debut, and the bout was added days before the event.",
+        "The thinnest sample on the card by a long way: 34 channels on the winner against 77-81 elsewhere, 17 on the method, and the sharp panels only part-reported (4 of 6 best predictors, 3 of 5 best favorite-pickers, 4 of 8 best underdog-pickers). No best method predictor has posted, and no method prices exist yet.",
+        "FLAG — the host gave the method split without stating its total, so the usual reconciliation check could not run; 17 is the sum of the counts he read out."
+      ]
+    },
+    {
+      "fighter_a": "Nikolas Motta",
+      "fighter_b": "Dom Mar Fan",
+      "card_order": 2,
+      "moneyline": { "channels": 79, "counts": { "a": 48 } },
+      "method": {
+        "channels": 54,
+        "counts": {
+          "a": { "ko_tko": 23, "decision": 7 },
+          "b": { "ko_tko": 3, "submission": 2, "decision": 19 }
+        }
+      },
+      "odds": {
+        "a": { "moneyline": "+135", "ko_tko": "+255" },
+        "b": { "moneyline": "-165", "decision": "+235" }
+      },
+      "sharps": { "a": { "predictors": [4, 6], "favorites": [4, 5], "underdogs": [6, 8] } },
+      "method_sharps": { "counts": { "b_decision": [3, 5] } },
+      "notes": ["Lightweight. The field and all three sharp panels are on the +135 underdog Motta, but 4 of 5 best method predictors have Mar Fan winning — the sharpest internal disagreement on the card."]
+    },
+    {
+      "fighter_a": "Jake Matthews",
+      "fighter_b": "Tahir Abdullayev",
+      "card_order": 3,
+      "moneyline": { "channels": 80, "counts": { "a": 76 } },
+      "method": {
+        "channels": 53,
+        "counts": {
+          "a": { "ko_tko": 3, "submission": 6, "decision": 42 },
+          "b": { "submission": 1, "decision": 1 }
+        }
+      },
+      "odds": {
+        "a": { "moneyline": "-260", "decision": "+140" },
+        "b": { "moneyline": "+210" }
+      },
+      "sharps": {
+        "a": { "predictors": [5, 6], "favorites": [4, 5] },
+        "b": { "underdogs": [2, 8] }
+      },
+      "method_sharps": { "counts": { "a_decision": [4, 4] } },
+      "notes": ["Welterweight. 79% of the method votes and all four best method predictors have Matthews by decision at +140. Abdullayev missed weight by a pound."]
+    },
+    {
+      "fighter_a": "Amir Albazi",
+      "fighter_b": "Alessandro Costa",
+      "card_order": 4,
+      "moneyline": { "channels": 81, "counts": { "b": 47 } },
+      "method": {
+        "channels": 54,
+        "counts": {
+          "a": { "ko_tko": 2, "decision": 20 },
+          "b": { "ko_tko": 10, "submission": 3, "decision": 19 }
+        }
+      },
+      "odds": {
+        "a": { "moneyline": "-115" },
+        "b": { "moneyline": "-105" }
+      },
+      "sharps": {
+        "a": { "predictors": [3, 6], "favorites": [3, 5], "underdogs": [4, 8] },
+        "b": { "predictors": [3, 6], "underdogs": [4, 8] }
+      },
+      "method_sharps": { "counts": { "a_decision": [3, 5], "b_decision": [2, 5] } },
+      "notes": [
+        "Flyweight rematch — Albazi won the first by KO four years ago — and the closest fight on the card at -115/-105.",
+        "Close everywhere: 58% Costa in the field, the best predictors 3-3, the best underdog-pickers 4-4, and every best method predictor expecting a decision either way.",
+        "FLAG — the host gave the method split without stating its total, so the usual reconciliation check could not run; 54 is the sum of the counts he read out.",
+        "He called an Albazi decision the oddsmakers' likeliest outcome but gave no price, so no method price is recorded."
+      ]
+    },
+    {
+      "fighter_a": "Shamil Gaziev",
+      "fighter_b": "Tallison Teixeira",
+      "card_order": 5,
+      "moneyline": { "channels": 80, "counts": { "a": 71 } },
+      "method": {
+        "channels": 55,
+        "counts": { "a": { "ko_tko": 47, "submission": 1, "decision": 1 }, "b": { "ko_tko": 6 } }
+      },
+      "odds": {
+        "a": { "moneyline": "-195", "ko_tko": "-140" },
+        "b": { "moneyline": "+165" }
+      },
+      "sharps": {
+        "a": { "predictors": [6, 6], "favorites": [5, 5] },
+        "b": { "underdogs": [0, 8] }
+      },
+      "notes": [
+        "Heavyweight. 96% of the method votes are a KO either way, and not one of the 8 best underdog-pickers is on Teixeira.",
+        "The host's second best bet: every panel 100% on Gaziev and the KO at -140 against a -195 moneyline. He said the method predictors were unanimous on it too but gave no panel size, so no method-panel count is recorded."
+      ]
+    },
+    {
+      "fighter_a": "Aleksandre Topuria",
+      "fighter_b": "Santiago Luna",
+      "card_order": 6,
+      "moneyline": { "channels": 80, "counts": { "a": 72 } },
+      "method": {
+        "channels": 55,
+        "counts": { "a": { "ko_tko": 14, "submission": 4, "decision": 36 }, "b": { "ko_tko": 1 } }
+      },
+      "odds": {
+        "a": { "moneyline": "-285", "decision": "+125" },
+        "b": { "moneyline": "+230" }
+      },
+      "sharps": {
+        "a": { "predictors": [5, 6], "favorites": [5, 5] },
+        "b": { "underdogs": [2, 8] }
+      },
+      "method_sharps": { "counts": { "a_decision": [4, 5] } },
+      "notes": ["Bantamweight prelim headliner."]
+    },
+    {
+      "fighter_a": "Jared Cannonier",
+      "fighter_b": "Ikram Aliskerov",
+      "card_order": 7,
+      "moneyline": { "channels": 80, "counts": { "b": 64 } },
+      "method": {
+        "channels": 54,
+        "counts": {
+          "a": { "ko_tko": 8, "decision": 1 },
+          "b": { "ko_tko": 11, "submission": 1, "decision": 33 }
+        }
+      },
+      "odds": {
+        "a": { "moneyline": "+240" },
+        "b": { "moneyline": "-295", "decision": "+175", "ko_tko": "+195" }
+      },
+      "sharps": {
+        "a": { "underdogs": [1, 8] },
+        "b": { "predictors": [5, 6], "favorites": [4, 5] }
+      },
+      "method_sharps": { "counts": { "b_decision": [4, 5] } },
+      "notes": ["Middleweight; opens the main card. Aliskerov is the biggest favorite on the card at -295."]
+    },
+    {
+      "fighter_a": "Kyoji Horiguchi",
+      "fighter_b": "Asu Almabayev",
+      "card_order": 8,
+      "moneyline": { "channels": 80, "counts": { "a": 74 } },
+      "method": {
+        "channels": 54,
+        "counts": { "a": { "ko_tko": 9, "submission": 1, "decision": 38 }, "b": { "decision": 6 } }
+      },
+      "odds": {
+        "a": { "moneyline": "-195", "decision": "+110" },
+        "b": { "moneyline": "+165" }
+      },
+      "sharps": {
+        "a": { "predictors": [5, 6], "favorites": [4, 5] },
+        "b": { "underdogs": [1, 8] }
+      },
+      "method_sharps": { "counts": { "a_decision": [4, 5] } },
+      "notes": ["Flyweight. The host's third best bet: Horiguchi takes 92.5% of the field and his decision pays +110 against a -195 moneyline."]
+    },
+    {
+      "fighter_a": "Dan Hooker",
+      "fighter_b": "Brian Ortega",
+      "card_order": 9,
+      "moneyline": { "channels": 81, "counts": { "a": 60 } },
+      "method": {
+        "channels": 55,
+        "counts": {
+          "a": { "ko_tko": 10, "submission": 1, "decision": 29 },
+          "b": { "submission": 14, "decision": 1 }
+        }
+      },
+      "odds": {
+        "a": { "moneyline": "-190", "decision": "+180", "ko_tko": "+210" },
+        "b": { "moneyline": "+160" }
+      },
+      "sharps": {
+        "a": { "predictors": [4, 6], "favorites": [4, 5] },
+        "b": { "underdogs": [2, 8] }
+      },
+      "method_sharps": { "counts": { "a_decision": [3, 4] } },
+      "notes": ["Lightweight. Every one of Ortega's 15 method votes bar one is a submission, and the oddsmakers rate a Hooker KO (+210) a shade behind his decision (+180) despite only 18% of the field picking it."]
+    },
+    {
+      "fighter_a": "Aljamain Sterling",
+      "fighter_b": "Kevin Vallejos",
+      "card_order": 10,
+      "moneyline": { "channels": 79, "counts": { "a": 45 } },
+      "method": {
+        "channels": 52,
+        "counts": { "a": { "submission": 3, "decision": 26 }, "b": { "ko_tko": 15, "decision": 8 } }
+      },
+      "odds": {
+        "a": { "moneyline": "+110", "decision": "+165" },
+        "b": { "moneyline": "-135", "ko_tko": "+200" }
+      },
+      "sharps": {
+        "a": { "predictors": [4, 6], "underdogs": [5, 8] },
+        "b": { "favorites": [2, 5] }
+      },
+      "method_sharps": { "counts": { "a_decision": [3, 4] } },
+      "notes": ["Featherweight co-main. Sterling is the +110 underdog in odds and the favorite everywhere else — the field, the best predictors and the best underdog-pickers. Even the best favorite-pickers have Vallejos at only 2 of 5."]
+    },
+    {
+      "fighter_a": "Jiri Prochazka",
+      "fighter_b": "Navajo Stirling",
+      "card_order": 11,
+      "moneyline": { "channels": 81, "counts": { "b": 52 } },
+      "method": {
+        "channels": 54,
+        "counts": { "a": { "ko_tko": 19 }, "b": { "ko_tko": 33, "decision": 2 } }
+      },
+      "odds": {
+        "a": { "moneyline": "+140", "ko_tko": "+185" },
+        "b": { "moneyline": "-165", "ko_tko": "-111" }
+      },
+      "sharps": {
+        "a": { "underdogs": [3, 8] },
+        "b": { "predictors": [4, 6], "favorites": [4, 5] }
+      },
+      "method_sharps": { "counts": { "a_ko_tko": [2, 5], "b_ko_tko": [2, 5], "b_decision": [1, 5] } },
+      "notes": [
+        "Light heavyweight main event, five rounds. Stirling is 11-0 and 6-0 in the UFC.",
+        "96% of the method votes have this ending by KO and not one channel picked a submission; the best method predictors split 2-2 on who lands it."
+      ]
+    }
+  ]
+}
